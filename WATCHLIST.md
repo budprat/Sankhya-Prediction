@@ -66,6 +66,24 @@ Mercury, the Sun, then Venus successively hold Rahu:
 | 2027-02-24 → 03-10 | Mercury (1.3°) | Jupiter (0.07°) | *pending* |
 | 2027-03-14 → 03-20 | Venus (0.5°) | Jupiter + Mars | *pending* |
 
+Dated trigger instants of the cluster (fast-layer crossings of the held
+axis), with the acting holder Jupiter located at each — all spots fall in
+Jupiter's 15–16.5°N declination band:
+
+| Instant (UT) | Trigger | Jupiter spot | Region | Outcome |
+|---|---|---|---|---|
+| 2027-02-06 22:28 | **Moon on Rahu, Sun 3° away — the annular solar eclipse at the held node** | 22.44E 14.96N | eastern Chad (Ouaddaï, toward Sudan border) | *pending* |
+| 2027-02-09 17:31 | Sun exact on Rahu | 93.58E 15.08N | Andaman Sea off Myanmar's Irrawaddy delta | *pending* |
+| 2027-02-20 04:03 | Moon on the Ketu–Jupiter end | 76.08W 15.54N | Caribbean S of Haiti / N of Guajira | *pending* |
+| 2027-03-02 07:31 | **Jupiter exactly on Ketu — constraint peak** | 139.39W 15.94N | NE Pacific ~1,700 km ESE of Hawaii | *pending* |
+| 2027-03-06 02:35 | Moon on the Rahu end | 69.60W 16.08N | Caribbean N of Curaçao (Beata Ridge) | *pending* |
+| 2027-03-19 10:54 | Moon on the Ketu–Jupiter end | 151.03E 16.45N | W Pacific NE of Guam (Marianas) | *pending* |
+
+Note the February corridor: this table's Chad spot (22E 15N), the
+band-trigger's western-Yemen spot (43E 15.6N, Feb 20), and the
+real-Uranus△Sun SW-Saudi spot (42E 20.4N, Feb 8) place three independent
+February instants in the Sahel–Red Sea–Arabia belt at 15–20°N.
+
 During these windows the site-specific companion rule
 `nodes-held-ascendant-cross` gives DAILY local trigger hours at any chosen
 site (the Asc crossing each held axis end, ~40 min per end per day):
