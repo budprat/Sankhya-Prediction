@@ -15,7 +15,7 @@ from .models import ChartResult
 class Condition(BaseModel):
     """One geometric predicate. Body names may be prefixed 'real:' to use the
     doctrinal ahead-position (Mathcad-QUAKE offsets)."""
-    type: Literal["conjunction", "opposition", "square", "axis_cross",
+    type: Literal["conjunction", "opposition", "square", "trine", "axis_cross",
                   "cluster", "same_band", "in_band"]
     bodies: list[str] = []
     axes: list[list[str]] = []          # axis_cross: [[A,B],[C,D]]
@@ -46,10 +46,11 @@ def _lon(result: ChartResult, name: str) -> float:
 
 
 def _holds(result: ChartResult, c: Condition) -> bool:
-    if c.type in ("conjunction", "opposition", "square"):
+    if c.type in ("conjunction", "opposition", "square", "trine"):
         a, b = (_lon(result, n) for n in c.bodies)
         sep = _arc_distance(a, b)
-        target = {"conjunction": 0.0, "opposition": 180.0, "square": 90.0}[c.type]
+        target = {"conjunction": 0.0, "opposition": 180.0,
+                  "square": 90.0, "trine": 120.0}[c.type]
         return abs(sep - target) <= c.orb
     if c.type == "axis_cross":
         cross = axis_angle(_lon(result, c.axes[0][0]), _lon(result, c.axes[1][0]))

@@ -73,6 +73,15 @@ def test_doctrine_rules_load_and_fire_on_ground_truths():
         assert not evaluate_rule(quiet, rule).fired, rule.name
 
 
+def test_mined_rules_load_and_trine_works():
+    rules = {r.name: r for r in load_rules("mined-triggers.toml")}
+    assert set(rules) == {"mined-real-uranus-saturn-conj",
+                          "mined-real-neptune-mercury-opp",
+                          "mined-real-uranus-sun-trine"}
+    r = make_result({"Uranus": 100.0, "Sun": 237.9})  # real:Uranus 117.86, sep 120.0
+    assert evaluate_rule(r, rules["mined-real-uranus-sun-trine"]).fired
+
+
 def test_real_prefix_resolves_offsets():
     r = make_result({"Neptune": 339.5, "Ketu": 8.6})
     rule = TriggerRule(name="rn", conditions=[

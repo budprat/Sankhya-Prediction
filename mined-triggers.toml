@@ -1,0 +1,26 @@
+# MINED candidate triggers — NOT doctrine. Screened on half the USGS M7+ corpus
+# (1900-2020), replicated on the held-out half, but below formal significance
+# after multiple-comparison correction (~300 predicates screened). Provenance:
+# scripts/mine_usgs.py over data/usgs-m7-1850-2020.csv, 2026-08-02.
+# Watch-list quality: firings mark windows to observe, not predictions.
+
+[[rule]]
+name = "mined-real-uranus-saturn-conj"
+description = "real-Uranus conjunct Saturn; lift 1.80 (half A) / 1.64 (held-out B), 2.3% of quakes vs 1.35% of controls"
+conditions = [
+  { type = "conjunction", bodies = ["real:Uranus", "Saturn"], orb = 3.0 },
+]
+
+[[rule]]
+name = "mined-real-neptune-mercury-opp"
+description = "real-Neptune opposition Mercury; lift 1.76 / 1.41"
+conditions = [
+  { type = "opposition", bodies = ["real:Neptune", "Mercury"], orb = 3.0 },
+]
+
+[[rule]]
+name = "mined-real-uranus-sun-trine"
+description = "real-Uranus trine Sun; lift 1.52 / 1.31 (family of the Nepal real-Uranus-on-Sun signature)"
+conditions = [
+  { type = "trine", bodies = ["real:Uranus", "Sun"], orb = 3.0 },
+]
