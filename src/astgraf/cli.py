@@ -11,6 +11,7 @@ from .aspects import find_events
 from .ephemeris import BODY_ORDER
 from .grid import build_rows, label_for_jd, make_pos_at_jd
 from .horary import find_sub_crossings, horary_position
+from .scope import render_scope
 from .models import (ChartMoment, GridSpec, PeriodUnit,
                      parse_latitude, parse_longitude, parse_utc_offset)
 from .svgplot import render, render_sequence
@@ -47,6 +48,11 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--koch", action="store_true",
                    help="Koch-style Ascendant (real obliquity); default is the equal path")
     p.add_argument("--style", choices=["wrapped", "cosine"], default="wrapped")
+    p.add_argument("--scope", action="store_true",
+                   help="render scope-chart wheels (aspect lines within orb): one per "
+                        "period row plus one at each refined aspect-event moment")
+    p.add_argument("--orb", type=float, default=3.0,
+                   help="aspect orb in degrees for scope wheels (default 3.0)")
     p.add_argument("--horary", action="store_true",
                    help="write the 252-division horary grid (horary.csv) and "
                         "sub-boundary crossing events (horary_events.csv)")
@@ -147,6 +153,27 @@ def main(argv: list[str] | None = None) -> int:
                                  label_for_jd(c.jd)])
         print(f"  horary: {len(rows) * len(BODY_ORDER)} grid rows, "
               f"{len(crossings)} sub crossings")
+
+    if args.scope:
+        scope_dir = out / "scope"
+        scope_dir.mkdir(parents=True, exist_ok=True)
+        for r in rows:
+            positions = {p.name: p.longitude for p in r.positions}
+            (scope_dir / f"row_{r.index:02d}.svg").write_text(
+                render_scope(positions, title=r.label, orb=args.orb))
+        event_cap = 100
+        if events:
+            pos_at = make_pos_at_jd(start)
+            for i, e in enumerate(events[:event_cap]):
+                title = f"{e.label} — {e.body_a} {e.kind} {e.body_b}"
+                stem = f"event_{i:03d}_{e.body_a}-{e.kind}-{e.body_b}"
+                (scope_dir / f"{stem}.svg").write_text(
+                    render_scope(pos_at(e.jd), title=title, orb=args.orb))
+            if len(events) > event_cap:
+                print(f"  scope: rendered first {event_cap} of {len(events)} event "
+                      "wheels; narrow with --aspect-bodies for full coverage")
+        print(f"  scope: {len(rows)} row wheels + "
+              f"{min(len(events), event_cap)} event wheels -> {scope_dir}")
 
     for stem, svg in render_sequence(rows, BODY_ORDER, style=args.style, events=events):
         (out / "svg" / f"{stem}.svg").write_text(svg)

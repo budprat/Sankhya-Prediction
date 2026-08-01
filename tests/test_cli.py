@@ -69,6 +69,28 @@ def test_aspect_bodies_rejects_unknown_name(tmp_path):
         main(["--year", "2000", "--aspect-bodies", "Vulcan", "--out", str(tmp_path)])
 
 
+def test_scope_wheels_for_rows_and_events(tmp_path):
+    rc = main([
+        "--year", "2000", "--month", "1", "--day", "1", "--time", "12:00",
+        "--unit", "year", "--step", "1", "--count", "17",
+        "--utc-offset", "+05:30", "--lon", "76:57E", "--lat", "28:48N",
+        "--aspect-bodies", "Uranus,Neptune,Ketu", "--scope",
+        "--out", str(tmp_path),
+    ])
+    assert rc == 0
+    scope = tmp_path / "scope"
+    row_wheels = sorted(scope.glob("row_*.svg"))
+    assert len(row_wheels) == 17
+    event_wheels = sorted(scope.glob("event_*.svg"))
+    with open(tmp_path / "aspects.csv", newline="") as fh:
+        events = list(csv.DictReader(fh))
+    assert len(event_wheels) == min(len(events), 100)
+    assert events, "slow-body events expected in 2000-2016"
+    root = ET.fromstring(event_wheels[0].read_text())
+    assert root.tag.endswith("svg")
+    assert any(el.get("data-body") == "Uranus" for el in root.iter())
+
+
 def test_horary_grid_and_crossings(tmp_path):
     rc = main([
         "--year", "1987", "--month", "8", "--day", "28", "--time", "02:55",
