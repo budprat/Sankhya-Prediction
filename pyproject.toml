@@ -6,10 +6,11 @@ name = "astgraf"
 version = "0.1.0"
 description = "Stellar-position period graphs: modern port of the ASTGRAF/GRAPHDO BASIC suite"
 requires-python = ">=3.12"
-dependencies = ["pydantic>=2.7"]
+dependencies = ["pydantic>=2.7", "openpyxl>=3.1"]
 
 [project.scripts]
 astgraf = "astgraf.cli:main"
+astgraf-bands = "astgraf.bands_cli:main"
 
 [dependency-groups]
 dev = ["pytest>=8", "defusedxml>=0.7"]

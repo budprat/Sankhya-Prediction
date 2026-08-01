@@ -39,6 +39,24 @@ The default plot is wrapped 0–360° with line breaks at the wrap — no more
 up/down dual-trace ambiguity. SVG is resolution-independent, so output is
 identical on every machine.
 
+## Band-coincidence scanner (`astgraf-bands`)
+
+The Predict.pdf method automated: sweep the 28-band × 11-body table (the PDF's
+columns — no Pluto, no Ascendant, so the scan is site-free) over any date range,
+fire on **Moon + Ketu + Mars sharing a band** (escalating to *catastrophic* when
+Uranus/Neptune join), merge consecutive firings into episodes, locate any giants
+present, and score episodes against a disaster-catalog xlsx with a chance
+baseline. 12-hour steps by default (daily sampling can skip a band — the Moon
+advances 13.2° > 12.857°/day).
+
+```bash
+uv run astgraf-bands --start 2013-01-01 --days 1095 --step-hours 12 \
+  --catalog "NATURAL DISASTERS.xlsx" --out out/scan-2013-2015
+```
+
+Outputs `sweep.csv`, `episodes.csv` (with giant spots), `catalog_score.csv`,
+and a summary with observed hits vs expected-by-chance.
+
 ## Event locator (`--locate`)
 
 NU's confirmed light-time rule: a crossing acts instantly in the substratum;
