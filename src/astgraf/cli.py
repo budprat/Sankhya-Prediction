@@ -47,6 +47,9 @@ def build_parser() -> argparse.ArgumentParser:
                    help="Koch-style Ascendant (real obliquity); default is the equal path")
     p.add_argument("--style", choices=["wrapped", "cosine"], default="wrapped")
     p.add_argument("--no-aspects", action="store_true")
+    p.add_argument("--aspect-bodies", default=None, metavar="A,B,...",
+                   help="restrict aspect detection to these bodies "
+                        "(e.g. Uranus,Neptune,Ketu); plotting is unaffected")
     p.add_argument("--out", default="astgraf-out")
     return p
 
@@ -62,10 +65,18 @@ def main(argv: list[str] | None = None) -> int:
         sidereal=not args.tropical, equal_houses=not args.koch)
     spec = GridSpec(unit=PeriodUnit(args.unit), step=args.step, count=args.count)
 
+    aspect_bodies = None
+    if args.aspect_bodies is not None:
+        aspect_bodies = [b.strip() for b in args.aspect_bodies.split(",") if b.strip()]
+        unknown = [b for b in aspect_bodies if b not in BODY_ORDER]
+        if unknown:
+            build_parser().error(f"unknown aspect bodies: {', '.join(unknown)} "
+                                 f"(choose from {', '.join(BODY_ORDER)})")
+
     rows = build_rows(start, spec)
     events = []
     if not args.no_aspects:
-        events = find_events(rows, pos_at_jd=make_pos_at_jd(start))
+        events = find_events(rows, pos_at_jd=make_pos_at_jd(start), bodies=aspect_bodies)
         for e in events:
             e.label = label_for_jd(e.jd)
 

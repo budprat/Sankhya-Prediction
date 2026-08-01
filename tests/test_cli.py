@@ -46,6 +46,29 @@ def test_full_run_writes_all_artifacts(tmp_path):
     assert aspects[0] == "body_a,body_b,kind,jd,label"
 
 
+def test_aspect_bodies_filter_limits_events(tmp_path):
+    rc = main([
+        "--year", "2000", "--month", "1", "--day", "1", "--time", "12:00",
+        "--unit", "year", "--step", "1", "--count", "17",
+        "--utc-offset", "+05:30", "--lon", "76:57E", "--lat", "28:48N",
+        "--aspect-bodies", "Uranus,Neptune,Ketu",
+        "--out", str(tmp_path),
+    ])
+    assert rc == 0
+    with open(tmp_path / "aspects.csv", newline="") as fh:
+        rows = list(csv.DictReader(fh))
+    assert rows, "slow-body events must still be found"
+    allowed = {"Uranus", "Neptune", "Ketu"}
+    for row in rows:
+        assert row["body_a"] in allowed and row["body_b"] in allowed
+
+
+def test_aspect_bodies_rejects_unknown_name(tmp_path):
+    import pytest
+    with pytest.raises(SystemExit):
+        main(["--year", "2000", "--aspect-bodies", "Vulcan", "--out", str(tmp_path)])
+
+
 def test_cosine_style_and_no_aspects(tmp_path):
     rc = main([
         "--year", "2010", "--month", "6", "--day", "15", "--time", "06:00",

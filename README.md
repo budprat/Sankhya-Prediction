@@ -44,7 +44,9 @@ identical on every machine.
   plots show cycle shapes, not minute-accurate positions.
 - Aspect events are only meaningful for bodies whose motion the sampling step
   resolves: at yearly steps, Moon/Ascendant/inner-planet events are aliased
-  noise (the BASIC had the same limit); use day or hour steps for those.
+  noise (the BASIC had the same limit); use day or hour steps for those, or
+  `--aspect-bodies Uranus,Neptune,Ketu` to restrict detection to named bodies
+  (plotting is unaffected).
 - The linear ayanamsa `(year − 294) · 151 / 10800` wraps a full circle in
   ~25,720 years — the precession cycle is built into the formula.
 
