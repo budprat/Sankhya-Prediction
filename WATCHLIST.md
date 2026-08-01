@@ -66,6 +66,12 @@ Mercury, the Sun, then Venus successively hold Rahu:
 | 2027-02-24 → 03-10 | Mercury (1.3°) | Jupiter (0.07°) | *pending* |
 | 2027-03-14 → 03-20 | Venus (0.5°) | Jupiter + Mars | *pending* |
 
+During these windows the site-specific companion rule
+`nodes-held-ascendant-cross` gives DAILY local trigger hours at any chosen
+site (the Asc crossing each held axis end, ~40 min per end per day):
+`astgraf-bands --rules doctrine-triggers.toml --site-lon ... --site-lat ...
+--step-hours 0.25 --start 2027-01-24 --days 56`.
+
 ## Doctrine: nepal-double census note (added 2026-08-02)
 
 The real-Neptune-on-Ketu + real-Uranus-on-Sun signature fired **four times

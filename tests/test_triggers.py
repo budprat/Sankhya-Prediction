@@ -58,7 +58,8 @@ def test_doctrine_rules_load_and_fire_on_ground_truths():
     assert set(rules) == {"chatur-vyuham", "band-trigger", "neptune-on-ketu",
                           "nepal-double", "uranus-neptune-conjunction",
                           "jupiter-saturn-conjunction", "nodes-doubly-occupied",
-                          "uranus-neptune-combo-on-ascendant"}
+                          "uranus-neptune-combo-on-ascendant",
+                          "nodes-held-ascendant-cross"}
 
     # The long-cycle families fire on their historical instances.
     conj_1993 = compute_raw(1993, 9, 1, 12.0, 0.0, 0.0, 0.0, True, True)
@@ -151,6 +152,24 @@ def test_nodes_doubly_occupied_rule_fires_on_hyderabad_not_nepal():
     assert not evaluate_rule(nepal, rule).fired  # Rahu was empty (observed)
     quiet = compute_raw(2010, 2, 1, 12.0, 0.0, 0.0, 0.0, True, True)
     assert not evaluate_rule(quiet, rule).fired
+
+
+def test_nodes_held_ascendant_cross_site_trigger():
+    rules = {r.name: r for r in load_rules(DOCTRINE)}
+    rule = rules["nodes-held-ascendant-cross"]
+    # Hyderabad 2016-09-23 ~04:49 IST: Asc on the Mercury-held Rahu end.
+    dawn = compute_raw(2016, 9, 23, 4.82, -5.5, -78.483, 17.385, False, False)
+    state = evaluate_rule(dawn, rule)
+    assert state.fired and state.level == "catastrophic"
+    # Evening ~17:04 IST: Asc on the Neptune-held Ketu end.
+    evening = compute_raw(2016, 9, 23, 17.07, -5.5, -78.483, 17.385, False, False)
+    assert evaluate_rule(evening, rule).fired
+    # Midday: constraint stands but the Asc is away from both ends.
+    noon = compute_raw(2016, 9, 23, 12.0, -5.5, -78.483, 17.385, False, False)
+    assert not evaluate_rule(noon, rule).fired
+    # Nodes unheld (2010): Asc on a node alone must not fire.
+    empty = compute_raw(2010, 2, 1, 12.0, 0.0, 0.0, 0.0, True, True)
+    assert not evaluate_rule(empty, rule).fired
 
 
 def test_giants_combo_on_ascendant_rule():

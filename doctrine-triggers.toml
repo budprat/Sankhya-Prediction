@@ -59,6 +59,17 @@ escalate = [
 ]
 
 [[rule]]
+name = "nodes-held-ascendant-cross"
+description = "Hyderabad flood site trigger (NU): the standing nodes-doubly-occupied constraint PLUS the local Ascendant crossing either held axis end - at Hyderabad 2016-09-23/24 the Asc crossed Mercury@Rahu ~04:49 IST and Neptune@Ketu ~17:04 IST (evening cloudburst); site-specific"
+conditions = [
+  { type = "nodes_occupied", bodies = ["Sun", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"], orb = 4.0 },
+  { type = "nodes_occupied", bodies = ["Ascendant"], orb = 5.0, require = "either" },
+]
+escalate = [
+  { type = "nodes_occupied", bodies = ["Uranus", "Neptune"], orb = 4.0, require = "either" },
+]
+
+[[rule]]
 name = "uranus-neptune-combo-on-ascendant"
 description = "Ulsoor Lake fish kill 2016-03-07 (NU): the local Ascendant inside the Uranus-Neptune arc - a SITE-SPECIFIC daily trigger (~2.6h window in eras when the giants are within 45 deg); NU's mechanism: local gravity-field density drop, EM rise, oxygen release"
 conditions = [

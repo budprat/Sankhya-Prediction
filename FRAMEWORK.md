@@ -59,7 +59,10 @@ lock, standing for weeks to months:
 - **Both nodes occupied** (Hyderaba-floods.docx, NU's own cast of
   24-09-2016): Neptune on Ketu (1.1°) AND exalted Mercury on Rahu (3.7°),
   with Sun conjunct Jupiter (1.6°) and the Moon crossing their square —
-  the nodal axis held at both ends while the fast layer fired.
+  the nodal axis held at both ends while the fast layer fired. NU
+  (2026-08-02): Hyderabad was ALSO site-specific — the local Ascendant
+  crossed the Mercury-held Rahu end ~04:49 IST and the Neptune-held Ketu
+  end ~17:04 IST each flood day (the evening cloudburst hour on Sep 23).
 - **Giants on the Ascendant** (Ulsoor Lake fish kill, 2016-03-07, NU): the
   first SITE-SPECIFIC trigger — at Bengaluru's dawn the Ascendant swept the
   Neptune→Sun→Ketu→Uranus chain (exact crossings 06:12 and 08:20 IST,
