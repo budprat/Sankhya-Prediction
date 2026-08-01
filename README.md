@@ -22,6 +22,30 @@ conjunctions to the minute; `--unit year --step 800 --count 60` spans 48,000
 years). `--tropical` disables the ayanamsa; `--koch` uses the real-obliquity
 Ascendant path; `--style cosine` reproduces the heritage GRAPHDO fold.
 
+## The 60-period drill (NU's canonical workflow)
+
+Sixty periods for max detail; the unit is 1 to any number — day×2 = a
+120-day spread, year×800 = 48,000 years. Coarse lens → find the crossing →
+finer lens → locate. Each stage is one command:
+
+```bash
+# LENS 1 — 60 x 1 year, slow bodies: find the crossings of an era
+uv run astgraf --year 1960 --unit year --step 1 --count 60 \
+  --aspect-bodies Uranus,Neptune,Rahu,Ketu --out out/lens1
+
+# LENS 2 — 60 x 12 hours around a found crossing, with the spot
+uv run astgraf --year 2015 --month 1 --day 16 --unit hour --step 12 --count 60 \
+  --aspect-bodies Uranus,Ketu --locate --out out/lens2
+```
+
+Bisection refinement makes the lenses agree to the minute (both give the
+2015-01-31 08:17 UT Uranus–Ketu conjunction) and `--locate` applies the
+light-time rotation — Jup 40 min, Sat 80, Ura 150, Nep 240, west from the
+culmination meridian — to give the spot (here 80.55E 4.67N, off southern
+Sri Lanka). One caveat: a coarse lens only resolves pairs whose relative
+motion per division stays under ~90° — at yearly steps use the slow bodies;
+descend the lens for the fast ones (each planet comes one by one).
+
 ## Outputs
 
 | File | Replaces | Content |
