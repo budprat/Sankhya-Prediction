@@ -149,8 +149,15 @@ class _Span:
 
 
 def run_rules(args, start, steps, step_hours, step_days) -> int:
-    from .triggers import evaluate_rule, load_rules
+    from .grid import make_chart_at_jd
+    from .models import ChartMoment
+    from .triggers import (acting_body, evaluate_rule, load_rules,
+                           refine_episode_instant)
     rules = load_rules(args.rules)
+    site_free_moment = ChartMoment(year=start.year, month=start.month, day=start.day,
+                                   hour=0, minute=0, utc_offset_hours=0.0,
+                                   longitude_east=0.0, latitude_north=0.0)
+    chart_at = make_chart_at_jd(site_free_moment)
     spans: dict[str, list[_Span]] = {r.name: [] for r in rules}
     for k in range(steps):
         result = compute_raw(start.year, start.month, start.day,
@@ -171,12 +178,26 @@ def run_rules(args, start, steps, step_hours, step_days) -> int:
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
+    rule_by_name = {r.name: r for r in rules}
     with open(out / "rules_episodes.csv", "w", newline="") as fh:
         writer = csv.writer(fh)
-        writer.writerow(["rule", "start", "end", "level"])
+        writer.writerow(["rule", "start", "end", "level", "exact_instant",
+                         "acting", "spot_lon_east", "spot_lat_north"])
         for name, episodes in spans.items():
+            rule = rule_by_name[name]
+            actor = acting_body(rule)
             for e in episodes:
-                writer.writerow([name, e.start_label, e.end_label, e.level])
+                instant = spot_lon = spot_lat = ""
+                if actor:
+                    jd = refine_episode_instant(
+                        chart_at, e.start_jd - step_days, e.end_jd + step_days, rule)
+                    if jd is not None:
+                        spot = locate(chart_at(jd), actor)
+                        instant = label_for_jd(jd)
+                        spot_lon = f"{spot.event_longitude_east:.2f}"
+                        spot_lat = f"{spot.event_latitude_north:.2f}"
+                writer.writerow([name, e.start_label, e.end_label, e.level,
+                                 instant, actor or "", spot_lon, spot_lat])
 
     print(f"astgraf-bands --rules: {steps} samples ({args.start} +{args.days}d @ "
           f"{step_hours:g}h), {len(rules)} rules")

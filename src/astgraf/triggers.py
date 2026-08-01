@@ -76,6 +76,63 @@ def evaluate_rule(result: ChartResult, rule: TriggerRule) -> RuleState:
                      level="catastrophic" if escalated else "disruptive")
 
 
+_ASPECT_TARGETS = {"conjunction": 0.0, "opposition": 180.0,
+                   "square": 90.0, "trine": 120.0}
+
+
+def aspect_target(rule: TriggerRule):
+    """(body_a, body_b, target_deg, orb) of the rule's first pair condition."""
+    for c in rule.conditions:
+        if c.type in _ASPECT_TARGETS:
+            return c.bodies[0], c.bodies[1], _ASPECT_TARGETS[c.type], c.orb
+    return None
+
+
+def acting_body(rule: TriggerRule) -> str | None:
+    """The rule's locatable planet: first light-time body in a pair condition."""
+    from .locator import LIGHT_MINUTES
+    target = aspect_target(rule)
+    if target is None:
+        return None
+    for name in target[:2]:
+        bare = name.removeprefix("real:")
+        if bare in LIGHT_MINUTES:
+            return bare
+    return None
+
+
+def refine_episode_instant(chart_at, jd_lo: float, jd_hi: float,
+                           rule: TriggerRule, step_days: float = 1 / 96):
+    """Exact-aspect instant within an episode: minimum |sep - target| on a
+    15-minute grid (handles both crossings and grazing approaches)."""
+    target = aspect_target(rule)
+    if target is None:
+        return None
+    name_a, name_b, angle, _ = target
+
+    def gap_at(jd: float) -> float:
+        result = chart_at(jd)
+        return abs(_arc_distance(_lon(result, name_a), _lon(result, name_b)) - angle)
+
+    def scan(lo: float, hi: float, step: float):
+        best = None
+        jd = lo
+        while jd <= hi:
+            gap = gap_at(jd)
+            if best is None or gap < best[0]:
+                best = (gap, jd)
+            jd += step
+        return best
+
+    coarse = scan(jd_lo, jd_hi, step_days)
+    if coarse is None:
+        return None
+    # Second stage: one-minute resolution around the coarse minimum, so the
+    # located longitude is good to ~0.1 deg (15 deg/hour of Earth rotation).
+    fine = scan(coarse[1] - step_days, coarse[1] + step_days, 1 / 1440)
+    return fine[1]
+
+
 def load_rules(path: str) -> list[TriggerRule]:
     with open(path, "rb") as fh:
         data = tomllib.load(fh)

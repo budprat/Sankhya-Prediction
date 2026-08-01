@@ -82,6 +82,38 @@ def test_mined_rules_load_and_trine_works():
     assert evaluate_rule(r, rules["mined-real-uranus-sun-trine"]).fired
 
 
+def test_acting_body_and_aspect_target():
+    from astgraf.triggers import acting_body, aspect_target, load_rules
+    rules = {r.name: r for r in load_rules("mined-triggers.toml")}
+    assert acting_body(rules["mined-real-uranus-sun-trine"]) == "Uranus"
+    assert acting_body(rules["mined-real-neptune-mercury-opp"]) == "Neptune"
+    a, b, target, orb = aspect_target(rules["mined-real-uranus-sun-trine"])
+    assert (a, b, target) == ("real:Uranus", "Sun", 120.0)
+    doctrine = {r.name: r for r in load_rules("doctrine-triggers.toml")}
+    assert acting_body(doctrine["chatur-vyuham"]) == "Saturn"
+    assert acting_body(doctrine["band-trigger"]) is None  # cluster: no light-time body
+
+
+def test_rules_cli_emits_exact_instant_and_spot(tmp_path):
+    from astgraf.bands_cli import main
+    import csv as _csv
+    rc = main([
+        "--start", "2026-10-10", "--days", "12",
+        "--rules", "mined-triggers.toml",
+        "--out", str(tmp_path / "w"),
+    ])
+    assert rc == 0
+    with open(tmp_path / "w" / "rules_episodes.csv", newline="") as fh:
+        rows = list(_csv.DictReader(fh))
+    trine = [r for r in rows if r["rule"] == "mined-real-uranus-sun-trine"]
+    assert trine, "the Oct 2026 real-Uranus trine Sun window must fire"
+    e = trine[0]
+    assert e["exact_instant"].startswith("2026-10-16")
+    assert e["acting"] == "Uranus"
+    assert float(e["spot_lon_east"]) == pytest.approx(-138.8, abs=0.5)
+    assert float(e["spot_lat_north"]) == pytest.approx(21.0, abs=0.2)
+
+
 def test_real_prefix_resolves_offsets():
     r = make_result({"Neptune": 339.5, "Ketu": 8.6})
     rule = TriggerRule(name="rn", conditions=[
