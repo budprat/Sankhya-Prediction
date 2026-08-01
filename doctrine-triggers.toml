@@ -1,0 +1,40 @@
+# NU's taught trigger patterns as declarative rules — extend this file to scale
+# the system with new position inputs; no code changes needed.
+# Body names take a "real:" prefix for doctrinal ahead-positions (Ura/Nep).
+
+[[rule]]
+name = "chatur-vyuham"
+description = "Fourfold array: Sun-Saturn x Jupiter-Neptune oppositions crossing at 90; nodes lock escalates"
+conditions = [
+  { type = "opposition", bodies = ["Sun", "Saturn"], orb = 3.0 },
+  { type = "opposition", bodies = ["Jupiter", "Neptune"], orb = 3.0 },
+  { type = "axis_cross", axes = [["Sun", "Saturn"], ["Jupiter", "Neptune"]], angle = 90.0, orb = 5.0 },
+]
+escalate = [
+  { type = "axis_cross", axes = [["Rahu", "Ketu"], ["Jupiter", "Neptune"]], angle = 0.0, orb = 5.0 },
+]
+
+[[rule]]
+name = "band-trigger"
+description = "Predict.pdf: Moon+Ketu+Mars within one 28-band span (proximity reading); giants escalate"
+conditions = [
+  { type = "cluster", bodies = ["Moon", "Ketu", "Mars"], max_spread = 12.857142857142858 },
+]
+escalate = [
+  { type = "cluster", bodies = ["Moon", "Ketu", "Mars", "Uranus"], max_spread = 25.714285714285715 },
+]
+
+[[rule]]
+name = "neptune-on-ketu"
+description = "Giant at node, observed positions (Hyderabad 2016-09: sep 1.15)"
+conditions = [
+  { type = "conjunction", bodies = ["Neptune", "Ketu"], orb = 2.0 },
+]
+
+[[rule]]
+name = "nepal-double"
+description = "Mathcad-QUAKE: real-Neptune on Ketu AND real-Uranus on the Sun simultaneously"
+conditions = [
+  { type = "conjunction", bodies = ["real:Neptune", "Ketu"], orb = 1.5 },
+  { type = "conjunction", bodies = ["real:Uranus", "Sun"], orb = 1.5 },
+]

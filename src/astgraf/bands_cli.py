@@ -40,6 +40,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--step-hours", type=float, default=None,
                    help="sweep step; defaults to 12h/1h/0.2h for levels 0/1/2 "
                         "(must resolve the Moon's dwell in one division)")
+    p.add_argument("--rules", default=None, metavar="FILE.toml",
+                   help="sweep every declarative trigger rule in the file "
+                        "(see doctrine-triggers.toml) instead of built-in modes")
     p.add_argument("--vyuha", action="store_true",
                    help="detect Chatur Vyuham instead of band triggers: Sun-Saturn "
                         "and Jupiter-Neptune/Uranus oppositions crossing at 90 deg, "
@@ -63,6 +66,8 @@ def main(argv: list[str] | None = None) -> int:
     steps = int(args.days * 24 / step_hours)
     step_days = step_hours / 24.0
 
+    if args.rules:
+        return run_rules(args, start, steps, step_hours, step_days)
     if args.vyuha:
         return run_vyuha(args, start, steps, step_hours, step_days)
 
@@ -131,6 +136,62 @@ def main(argv: list[str] | None = None) -> int:
               f"trigger episode (±{args.window_days:g}d)")
         print(f"  trigger-day fraction {summary['trigger_day_fraction']}, "
               f"expected hits by chance ≈ {summary['expected_hits_by_chance']}")
+    return 0
+
+
+class _Span:
+    def __init__(self, jd, label, level):
+        self.start_jd = jd
+        self.end_jd = jd
+        self.start_label = label
+        self.end_label = label
+        self.level = level
+
+
+def run_rules(args, start, steps, step_hours, step_days) -> int:
+    from .triggers import evaluate_rule, load_rules
+    rules = load_rules(args.rules)
+    spans: dict[str, list[_Span]] = {r.name: [] for r in rules}
+    for k in range(steps):
+        result = compute_raw(start.year, start.month, start.day,
+                             k * step_hours, **SITE_FREE)
+        label = label_for_jd(result.jd)
+        for rule in rules:
+            state = evaluate_rule(result, rule)
+            if not state.fired:
+                continue
+            existing = spans[rule.name]
+            if existing and result.jd - existing[-1].end_jd <= step_days * 1.5:
+                existing[-1].end_jd = result.jd
+                existing[-1].end_label = label
+                if state.level == "catastrophic":
+                    existing[-1].level = "catastrophic"
+            else:
+                existing.append(_Span(result.jd, label, state.level))
+
+    out = Path(args.out)
+    out.mkdir(parents=True, exist_ok=True)
+    with open(out / "rules_episodes.csv", "w", newline="") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(["rule", "start", "end", "level"])
+        for name, episodes in spans.items():
+            for e in episodes:
+                writer.writerow([name, e.start_label, e.end_label, e.level])
+
+    print(f"astgraf-bands --rules: {steps} samples ({args.start} +{args.days}d @ "
+          f"{step_hours:g}h), {len(rules)} rules")
+    for name, episodes in spans.items():
+        print(f"  {name}: {len(episodes)} episodes")
+        for e in episodes[:8]:
+            print(f"    {e.start_label} -> {e.end_label}  {e.level}")
+
+    if args.catalog:
+        events = load_catalog(args.catalog)
+        for name, episodes in spans.items():
+            _, summary = score_events(episodes, events, args.window_days,
+                                      start, start + dt.timedelta(days=args.days))
+            print(f"  score[{name}]: {summary['hits']}/{summary['events']} hits, "
+                  f"expected by chance ≈ {summary['expected_hits_by_chance']}")
     return 0
 
 

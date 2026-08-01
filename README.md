@@ -113,6 +113,17 @@ moment (`scope/event_NNN_*.svg`) — the geometry at the instant of the crossing
 not the nearest sample. Event wheels cap at 100 with a printed notice; narrow
 with `--aspect-bodies` for full coverage.
 
+## Trigger rules — how the system scales (`--rules doctrine-triggers.toml`)
+
+Every trigger pattern is DATA, not code: `doctrine-triggers.toml` holds the
+taught patterns (Chatur Vyuham, the band trigger, Neptune-on-Ketu, the Nepal
+double) as declarative rules built from seven primitives — conjunction,
+opposition, square, axis_cross, cluster, same_band, in_band — with `real:`
+prefixes for doctrinal ahead-positions and `escalate` blocks for severity.
+New inputs about what positions trigger events become a few lines in the
+file; `astgraf-bands --rules FILE` sweeps and scores every rule uniformly.
+The theory itself is documented in FRAMEWORK.md.
+
 ## The 252-division horary grid (`--horary`)
 
 NU's Sankhyan prediction grid: **28 equal nakshatra divisions** (star names are

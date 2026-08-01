@@ -40,6 +40,21 @@ def test_sweep_and_catalog_scoring(tmp_path):
     assert (tmp_path / "scan" / "episodes.csv").exists()
 
 
+def test_rules_cli_sweeps_doctrine_file(tmp_path):
+    rc = main([
+        "--start", "2016-05-25", "--days", "15",
+        "--rules", "doctrine-triggers.toml",
+        "--out", str(tmp_path / "rules"),
+    ])
+    assert rc == 0
+    with open(tmp_path / "rules" / "rules_episodes.csv", newline="") as fh:
+        episodes = list(csv.DictReader(fh))
+    vyuha = [e for e in episodes if e["rule"] == "chatur-vyuham"]
+    assert vyuha, "the June 2016 array must fire from the rules file"
+    assert vyuha[0]["level"] == "catastrophic"
+    assert vyuha[0]["start"] <= "2016-06-03" <= vyuha[0]["end"]
+
+
 def test_vyuha_cli_finds_june_2016(tmp_path):
     rc = main([
         "--start", "2016-05-15", "--days", "31", "--vyuha",
