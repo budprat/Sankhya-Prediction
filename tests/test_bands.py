@@ -73,6 +73,58 @@ def test_level2_is_the_pdf_one_sixty_third():
     assert division_of(0.5, level=2) == 3
 
 
+def test_vyuha_fires_on_synthetic_grand_cross():
+    from astgraf.bands import vyuha_state
+    shape = make_result(scatter(Sun=73.0, Saturn=253.0, Jupiter=163.0,
+                                Neptune=343.0, Rahu=166.0, Ketu=346.0))
+    state = vyuha_state(shape)
+    assert state.fired and state.level == "vyuha+nodes"
+    assert state.partner == "Neptune"
+    assert state.cross_deg == pytest.approx(90.0)
+    assert state.node_align_deg == pytest.approx(3.0)
+
+
+def test_vyuha_needs_both_axes_and_the_cross():
+    from astgraf.bands import vyuha_state
+    no_axis_b = make_result(scatter(Sun=73.0, Saturn=253.0, Jupiter=163.0,
+                                    Neptune=320.0))
+    assert not vyuha_state(no_axis_b).fired
+    no_cross = make_result(scatter(Sun=93.0, Saturn=273.0, Jupiter=163.0,
+                                   Neptune=343.0))
+    assert not vyuha_state(no_cross).fired  # axes only 70 deg apart
+
+
+def test_vyuha_without_nodes_is_base_level():
+    from astgraf.bands import vyuha_state
+    shape = make_result(scatter(Sun=73.0, Saturn=253.0, Jupiter=163.0,
+                                Neptune=343.0, Rahu=120.0, Ketu=300.0))
+    state = vyuha_state(shape)
+    assert state.fired and state.level == "vyuha"
+
+
+def test_vyuha_real_engine_finds_june_2016():
+    # NU's ground truth: the Chatur Vyuham of end-May/June 2016.
+    from astgraf.bands import vyuha_state
+    from astgraf.ephemeris import compute_raw
+    june3 = compute_raw(2016, 6, 3, 12.0, 0.0, 0.0, 0.0, True, True)
+    state = vyuha_state(june3)
+    assert state.fired and state.level == "vyuha+nodes"
+    assert state.partner == "Neptune"
+    assert abs(state.cross_deg - 90) < 2
+    assert state.saturn_distance > 0
+    march = compute_raw(2016, 3, 1, 12.0, 0.0, 0.0, 0.0, True, True)
+    assert not vyuha_state(march).fired
+
+
+def test_engine_exposes_geocentric_distances():
+    from astgraf.ephemeris import compute_raw
+    r = compute_raw(2016, 6, 3, 12.0, 0.0, 0.0, 0.0, True, True)
+    jup = r.positions["Jupiter"].distance
+    sat = r.positions["Saturn"].distance
+    nep = r.positions["Neptune"].distance
+    assert 0 < jup < sat < nep  # scaled units; ordering is what matters
+
+
 def test_proximity_spread_math():
     from astgraf.bands import circular_spread
     assert circular_spread([10.0, 11.0, 12.0]) == pytest.approx(2.0)

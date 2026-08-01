@@ -66,6 +66,92 @@ def band_table(result: ChartResult, level: int = 0) -> dict[int, list[str]]:
     return table
 
 
+class VyuhaState(BaseModel):
+    """Chatur Vyuham (NU, 2026-08-01): two oppositions crossing at 90 deg —
+    Sun-Saturn x Jupiter-Neptune/Uranus — with the nodal axis locked into the
+    cross as the aggravator, and Saturn's closeness as the final weight."""
+    fired: bool
+    level: str                    # none | vyuha | vyuha+nodes
+    partner: str = ""             # Neptune or Uranus on Jupiter's axis
+    sun_saturn_sep: float = 0.0
+    partner_sep: float = 0.0
+    cross_deg: float = 0.0
+    node_align_deg: float = 0.0   # node axis to nearest arm (mod 90 alignment)
+    saturn_distance: float = 0.0
+
+
+class VyuhaEpisode(BaseModel):
+    start_jd: float
+    end_jd: float
+    start_label: str
+    end_label: str
+    level: str
+    partner: str
+    best_cross_deg: float         # closest approach to a perfect 90
+    min_saturn_distance: float
+
+
+def axis_angle(a: float, b: float) -> float:
+    """Angle between two axes (each defined mod 180)."""
+    d = abs(a - b) % 180.0
+    return min(d, 180.0 - d)
+
+
+def vyuha_state(result: ChartResult, orb_opp: float = 3.0, orb_cross: float = 5.0,
+                orb_node: float = 5.0) -> VyuhaState:
+    p = {name: result.positions[name].longitude for name in result.positions}
+    saturn_distance = result.positions["Saturn"].distance if "Saturn" in result.positions else 0.0
+    sun_saturn = _arc_distance(p["Sun"], p["Saturn"])
+    if abs(sun_saturn - 180.0) > orb_opp:
+        return VyuhaState(fired=False, level="none", saturn_distance=saturn_distance)
+    partner = ""
+    partner_sep = 0.0
+    for candidate in ("Neptune", "Uranus"):
+        sep_c = _arc_distance(p["Jupiter"], p[candidate])
+        if abs(sep_c - 180.0) <= orb_opp:
+            partner, partner_sep = candidate, sep_c
+            break
+    if not partner:
+        return VyuhaState(fired=False, level="none", saturn_distance=saturn_distance)
+    cross = axis_angle(p["Sun"], p["Jupiter"])
+    if abs(cross - 90.0) > orb_cross:
+        return VyuhaState(fired=False, level="none", saturn_distance=saturn_distance)
+    node_align = min(axis_angle(p["Rahu"], p["Sun"]), axis_angle(p["Rahu"], p["Jupiter"]))
+    nodes_locked = node_align <= orb_node
+    return VyuhaState(
+        fired=True, level="vyuha+nodes" if nodes_locked else "vyuha",
+        partner=partner, sun_saturn_sep=sun_saturn, partner_sep=partner_sep,
+        cross_deg=cross, node_align_deg=node_align, saturn_distance=saturn_distance)
+
+
+def find_vyuha_episodes(samples: list[tuple[float, str, VyuhaState]],
+                        step_days: float) -> list[VyuhaEpisode]:
+    episodes: list[VyuhaEpisode] = []
+    current: VyuhaEpisode | None = None
+    for jd, label, state in samples:
+        if state.fired:
+            if current is not None and jd - current.end_jd <= step_days * 1.5:
+                current.end_jd = jd
+                current.end_label = label
+                if state.level == "vyuha+nodes":
+                    current.level = "vyuha+nodes"
+                if abs(state.cross_deg - 90) < abs(current.best_cross_deg - 90):
+                    current.best_cross_deg = state.cross_deg
+                current.min_saturn_distance = min(current.min_saturn_distance,
+                                                  state.saturn_distance)
+            else:
+                if current is not None:
+                    episodes.append(current)
+                current = VyuhaEpisode(start_jd=jd, end_jd=jd, start_label=label,
+                                       end_label=label, level=state.level,
+                                       partner=state.partner,
+                                       best_cross_deg=state.cross_deg,
+                                       min_saturn_distance=state.saturn_distance)
+    if current is not None:
+        episodes.append(current)
+    return episodes
+
+
 def circular_spread(longitudes: list[float]) -> float:
     """Smallest arc containing all points: 360 minus the largest gap."""
     angles = sorted(lon % 360.0 for lon in longitudes)

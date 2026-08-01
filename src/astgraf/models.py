@@ -96,6 +96,9 @@ class BodyPosition(BaseModel):
     # Ecliptic latitude in degrees (planets only; 0 for Sun/Moon/nodes/Ascendant,
     # which the BASIC suite never computes it for). Used by the event-locator.
     ecliptic_latitude: float = 0.0
+    # Geocentric distance in the engine's scaled units (ratios are meaningful,
+    # absolute values are not — the suite scales AU by pi/180). 0 when undefined.
+    distance: float = 0.0
 
 
 class PeriodRow(BaseModel):

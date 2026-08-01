@@ -6,8 +6,8 @@ import csv
 import datetime as dt
 from pathlib import Path
 
-from .bands import (BAND_BODIES, find_episodes, parse_event_window,
-                    score_events, trigger_state)
+from .bands import (BAND_BODIES, find_episodes, find_vyuha_episodes,
+                    parse_event_window, score_events, trigger_state, vyuha_state)
 from .ephemeris import compute_raw
 from .grid import label_for_jd
 from .locator import locate
@@ -40,6 +40,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--step-hours", type=float, default=None,
                    help="sweep step; defaults to 12h/1h/0.2h for levels 0/1/2 "
                         "(must resolve the Moon's dwell in one division)")
+    p.add_argument("--vyuha", action="store_true",
+                   help="detect Chatur Vyuham instead of band triggers: Sun-Saturn "
+                        "and Jupiter-Neptune/Uranus oppositions crossing at 90 deg, "
+                        "nodal-axis lock as aggravator (daily steps suffice)")
     p.add_argument("--proximity", action="store_true",
                    help="fire on the trio's circular spread <= the level span, "
                         "grid-free (NU ruling); giants escalate within one span")
@@ -52,9 +56,15 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     start = dt.date.fromisoformat(args.start)
-    step_hours = args.step_hours or {0: 12.0, 1: 1.0, 2: 0.2}[args.level]
+    if args.vyuha:
+        step_hours = args.step_hours or 24.0
+    else:
+        step_hours = args.step_hours or {0: 12.0, 1: 1.0, 2: 0.2}[args.level]
     steps = int(args.days * 24 / step_hours)
     step_days = step_hours / 24.0
+
+    if args.vyuha:
+        return run_vyuha(args, start, steps, step_hours, step_days)
 
     samples = []
     results = {}
@@ -121,6 +131,62 @@ def main(argv: list[str] | None = None) -> int:
               f"trigger episode (±{args.window_days:g}d)")
         print(f"  trigger-day fraction {summary['trigger_day_fraction']}, "
               f"expected hits by chance ≈ {summary['expected_hits_by_chance']}")
+    return 0
+
+
+def run_vyuha(args, start, steps, step_hours, step_days) -> int:
+    samples = []
+    for k in range(steps):
+        result = compute_raw(start.year, start.month, start.day,
+                             k * step_hours, **SITE_FREE)
+        samples.append((result.jd, label_for_jd(result.jd), vyuha_state(result)))
+
+    out = Path(args.out)
+    out.mkdir(parents=True, exist_ok=True)
+    with open(out / "vyuha.csv", "w", newline="") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(["jd", "label", "level", "partner", "sun_saturn_sep",
+                         "partner_sep", "cross_deg", "node_align_deg",
+                         "saturn_distance"])
+        for jd, label, s in samples:
+            writer.writerow([f"{jd:.5f}", label, s.level, s.partner,
+                             f"{s.sun_saturn_sep:.3f}", f"{s.partner_sep:.3f}",
+                             f"{s.cross_deg:.3f}", f"{s.node_align_deg:.3f}",
+                             f"{s.saturn_distance:.6f}"])
+
+    episodes = find_vyuha_episodes(samples, step_days=step_days)
+    with open(out / "vyuha_episodes.csv", "w", newline="") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(["start", "end", "level", "partner", "best_cross_deg",
+                         "min_saturn_distance"])
+        for e in episodes:
+            writer.writerow([e.start_label, e.end_label, e.level, e.partner,
+                             f"{e.best_cross_deg:.3f}",
+                             f"{e.min_saturn_distance:.6f}"])
+
+    fired = sum(1 for _, _, s in samples if s.fired)
+    print(f"astgraf-bands --vyuha: {steps} samples ({args.start} +{args.days}d @ "
+          f"{step_hours:g}h), {fired} fired, {len(episodes)} episodes")
+    for e in episodes:
+        print(f"  {e.start_label} -> {e.end_label}  {e.level}  Jupiter opp "
+              f"{e.partner}, best cross {e.best_cross_deg:.2f} deg")
+
+    if args.catalog:
+        events = load_catalog(args.catalog)
+        rows, summary = score_events(episodes, events, args.window_days,
+                                     start, start + dt.timedelta(days=args.days))
+        with open(out / "catalog_score.csv", "w", newline="") as fh:
+            writer = csv.writer(fh)
+            writer.writerow(["place", "window_start", "window_end", "precision",
+                             "hit", "p_chance"])
+            for r in rows:
+                w = r["window"]
+                writer.writerow([r["place"], w[0], w[1], r["precision"],
+                                 r["hit"], r["p_chance"]])
+        print(f"  catalog: {summary['events']} events, {summary['hits']} hit "
+              f"(±{args.window_days:g}d); trigger-day fraction "
+              f"{summary['trigger_day_fraction']}, expected by chance ≈ "
+              f"{summary['expected_hits_by_chance']}")
     return 0
 
 

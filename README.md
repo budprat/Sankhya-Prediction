@@ -68,6 +68,18 @@ never fired in grid mode). A giant escalates when within one span of the
 cluster; the band is named from the Moon. The 30-year level-1 proximity
 census: 1996-04-17, 2003-01-27, 2004-11-11, 2018-09-20.
 
+## Chatur Vyuham detector (`astgraf-bands --vyuha`)
+
+NU's fourfold array — the most dangerous stellar constraint: Sun–Saturn and
+Jupiter–Neptune/Uranus oppositions crossing at 90°, with the Rahu–Ketu axis
+locked into the cross as the aggravator. Daily steps suffice (slow bodies).
+Writes `vyuha.csv` (per-day separations, cross angle, node alignment, Saturn
+distance) and `vyuha_episodes.csv`. **Census 1900–2026: the full array with
+nodes fired exactly once — 2016-06-01 → 06-06, Jupiter opp Neptune, best
+cross 89.56°** — the very window NU identified from memory. Saturn's
+geocentric distance that week ranked at the 26th percentile (closest days in
+the sweep: the perihelic oppositions of Dec 1914 / Dec 1973).
+
 ## Event locator (`--locate`)
 
 NU's confirmed light-time rule: a crossing acts instantly in the substratum;

@@ -192,14 +192,16 @@ def compute_raw(year: int, month: int, day: float, local_hours: float,
             m1, c1_rad = rv, c_rad
             x1, y1, z1 = x, y, z
             sun = _norm360(_deg(c1_rad) + 180 - nam)
-            positions["Sun"] = BodyPosition(name="Sun", longitude=sun, retrograde=False)
+            positions["Sun"] = BodyPosition(name="Sun", longitude=sun, retrograde=False,
+                                            distance=rv)
         else:
-            xg, yg = x - x1, y - y1
+            xg, yg, zg = x - x1, y - y1, z - z1
             _, geo = _co950(xg, yg)
             c_geo = _norm360(_deg(geo) - nam)
-            beta = _deg(math.atan((z - z1) / math.sqrt(xg * xg + yg * yg)))
+            beta = _deg(math.atan(zg / math.sqrt(xg * xg + yg * yg)))
             positions[name] = BodyPosition(name=name, longitude=c_geo, retrograde=retro,
-                                           ecliptic_latitude=beta)
+                                           ecliptic_latitude=beta,
+                                           distance=math.sqrt(xg * xg + yg * yg + zg * zg))
 
     # Truncated Brown lunar theory (arcseconds), then node and Ketu.
     ll = 973563 + 1732564379 * t - 4 * t * t

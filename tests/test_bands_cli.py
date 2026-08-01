@@ -40,6 +40,22 @@ def test_sweep_and_catalog_scoring(tmp_path):
     assert (tmp_path / "scan" / "episodes.csv").exists()
 
 
+def test_vyuha_cli_finds_june_2016(tmp_path):
+    rc = main([
+        "--start", "2016-05-15", "--days", "31", "--vyuha",
+        "--out", str(tmp_path / "vyuha"),
+    ])
+    assert rc == 0
+    with open(tmp_path / "vyuha" / "vyuha_episodes.csv", newline="") as fh:
+        episodes = list(csv.DictReader(fh))
+    assert len(episodes) == 1
+    e = episodes[0]
+    assert e["level"] == "vyuha+nodes"
+    assert e["partner"] == "Neptune"
+    assert e["start"] <= "2016-06-03" <= e["end"]
+    assert abs(float(e["best_cross_deg"]) - 90) < 1
+
+
 def test_level1_defaults_to_hourly_steps(tmp_path):
     rc = main([
         "--start", "2014-04-10", "--days", "2", "--level", "1",
