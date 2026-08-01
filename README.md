@@ -7,6 +7,10 @@ clock. Built on the family BASIC suite's transit-graph pair, ported verbatim:
 (SCREEN 12 cosine plot). Same computation core, modern I/O. Natal chart
 reading stays in the SankhyaHoroscope app; this tool predicts.
 
+Documents: theory in `FRAMEWORK.md` · forward windows in `WATCHLIST.md` ·
+trigger rules in `doctrine-triggers.toml` / `mined-triggers.toml` ·
+training corpus in `data/` · decision ledger in `.claude/tasks/ASTGRAF_TOOL.md`.
+
 ## Run
 
 ```bash
@@ -109,10 +113,14 @@ the sweep: the perihelic oppositions of Dec 1914 / Dec 1973).
 NU's confirmed light-time rule: a crossing acts instantly in the substratum;
 the marker arrives at light speed. At each refined aspect-event instant, take
 the planet's culmination meridian (where its right ascension is on the local
-meridian) and rotate **west by light-time × 15°/hour** — Jupiter 40 min → 10°,
-Saturn 80 → 20°, Uranus 150 → 37.5°, Neptune 240 → 60°; latitude from the
-planet's declination. `locations.csv` gives the spot for every event involving
-those four planets.
+meridian) and rotate **west by light-time × 15°/hour**; latitude from the
+planet's declination. Rule v2 (2026-08-02): the light-time is computed from
+the planet's **actual distance at the instant** (engine geocentric distance,
+8.3167 min/AU) — NU's fixed minutes (Jup 40, Sat 80, Ura 150, Nep 240) remain
+the nearest-position anchors and the fallback. At nearest position the surface
+displacement is ~1000 km (Jupiter), ~2000 (Saturn), ~4000 (Uranus); NU's
+Neptune 8000 vs the physical ~6700–7200 km is a recorded tension.
+`locations.csv` gives the spot for every event involving those four planets.
 
 ## Precession clock (`--precession YEAR`)
 

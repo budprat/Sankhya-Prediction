@@ -106,6 +106,10 @@ window NU named from memory).
 | Real positions | `real_longitude` (Ura/Nep only) | Nepal chart: real-Nep→Ketu 0.34°, real-Ura→Sun 0.7° |
 | Event location | `locator.py`, `--locate` | rule confirmed by NU; 12-spot archive check: 0 hits, 1 near-miss (honest negative) |
 | Aspect geometry / scope | `aspects.py`, `scope.py`, `--scope` | Ura/Nep/Ketu 2000–2016 event set |
+| Trigger rules as data | `triggers.py`, `doctrine-triggers.toml`, `mined-triggers.toml`, `--rules` | all doctrine rules fire on their ground-truth charts |
+| Inverse learning (signatures/mining) | `signatures.py`, `scripts/mine_usgs.py`, `data/usgs-m7-1850-2020.csv` | split-half validation; real-position predicates replicate |
+| Forecast register | `WATCHLIST.md` | 15 windows with v2 instants/spots, outcome protocol |
+| Long-cycle families | conjunction rules in `doctrine-triggers.toml` | census: Ura-Nep 167.6 y; Jup-Sat 1881→Krakatoa, 2000→2004 |
 
 ## 5. Open questions (NU's to close)
 
@@ -119,3 +123,15 @@ window NU named from memory).
 5. Sub-lord start convention; the dual ayanamsa reckoning (charts anchored
    294 CE vs epochal Aswini 1996) — implemented as coexisting, unratified.
 6. Vyuha orbs (3°/5°/5° chosen by implementer from the 2016 probe).
+7. The 1000-year Uranus–Neptune records list (NU to share) — the per-cell
+   matrix library's training corpus.
+8. `precess.mcd` (referenced by Secrets of Sankhya; not yet shared).
+
+## 6. Document map
+
+- `FRAMEWORK.md` — this file: the theory and its implementation status.
+- `README.md` — tool-by-tool usage, the 60-period drill, honesty notes.
+- `WATCHLIST.md` — registered forward windows, spots, outcome protocol.
+- `doctrine-triggers.toml` / `mined-triggers.toml` — rules as data (NU's vs mined).
+- `data/usgs-m7-1850-2020.csv` — pinned training corpus.
+- `.claude/tasks/ASTGRAF_TOOL.md` (repo) — decision ledger, every ruling dated.
