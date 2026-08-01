@@ -9,8 +9,9 @@ from pathlib import Path
 
 from .aspects import find_events
 from .ephemeris import BODY_ORDER
-from .grid import build_rows, label_for_jd, make_pos_at_jd
+from .grid import build_rows, label_for_jd, make_chart_at_jd, make_pos_at_jd
 from .horary import find_sub_crossings, horary_position
+from .locator import locate
 from .precession import render_precession_wheel, report_lines
 from .scope import render_scope
 from .models import (ChartMoment, GridSpec, PeriodUnit,
@@ -49,6 +50,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--koch", action="store_true",
                    help="Koch-style Ascendant (real obliquity); default is the equal path")
     p.add_argument("--style", choices=["wrapped", "cosine"], default="wrapped")
+    p.add_argument("--locate", action="store_true",
+                   help="write locations.csv: the light-time event spot for each aspect "
+                        "event involving Jupiter/Saturn/Uranus/Neptune")
     p.add_argument("--precession", type=float, default=None, metavar="YEAR",
                    help="print the 25,739-year precession clock for YEAR and write "
                         "precession_wheel.svg (28-sector wheel with the equinox needle)")
@@ -160,6 +164,37 @@ def main(argv: list[str] | None = None) -> int:
                                  label_for_jd(c.jd)])
         print(f"  horary: {len(rows) * len(BODY_ORDER)} grid rows, "
               f"{len(crossings)} sub crossings")
+
+    if args.locate:
+        if not events:
+            print("  locate: no aspect events (is --no-aspects set?); nothing to locate")
+        else:
+            chart_at = make_chart_at_jd(start)
+            located = []
+            for e in events:
+                result = chart_at(e.jd)
+                for body in (e.body_a, e.body_b):
+                    spot = locate(result, body)
+                    if spot:
+                        located.append((e, spot))
+            with open(out / "locations.csv", "w", newline="") as fh:
+                writer = csv.writer(fh)
+                writer.writerow(["jd", "label", "body_a", "kind", "body_b", "body",
+                                 "light_minutes", "culmination_longitude_east",
+                                 "event_longitude_east", "event_latitude_north"])
+                for e, s in located:
+                    writer.writerow([f"{e.jd:.6f}", e.label, e.body_a, e.kind, e.body_b,
+                                     s.body, s.light_minutes,
+                                     f"{s.culmination_longitude_east:.4f}",
+                                     f"{s.event_longitude_east:.4f}",
+                                     f"{s.event_latitude_north:.4f}"])
+            print(f"  locate: {len(located)} event spots -> {out / 'locations.csv'}")
+            for e, s in located[:6]:
+                ew = "E" if s.event_longitude_east >= 0 else "W"
+                ns = "N" if s.event_latitude_north >= 0 else "S"
+                print(f"    {e.label}  {e.body_a} {e.kind} {e.body_b}: {s.body} spot "
+                      f"{abs(s.event_longitude_east):.2f}{ew} "
+                      f"{abs(s.event_latitude_north):.2f}{ns}")
 
     if args.precession is not None:
         for line in report_lines(args.precession, zero_year=args.precession_zero):

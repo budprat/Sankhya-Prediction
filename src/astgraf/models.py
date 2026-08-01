@@ -93,6 +93,9 @@ class BodyPosition(BaseModel):
     name: str
     longitude: float
     retrograde: bool
+    # Ecliptic latitude in degrees (planets only; 0 for Sun/Moon/nodes/Ascendant,
+    # which the BASIC suite never computes it for). Used by the event-locator.
+    ecliptic_latitude: float = 0.0
 
 
 class PeriodRow(BaseModel):
@@ -112,6 +115,8 @@ class ChartResult(BaseModel):
     positions: dict[str, BodyPosition]
     ayanamsa: float
     jd: float
+    gmst: float = 0.0        # Greenwich mean sidereal time, degrees
+    obliquity: float = 0.0   # real obliquity at the instant, degrees
 
 
 class AspectEvent(BaseModel):

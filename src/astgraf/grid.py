@@ -67,16 +67,24 @@ def build_rows(start: ChartMoment, spec: GridSpec) -> list[PeriodRow]:
     return rows
 
 
-def make_pos_at_jd(start: ChartMoment):
-    """Continuous position function over JD, for aspect refinement."""
-    def pos(jd: float) -> dict[str, float]:
+def make_chart_at_jd(start: ChartMoment):
+    """Continuous full-chart function over JD (locator, refinement)."""
+    def chart(jd: float):
         jdn = math.floor(jd + 0.5)
         year, month, day = jd_to_calendar(jdn)
         ut_hours = (jd + 0.5 - jdn) * 24
         local_hours = ut_hours - start.engine_gmt_hours
-        result = compute_raw(year, month, day, local_hours,
-                             start.engine_gmt_hours, start.engine_longitude,
-                             start.latitude_north, start.sidereal, start.equal_houses,
-                             start.ayanamsa_rate_arcsec, start.ayanamsa_zero_year)
-        return {name: p.longitude for name, p in result.positions.items()}
+        return compute_raw(year, month, day, local_hours,
+                           start.engine_gmt_hours, start.engine_longitude,
+                           start.latitude_north, start.sidereal, start.equal_houses,
+                           start.ayanamsa_rate_arcsec, start.ayanamsa_zero_year)
+    return chart
+
+
+def make_pos_at_jd(start: ChartMoment):
+    """Continuous position function over JD, for aspect refinement."""
+    chart = make_chart_at_jd(start)
+
+    def pos(jd: float) -> dict[str, float]:
+        return {name: p.longitude for name, p in chart(jd).positions.items()}
     return pos

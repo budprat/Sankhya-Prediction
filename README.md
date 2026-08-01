@@ -39,6 +39,16 @@ The default plot is wrapped 0–360° with line breaks at the wrap — no more
 up/down dual-trace ambiguity. SVG is resolution-independent, so output is
 identical on every machine.
 
+## Event locator (`--locate`)
+
+NU's confirmed light-time rule: a crossing acts instantly in the substratum;
+the marker arrives at light speed. At each refined aspect-event instant, take
+the planet's culmination meridian (where its right ascension is on the local
+meridian) and rotate **west by light-time × 15°/hour** — Jupiter 40 min → 10°,
+Saturn 80 → 20°, Uranus 150 → 37.5°, Neptune 240 → 60°; latitude from the
+planet's declination. `locations.csv` gives the spot for every event involving
+those four planets.
+
 ## Precession clock (`--precession YEAR`)
 
 The 25,739-year cycle from Secrets of Sankhya: equinox drift at 50.352″/yr

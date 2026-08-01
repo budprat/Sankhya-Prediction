@@ -144,8 +144,10 @@ def compute_raw(year: int, month: int, day: float, local_hours: float,
     # Local sidereal time -> RA of the east point, less the ayanamsa.
     rg = (23925.836 + 8640184.542 * t + 0.0929 * t * t) / 3600
     rg = (rg + f * 24) / 24
+    gmst = (rg - math.floor(rg)) * 360
     ux = ((rg - math.floor(rg)) * 24) * 15 - engine_longitude
     ra = _rad(_norm360(ux - nam))
+    obliquity_real = 23.45229444 - 0.0130125 * t
 
     # Equal houses run the Ascendant with OB=0, exactly as the BASIC E-path does.
     ob_house = 0.0 if equal_houses else _rad(23.45229444 - 0.0130125 * t)
@@ -192,9 +194,12 @@ def compute_raw(year: int, month: int, day: float, local_hours: float,
             sun = _norm360(_deg(c1_rad) + 180 - nam)
             positions["Sun"] = BodyPosition(name="Sun", longitude=sun, retrograde=False)
         else:
-            _, geo = _co950(x - x1, y - y1)
+            xg, yg = x - x1, y - y1
+            _, geo = _co950(xg, yg)
             c_geo = _norm360(_deg(geo) - nam)
-            positions[name] = BodyPosition(name=name, longitude=c_geo, retrograde=retro)
+            beta = _deg(math.atan((z - z1) / math.sqrt(xg * xg + yg * yg)))
+            positions[name] = BodyPosition(name=name, longitude=c_geo, retrograde=retro,
+                                           ecliptic_latitude=beta)
 
     # Truncated Brown lunar theory (arcseconds), then node and Ketu.
     ll = 973563 + 1732564379 * t - 4 * t * t
@@ -230,7 +235,8 @@ def compute_raw(year: int, month: int, day: float, local_hours: float,
     positions["Ascendant"] = BodyPosition(name="Ascendant", longitude=asc, retrograde=False)
 
     ordered = {name: positions[name] for name in BODY_ORDER}
-    return ChartResult(positions=ordered, ayanamsa=nam, jd=j + f - 0.5)
+    return ChartResult(positions=ordered, ayanamsa=nam, jd=j + f - 0.5,
+                       gmst=gmst, obliquity=obliquity_real)
 
 
 def compute_chart(moment: ChartMoment, hour_offset: float = 0.0) -> ChartResult:

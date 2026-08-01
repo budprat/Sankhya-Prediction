@@ -5,6 +5,7 @@ import csv
 import json
 
 import defusedxml.ElementTree as ET
+import pytest
 
 from astgraf.cli import main
 
@@ -67,6 +68,28 @@ def test_aspect_bodies_rejects_unknown_name(tmp_path):
     import pytest
     with pytest.raises(SystemExit):
         main(["--year", "2000", "--aspect-bodies", "Vulcan", "--out", str(tmp_path)])
+
+
+def test_locate_writes_event_spots(tmp_path):
+    rc = main([
+        "--year", "2000", "--month", "1", "--day", "1", "--time", "12:00",
+        "--unit", "year", "--step", "1", "--count", "17",
+        "--utc-offset", "+05:30", "--lon", "76:57E", "--lat", "28:48N",
+        "--aspect-bodies", "Uranus,Neptune,Ketu", "--locate",
+        "--out", str(tmp_path),
+    ])
+    assert rc == 0
+    with open(tmp_path / "locations.csv", newline="") as fh:
+        spots = list(csv.DictReader(fh))
+    assert spots, "Uranus/Neptune events must yield located spots"
+    for s in spots:
+        assert s["body"] in ("Uranus", "Neptune")   # Ketu has no light-time entry
+        assert -180 < float(s["event_longitude_east"]) <= 180
+        assert -90 <= float(s["event_latitude_north"]) <= 90
+        rotation = {"Uranus": 37.5, "Neptune": 60.0}[s["body"]]
+        delta = (float(s["culmination_longitude_east"])
+                 - float(s["event_longitude_east"])) % 360
+        assert delta == pytest.approx(rotation, abs=1e-6)
 
 
 def test_precession_report_and_wheel(tmp_path, capsys):
