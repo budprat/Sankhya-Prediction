@@ -1,5 +1,9 @@
 # Forecast Watch-List — registered 2026-08-02
 
+Outcome grading is automated: `uv run astgraf-outcomes --episodes
+out/mined-forward/rules_episodes.csv` fills the quake channel objectively
+after each window passes (run 2026-08-02: 9/9 pending).
+
 Falsifiable forward windows from the trigger rules, each with its exact-aspect
 instant (refined to the minute) and located spot. Protocol per Predict.pdf:
 after each window passes, do the assiduous search of event records, log the

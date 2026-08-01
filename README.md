@@ -171,6 +171,23 @@ Conventions (stated for correction): division *n* takes Vimshottari lord
 sub-subs likewise from the sub's lord. `--ayanamsa-rate 50.35` switches to NU's
 50.35″/yr reckoning (`--ayanamsa-zero` sets its zero year, default 294).
 
+## The matrix, the atlas, and the outcome logger
+
+- **`astgraf-matrix --signatures out/signatures-m7`** — the Predict.pdf 28×11
+  matrix as a library: per-cell event rates vs controls from the signature
+  CSVs, rendered as a heatmap SVG with per-cell counts (`matrix.svg`,
+  `matrix.csv`). Outer-planet columns are baseline-confounded (slow bands) —
+  read the inner-body columns first.
+- **`astgraf-atlas`** — one SVG timeline: 52 equinox-sector passages over
+  48,000 years with the doctrine epochs (Punarvasu zeros, Magha flood epoch,
+  Kritika 158 CE, Aswini 1996), plus the modern panel of Jup–Sat conjunction
+  ticks and Ura–Nep clusters with the Krakatoa/2004/2016 returns.
+- **`astgraf-outcomes --episodes .../rules_episodes.csv`** — the
+  assiduous-search step automated: for every passed watch window, query the
+  USGS catalog (±window, radius around the spot) and log hit/clear/pending
+  to `outcomes.csv`. Future windows never touch the network. The news
+  channel joins when firecrawl has credits.
+
 ## Honesty notes
 
 - The ephemeris is the ASTROLOG.BAS/ASTGRAF.BAS canon verbatim, including its
