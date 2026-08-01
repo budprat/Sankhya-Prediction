@@ -90,6 +90,27 @@ def test_all_longitudes_normalized(chart):
         assert 0 <= p.longitude < 360, name
 
 
+def test_quake_pdf_tropical_koch_oracle():
+    """QUAKE.pdf: the suite's own tropical (ayanamsa 0) Koch-path printout of the
+    2015 Nepal earthquake chart — the only canon oracle exercising the W/W path."""
+    moment = ChartMoment(year=2015, month=4, day=25, hour=11, minute=40,
+                         utc_offset_hours=5.5, longitude_east=86.0,
+                         latitude_north=28.0, sidereal=False, equal_houses=False)
+    chart = compute_chart(moment)
+    expected = {
+        "Ascendant": 129.0, "Sun": 34 + 44 / 60, "Moon": 116 + 22 / 60,
+        "Mars": 48.0 - 2 / 60, "Mercury": 50 + 35 / 60, "Jupiter": 133.0,
+        "Venus": 75 + 44 / 60, "Saturn": 243 + 33 / 60, "Rahu": 188 + 53 / 60,
+        "Ketu": 8 + 53 / 60, "Uranus": 17 + 34 / 60, "Neptune": 339 + 27 / 60,
+        "Pluto": 285 + 56 / 60,
+    }
+    for body, value in expected.items():
+        assert chart.positions[body].longitude == pytest.approx(value, abs=0.03), body
+    assert chart.positions["Saturn"].retrograde
+    assert chart.positions["Pluto"].retrograde
+    assert not chart.positions["Jupiter"].retrograde
+
+
 def test_tropical_differs_by_exactly_the_ayanamsa():
     tropical = compute_chart(PRATEEK.model_copy(update={"sidereal": False}))
     sidereal = compute_chart(PRATEEK)

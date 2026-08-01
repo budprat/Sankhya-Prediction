@@ -73,7 +73,17 @@ def test_level2_is_the_pdf_one_sixty_third():
     assert division_of(0.5, level=2) == 3
 
 
-def test_vyuha_fires_on_synthetic_grand_cross():
+def test_real_longitude_applies_doctrine_offsets():
+    from astgraf.bands import real_longitude
+    from astgraf.ephemeris import compute_raw
+    # The Nepal-quake chart (QUAKE.pdf, tropical): real-Neptune lands on Ketu,
+    # real-Uranus on the Sun, per Mathcad-QUAKE.pdf.
+    r = compute_raw(2015, 4, 25, 11 + 40 / 60, -5.5, -86.0, 28.0, False, False)
+    ketu = r.positions["Ketu"].longitude
+    sun = r.positions["Sun"].longitude
+    assert abs(real_longitude(r, "Neptune") - ketu) < 0.5
+    assert abs(real_longitude(r, "Uranus") - sun) < 0.8
+    assert real_longitude(r, "Moon") == r.positions["Moon"].longitude
     from astgraf.bands import vyuha_state
     shape = make_result(scatter(Sun=73.0, Saturn=253.0, Jupiter=163.0,
                                 Neptune=343.0, Rahu=166.0, Ketu=346.0))

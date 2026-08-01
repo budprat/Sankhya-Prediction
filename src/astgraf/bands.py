@@ -66,6 +66,19 @@ def band_table(result: ChartResult, level: int = 0) -> dict[int, list[str]]:
     return table
 
 
+# Mathcad-QUAKE.pdf (NU): a slow giant's REAL position runs ahead of the observed
+# one — (NR·Rs/(2·Ro) − 1)·500/240 — putting real-Neptune on Ketu's node and
+# real-Uranus on the Sun at the 2015 Nepal quake. Only these two results are given;
+# the NR/Rs/Ro table (and Jupiter/Saturn's offsets) awaits NU.
+REAL_POSITION_OFFSETS = {"Uranus": 17.8562342478, "Neptune": 29.0917753653}
+
+
+def real_longitude(result: ChartResult, body: str) -> float:
+    """Doctrinal 'real' position: observed longitude plus the ahead-offset."""
+    lon = result.positions[body].longitude
+    return (lon + REAL_POSITION_OFFSETS.get(body, 0.0)) % 360.0
+
+
 class VyuhaState(BaseModel):
     """Chatur Vyuham (NU, 2026-08-01): two oppositions crossing at 90 deg —
     Sun-Saturn x Jupiter-Neptune/Uranus — with the nodal axis locked into the
