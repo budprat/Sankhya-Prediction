@@ -149,8 +149,9 @@ with `--aspect-bodies` for full coverage.
 
 Every trigger pattern is DATA, not code: `doctrine-triggers.toml` holds the
 taught patterns (Chatur Vyuham, the band trigger, Neptune-on-Ketu, the Nepal
-double) as declarative rules built from seven primitives — conjunction,
-opposition, square, axis_cross, cluster, same_band, in_band — with `real:`
+double) as declarative rules built from eight primitives — conjunction, opposition,
+square, trine, axis_cross, cluster, same_band, in_band, plus nodes_occupied
+(the Hyderabad both-node-ends pattern, Moon excluded as the fast hand) — with `real:`
 prefixes for doctrinal ahead-positions and `escalate` blocks for severity.
 New inputs about what positions trigger events become a few lines in the
 file; `astgraf-bands --rules FILE` sweeps and scores every rule uniformly.

@@ -46,6 +46,19 @@ conditions = [
 ]
 
 [[rule]]
+name = "nodes-doubly-occupied"
+description = "Hyderaba-floods.docx pattern (24-09-2016): nodal axis held at both ends - Mercury on Rahu 3.7, Neptune on Ketu 1.1 - while Sun-Jupiter stood square the Moon; a giant at either node escalates"
+# The Moon is excluded from the holders: it is the fast trigger hand
+# (FRAMEWORK section 2), not a standing constraint - with it the rule fires
+# monthly and scores at chance.
+conditions = [
+  { type = "nodes_occupied", bodies = ["Sun", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"], orb = 4.0 },
+]
+escalate = [
+  { type = "nodes_occupied", bodies = ["Uranus", "Neptune"], orb = 4.0, require = "either" },
+]
+
+[[rule]]
 name = "nepal-double"
 description = "Mathcad-QUAKE: real-Neptune on Ketu AND real-Uranus on the Sun simultaneously"
 conditions = [

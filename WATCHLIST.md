@@ -51,6 +51,29 @@ derivable; giant spots at the tightest instant are secondary information only.
 
 No windows through 2028 (consistent with the vyuha's once-in-126-years census).
 
+## Doctrine: nodes-doubly-occupied (added 2026-08-02)
+
+The Hyderabad pattern (Mercury on Rahu + Neptune on Ketu): both node ends
+held by planets (Moon excluded — it is the fast hand). Census 1900–2026:
+64 episodes (~one cluster every two years). Forward: an unusually
+persistent cluster — **Jupiter holds Ketu through Jan–Mar 2027** while
+Mercury, the Sun, then Venus successively hold Rahu:
+
+| Window (UT) | Rahu held by | Ketu held by | Outcome |
+|---|---|---|---|
+| 2027-01-24 → 01-28 | Mercury (0.6°) | Jupiter (2.6°) | *pending* |
+| 2027-02-06 → 02-13 | Sun (0.2°) | Jupiter (1.5°) | *pending* |
+| 2027-02-24 → 03-10 | Mercury (1.3°) | Jupiter (0.07°) | *pending* |
+| 2027-03-14 → 03-20 | Venus (0.5°) | Jupiter + Mars | *pending* |
+
+## Doctrine: nepal-double census note (added 2026-08-02)
+
+The real-Neptune-on-Ketu + real-Uranus-on-Sun signature fired **four times
+in 126 years — 1915-02, 1948-07, 1981-12, and 2015-04-24→27, the window
+containing the Nepal earthquake** (the rule was derived from that chart, so
+the 2015 firing is by construction; the ~33-year spacing 1915/1948/1981/2015
+is the discovery). Next occurrence beyond 2028.
+
 ## Doctrine: long-cycle families (added 2026-08-02)
 
 - **Uranus–Neptune conjunction** (flood-catastrophe family): engine census

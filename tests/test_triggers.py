@@ -57,7 +57,7 @@ def test_doctrine_rules_load_and_fire_on_ground_truths():
     rules = {r.name: r for r in load_rules(DOCTRINE)}
     assert set(rules) == {"chatur-vyuham", "band-trigger", "neptune-on-ketu",
                           "nepal-double", "uranus-neptune-conjunction",
-                          "jupiter-saturn-conjunction"}
+                          "jupiter-saturn-conjunction", "nodes-doubly-occupied"}
 
     # The long-cycle families fire on their historical instances.
     conj_1993 = compute_raw(1993, 9, 1, 12.0, 0.0, 0.0, 0.0, True, True)
@@ -121,6 +121,35 @@ def test_rules_cli_emits_exact_instant_and_spot(tmp_path):
     # mid-October shifts the spot ~1.5 deg west of the fixed-150 value.
     assert float(e["spot_lon_east"]) == pytest.approx(-140.33, abs=0.5)
     assert float(e["spot_lat_north"]) == pytest.approx(21.0, abs=0.2)
+
+
+def test_nodes_occupied_primitive():
+    base = {"Rahu": 161.5, "Ketu": 341.5, "Mercury": 165.2, "Neptune": 340.3,
+            "Sun": 181.6, "Mars": 268.0}
+    both = make_result(base)
+    rule = TriggerRule(name="n", conditions=[
+        Condition(type="nodes_occupied",
+                  bodies=["Sun", "Mercury", "Mars", "Neptune"], orb=4.0)])
+    assert evaluate_rule(both, rule).fired
+    # Only Ketu held -> no fire under require="both".
+    one = make_result({**base, "Mercury": 100.0})
+    assert not evaluate_rule(one, rule).fired
+    either = TriggerRule(name="e", conditions=[
+        Condition(type="nodes_occupied", bodies=["Neptune"], orb=4.0,
+                  require="either")])
+    assert evaluate_rule(one, either).fired  # Neptune still on Ketu
+
+
+def test_nodes_doubly_occupied_rule_fires_on_hyderabad_not_nepal():
+    rules = {r.name: r for r in load_rules(DOCTRINE)}
+    rule = rules["nodes-doubly-occupied"]
+    hyderabad = compute_raw(2016, 9, 24, 10.0, -5.5, -78.0, 16.0, False, False)
+    state = evaluate_rule(hyderabad, rule)
+    assert state.fired and state.level == "catastrophic"  # Neptune holds Ketu
+    nepal = compute_raw(2015, 4, 25, 11 + 40 / 60, -5.5, -86.0, 28.0, False, False)
+    assert not evaluate_rule(nepal, rule).fired  # Rahu was empty (observed)
+    quiet = compute_raw(2010, 2, 1, 12.0, 0.0, 0.0, 0.0, True, True)
+    assert not evaluate_rule(quiet, rule).fired
 
 
 def test_real_prefix_resolves_offsets():

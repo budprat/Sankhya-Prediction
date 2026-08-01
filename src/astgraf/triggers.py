@@ -16,7 +16,7 @@ class Condition(BaseModel):
     """One geometric predicate. Body names may be prefixed 'real:' to use the
     doctrinal ahead-position (Mathcad-QUAKE offsets)."""
     type: Literal["conjunction", "opposition", "square", "trine", "axis_cross",
-                  "cluster", "same_band", "in_band"]
+                  "cluster", "same_band", "in_band", "nodes_occupied"]
     bodies: list[str] = []
     axes: list[list[str]] = []          # axis_cross: [[A,B],[C,D]]
     angle: float = 90.0                 # axis_cross target (0 = axes aligned)
@@ -24,6 +24,7 @@ class Condition(BaseModel):
     max_spread: float | None = None     # cluster
     level: int = 0                      # same_band grid level
     band: str | int | None = None       # in_band target (name or 1..28)
+    require: Literal["both", "either"] = "both"   # nodes_occupied: which node ends
 
 
 class TriggerRule(BaseModel):
@@ -61,6 +62,18 @@ def _holds(result: ChartResult, c: Condition) -> bool:
     if c.type == "same_band":
         divisions = {division_of(_lon(result, n), c.level) for n in c.bodies}
         return len(divisions) == 1
+    if c.type == "nodes_occupied":
+        # Hyderaba-floods.docx pattern (2026-08-02): the nodal axis held at both
+        # ends — some body conjunct Rahu AND some body conjunct Ketu, within orb.
+        # require="either" relaxes to one end (used for giant escalation).
+        rahu = result.positions["Rahu"].longitude
+        ketu = result.positions["Ketu"].longitude
+        held_rahu = any(_arc_distance(_lon(result, n), rahu) <= c.orb
+                        for n in c.bodies)
+        held_ketu = any(_arc_distance(_lon(result, n), ketu) <= c.orb
+                        for n in c.bodies)
+        return (held_rahu or held_ketu) if c.require == "either" \
+            else (held_rahu and held_ketu)
     if c.type == "in_band":
         index = (HORARY_NAKSHATRAS_28.index(c.band) + 1
                  if isinstance(c.band, str) else int(c.band))
