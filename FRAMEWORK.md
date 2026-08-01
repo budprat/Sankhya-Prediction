@@ -56,6 +56,10 @@ lock, standing for weeks to months:
 - **Giant on a node**: Neptune on Ketu — real position at Nepal 2015
   (0.34°), observed at Hyderabad 2016 (1.15°). Two simultaneous constraints
   (real-Neptune on Ketu + real-Uranus on the Sun) = the Nepal quake.
+- **Both nodes occupied** (Hyderaba-floods.docx, NU's own cast of
+  24-09-2016): Neptune on Ketu (1.1°) AND exalted Mercury on Rahu (3.7°),
+  with Sun conjunct Jupiter (1.6°) and the Moon crossing their square —
+  the nodal axis held at both ends while the fast layer fired.
 - **Band coincidence** (Predict.pdf): bodies stacking in one of the 28
   bands; Moon+Ketu+Mars is the taught example, Uranus/Neptune presence
   escalates to catastrophic.
@@ -114,8 +118,10 @@ window NU named from memory).
 ## 5. Open questions (NU's to close)
 
 1. **NR/Rs/Ro constants table** — needed for Jupiter/Saturn real-position
-   offsets (Jupiter's ≈21–22° would put real-Jupiter on Rahu at Hyderabad,
-   completing both-giants-on-both-nodes).
+   offsets. (Earlier note withdrawn: offsets run AHEAD, so no offset puts
+   Jupiter back onto Rahu at Hyderabad — the chart shows Rahu was held by
+   exalted Mercury instead; "Jup at the node" in the recollection reads as
+   Jupiter-on-Sun + Mercury-on-Rahu.)
 2. Is Moon+Ketu+Mars *the* band trigger or one of a taught family?
 3. Lords for the 7-fold instant level (the 9-lord cycle doesn't map onto 7).
 4. Exact definition of the "Moon–Sun–Asc cross" trigger (square/conjunction

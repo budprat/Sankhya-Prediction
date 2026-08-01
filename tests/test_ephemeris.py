@@ -111,6 +111,27 @@ def test_quake_pdf_tropical_koch_oracle():
     assert not chart.positions["Jupiter"].retrograde
 
 
+def test_hyderabad_floods_docx_oracle():
+    """Hyderaba-floods.docx: NU's suite-cast chart of the 2016 Hyderabad flood
+    (HYD/HF, 24-09-2016 10:00 AM, 78E 16N, tropical, Koch) — second W/W oracle."""
+    moment = ChartMoment(year=2016, month=9, day=24, hour=10, minute=0,
+                         utc_offset_hours=5.5, longitude_east=78.0,
+                         latitude_north=16.0, sidereal=False, equal_houses=False)
+    chart = compute_chart(moment)
+    expected = {
+        "Ascendant": 235 + 34 / 60, "Sun": 181 + 34 / 60, "Moon": 101 + 26 / 60,
+        "Mars": 267 + 58 / 60, "Mercury": 165 + 9 / 60, "Jupiter": 183 + 13 / 60,
+        "Venus": 210 + 42 / 60, "Saturn": 251 + 9 / 60, "Rahu": 161 + 27 / 60,
+        "Ketu": 341 + 27 / 60, "Uranus": 23 + 24 / 60, "Neptune": 340 + 19 / 60,
+        "Pluto": 285 + 21 / 60,
+    }
+    for body, value in expected.items():
+        assert chart.positions[body].longitude == pytest.approx(value, abs=0.03), body
+    for body in ("Uranus", "Neptune", "Pluto"):
+        assert chart.positions[body].retrograde, body
+    assert not chart.positions["Jupiter"].retrograde
+
+
 def test_tropical_differs_by_exactly_the_ayanamsa():
     tropical = compute_chart(PRATEEK.model_copy(update={"sidereal": False}))
     sidereal = compute_chart(PRATEEK)
