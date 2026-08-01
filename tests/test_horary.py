@@ -9,11 +9,15 @@ from astgraf.horary import (HORARY_NAKSHATRAS_28, LORD_CYCLE, find_sub_crossings
 from astgraf.models import BodyPosition, ChartMoment, PeriodRow
 
 
-def test_twenty_eight_names_with_abhijit_inserted():
+def test_twenty_eight_names_with_abhijit_twenty_first():
+    # NU ruling 2026-08-02: Abhijit is the 21st division (257.14-270) — exactly
+    # opposite Punarvasu (7th), per the book's opposition argument and the
+    # Atharvaveda order. Predict.pdf's own table said 22nd; overridden.
     assert len(HORARY_NAKSHATRAS_28) == 28
     assert HORARY_NAKSHATRAS_28[0] == "Aswini"
-    assert HORARY_NAKSHATRAS_28[20] == "Uthrashada"
-    assert HORARY_NAKSHATRAS_28[21] == "Abhijit"
+    assert HORARY_NAKSHATRAS_28[19] == "Poorvashada"
+    assert HORARY_NAKSHATRAS_28[20] == "Abhijit"
+    assert HORARY_NAKSHATRAS_28[21] == "Uthrashada"
     assert HORARY_NAKSHATRAS_28[22] == "Sravana"
     assert HORARY_NAKSHATRAS_28[27] == "Revathy"
 
@@ -29,7 +33,6 @@ def test_zero_longitude_is_first_division():
     assert p.nakshatra == "Aswini"
     assert p.division_lord == "Ketu"
     assert p.sub_lord == "Ketu"
-    assert p.subsub_lord == "Ketu"
 
 
 def test_sample_ascendant_falls_in_punarvasu_with_jupiter_lord():
@@ -40,19 +43,23 @@ def test_sample_ascendant_falls_in_punarvasu_with_jupiter_lord():
     assert p.nakshatra == "Punarvasu"
     assert p.division_lord == "Jupiter"
     assert p.sub == 57
-    assert p.subsub == 505
+    assert p.subsub == 393  # 1764-grid (28 x 9 x 7, the PDF's 1/63 ladder)
 
 
 def test_top_of_circle_is_last_divisions():
     p = horary_position(359.999)
-    assert (p.division, p.sub, p.subsub) == (28, 252, 2268)
+    assert (p.division, p.sub, p.subsub) == (28, 252, 1764)
     assert p.nakshatra == "Revathy"
     p0 = horary_position(360.0)
     assert p0.division == 1
 
 
-def test_abhijit_division():
-    assert horary_position(270.1).nakshatra == "Abhijit"
+def test_abhijit_division_is_opposite_punarvasu():
+    assert horary_position(260.0).nakshatra == "Abhijit"     # 257.14-270
+    assert horary_position(270.1).nakshatra == "Uthrashada"
+    # Exact opposition: Abhijit's start = Punarvasu's start + 180.
+    assert horary_position(77.15).nakshatra == "Punarvasu"
+    assert horary_position(77.15 + 180).nakshatra == "Abhijit"
 
 
 def _rows(samples):

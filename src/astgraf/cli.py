@@ -145,14 +145,13 @@ def main(argv: list[str] | None = None) -> int:
             writer = csv.writer(fh)
             writer.writerow(["index", "label", "jd", "body", "longitude", "division",
                              "nakshatra", "division_lord", "sub", "sub_lord",
-                             "subsub", "subsub_lord"])
+                             "subsub"])
             for r in rows:
                 for p in r.positions:
                     h = horary_position(p.longitude)
                     writer.writerow([r.index, r.label, f"{r.jd:.6f}", p.name,
                                      f"{p.longitude:.6f}", h.division, h.nakshatra,
-                                     h.division_lord, h.sub, h.sub_lord,
-                                     h.subsub, h.subsub_lord])
+                                     h.division_lord, h.sub, h.sub_lord, h.subsub])
         crossings = find_sub_crossings(rows, pos_at_jd=make_pos_at_jd(start),
                                        bodies=aspect_bodies)
         with open(out / "horary_events.csv", "w", newline="") as fh:

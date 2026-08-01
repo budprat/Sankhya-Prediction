@@ -127,9 +127,11 @@ The theory itself is documented in FRAMEWORK.md.
 ## The 252-division horary grid (`--horary`)
 
 NU's Sankhyan prediction grid: **28 equal nakshatra divisions** (star names are
-markers only; Abhijit is the 22nd equal division) × 9 equal subs = **1/252** of
-the cycle, × 9 again = **1/2268** ("the instant"). `horary.csv` gives every body's
-division/sub/sub-sub numbers and lords each period; `horary_events.csv` records
+markers only; Abhijit is the 21st division, 257.14–270°, exactly opposite
+Punarvasu — NU ruling 2026-08-02) × 9 equal subs = **1/252** of the cycle, × 7
+again = **1/1764** (the PDF's "1/63rd fraction" — the instant; numeric only,
+since the 9-lord cycle has no defined 7-fold mapping). `horary.csv` gives every
+body's division/sub/sub-sub numbers and lords each period; `horary_events.csv` records
 every 1/252-boundary crossing, bisection-refined, wrap- and retrograde-aware.
 Conventions (stated for correction): division *n* takes Vimshottari lord
 (*n*−1 mod 9); a division's first sub takes the division's own lord and cycles;

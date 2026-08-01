@@ -1,10 +1,12 @@
 # ABOUTME: The 252-division horary grid per NU's Sankhyan spec: 28 EQUAL nakshatra
 # ABOUTME: divisions x 9 equal subs (1/252) x 9 sub-subs (1/2268), with lord cycling.
 
-# NU (2026-08-01): the real cycle is 28 x 9 = 252 divisions (KP's 243 used 27); star
-# names are MARKERS only — divisions are equal, not tied to observed star spans. The
-# third level 1/(28x81) = 1/2268 "gives the instant". Abhijit sits between Uthrashada
-# and Sravana as the 22nd equal division.
+# NU (2026-08-01/02): the real cycle is 28 x 9 = 252 divisions (KP's 243 used 27);
+# star names are MARKERS only — divisions are equal. The refinement ladder is the
+# Predict.pdf one: /9 then /7 — 28 x 9 x 7 = 1764, "the 1/63rd fraction", the
+# instant. Abhijit is the 21st division (257.14-270), exactly opposite Punarvasu
+# (NU ruling 2026-08-02, with the Secrets-of-Sankhya opposition argument and the
+# Atharvaveda 19.7 order; Predict.pdf's own table said 22nd — overridden).
 from collections.abc import Callable
 
 from pydantic import BaseModel
@@ -14,8 +16,8 @@ from .models import PeriodRow
 HORARY_NAKSHATRAS_28 = [
     "Aswini", "Bharani", "Kritika", "Rohini", "Mirgasirsa", "Rudra", "Punarvasu",
     "Pusyam", "Ashlesha", "Magha", "Pura", "Uthra", "Hasta", "Chitra", "Swathy",
-    "Visaka", "Anuradha", "Jyestha", "Moola", "Poorvashada", "Uthrashada",
-    "Abhijit", "Sravana", "Dhanishta", "Satabhisa", "P.Badra", "Uthra Badra",
+    "Visaka", "Anuradha", "Jyestha", "Moola", "Poorvashada", "Abhijit",
+    "Uthrashada", "Sravana", "Dhanishta", "Satabhisa", "P.Badra", "Uthra Badra",
     "Revathy",
 ]
 
@@ -27,7 +29,7 @@ LORD_CYCLE = ["Ketu", "Venus", "Sun", "Moon", "Mars",
 
 DIVISION_SPAN = 360.0 / 28
 SUB_SPAN = 360.0 / 252
-SUBSUB_SPAN = 360.0 / 2268
+SUBSUB_SPAN = 360.0 / 1764   # /9 then /7, the PDF's 1/63rd of a nakshatra
 
 
 class HoraryPosition(BaseModel):
@@ -37,8 +39,9 @@ class HoraryPosition(BaseModel):
     division_lord: str
     sub: int               # 1..252 (global numbering)
     sub_lord: str
-    subsub: int            # 1..2268 (global numbering)
-    subsub_lord: str
+    # Numeric only: the 9-lord cycle has no defined mapping onto a 7-fold level;
+    # lords for the instant level await NU's specification.
+    subsub: int            # 1..1764 (global numbering)
 
 
 class SubCrossing(BaseModel):
@@ -58,7 +61,6 @@ def horary_position(longitude: float) -> HoraryPosition:
     division_index = division - 1
     sub_in_division = sub - division_index * 9 - 1        # 0..8
     sub_lord_index = (division_index + sub_in_division) % 9
-    subsub_in_sub = subsub - (sub - 1) * 9 - 1            # 0..8
     return HoraryPosition(
         longitude=lon,
         division=division,
@@ -67,7 +69,6 @@ def horary_position(longitude: float) -> HoraryPosition:
         sub=sub,
         sub_lord=LORD_CYCLE[sub_lord_index],
         subsub=subsub,
-        subsub_lord=LORD_CYCLE[(sub_lord_index + subsub_in_sub) % 9],
     )
 
 

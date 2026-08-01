@@ -32,8 +32,12 @@ can be compared across time. Zero at Punarvasu ("the return of the ray"),
 
 **The grid.** 28 equal divisions — the Sankhyan PHO-state count
 ((7+1/7)/2 = 3.57; 100/3.57 = 28) — with star names as markers ONLY.
-Refinement ladder: ÷9 → 1/252 ("the real cycle"; KP's 243 forced his own
-ayanamsa), and again ÷9 → 1/2268 or ÷7 → 1/63 "the instant." Classical
+Refinement ladder (NU ruling 2026-08-02: Predict.pdf's is canonical):
+÷9 → 1/252 ("the real cycle"; KP's 243 forced his own ayanamsa), then
+÷7 → 1/1764 — the "1/63rd fraction," the instant. Abhijit is the 21st
+division, exactly opposite Punarvasu (ruling 2026-08-02; Predict.pdf's own
+table said 22nd — overridden by the opposition argument and the Atharvaveda
+19.7 order, and the tension is on record). Classical
 practice fell back to 27 because Abhijit's observable spread collapsed
 (<1°) — a deliberate 1/28 accuracy loss. Empirical rules end at Saturn:
 in the ancients' 120-year observation window Saturn completed 4 cycles,
@@ -83,7 +87,7 @@ window NU named from memory).
 |---|---|---|
 | Ephemeris canon | `ephemeris.py` (truncated π, suite constants) | bit-parity with corrected JS engine; PRATEEK.docx (sidereal/E); QUAKE.pdf (tropical/Koch) |
 | Precession clock | `precession.py`, `--precession` | book's own arithmetic (Kritika 158 CE, Punarvasu 4438 BC, 30,170 BC) |
-| 252/2268 horary grid | `horary.py`, `--horary` | sample Asc → Punarvasu/Jupiter = docx C.Planet |
+| 252/1764 horary grid | `horary.py`, `--horary` | sample Asc → Punarvasu/Jupiter = docx C.Planet |
 | Band table + triggers | `bands.py`, `astgraf-bands` (`--level`, `--proximity`) | 2013–15 + 30-yr censuses; catalog scoring |
 | Chatur Vyuham | `vyuha_state`, `--vyuha` | unique June 2016 detection, 126-yr census |
 | Real positions | `real_longitude` (Ura/Nep only) | Nepal chart: real-Nep→Ketu 0.34°, real-Ura→Sun 0.7° |
@@ -96,7 +100,7 @@ window NU named from memory).
    offsets (Jupiter's ≈21–22° would put real-Jupiter on Rahu at Hyderabad,
    completing both-giants-on-both-nodes).
 2. Is Moon+Ketu+Mars *the* band trigger or one of a taught family?
-3. The ladder duality: Predict.pdf ÷9÷7 vs HORARY.BAS ÷9÷9 — which for what?
+3. Lords for the 7-fold instant level (the 9-lord cycle doesn't map onto 7).
 4. Exact definition of the "Moon–Sun–Asc cross" trigger (square/conjunction
    to loaded axes? all three, or any?).
 5. Sub-lord start convention; the dual ayanamsa reckoning (charts anchored
