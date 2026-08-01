@@ -146,6 +146,15 @@ def refine_episode_instant(chart_at, jd_lo: float, jd_hi: float,
     return fine[1]
 
 
+def mentions_ascendant(rule: TriggerRule) -> bool:
+    """Site-specific rules: the Ascendant only means something at a real site."""
+    for c in rule.conditions + rule.escalate:
+        names = list(c.bodies) + [n for axis in c.axes for n in axis]
+        if any(n.removeprefix("real:") == "Ascendant" for n in names):
+            return True
+    return False
+
+
 def load_rules(path: str) -> list[TriggerRule]:
     with open(path, "rb") as fh:
         data = tomllib.load(fh)

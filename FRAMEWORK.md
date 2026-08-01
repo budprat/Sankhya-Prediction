@@ -60,6 +60,15 @@ lock, standing for weeks to months:
   24-09-2016): Neptune on Ketu (1.1°) AND exalted Mercury on Rahu (3.7°),
   with Sun conjunct Jupiter (1.6°) and the Moon crossing their square —
   the nodal axis held at both ends while the fast layer fired.
+- **Giants on the Ascendant** (Ulsoor Lake fish kill, 2016-03-07, NU): the
+  first SITE-SPECIFIC trigger — at Bengaluru's dawn the Ascendant swept the
+  Neptune→Sun→Ketu→Uranus chain (exact crossings 06:12 and 08:20 IST,
+  spanning the hours the fish were found), with the Sun 5° from Ketu two
+  days before the total solar eclipse at that node. NU's mechanism, on
+  record as doctrine: the Ura/Nep combo on the Asc lowers local
+  micro-gravity field density toward space values and raises EM frequency,
+  releasing free oxygen in water to lethal levels. Event categories thus
+  extend beyond geophysics to biological/limnological effects.
 - **Band coincidence** (Predict.pdf): bodies stacking in one of the 28
   bands; Moon+Ketu+Mars is the taught example, Uranus/Neptune presence
   escalates to catastrophic.

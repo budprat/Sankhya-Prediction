@@ -57,7 +57,8 @@ def test_doctrine_rules_load_and_fire_on_ground_truths():
     rules = {r.name: r for r in load_rules(DOCTRINE)}
     assert set(rules) == {"chatur-vyuham", "band-trigger", "neptune-on-ketu",
                           "nepal-double", "uranus-neptune-conjunction",
-                          "jupiter-saturn-conjunction", "nodes-doubly-occupied"}
+                          "jupiter-saturn-conjunction", "nodes-doubly-occupied",
+                          "uranus-neptune-combo-on-ascendant"}
 
     # The long-cycle families fire on their historical instances.
     conj_1993 = compute_raw(1993, 9, 1, 12.0, 0.0, 0.0, 0.0, True, True)
@@ -150,6 +151,38 @@ def test_nodes_doubly_occupied_rule_fires_on_hyderabad_not_nepal():
     assert not evaluate_rule(nepal, rule).fired  # Rahu was empty (observed)
     quiet = compute_raw(2010, 2, 1, 12.0, 0.0, 0.0, 0.0, True, True)
     assert not evaluate_rule(quiet, rule).fired
+
+
+def test_giants_combo_on_ascendant_rule():
+    rules = {r.name: r for r in load_rules(DOCTRINE)}
+    rule = rules["uranus-neptune-combo-on-ascendant"]
+    # Ulsoor Lake dawn, 2016-03-07 07:00 IST: Asc inside the Neptune-Uranus arc.
+    dawn = compute_raw(2016, 3, 7, 7.0, -5.5, -77.617, 12.98, False, False)
+    assert evaluate_rule(dawn, rule).fired
+    # Midday: the Ascendant has left the arc.
+    noon = compute_raw(2016, 3, 7, 12.0, -5.5, -77.617, 12.98, False, False)
+    assert not evaluate_rule(noon, rule).fired
+    # 1960: Uranus and Neptune ~84 deg apart - the combo does not exist as an arc.
+    era = compute_raw(1960, 3, 7, 7.0, -5.5, -77.617, 12.98, False, False)
+    assert not evaluate_rule(era, rule).fired
+
+
+def test_rules_cli_site_awareness(tmp_path):
+    from astgraf.bands_cli import main
+    import csv as _csv
+    rc = main([
+        "--start", "2016-03-07", "--days", "1", "--step-hours", "0.5",
+        "--rules", "doctrine-triggers.toml",
+        "--site-lon", "77:37E", "--site-lat", "12:59N", "--utc-offset", "+05:30",
+        "--out", str(tmp_path / "u"),
+    ])
+    assert rc == 0
+    with open(tmp_path / "u" / "rules_episodes.csv", newline="") as fh:
+        rows = [r for r in _csv.DictReader(fh)
+                if r["rule"] == "uranus-neptune-combo-on-ascendant"]
+    assert rows, "the dawn combo traversal must appear as an episode"
+    assert any(r["start"] <= "2016-03-07 01:00" <= r["end"] or
+               "2016-03-07 0" in r["start"] for r in rows)
 
 
 def test_real_prefix_resolves_offsets():

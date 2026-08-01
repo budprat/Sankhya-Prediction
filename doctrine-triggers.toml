@@ -59,6 +59,13 @@ escalate = [
 ]
 
 [[rule]]
+name = "uranus-neptune-combo-on-ascendant"
+description = "Ulsoor Lake fish kill 2016-03-07 (NU): the local Ascendant inside the Uranus-Neptune arc - a SITE-SPECIFIC daily trigger (~2.6h window in eras when the giants are within 45 deg); NU's mechanism: local gravity-field density drop, EM rise, oxygen release"
+conditions = [
+  { type = "cluster", bodies = ["Ascendant", "Uranus", "Neptune"], max_spread = 45.0 },
+]
+
+[[rule]]
 name = "nepal-double"
 description = "Mathcad-QUAKE: real-Neptune on Ketu AND real-Uranus on the Sun simultaneously"
 conditions = [

@@ -43,6 +43,12 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--rules", default=None, metavar="FILE.toml",
                    help="sweep every declarative trigger rule in the file "
                         "(see doctrine-triggers.toml) instead of built-in modes")
+    p.add_argument("--site-lon", default=None, metavar="76:57E",
+                   help="site longitude for Ascendant-based rules (rules "
+                        "mentioning the Ascendant are skipped without a site)")
+    p.add_argument("--site-lat", default=None, metavar="12:59N")
+    p.add_argument("--utc-offset", default="+00:00",
+                   help="sweep clock offset (labels stay UT)")
     p.add_argument("--vyuha", action="store_true",
                    help="detect Chatur Vyuham instead of band triggers: Sun-Saturn "
                         "and Jupiter-Neptune/Uranus oppositions crossing at 90 deg, "
@@ -150,18 +156,28 @@ class _Span:
 
 def run_rules(args, start, steps, step_hours, step_days) -> int:
     from .grid import make_chart_at_jd
-    from .models import ChartMoment
+    from .models import (ChartMoment, parse_latitude, parse_longitude,
+                         parse_utc_offset)
     from .triggers import (acting_body, evaluate_rule, load_rules,
-                           refine_episode_instant)
+                           mentions_ascendant, refine_episode_instant)
     rules = load_rules(args.rules)
-    site_free_moment = ChartMoment(year=start.year, month=start.month, day=start.day,
-                                   hour=0, minute=0, utc_offset_hours=0.0,
-                                   longitude_east=0.0, latitude_north=0.0)
-    chart_at = make_chart_at_jd(site_free_moment)
+    has_site = args.site_lon is not None and args.site_lat is not None
+    skipped = [r.name for r in rules if mentions_ascendant(r) and not has_site]
+    if skipped:
+        print(f"  site-specific rules skipped (no --site-lon/--site-lat): "
+              f"{', '.join(skipped)}")
+        rules = [r for r in rules if r.name not in skipped]
+    site_lon = parse_longitude(args.site_lon) if has_site else 0.0
+    site_lat = parse_latitude(args.site_lat) if has_site else 0.0
+    utc_offset = parse_utc_offset(args.utc_offset)
+    moment = ChartMoment(year=start.year, month=start.month, day=start.day,
+                         hour=0, minute=0, utc_offset_hours=utc_offset,
+                         longitude_east=site_lon, latitude_north=site_lat)
+    chart_at = make_chart_at_jd(moment)
     spans: dict[str, list[_Span]] = {r.name: [] for r in rules}
     for k in range(steps):
-        result = compute_raw(start.year, start.month, start.day,
-                             k * step_hours, **SITE_FREE)
+        result = compute_raw(start.year, start.month, start.day, k * step_hours,
+                             -utc_offset, -site_lon, site_lat, True, True)
         label = label_for_jd(result.jd)
         for rule in rules:
             state = evaluate_rule(result, rule)

@@ -74,6 +74,17 @@ containing the Nepal earthquake** (the rule was derived from that chart, so
 the 2015 firing is by construction; the ~33-year spacing 1915/1948/1981/2015
 is the discovery). Next occurrence beyond 2028.
 
+## Doctrine: uranus-neptune-combo-on-ascendant (added 2026-08-02)
+
+Site-specific daily trigger, not a calendar window: at any chosen site the
+Ascendant crosses the Uranus–Neptune arc for ~2.6 h every day while the
+giants stay within 45° of each other (true through the 2010s–2030s).
+Meaningful in combination with standing constraints (eclipse-loaded nodes
+at Ulsoor). Sweep any site with
+`astgraf-bands --rules doctrine-triggers.toml --site-lon ... --site-lat ...
+--step-hours 0.5`. No rows registered here — the rule selects hours at a
+place, not dates on a calendar.
+
 ## Doctrine: long-cycle families (added 2026-08-02)
 
 - **Uranus–Neptune conjunction** (flood-catastrophe family): engine census
