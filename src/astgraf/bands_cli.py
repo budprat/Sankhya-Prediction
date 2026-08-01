@@ -35,7 +35,11 @@ def build_parser() -> argparse.ArgumentParser:
                                 description="Predict.pdf band-coincidence scanner")
     p.add_argument("--start", required=True, help="sweep start date YYYY-MM-DD")
     p.add_argument("--days", type=int, required=True)
-    p.add_argument("--step-hours", type=float, default=12.0)
+    p.add_argument("--level", type=int, choices=(0, 1, 2), default=0,
+                   help="grid level: 0=28 bands, 1=/9 (1.43 deg), 2=/63 (0.20 deg)")
+    p.add_argument("--step-hours", type=float, default=None,
+                   help="sweep step; defaults to 12h/1h/0.2h for levels 0/1/2 "
+                        "(must resolve the Moon's dwell in one division)")
     p.add_argument("--catalog", default=None, help="disaster catalog .xlsx to score")
     p.add_argument("--window-days", type=float, default=3.0)
     p.add_argument("--out", default="bands-out")
@@ -45,15 +49,16 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     start = dt.date.fromisoformat(args.start)
-    steps = int(args.days * 24 / args.step_hours)
-    step_days = args.step_hours / 24.0
+    step_hours = args.step_hours or {0: 12.0, 1: 1.0, 2: 0.2}[args.level]
+    steps = int(args.days * 24 / step_hours)
+    step_days = step_hours / 24.0
 
     samples = []
     results = {}
     for k in range(steps):
-        hours = k * args.step_hours
+        hours = k * step_hours
         result = compute_raw(start.year, start.month, start.day, hours, **SITE_FREE)
-        state = trigger_state(result)
+        state = trigger_state(result, level=args.level)
         samples.append((result.jd, label_for_jd(result.jd), state))
         if state.fired:
             results[result.jd] = result
@@ -62,17 +67,18 @@ def main(argv: list[str] | None = None) -> int:
     out.mkdir(parents=True, exist_ok=True)
     with open(out / "sweep.csv", "w", newline="") as fh:
         writer = csv.writer(fh)
-        writer.writerow(["jd", "label", "level", "band", "nakshatra", "members", "giants"])
+        writer.writerow(["jd", "label", "level", "band", "division", "nakshatra",
+                         "members", "giants"])
         for jd, label, state in samples:
             writer.writerow([f"{jd:.5f}", label, state.level, state.band or "",
-                             state.nakshatra, " ".join(state.members),
-                             " ".join(state.giants)])
+                             state.division or "", state.nakshatra,
+                             " ".join(state.members), " ".join(state.giants)])
 
     episodes = find_episodes(samples, step_days=step_days)
     with open(out / "episodes.csv", "w", newline="") as fh:
         writer = csv.writer(fh)
-        writer.writerow(["start", "end", "band", "nakshatra", "level", "giants",
-                         "giant_spots"])
+        writer.writerow(["start", "end", "band", "division", "nakshatra", "level",
+                         "giants", "giant_spots"])
         for e in episodes:
             spots = []
             for giant in e.giants:
@@ -80,16 +86,19 @@ def main(argv: list[str] | None = None) -> int:
                 if spot:
                     spots.append(f"{giant}:{spot.event_longitude_east:.2f}E,"
                                  f"{spot.event_latitude_north:.2f}N")
-            writer.writerow([e.start_label, e.end_label, e.band, e.nakshatra,
-                             e.level, " ".join(e.giants), "; ".join(spots)])
+            writer.writerow([e.start_label, e.end_label, e.band, e.division,
+                             e.nakshatra, e.level, " ".join(e.giants),
+                             "; ".join(spots)])
 
     fired = sum(1 for _, _, s in samples if s.fired)
     print(f"astgraf-bands: {steps} samples ({args.start} +{args.days}d @ "
-          f"{args.step_hours}h), {fired} fired, {len(episodes)} episodes")
+          f"{step_hours:g}h, level {args.level}), {fired} fired, "
+          f"{len(episodes)} episodes")
     for e in episodes:
         extra = f" + {'/'.join(e.giants)}" if e.giants else ""
-        print(f"  {e.start_label} -> {e.end_label}  band {e.band} ({e.nakshatra}) "
-              f"{e.level}{extra}")
+        division = f" div {e.division}" if args.level else ""
+        print(f"  {e.start_label} -> {e.end_label}  band {e.band}{division} "
+              f"({e.nakshatra}) {e.level}{extra}")
 
     if args.catalog:
         events = load_catalog(args.catalog)

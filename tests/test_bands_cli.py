@@ -38,3 +38,15 @@ def test_sweep_and_catalog_scoring(tmp_path):
     assert all(r["hit"] in ("True", "False") for r in score)
 
     assert (tmp_path / "scan" / "episodes.csv").exists()
+
+
+def test_level1_defaults_to_hourly_steps(tmp_path):
+    rc = main([
+        "--start", "2014-04-10", "--days", "2", "--level", "1",
+        "--out", str(tmp_path / "scan1"),
+    ])
+    assert rc == 0
+    with open(tmp_path / "scan1" / "sweep.csv", newline="") as fh:
+        sweep = list(csv.DictReader(fh))
+    assert len(sweep) == 48  # 2 days at the level-1 default 1h step
+    assert "division" in sweep[0]

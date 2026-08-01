@@ -60,6 +60,31 @@ def test_no_trigger_when_scattered():
     assert not state.fired and state.level == "none"
 
 
+def test_level1_divisions_match_the_horary_sub_grid():
+    from astgraf.bands import division_of
+    from astgraf.horary import horary_position
+    for lon in (0.5, 80.1068, 200.3, 359.9):
+        assert division_of(lon, level=1) == horary_position(lon).sub
+
+
+def test_level2_is_the_pdf_one_sixty_third():
+    from astgraf.bands import division_of, level_span
+    assert level_span(2) == pytest.approx(360 / 1764)
+    assert division_of(0.5, level=2) == 3
+
+
+def test_level1_trigger_requires_same_fine_division():
+    # All three within one 1.43-deg sub-division: fires at level 1 and level 0.
+    tight = make_result(scatter(Moon=40.1, Ketu=40.2, Mars=40.3))
+    assert trigger_state(tight, level=1).fired
+    assert trigger_state(tight, level=1).division == 29
+    assert trigger_state(tight, level=1).band == 4
+    # Same 28-band but different sub-divisions: level 0 fires, level 1 does not.
+    loose = make_result(scatter(Moon=40.1, Ketu=41.9, Mars=40.3))
+    assert trigger_state(loose, level=0).fired
+    assert not trigger_state(loose, level=1).fired
+
+
 def test_episodes_merge_consecutive_firings():
     def s(fired, jd):
         state = trigger_state(make_result(

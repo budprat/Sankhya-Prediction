@@ -18,11 +18,19 @@ BAND_BODIES = ["Sun", "Moon", "Rahu", "Ketu", "Mercury", "Venus",
 TRIGGER_SET = {"Moon", "Ketu", "Mars"}
 GIANTS = ("Uranus", "Neptune")
 
+# Predict.pdf refinement ladder: band, band/9, band/63 ("1/63rd fraction").
+LEVEL_DIVISORS = {0: 1, 1: 9, 2: 63}
+
+
+def level_span(level: int) -> float:
+    return DIVISION_SPAN / LEVEL_DIVISORS[level]
+
 
 class TriggerState(BaseModel):
     fired: bool
     level: str                  # none | disruptive | catastrophic
-    band: int = 0
+    band: int = 0               # parent 28-band, for naming
+    division: int = 0           # division index at the scan's grid level
     nakshatra: str = ""
     members: list[str] = []
     giants: list[str] = []
@@ -34,6 +42,7 @@ class Episode(BaseModel):
     start_label: str
     end_label: str
     band: int
+    division: int = 0
     nakshatra: str
     level: str
     giants: list[str]
@@ -43,22 +52,29 @@ def band_of(longitude: float) -> int:
     return int((longitude % 360.0) // DIVISION_SPAN) + 1
 
 
-def band_table(result: ChartResult) -> dict[int, list[str]]:
+def division_of(longitude: float, level: int = 0) -> int:
+    return int((longitude % 360.0) // level_span(level)) + 1
+
+
+def band_table(result: ChartResult, level: int = 0) -> dict[int, list[str]]:
     table: dict[int, list[str]] = {}
     for name in BAND_BODIES:
         if name in result.positions:
-            table.setdefault(band_of(result.positions[name].longitude), []).append(name)
+            division = division_of(result.positions[name].longitude, level)
+            table.setdefault(division, []).append(name)
     return table
 
 
-def trigger_state(result: ChartResult) -> TriggerState:
-    table = band_table(result)
-    for band, members in table.items():
+def trigger_state(result: ChartResult, level: int = 0) -> TriggerState:
+    table = band_table(result, level)
+    for division, members in table.items():
         if TRIGGER_SET <= set(members):
             giants = [g for g in GIANTS if g in members]
+            band = (division - 1) // LEVEL_DIVISORS[level] + 1
             return TriggerState(
                 fired=True, level="catastrophic" if giants else "disruptive",
-                band=band, nakshatra=HORARY_NAKSHATRAS_28[band - 1],
+                band=band, division=division,
+                nakshatra=HORARY_NAKSHATRAS_28[band - 1],
                 members=sorted(members), giants=giants)
     return TriggerState(fired=False, level="none")
 
@@ -81,6 +97,7 @@ def find_episodes(samples: list[tuple[float, str, TriggerState]],
                     episodes.append(current)
                 current = Episode(start_jd=jd, end_jd=jd, start_label=label,
                                   end_label=label, band=state.band,
+                                  division=state.division,
                                   nakshatra=state.nakshatra, level=state.level,
                                   giants=list(state.giants))
     if current is not None:

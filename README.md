@@ -57,6 +57,14 @@ uv run astgraf-bands --start 2013-01-01 --days 1095 --step-hours 12 \
 Outputs `sweep.csv`, `episodes.csv` (with giant spots), `catalog_score.csv`,
 and a summary with observed hits vs expected-by-chance.
 
+`--level` selects the PDF's refinement ladder: 0 = 28 bands (12.857°),
+1 = ÷9 (1.43°, the 252 grid), 2 = ÷63 (0.204°, the "1/63rd fraction");
+sweep steps default to 12h/1h/0.2h so the Moon's dwell is always resolved.
+Note: finer levels use fixed grid cells, so a triple within one division-width
+of arc can still straddle a cell boundary and not fire — the tightest
+Moon–Ketu–Mars convergence in 1990–2020 was 0.758° (2018-09-20) and straddled
+a level-1 boundary.
+
 ## Event locator (`--locate`)
 
 NU's confirmed light-time rule: a crossing acts instantly in the substratum;
