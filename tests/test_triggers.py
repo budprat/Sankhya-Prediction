@@ -56,7 +56,14 @@ def test_escalation_level():
 def test_doctrine_rules_load_and_fire_on_ground_truths():
     rules = {r.name: r for r in load_rules(DOCTRINE)}
     assert set(rules) == {"chatur-vyuham", "band-trigger", "neptune-on-ketu",
-                          "nepal-double"}
+                          "nepal-double", "uranus-neptune-conjunction",
+                          "jupiter-saturn-conjunction"}
+
+    # The long-cycle families fire on their historical instances.
+    conj_1993 = compute_raw(1993, 9, 1, 12.0, 0.0, 0.0, 0.0, True, True)
+    assert evaluate_rule(conj_1993, rules["uranus-neptune-conjunction"]).fired
+    great_2000 = compute_raw(2000, 5, 28, 12.0, 0.0, 0.0, 0.0, True, True)
+    assert evaluate_rule(great_2000, rules["jupiter-saturn-conjunction"]).fired
 
     june2016 = compute_raw(2016, 6, 3, 12.0, 0.0, 0.0, 0.0, True, True)
     state = evaluate_rule(june2016, rules["chatur-vyuham"])
@@ -110,7 +117,9 @@ def test_rules_cli_emits_exact_instant_and_spot(tmp_path):
     e = trine[0]
     assert e["exact_instant"].startswith("2026-10-16")
     assert e["acting"] == "Uranus"
-    assert float(e["spot_lon_east"]) == pytest.approx(-138.8, abs=0.5)
+    # Rule v2 (distance-true light-time): Uranus at ~156 light-minutes in
+    # mid-October shifts the spot ~1.5 deg west of the fixed-150 value.
+    assert float(e["spot_lon_east"]) == pytest.approx(-140.33, abs=0.5)
     assert float(e["spot_lat_north"]) == pytest.approx(21.0, abs=0.2)
 
 

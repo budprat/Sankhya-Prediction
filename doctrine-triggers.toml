@@ -32,6 +32,20 @@ conditions = [
 ]
 
 [[rule]]
+name = "uranus-neptune-conjunction"
+description = "NU: ~163-year cycle of large-scale flood catastrophes (2011-2015 cluster: Uttarakhand, Kashmir, China, Europe, US/Canada); 1000-year record list exists"
+conditions = [
+  { type = "conjunction", bodies = ["Uranus", "Neptune"], orb = 3.0 },
+]
+
+[[rule]]
+name = "jupiter-saturn-conjunction"
+description = "NU: ~120-year same-position return - Krakatoa 1883 to the 2004 Java/Sumatra tsunami family"
+conditions = [
+  { type = "conjunction", bodies = ["Jupiter", "Saturn"], orb = 3.0 },
+]
+
+[[rule]]
 name = "nepal-double"
 description = "Mathcad-QUAKE: real-Neptune on Ketu AND real-Uranus on the Sun simultaneously"
 conditions = [

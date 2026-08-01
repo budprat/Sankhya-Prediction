@@ -9,8 +9,26 @@ from pydantic import BaseModel
 from .models import ChartResult
 
 # NU's doctrinal light-travel times (minutes), confirmed 2026-08-01 as the
-# planet-to-Earth light times: rotation west = minutes x 0.25 deg.
+# planet-to-Earth light times: rotation west = minutes x 0.25 deg. Refined
+# 2026-08-02: the displacement follows the planet's ACTUAL distance ("these
+# figures are for the nearest position") — when the chart carries a distance,
+# the light-time is computed from it; these constants remain the fallback and
+# the nearest-position anchors (Jup ~1000 km, Sat ~2000, Ura ~4000; NU's
+# Neptune 8000 exceeds the physical ~6700-7200 km — tension on record).
 LIGHT_MINUTES = {"Jupiter": 40.0, "Saturn": 80.0, "Uranus": 150.0, "Neptune": 240.0}
+
+ENGINE_UNITS_PER_AU = 3.141592654 / 180   # the suite's AU-through-ANR quirk
+LIGHT_MINUTES_PER_AU = 8.3167464          # 499.004784 s per AU
+
+
+def light_minutes_for(result: ChartResult, body: str) -> float | None:
+    fixed = LIGHT_MINUTES.get(body)
+    if fixed is None:
+        return None
+    distance = result.positions[body].distance
+    if distance > 0:
+        return (distance / ENGINE_UNITS_PER_AU) * LIGHT_MINUTES_PER_AU
+    return fixed
 
 
 class EventLocation(BaseModel):
@@ -38,7 +56,7 @@ def equatorial(lambda_deg: float, beta_deg: float, eps_deg: float) -> tuple[floa
 
 def locate(result: ChartResult, body: str) -> EventLocation | None:
     """The event's spot for one planet at one instant; None if no light-time is defined."""
-    minutes = LIGHT_MINUTES.get(body)
+    minutes = light_minutes_for(result, body)
     if minutes is None:
         return None
     position = result.positions[body]

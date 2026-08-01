@@ -50,3 +50,40 @@ derivable; giant spots at the tightest instant are secondary information only.
 ## Doctrine: Chatur Vyuham, Neptune-on-Ketu, Nepal-double
 
 No windows through 2028 (consistent with the vyuha's once-in-126-years census).
+
+## Doctrine: long-cycle families (added 2026-08-02)
+
+- **Uranus–Neptune conjunction** (flood-catastrophe family): engine census
+  1600–2030 shows triple-conjunction clusters every **167.6 years** —
+  1649–52, 1820–23, 1991–94 (Abhijit/Uthrashada). Next cluster ~2159.
+  No forward window in this register's span.
+- **Jupiter–Saturn conjunction** (Java/tsunami-volcanic family): ~19–20 y
+  rhythm; the doctrine's ~120-year episode is concrete in the census —
+  **1881 conjunction in Aswini → Krakatoa 1883; 2000 conjunction in
+  Kritika → 2004 Sumatra tsunami** (both conjunctions in the Aswini–Kritika
+  sector, both followed by Indonesian mega-events within 2–4 years). Last:
+  2020-12-21 (Uthrashada). Next: ~2040 — outside this register's span.
+
+## Amendment 2026-08-02 — locator rule v2 (distance-true light-times)
+
+The location rule now uses the planet's actual distance at the instant
+(NU: "these figures are for the nearest position"), replacing fixed minutes.
+Registered spots shift ≤ ~1.6° longitude; v2 values (authoritative,
+regenerable from `rules_episodes.csv`):
+
+| Instant (UT) | v2 spot | v1 spot |
+|---|---|---|
+| 2026-10-02 04:43 | 138.32W 0.05S | 138.71W |
+| 2027-10-04 20:15 | 11.61W 0.80N | 11.50W |
+| 2027-11-12 12:07 | 70.84E 0.44N | 73.31E |
+| 2028-11-06 06:09 | 168.16E 1.35N | 167.18E |
+| 2026-10-16 09:19 | 140.33W 21.01N | 138.80W |
+| 2027-02-08 13:16 | 42.20E 20.37N | 44.71E |
+| 2027-10-20 21:47 | 33.07E 21.77N | 34.40E |
+| 2028-02-12 23:36 | 112.35W 21.22N | 109.89W |
+| 2028-10-24 10:43 | 160.46W 22.41N | 159.28W |
+
+Region names hold at this scale except: 2027-02-08 moves ~260 km west
+(SW Saudi Arabia toward the Asir highlands); 2027-11-12 moves ~275 km west
+(still the central Indian Ocean west of the Maldives chain); 2028-10-24
+moves ~120 km further west of Kauai.

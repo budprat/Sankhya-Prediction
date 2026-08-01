@@ -66,6 +66,24 @@ def test_locate_returns_none_for_bodies_without_light_time():
     assert locate(make_result("Moon", 100.0), "Moon") is None
 
 
+def test_distance_true_light_minutes():
+    # NU 2026-08-02: displacement follows the planet's actual distance ("figures
+    # are for the nearest position"). Engine distances calibrate via the AU quirk.
+    from astgraf.locator import light_minutes_for
+    chart = compute_chart(ChartMoment(
+        year=2016, month=6, day=3, hour=12, minute=0, utc_offset_hours=0.0,
+        longitude_east=0.0, latitude_north=0.0))
+    sun_au = chart.positions["Sun"].distance * 180 / 3.141592654
+    assert 0.98 < sun_au < 1.03
+    assert 32 < light_minutes_for(chart, "Jupiter") < 55
+    assert 66 < light_minutes_for(chart, "Saturn") < 93
+    assert 143 < light_minutes_for(chart, "Uranus") < 176
+    assert 238 < light_minutes_for(chart, "Neptune") < 262
+    assert light_minutes_for(chart, "Moon") is None
+    # Synthetic results without distances fall back to the doctrine constants.
+    assert light_minutes_for(make_result("Jupiter", 0.0), "Jupiter") == 40.0
+
+
 def test_engine_exposes_gmst_obliquity_and_planet_latitudes():
     chart = compute_chart(ChartMoment(
         year=1987, month=8, day=28, hour=2, minute=55, utc_offset_hours=5.5,

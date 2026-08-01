@@ -68,7 +68,20 @@ named from it, and its dwell time sets every sweep step.
 
 **Location layer.** At the trigger instant, the light-time rotation gives
 the spot (longitude from the rotated culmination meridian, latitude from
-declination).
+declination). Rule v2 (NU, 2026-08-02): the displacement follows the
+planet's ACTUAL distance — almanacs that ignore light-delay hide the
+connection; at nearest position the displacements are ~1000 km (Jupiter),
+~2000 (Saturn), ~4000 (Uranus) — NU's Neptune 8000 exceeds the physical
+~6700-7200 km, tension on record.
+
+**Long-cycle families (NU, 2026-08-02).** A 1000-year record list exists
+(NU to share) for the Uranus–Neptune conjunction — engine-measured period
+167.6 y — as the large-flood family (2011–15 cluster: Uttarakhand, Kashmir,
+China, Europe, US/Canada). The Jupiter–Saturn conjunction's ~120-year
+same-region return is the Java family: 1881 Aswini conjunction → Krakatoa
+1883; 2000 Kritika conjunction → 2004 Sumatra tsunami. Each 28×11 matrix
+cell is to accumulate confirmed event-synchronisation factors from past
+records, per category — the per-cell library the mining stages build.
 
 ## 3. Validation is part of the method
 
