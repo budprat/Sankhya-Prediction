@@ -13,7 +13,7 @@ from .models import PeriodRow
 
 HORARY_NAKSHATRAS_28 = [
     "Aswini", "Bharani", "Kritika", "Rohini", "Mirgasirsa", "Rudra", "Punarvasu",
-    "Pusyam", "Ashlesha", "Makha", "Pura", "Uthra", "Hasta", "Chitra", "Swathy",
+    "Pusyam", "Ashlesha", "Magha", "Pura", "Uthra", "Hasta", "Chitra", "Swathy",
     "Visaka", "Anuradha", "Jyestha", "Moola", "Poorvashada", "Uthrashada",
     "Abhijit", "Sravana", "Dhanishta", "Satabhisa", "P.Badra", "Uthra Badra",
     "Revathy",

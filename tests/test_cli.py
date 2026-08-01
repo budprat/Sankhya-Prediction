@@ -69,6 +69,21 @@ def test_aspect_bodies_rejects_unknown_name(tmp_path):
         main(["--year", "2000", "--aspect-bodies", "Vulcan", "--out", str(tmp_path)])
 
 
+def test_precession_report_and_wheel(tmp_path, capsys):
+    rc = main([
+        "--year", "2026", "--count", "1", "--no-aspects",
+        "--precession", "2026",
+        "--out", str(tmp_path),
+    ])
+    assert rc == 0
+    printed = capsys.readouterr().out
+    assert "Precession clock" in printed
+    assert "Punarvasu zero (two cycles back):" in printed
+    wheel = tmp_path / "precession_wheel.svg"
+    assert wheel.exists()
+    ET.fromstring(wheel.read_text())
+
+
 def test_scope_wheels_for_rows_and_events(tmp_path):
     rc = main([
         "--year", "2000", "--month", "1", "--day", "1", "--time", "12:00",

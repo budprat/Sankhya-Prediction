@@ -33,6 +33,18 @@ The default plot is wrapped 0–360° with line breaks at the wrap — no more
 up/down dual-trace ambiguity. SVG is resolution-independent, so output is
 identical on every machine.
 
+## Precession clock (`--precession YEAR`)
+
+The 25,739-year cycle from Secrets of Sankhya: equinox drift at 50.352″/yr
+(= 360°/25,739 — the "50.35" is the same fact), 919.25 years per nakshatra
+passage. Prints where the equinox sits on the 28-sector wheel for any year,
+each marker sector's occupancy epoch (Punarvasu start, Abhijit opposition,
+Magha flood epoch), and the two-cycle Punarvasu zero (~30,170 BC), and
+writes `precession_wheel.svg` — the 28-sector wheel with the equinox needle.
+Anchor defaults to equinox-at-0° in 1996 (the book's own arithmetic: Kritika
+2 sectors back ≈ 158 CE, Punarvasu 7 back ≈ 4438 BC); `--precession-zero`
+moves it.
+
 ## Scope charts (`--scope`)
 
 Conjunctions, squares, trines and oppositions are the real guides — the scope

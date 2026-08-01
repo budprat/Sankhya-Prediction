@@ -11,6 +11,7 @@ from .aspects import find_events
 from .ephemeris import BODY_ORDER
 from .grid import build_rows, label_for_jd, make_pos_at_jd
 from .horary import find_sub_crossings, horary_position
+from .precession import render_precession_wheel, report_lines
 from .scope import render_scope
 from .models import (ChartMoment, GridSpec, PeriodUnit,
                      parse_latitude, parse_longitude, parse_utc_offset)
@@ -48,6 +49,12 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--koch", action="store_true",
                    help="Koch-style Ascendant (real obliquity); default is the equal path")
     p.add_argument("--style", choices=["wrapped", "cosine"], default="wrapped")
+    p.add_argument("--precession", type=float, default=None, metavar="YEAR",
+                   help="print the 25,739-year precession clock for YEAR and write "
+                        "precession_wheel.svg (28-sector wheel with the equinox needle)")
+    p.add_argument("--precession-zero", type=float, default=1996.0, metavar="YEAR",
+                   help="anchor year when the equinox sat at wheel 0 (default 1996, "
+                        "from the Secrets of Sankhya arithmetic)")
     p.add_argument("--scope", action="store_true",
                    help="render scope-chart wheels (aspect lines within orb): one per "
                         "period row plus one at each refined aspect-event moment")
@@ -153,6 +160,13 @@ def main(argv: list[str] | None = None) -> int:
                                  label_for_jd(c.jd)])
         print(f"  horary: {len(rows) * len(BODY_ORDER)} grid rows, "
               f"{len(crossings)} sub crossings")
+
+    if args.precession is not None:
+        for line in report_lines(args.precession, zero_year=args.precession_zero):
+            print(line)
+        (out / "precession_wheel.svg").write_text(
+            render_precession_wheel(args.precession, zero_year=args.precession_zero))
+        print(f"  wrote {out / 'precession_wheel.svg'}")
 
     if args.scope:
         scope_dir = out / "scope"
