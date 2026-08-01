@@ -69,6 +69,31 @@ def test_aspect_bodies_rejects_unknown_name(tmp_path):
         main(["--year", "2000", "--aspect-bodies", "Vulcan", "--out", str(tmp_path)])
 
 
+def test_horary_grid_and_crossings(tmp_path):
+    rc = main([
+        "--year", "1987", "--month", "8", "--day", "28", "--time", "02:55",
+        "--utc-offset", "+05:30", "--lon", "76:57E", "--lat", "28:48N",
+        "--unit", "hour", "--step", "6", "--count", "3",
+        "--horary", "--no-aspects",
+        "--out", str(tmp_path),
+    ])
+    assert rc == 0
+    with open(tmp_path / "horary.csv", newline="") as fh:
+        rows = list(csv.DictReader(fh))
+    assert len(rows) == 3 * 13
+    asc = next(r for r in rows if r["index"] == "0" and r["body"] == "Ascendant")
+    assert asc["nakshatra"] == "Punarvasu"
+    assert asc["sub"] == "57"
+    assert asc["division_lord"] == "Jupiter"
+
+    with open(tmp_path / "horary_events.csv", newline="") as fh:
+        events = list(csv.DictReader(fh))
+    # The Moon moves ~6.6 deg in 12 hours: several 1/252 boundaries must be crossed.
+    assert any(e["body"] == "Moon" for e in events)
+    for e in events:
+        assert abs(int(e["to_sub"]) - int(e["from_sub"])) in (1, 251)
+
+
 def test_cosine_style_and_no_aspects(tmp_path):
     rc = main([
         "--year", "2010", "--month", "6", "--day", "15", "--time", "06:00",

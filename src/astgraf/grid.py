@@ -51,7 +51,8 @@ def build_rows(start: ChartMoment, spec: GridSpec) -> list[PeriodRow]:
     for index in range(spec.count):
         result = compute_raw(year, month, day, hours,
                              start.engine_gmt_hours, start.engine_longitude,
-                             start.latitude_north, start.sidereal, start.equal_houses)
+                             start.latitude_north, start.sidereal, start.equal_houses,
+                             start.ayanamsa_rate_arcsec, start.ayanamsa_zero_year)
         rows.append(PeriodRow(
             index=index, label=label_for_jd(result.jd), jd=result.jd,
             positions=[result.positions[name] for name in BODY_ORDER]))
@@ -75,6 +76,7 @@ def make_pos_at_jd(start: ChartMoment):
         local_hours = ut_hours - start.engine_gmt_hours
         result = compute_raw(year, month, day, local_hours,
                              start.engine_gmt_hours, start.engine_longitude,
-                             start.latitude_north, start.sidereal, start.equal_houses)
+                             start.latitude_north, start.sidereal, start.equal_houses,
+                             start.ayanamsa_rate_arcsec, start.ayanamsa_zero_year)
         return {name: p.longitude for name, p in result.positions.items()}
     return pos

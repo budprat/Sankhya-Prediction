@@ -61,6 +61,13 @@ def ayanamsa(year: int) -> float:
     return (year - 294) * 151 / 10800
 
 
+def ayanamsa_value(year: int, rate_arcsec: float | None, zero_year: int) -> float:
+    """Suite formula by default; NU's 50.35"/yr-from-Aswini available via rate override."""
+    if rate_arcsec is None:
+        return ayanamsa(year)
+    return (year - zero_year) * rate_arcsec / 3600
+
+
 def julian_day_number(year: int, month: int, day: float) -> float:
     """The suite's Julian day (noon-based JDN); tolerates overflowed months/days."""
     im = 12 * (year + 4800) + month - 3
@@ -125,10 +132,12 @@ def _ascendant(ra: float, lat_rad: float, obliquity_rad: float) -> float:
 
 def compute_raw(year: int, month: int, day: float, local_hours: float,
                 engine_gmt: float, engine_longitude: float, latitude_north: float,
-                sidereal: bool, equal_houses: bool) -> ChartResult:
+                sidereal: bool, equal_houses: bool,
+                ayanamsa_rate: float | None = None,
+                ayanamsa_zero: int = 294) -> ChartResult:
     f = (local_hours + engine_gmt) / 24          # UT fraction of day
     lat_rad = _rad(latitude_north)
-    nam = ayanamsa(year) if sidereal else 0.0
+    nam = ayanamsa_value(year, ayanamsa_rate, ayanamsa_zero) if sidereal else 0.0
     j = julian_day_number(year, month, day)
     t = ((j - 2415020) + f - 0.5) / 36525
 
@@ -228,4 +237,5 @@ def compute_chart(moment: ChartMoment, hour_offset: float = 0.0) -> ChartResult:
     return compute_raw(moment.year, moment.month, moment.day,
                        moment.local_decimal_hours + hour_offset,
                        moment.engine_gmt_hours, moment.engine_longitude,
-                       moment.latitude_north, moment.sidereal, moment.equal_houses)
+                       moment.latitude_north, moment.sidereal, moment.equal_houses,
+                       moment.ayanamsa_rate_arcsec, moment.ayanamsa_zero_year)

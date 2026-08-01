@@ -33,6 +33,18 @@ The default plot is wrapped 0–360° with line breaks at the wrap — no more
 up/down dual-trace ambiguity. SVG is resolution-independent, so output is
 identical on every machine.
 
+## The 252-division horary grid (`--horary`)
+
+NU's Sankhyan prediction grid: **28 equal nakshatra divisions** (star names are
+markers only; Abhijit is the 22nd equal division) × 9 equal subs = **1/252** of
+the cycle, × 9 again = **1/2268** ("the instant"). `horary.csv` gives every body's
+division/sub/sub-sub numbers and lords each period; `horary_events.csv` records
+every 1/252-boundary crossing, bisection-refined, wrap- and retrograde-aware.
+Conventions (stated for correction): division *n* takes Vimshottari lord
+(*n*−1 mod 9); a division's first sub takes the division's own lord and cycles;
+sub-subs likewise from the sub's lord. `--ayanamsa-rate 50.35` switches to NU's
+50.35″/yr reckoning (`--ayanamsa-zero` sets its zero year, default 294).
+
 ## Honesty notes
 
 - The ephemeris is the ASTROLOG.BAS/ASTGRAF.BAS canon verbatim, including its

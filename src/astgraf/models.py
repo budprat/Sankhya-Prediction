@@ -56,6 +56,10 @@ class ChartMoment(BaseModel):
     latitude_north: float = Field(ge=-90, le=90)
     sidereal: bool = True
     equal_houses: bool = True
+    # Ayanamsa override: None keeps the suite formula (151/10800 deg/yr, zero 294 CE).
+    # NU's alternative reckoning is 50.35 arcsec/yr from the Aswini zero.
+    ayanamsa_rate_arcsec: float | None = None
+    ayanamsa_zero_year: int = 294
 
     @property
     def local_decimal_hours(self) -> float:

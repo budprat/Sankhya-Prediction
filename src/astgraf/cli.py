@@ -10,6 +10,7 @@ from pathlib import Path
 from .aspects import find_events
 from .ephemeris import BODY_ORDER
 from .grid import build_rows, label_for_jd, make_pos_at_jd
+from .horary import find_sub_crossings, horary_position
 from .models import (ChartMoment, GridSpec, PeriodUnit,
                      parse_latitude, parse_longitude, parse_utc_offset)
 from .svgplot import render, render_sequence
@@ -46,6 +47,14 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--koch", action="store_true",
                    help="Koch-style Ascendant (real obliquity); default is the equal path")
     p.add_argument("--style", choices=["wrapped", "cosine"], default="wrapped")
+    p.add_argument("--horary", action="store_true",
+                   help="write the 252-division horary grid (horary.csv) and "
+                        "sub-boundary crossing events (horary_events.csv)")
+    p.add_argument("--ayanamsa-rate", type=float, default=None, metavar="ARCSEC",
+                   help="ayanamsa arcsec/year override (e.g. 50.35); default keeps "
+                        "the suite formula 151/10800 deg/yr")
+    p.add_argument("--ayanamsa-zero", type=int, default=294, metavar="YEAR",
+                   help="ayanamsa zero year for the rate override (default 294)")
     p.add_argument("--no-aspects", action="store_true")
     p.add_argument("--aspect-bodies", default=None, metavar="A,B,...",
                    help="restrict aspect detection to these bodies "
@@ -62,7 +71,8 @@ def main(argv: list[str] | None = None) -> int:
         utc_offset_hours=parse_utc_offset(args.utc_offset),
         longitude_east=parse_longitude(args.lon),
         latitude_north=parse_latitude(args.lat),
-        sidereal=not args.tropical, equal_houses=not args.koch)
+        sidereal=not args.tropical, equal_houses=not args.koch,
+        ayanamsa_rate_arcsec=args.ayanamsa_rate, ayanamsa_zero_year=args.ayanamsa_zero)
     spec = GridSpec(unit=PeriodUnit(args.unit), step=args.step, count=args.count)
 
     aspect_bodies = None
@@ -112,6 +122,31 @@ def main(argv: list[str] | None = None) -> int:
             writer.writerow(["body_a", "body_b", "kind", "jd", "label"])
             for e in events:
                 writer.writerow([e.body_a, e.body_b, e.kind, f"{e.jd:.6f}", e.label])
+
+    if args.horary:
+        with open(out / "horary.csv", "w", newline="") as fh:
+            writer = csv.writer(fh)
+            writer.writerow(["index", "label", "jd", "body", "longitude", "division",
+                             "nakshatra", "division_lord", "sub", "sub_lord",
+                             "subsub", "subsub_lord"])
+            for r in rows:
+                for p in r.positions:
+                    h = horary_position(p.longitude)
+                    writer.writerow([r.index, r.label, f"{r.jd:.6f}", p.name,
+                                     f"{p.longitude:.6f}", h.division, h.nakshatra,
+                                     h.division_lord, h.sub, h.sub_lord,
+                                     h.subsub, h.subsub_lord])
+        crossings = find_sub_crossings(rows, pos_at_jd=make_pos_at_jd(start),
+                                       bodies=aspect_bodies)
+        with open(out / "horary_events.csv", "w", newline="") as fh:
+            writer = csv.writer(fh)
+            writer.writerow(["body", "from_sub", "to_sub", "boundary_deg", "jd", "label"])
+            for c in crossings:
+                writer.writerow([c.body, c.from_sub, c.to_sub,
+                                 f"{c.boundary_deg:.6f}", f"{c.jd:.6f}",
+                                 label_for_jd(c.jd)])
+        print(f"  horary: {len(rows) * len(BODY_ORDER)} grid rows, "
+              f"{len(crossings)} sub crossings")
 
     for stem, svg in render_sequence(rows, BODY_ORDER, style=args.style, events=events):
         (out / "svg" / f"{stem}.svg").write_text(svg)
