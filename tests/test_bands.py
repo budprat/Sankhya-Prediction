@@ -73,6 +73,37 @@ def test_level2_is_the_pdf_one_sixty_third():
     assert division_of(0.5, level=2) == 3
 
 
+def test_proximity_spread_math():
+    from astgraf.bands import circular_spread
+    assert circular_spread([10.0, 11.0, 12.0]) == pytest.approx(2.0)
+    assert circular_spread([359.0, 0.5, 1.0]) == pytest.approx(2.0)  # wraps zero
+    assert circular_spread([0.0, 120.0, 240.0]) == pytest.approx(240.0)
+
+
+def test_proximity_fires_across_grid_boundary():
+    # The 2018-09-20 shape: spread 0.76 deg but straddling the level-1 cell line.
+    shape = make_result(scatter(Mars=278.54, Ketu=279.30, Moon=279.27))
+    assert not trigger_state(shape, level=1).fired            # grid mode misses
+    prox = trigger_state(shape, level=1, proximity=True)      # proximity fires
+    assert prox.fired and prox.level == "disruptive"
+    assert prox.spread_deg == pytest.approx(0.76, abs=0.01)
+    assert prox.band == band_of(279.27)                       # named from the Moon
+
+
+def test_proximity_escalates_when_giant_is_near_cluster():
+    near = make_result(scatter(Mars=278.54, Ketu=279.30, Moon=279.27, Uranus=280.0))
+    state = trigger_state(near, level=1, proximity=True)
+    assert state.level == "catastrophic" and state.giants == ["Uranus"]
+    far = make_result(scatter(Mars=278.54, Ketu=279.30, Moon=279.27, Uranus=300.0))
+    assert trigger_state(far, level=1, proximity=True).giants == []
+
+
+def test_proximity_respects_level_threshold():
+    shape = make_result(scatter(Mars=10.0, Ketu=10.5, Moon=10.4))
+    assert trigger_state(shape, level=2, proximity=True).fired is False  # 0.5 > 0.204
+    assert trigger_state(shape, level=1, proximity=True).fired is True
+
+
 def test_level1_trigger_requires_same_fine_division():
     # All three within one 1.43-deg sub-division: fires at level 1 and level 0.
     tight = make_result(scatter(Moon=40.1, Ketu=40.2, Mars=40.3))

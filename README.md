@@ -60,10 +60,13 @@ and a summary with observed hits vs expected-by-chance.
 `--level` selects the PDF's refinement ladder: 0 = 28 bands (12.857°),
 1 = ÷9 (1.43°, the 252 grid), 2 = ÷63 (0.204°, the "1/63rd fraction");
 sweep steps default to 12h/1h/0.2h so the Moon's dwell is always resolved.
-Note: finer levels use fixed grid cells, so a triple within one division-width
-of arc can still straddle a cell boundary and not fire — the tightest
-Moon–Ketu–Mars convergence in 1990–2020 was 0.758° (2018-09-20) and straddled
-a level-1 boundary.
+
+`--proximity` (NU ruling): fire on the trio's **circular spread ≤ the level
+span**, grid-free — fixed cells quantize away real convergences (the tightest
+1990–2020 triple, 0.758° on 2018-09-20, straddled a level-1 cell line and
+never fired in grid mode). A giant escalates when within one span of the
+cluster; the band is named from the Moon. The 30-year level-1 proximity
+census: 1996-04-17, 2003-01-27, 2004-11-11, 2018-09-20.
 
 ## Event locator (`--locate`)
 

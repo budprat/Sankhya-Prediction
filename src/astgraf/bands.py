@@ -34,6 +34,7 @@ class TriggerState(BaseModel):
     nakshatra: str = ""
     members: list[str] = []
     giants: list[str] = []
+    spread_deg: float = 0.0     # proximity mode: circular spread of the trigger trio
 
 
 class Episode(BaseModel):
@@ -65,7 +66,43 @@ def band_table(result: ChartResult, level: int = 0) -> dict[int, list[str]]:
     return table
 
 
-def trigger_state(result: ChartResult, level: int = 0) -> TriggerState:
+def circular_spread(longitudes: list[float]) -> float:
+    """Smallest arc containing all points: 360 minus the largest gap."""
+    angles = sorted(lon % 360.0 for lon in longitudes)
+    gaps = [angles[i + 1] - angles[i] for i in range(len(angles) - 1)]
+    gaps.append(360.0 - angles[-1] + angles[0])
+    return 360.0 - max(gaps)
+
+
+def _arc_distance(a: float, b: float) -> float:
+    d = abs(a - b) % 360.0
+    return min(d, 360.0 - d)
+
+
+def trigger_state(result: ChartResult, level: int = 0,
+                  proximity: bool = False) -> TriggerState:
+    if proximity:
+        # NU ruling (2026-08-01): the twang is about closeness, not grid cells —
+        # fire when the trio's spread fits within the level's span, wherever the
+        # boundaries fall; a giant escalates when within one span of the cluster.
+        span = level_span(level)
+        trio = {name: result.positions[name].longitude for name in TRIGGER_SET}
+        spread = circular_spread(list(trio.values()))
+        if spread <= span:
+            giants = [g for g in GIANTS
+                      if g in result.positions and min(
+                          _arc_distance(result.positions[g].longitude, lon)
+                          for lon in trio.values()) <= span]
+            moon = result.positions["Moon"].longitude
+            band = band_of(moon)
+            return TriggerState(
+                fired=True, level="catastrophic" if giants else "disruptive",
+                band=band, division=division_of(moon, level),
+                nakshatra=HORARY_NAKSHATRAS_28[band - 1],
+                members=sorted(set(trio) | set(giants)), giants=giants,
+                spread_deg=spread)
+        return TriggerState(fired=False, level="none", spread_deg=spread)
+
     table = band_table(result, level)
     for division, members in table.items():
         if TRIGGER_SET <= set(members):

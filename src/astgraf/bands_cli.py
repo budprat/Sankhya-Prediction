@@ -40,6 +40,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--step-hours", type=float, default=None,
                    help="sweep step; defaults to 12h/1h/0.2h for levels 0/1/2 "
                         "(must resolve the Moon's dwell in one division)")
+    p.add_argument("--proximity", action="store_true",
+                   help="fire on the trio's circular spread <= the level span, "
+                        "grid-free (NU ruling); giants escalate within one span")
     p.add_argument("--catalog", default=None, help="disaster catalog .xlsx to score")
     p.add_argument("--window-days", type=float, default=3.0)
     p.add_argument("--out", default="bands-out")
@@ -58,7 +61,7 @@ def main(argv: list[str] | None = None) -> int:
     for k in range(steps):
         hours = k * step_hours
         result = compute_raw(start.year, start.month, start.day, hours, **SITE_FREE)
-        state = trigger_state(result, level=args.level)
+        state = trigger_state(result, level=args.level, proximity=args.proximity)
         samples.append((result.jd, label_for_jd(result.jd), state))
         if state.fired:
             results[result.jd] = result
@@ -68,11 +71,12 @@ def main(argv: list[str] | None = None) -> int:
     with open(out / "sweep.csv", "w", newline="") as fh:
         writer = csv.writer(fh)
         writer.writerow(["jd", "label", "level", "band", "division", "nakshatra",
-                         "members", "giants"])
+                         "members", "giants", "spread_deg"])
         for jd, label, state in samples:
             writer.writerow([f"{jd:.5f}", label, state.level, state.band or "",
                              state.division or "", state.nakshatra,
-                             " ".join(state.members), " ".join(state.giants)])
+                             " ".join(state.members), " ".join(state.giants),
+                             f"{state.spread_deg:.3f}" if state.spread_deg else ""])
 
     episodes = find_episodes(samples, step_days=step_days)
     with open(out / "episodes.csv", "w", newline="") as fh:
@@ -97,8 +101,9 @@ def main(argv: list[str] | None = None) -> int:
     for e in episodes:
         extra = f" + {'/'.join(e.giants)}" if e.giants else ""
         division = f" div {e.division}" if args.level else ""
+        mode = " proximity" if args.proximity else ""
         print(f"  {e.start_label} -> {e.end_label}  band {e.band}{division} "
-              f"({e.nakshatra}) {e.level}{extra}")
+              f"({e.nakshatra}) {e.level}{mode}{extra}")
 
     if args.catalog:
         events = load_catalog(args.catalog)
