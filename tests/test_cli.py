@@ -190,6 +190,35 @@ def test_horary_ladder_28_flag_restores_252_grid(tmp_path):
         assert abs(int(e["to_sub"]) - int(e["from_sub"])) in (1, 251)
 
 
+def test_rasi_output_at_nepal_quake_moment(tmp_path):
+    # End to end: the QUAKE.pdf chart moment (tropical) must yield the PDF's
+    # own RASI/NAVAMSAM placements from live engine positions.
+    rc = main([
+        "--year", "2015", "--month", "4", "--day", "25", "--time", "11:40",
+        "--utc-offset", "+05:30", "--lon", "86:00E", "--lat", "28:00N",
+        "--tropical", "--koch", "--unit", "hour", "--step", "6", "--count", "1",
+        "--rasi", "--no-aspects",
+        "--out", str(tmp_path),
+    ])
+    assert rc == 0
+    lines = (tmp_path / "rasi_navamsam.txt").read_text().splitlines()
+    # File layout: label, blank, 21-line RASI box, blank, 21-line NAVAMSAM box.
+    rasi_box, nav_box = lines[2:23], lines[24:45]
+    assert "  RASI   " in rasi_box[10] and "NAVAMSAM " in nav_box[10]
+    # RASI: Sun/Mer/Mar share Tau's top slot line (fixed 4-char columns), and
+    # the Koch-path Asc (129.0 in the PDF) sits in Leo (mid2-right) with Jupiter.
+    assert rasi_box[1][35:51] == "Sun Mer     Mar "
+    assert rasi_box[12][52:55] == "Jup"
+    assert rasi_box[14][52:55] == "Asc"
+    # NAVAMSAM: Asc lands in Gem (top band, 4th cell); the BAS blanks slots
+    # 7-9 — no outer planets anywhere on page 2 of the printout.
+    assert nav_box[4][52:55] == "Asc"
+    nav_text = "\n".join(nav_box)
+    assert "Ura" not in nav_text
+    assert "Nep" not in nav_text
+    assert "Plu" not in nav_text
+
+
 def test_cosine_style_and_no_aspects(tmp_path):
     rc = main([
         "--year", "2010", "--month", "6", "--day", "15", "--time", "06:00",

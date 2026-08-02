@@ -11,6 +11,7 @@ from .aspects import find_events
 from .ephemeris import BODY_ORDER
 from .grid import build_rows, label_for_jd, make_chart_at_jd, make_pos_at_jd
 from .horary import find_sub_crossings, horary_position, star_position
+from .rasi import render_rasi_navamsam
 from .locator import locate
 from .precession import render_precession_wheel, report_lines
 from .scope import render_scope
@@ -71,6 +72,10 @@ def build_parser() -> argparse.ArgumentParser:
                    help="with --horary: use the parked 28x9x7 equal-division "
                         "ladder instead (252-grid columns + horary_events.csv); "
                         "Abhijit-28 decision pending")
+    p.add_argument("--rasi", action="store_true",
+                   help="write rasi_navamsam.txt: RASI + NAVAMSAM box charts "
+                        "(QUAKE.pdf layout) for each period row and each "
+                        "refined aspect event")
     p.add_argument("--ayanamsa-rate", type=float, default=None, metavar="ARCSEC",
                    help="ayanamsa arcsec/year override (e.g. 50.35); default keeps "
                         "the suite formula 151/10800 deg/yr")
@@ -182,6 +187,17 @@ def main(argv: list[str] | None = None) -> int:
                                      s.navam])
         print(f"  horary: {len(rows) * len(BODY_ORDER)} grid rows "
               "(classical 27; --ladder 28 for the 252-grid)")
+
+    if args.rasi:
+        pos_at = make_pos_at_jd(start)
+        blocks = [render_rasi_navamsam({p.name: p.longitude for p in r.positions},
+                                       r.label)
+                  for r in rows]
+        blocks += [render_rasi_navamsam(
+            pos_at(e.jd), f"{label_for_jd(e.jd)}  {e.body_a} {e.kind} {e.body_b}")
+            for e in events]
+        (out / "rasi_navamsam.txt").write_text("\n".join(blocks))
+        print(f"  rasi: {len(blocks)} chart blocks -> rasi_navamsam.txt")
 
     if args.locate:
         if not events:

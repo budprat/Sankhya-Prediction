@@ -61,6 +61,7 @@ descend the lens for the fast ones (each planet comes one by one).
 | `aspects.csv` | manual matching | conjunction/square/trine/opposition crossings, bisection-refined to the minute |
 | `scope/row_NN.svg`, `scope/event_NNN_*.svg` | — | scope wheels with aspect lines (`--scope`) |
 | `horary.csv`, `horary_events.csv` | — | classical 27-star nakshatra/pada/navam (`--horary`); 252-grid + crossings with `--ladder 28` |
+| `rasi_navamsam.txt` | — | RASI + NAVAMSAM box charts, QUAKE.pdf layout, per period row and per aspect event (`--rasi`) |
 | `precession_wheel.svg` | — | 28-sector precession wheel with equinox needle (`--precession`) |
 
 The default plot is wrapped 0–360° with line breaks at the wrap — no more
@@ -178,6 +179,20 @@ Conventions (stated for correction): division *n* takes Vimshottari lord
 (*n*−1 mod 9); a division's first sub takes the division's own lord and cycles;
 sub-subs likewise from the sub's lord. `--ayanamsa-rate 50.35` switches to NU's
 50.35″/yr reckoning (`--ayanamsa-zero` sets its zero year, default 294).
+
+## RASI and NAVAMSAM boxes (`--rasi`)
+
+`--rasi` writes `rasi_navamsam.txt`: the South-Indian square charts exactly as
+the ASTROLOG.BAS HOROSCOPE subroutine prints them (lines 6120–6880) — the AR()
+house-square walk, fixed 4-character body slots (which produce the staggered
+look of the printout), the 15-character Ascendant line, and the canon's
+deliberate omission of Ura/Nep/Plu from the NAVAMSAM chart. One block per
+period row plus one per refined aspect event. ASCII `|`/`-` stand in for the
+BAS's CP437 border glyphs. To reproduce QUAKE.pdf itself:
+`--year 2015 --month 4 --day 25 --time 11:40 --utc-offset +05:30 --lon 86:00E
+--lat 28:00N --tropical --koch --rasi` (the PDF chart is the Koch path — the
+canon's equal/Koch setting changes the Ascendant itself, and ASTGRAF.BAS
+hardcodes `EQL$ = "KOCH"`).
 
 ## The matrix, the atlas, and the outcome logger
 
