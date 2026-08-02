@@ -1,11 +1,37 @@
-# ABOUTME: Aspect-event detection over a period grid: conjunction/square/trine/opposition
-# ABOUTME: crossings found between samples and refined by bisection on the ephemeris.
+# ABOUTME: Aspect-event detection over a period grid: wrap-safe crossing detection on
+# ABOUTME: an unwrapped sub-sampled separation series, bisection-refined per crossing.
 
+# Audit 2026-08-02 rewrite: the old endpoint-only detector missed retrograde
+# multi-crossings and its bisection converged onto the +-180 wrap (events
+# reported with the OPPOSITE aspect kind). Each grid interval is now
+# sub-sampled so relative motion per sub-step stays under 60 deg, the
+# separation series is unwrapped (continuous), and crossings are isolated in
+# sub-brackets where the wrapped refinement function has no discontinuity.
+import math
 from collections.abc import Callable
 
 from .models import AspectEvent, PeriodRow
 
 ASPECT_ANGLES = {"conjunction": 0.0, "square": 90.0, "trine": 120.0, "opposition": 180.0}
+
+# Max geocentric rates, deg/day, with headroom — sizes the sub-sampling.
+MAX_SPEED = {"Ascendant": 366.0, "Moon": 16.0, "Sun": 1.1, "Mercury": 2.3,
+             "Venus": 1.4, "Mars": 0.9, "Jupiter": 0.3, "Saturn": 0.2,
+             "Rahu": 0.1, "Ketu": 0.1, "Uranus": 0.1, "Neptune": 0.1,
+             "Pluto": 0.1}
+DEFAULT_SPEED = 20.0        # unknown (synthetic/test) bodies
+MAX_MOTION = 60.0           # max relative motion per sub-step, degrees
+# Known bodies follow the lens contract (README): a pair is meaningful at a
+# grid only while its relative motion stays within ~one cycle per division —
+# beyond that it is skipped with a note ("descend the lens"). Unknown bodies
+# (synthetic tests) get a generous cost cap instead.
+MAX_SUBSTEPS = 8            # known pairs: ~480 deg of relative motion/interval
+MAX_SUBSTEPS_UNKNOWN = 400
+
+
+def _substep_cap(body_a: str, body_b: str) -> int:
+    known = body_a in MAX_SPEED and body_b in MAX_SPEED
+    return MAX_SUBSTEPS if known else MAX_SUBSTEPS_UNKNOWN
 
 PosFn = Callable[[float], dict[str, float]]
 
@@ -29,6 +55,23 @@ def _wrap180(x: float) -> float:
     return d - 360 if d > 180 else d
 
 
+def pair_speed(body_a: str, body_b: str) -> float:
+    return (MAX_SPEED.get(body_a, DEFAULT_SPEED)
+            + MAX_SPEED.get(body_b, DEFAULT_SPEED))
+
+
+def substeps_needed(span_days: float, speed: float) -> int:
+    return max(1, math.ceil(span_days * speed / MAX_MOTION))
+
+
+def unwrap(values: list[float]) -> list[float]:
+    """Continuous series: each step takes the nearest representation."""
+    out = [values[0]]
+    for v in values[1:]:
+        out.append(out[-1] + _wrap180(v - out[-1]))
+    return out
+
+
 def _refine(pos: PosFn, body_a: str, body_b: str, target: float,
             jd_lo: float, jd_hi: float, jd_guess: float) -> float:
     def g(jd: float) -> float:
@@ -36,10 +79,14 @@ def _refine(pos: PosFn, body_a: str, body_b: str, target: float,
         return _wrap180(signed_separation(lons[body_b], lons[body_a]) - target)
 
     lo, hi = jd_lo, jd_hi
-    g_lo = g(lo)
-    if g_lo * g(hi) > 0:
-        return jd_guess  # bracket lost (multiple crossings); keep the linear estimate
+    g_lo, g_hi = g(lo), g(hi)
+    # Sub-bracket motion is < MAX_MOTION, so a genuine crossing keeps |g| small
+    # on at least one side; a +-180 jump bracket does not — refuse it.
+    if g_lo * g_hi > 0 or min(abs(g_lo), abs(g_hi)) > 90:
+        return jd_guess
     for _ in range(60):
+        if hi - lo < 1e-9:                  # ~0.1 ms — beyond any output need
+            break
         mid = (lo + hi) / 2
         if g_lo * g(mid) <= 0:
             hi = mid
@@ -49,30 +96,76 @@ def _refine(pos: PosFn, body_a: str, body_b: str, target: float,
     return (lo + hi) / 2
 
 
+def _sample_interval(r1: PeriodRow, r2: PeriodRow, n: int, pos_at_jd: PosFn,
+                     bodies: list[str]) -> tuple[list[float], list[dict[str, float]]]:
+    """n+1 sample points across [r1.jd, r2.jd]; ends come from the rows."""
+    jds = [r1.jd + (r2.jd - r1.jd) * j / n for j in range(n + 1)]
+    lons: list[dict[str, float]] = []
+    for j, jd in enumerate(jds):
+        if j == 0:
+            lons.append({b: r1.longitude_of(b) for b in bodies})
+        elif j == n:
+            lons.append({b: r2.longitude_of(b) for b in bodies})
+        else:
+            lons.append(pos_at_jd(jd))
+    return jds, lons
+
+
 def find_events(rows: list[PeriodRow], pos_at_jd: PosFn | None = None,
-                bodies: list[str] | None = None) -> list[AspectEvent]:
+                bodies: list[str] | None = None,
+                skipped: list[str] | None = None) -> list[AspectEvent]:
     if bodies is None:
         bodies = [p.name for p in rows[0].positions]
     events: list[AspectEvent] = []
     pairs = [(a, b) for i, a in enumerate(bodies) for b in bodies[i + 1:]]
+    skip_set: set[str] = set()
+
     for i in range(len(rows) - 1):
         r1, r2 = rows[i], rows[i + 1]
-        for body_a, body_b in pairs:
-            d1 = signed_separation(r1.longitude_of(body_b), r1.longitude_of(body_a))
-            d2 = signed_separation(r2.longitude_of(body_b), r2.longitude_of(body_a))
-            delta = _wrap180(d2 - d1)
-            if delta == 0:
+        span = r2.jd - r1.jd
+        live_pairs = []
+        n_grid = 1
+        for a, b in pairs:
+            n = substeps_needed(span, pair_speed(a, b))
+            if pos_at_jd is None:
+                n = 1                       # no sampler: legacy single segment
+            if n > _substep_cap(a, b):
+                skip_set.add(f"{a}-{b}")
                 continue
+            live_pairs.append((a, b))
+            n_grid = max(n_grid, n)
+        if not live_pairs:
+            continue
+        if pos_at_jd is None:
+            jds = [r1.jd, r2.jd]
+            lons = [{p: r1.longitude_of(p) for p in bodies},
+                    {p: r2.longitude_of(p) for p in bodies}]
+        else:
+            jds, lons = _sample_interval(r1, r2, n_grid, pos_at_jd, bodies)
+
+        for body_a, body_b in live_pairs:
+            seps = unwrap([signed_separation(s[body_b], s[body_a]) for s in lons])
             for kind, angle in ASPECT_ANGLES.items():
                 for target in _targets(angle):
-                    for k in (-1, 0, 1):
-                        u = (target + 360 * k - d1) / delta
-                        if not 0 < u <= 1:
+                    for j in range(len(jds) - 1):
+                        u0, u1 = seps[j], seps[j + 1]
+                        if u0 == u1:
                             continue
-                        jd_guess = r1.jd + u * (r2.jd - r1.jd)
-                        jd = jd_guess if pos_at_jd is None else _refine(
-                            pos_at_jd, body_a, body_b, target, r1.jd, r2.jd, jd_guess)
-                        events.append(AspectEvent(
-                            body_a=body_a, body_b=body_b, kind=kind, jd=jd))
+                        lo_v, hi_v = min(u0, u1), max(u0, u1)
+                        k0 = math.ceil((lo_v - target) / 360)
+                        k1 = math.floor((hi_v - target) / 360)
+                        for k in range(k0, k1 + 1):
+                            tgt = target + 360 * k
+                            if tgt == u0 or not lo_v <= tgt <= hi_v:
+                                continue   # crossings are (u0, u1]-exclusive at u0
+                            u = (tgt - u0) / (u1 - u0)
+                            jd_guess = jds[j] + u * (jds[j + 1] - jds[j])
+                            jd = jd_guess if pos_at_jd is None else _refine(
+                                pos_at_jd, body_a, body_b, target,
+                                jds[j], jds[j + 1], jd_guess)
+                            events.append(AspectEvent(
+                                body_a=body_a, body_b=body_b, kind=kind, jd=jd))
+    if skipped is not None:
+        skipped.extend(sorted(skip_set))
     events.sort(key=lambda e: e.jd)
     return events

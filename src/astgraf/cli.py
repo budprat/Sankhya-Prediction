@@ -126,7 +126,12 @@ def main(argv: list[str] | None = None) -> int:
     rows = build_rows(start, spec)
     events = []
     if not args.no_aspects:
-        events = find_events(rows, pos_at_jd=make_pos_at_jd(start), bodies=aspect_bodies)
+        skipped_pairs: list[str] = []
+        events = find_events(rows, pos_at_jd=make_pos_at_jd(start),
+                             bodies=aspect_bodies, skipped=skipped_pairs)
+        if skipped_pairs:
+            print(f"  aspects: pairs too fast for this step, skipped "
+                  f"(descend the lens): {', '.join(skipped_pairs)}")
         for e in events:
             e.label = label_for_jd(e.jd)
 
@@ -175,8 +180,13 @@ def main(argv: list[str] | None = None) -> int:
                     writer.writerow([r.index, r.label, f"{r.jd:.6f}", p.name,
                                      f"{p.longitude:.6f}", h.division, h.nakshatra,
                                      h.division_lord, h.sub, h.sub_lord, h.subsub])
+        skipped_bodies: list[str] = []
         crossings = find_sub_crossings(rows, pos_at_jd=make_pos_at_jd(start),
-                                       bodies=aspect_bodies)
+                                       bodies=aspect_bodies,
+                                       skipped=skipped_bodies)
+        if skipped_bodies:
+            print(f"  horary: bodies too fast for this step, skipped "
+                  f"(descend the lens): {', '.join(skipped_bodies)}")
         with open(out / "horary_events.csv", "w", newline="") as fh:
             writer = csv.writer(fh)
             writer.writerow(["body", "from_sub", "to_sub", "boundary_deg", "jd", "label"])

@@ -147,6 +147,28 @@ def test_wrap_crossing_at_zero():
     assert (events[0].from_sub, events[0].to_sub) == (252, 1)
 
 
+def test_sub_crossings_exact_on_yearly_grid():
+    # Audit finding 4: at yearly grids, aliasing put bodies 180 deg from the
+    # claimed boundary and fabricated backward walks. Every reported crossing
+    # must now sit ON its boundary at the refined instant, and Mars's direct
+    # year must cross ~173 boundaries (engine motion ~247 deg).
+    from astgraf.grid import build_rows, make_pos_at_jd
+    from astgraf.horary import SUB_SPAN
+    from astgraf.models import ChartMoment, GridSpec, PeriodUnit
+    start = ChartMoment(year=2000, month=1, day=1, hour=12, minute=0,
+                        utc_offset_hours=0.0, longitude_east=0.0,
+                        latitude_north=0.0)
+    rows = build_rows(start, GridSpec(unit=PeriodUnit.YEAR, step=1, count=2))
+    pos = make_pos_at_jd(start)
+    events = find_sub_crossings(rows, pos_at_jd=pos, bodies=["Mars"])
+    assert 150 <= len(events) <= 200
+    for e in events:
+        lon = pos(e.jd)["Mars"]
+        off = abs((lon - e.boundary_deg + 180) % 360 - 180)
+        assert off < 0.01, (e.from_sub, e.to_sub, off)
+        assert abs(e.to_sub - e.from_sub) in (1, 251)
+
+
 def test_ayanamsa_override_shifts_all_longitudes_uniformly():
     base = ChartMoment(year=1987, month=8, day=28, hour=2, minute=55,
                       utc_offset_hours=5.5, longitude_east=76.95, latitude_north=28.8)

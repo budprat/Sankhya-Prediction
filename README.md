@@ -48,9 +48,12 @@ Bisection refinement makes the lenses agree to the minute (both give the
 light-time rotation — distance-true minutes (locator v2; the fixed
 40/80/150/240 anchors are the fallback), west from the culmination
 meridian — to give the spot (here 75.46E 4.67N, southern Laccadive Sea;
-Uranus's actual distance gave 170.4 light-minutes at this instant). One caveat: a coarse lens only resolves pairs whose relative
-motion per division stays under ~90° — at yearly steps use the slow bodies;
-descend the lens for the fast ones (each planet comes one by one).
+Uranus's actual distance gave 170.4 light-minutes at this instant). The lens contract is enforced: pairs whose
+relative motion exceeds ~one cycle per division are skipped with a printed
+note — at yearly steps use the slow bodies; descend the lens for the fast
+ones (each planet comes one by one). Within the contract, detection is
+wrap-safe and finds every crossing, including retrograde multi-passes (the
+2010–11 Jupiter–Saturn triple opposition resolves at a yearly lens).
 
 ## Outputs
 

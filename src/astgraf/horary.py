@@ -134,10 +134,14 @@ def _refine_boundary(pos: PosFn, body: str, boundary: float,
         return _wrap180(pos(jd)[body] - boundary)
 
     lo, hi = jd_lo, jd_hi
-    g_lo = g(lo)
-    if g_lo * g(hi) > 0:
+    g_lo, g_hi = g(lo), g(hi)
+    # A +-180 jump bracket has |g| large on both sides; a real crossing does
+    # not (sub-bracket motion < 60 deg) — refuse the jump.
+    if g_lo * g_hi > 0 or min(abs(g_lo), abs(g_hi)) > 90:
         return jd_guess
     for _ in range(60):
+        if hi - lo < 1e-9:
+            break
         mid = (lo + hi) / 2
         if g_lo * g(mid) <= 0:
             hi = mid
@@ -148,39 +152,76 @@ def _refine_boundary(pos: PosFn, body: str, boundary: float,
 
 
 def find_sub_crossings(rows: list[PeriodRow], pos_at_jd: PosFn | None = None,
-                       bodies: list[str] | None = None) -> list[SubCrossing]:
-    """Detect 1/252-boundary crossings between samples, wrap- and retro-aware."""
+                       bodies: list[str] | None = None,
+                       skipped: list[str] | None = None) -> list[SubCrossing]:
+    """Detect 1/252-boundary crossings, wrap- and retro-aware.
+
+    Audit 2026-08-02 rewrite: each interval is sub-sampled so a body moves
+    under 60 deg per sub-step (fast movers at too-coarse grids are skipped
+    with a note), the longitude series is unwrapped, and every boundary
+    multiple crossed on the continuous axis becomes one event, refined in a
+    sub-bracket free of the +-180 discontinuity.
+    """
+    from math import ceil, floor
+
+    from .aspects import (DEFAULT_SPEED, MAX_MOTION, MAX_SPEED, MAX_SUBSTEPS,
+                          MAX_SUBSTEPS_UNKNOWN, unwrap)
     if bodies is None:
         bodies = [p.name for p in rows[0].positions]
     events: list[SubCrossing] = []
+    skip_set: set[str] = set()
     for i in range(len(rows) - 1):
         r1, r2 = rows[i], rows[i + 1]
+        span = r2.jd - r1.jd
+        live = []
+        n_grid = 1
         for body in bodies:
-            lon1, lon2 = r1.longitude_of(body), r2.longitude_of(body)
-            delta = _wrap180(lon2 - lon1)
-            if delta == 0:
+            n = max(1, ceil(span * MAX_SPEED.get(body, DEFAULT_SPEED) / MAX_MOTION))
+            if pos_at_jd is None:
+                n = 1
+            cap = MAX_SUBSTEPS if body in MAX_SPEED else MAX_SUBSTEPS_UNKNOWN
+            if n > cap:
+                skip_set.add(body)
                 continue
-            step = 1 if delta > 0 else -1
-            sub1 = int((lon1 % 360) // SUB_SPAN) + 1
-            # Walk boundaries along the motion direction until past lon2.
-            k = 0
-            while k < 252:
-                k += 1
-                if step > 0:
-                    boundary = ((sub1 + k - 1) % 252) * SUB_SPAN
-                    travelled = (boundary - lon1) % 360
-                else:
-                    boundary = ((sub1 - k) % 252) * SUB_SPAN
-                    travelled = (lon1 - boundary) % 360
-                if travelled == 0 or travelled > abs(delta):
-                    break
-                u = travelled / abs(delta)
-                jd_guess = r1.jd + u * (r2.jd - r1.jd)
-                jd = jd_guess if pos_at_jd is None else _refine_boundary(
-                    pos_at_jd, body, boundary, r1.jd, r2.jd, jd_guess)
-                from_sub = (sub1 + (k - 1) * step - 1) % 252 + 1
-                to_sub = (sub1 + k * step - 1) % 252 + 1
-                events.append(SubCrossing(body=body, from_sub=from_sub,
-                                          to_sub=to_sub, boundary_deg=boundary, jd=jd))
+            live.append(body)
+            n_grid = max(n_grid, n)
+        if not live:
+            continue
+        jds = [r1.jd + span * j / n_grid for j in range(n_grid + 1)]
+        samples = []
+        for j, jd in enumerate(jds):
+            if j == 0:
+                samples.append({b: r1.longitude_of(b) for b in live})
+            elif j == n_grid:
+                samples.append({b: r2.longitude_of(b) for b in live})
+            else:
+                samples.append(pos_at_jd(jd))
+        for body in live:
+            lons = unwrap([s[body] for s in samples])
+            for j in range(n_grid):
+                l0, l1 = lons[j], lons[j + 1]
+                if l0 == l1:
+                    continue
+                lo_v, hi_v = min(l0, l1), max(l0, l1)
+                direction = 1 if l1 > l0 else -1
+                for k in range(ceil(lo_v / SUB_SPAN), floor(hi_v / SUB_SPAN) + 1):
+                    v = k * SUB_SPAN
+                    if v == l0 or not lo_v <= v <= hi_v:
+                        continue           # crossings are (l0, l1]-exclusive at l0
+                    boundary = v % 360.0
+                    kb = round(boundary / SUB_SPAN) % 252   # boundary index 0..251
+                    if direction > 0:
+                        from_sub, to_sub = (kb - 1) % 252 + 1, kb % 252 + 1
+                    else:
+                        from_sub, to_sub = kb % 252 + 1, (kb - 1) % 252 + 1
+                    u = (v - l0) / (l1 - l0)
+                    jd_guess = jds[j] + u * (jds[j + 1] - jds[j])
+                    jd = jd_guess if pos_at_jd is None else _refine_boundary(
+                        pos_at_jd, body, boundary, jds[j], jds[j + 1], jd_guess)
+                    events.append(SubCrossing(body=body, from_sub=from_sub,
+                                              to_sub=to_sub, boundary_deg=boundary,
+                                              jd=jd))
+    if skipped is not None:
+        skipped.extend(sorted(skip_set))
     events.sort(key=lambda e: e.jd)
     return events
