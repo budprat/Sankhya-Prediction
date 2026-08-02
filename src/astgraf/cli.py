@@ -8,10 +8,11 @@ import re
 from pathlib import Path
 
 from .aspects import find_events
-from .ephemeris import BODY_ORDER
+from .ephemeris import BODY_ORDER, compute_chart
 from .grid import build_rows, label_for_jd, make_chart_at_jd, make_pos_at_jd
 from .horary import find_sub_crossings, horary_position, star_position
 from .rasi import render_rasi_navamsam
+from .report import render_report
 from .locator import locate
 from .precession import render_precession_wheel, report_lines
 from .scope import render_scope
@@ -77,6 +78,12 @@ def build_parser() -> argparse.ArgumentParser:
                    help="with --horary: use the parked 28x9x7 equal-division "
                         "ladder instead (252-grid columns + horary_events.csv); "
                         "Abhijit-28 decision pending")
+    p.add_argument("--report", action="store_true",
+                   help="write horoscope.txt: the full ASTROLOG report page for "
+                        "the start moment (header, Koch cusps, planet table, "
+                        "Dasa/Bukti, RASI + NAVAMSAM) as in QUAKE.pdf")
+    p.add_argument("--name", default="", help="Full name field for --report")
+    p.add_argument("--place", default="", help="Place of birth field for --report")
     p.add_argument("--rasi", action="store_true",
                    help="write rasi_navamsam.txt: RASI + NAVAMSAM box charts "
                         "(QUAKE.pdf layout) for each period row and each "
@@ -192,6 +199,12 @@ def main(argv: list[str] | None = None) -> int:
                                      s.navam])
         print(f"  horary: {len(rows) * len(BODY_ORDER)} grid rows "
               "(classical 27; --ladder 28 for the 252-grid)")
+
+    if args.report:
+        chart = compute_chart(start)
+        (out / "horoscope.txt").write_text(
+            render_report(chart, start, name=args.name, place=args.place))
+        print("  report: horoscope.txt")
 
     if args.rasi:
         pos_at = make_pos_at_jd(start)

@@ -225,6 +225,21 @@ def test_rasi_output_at_nepal_quake_moment(tmp_path):
     assert "Plu" not in nav_text
 
 
+def test_report_flag_writes_quake_page(tmp_path):
+    rc = main([
+        "--year", "2015", "--month", "4", "--day", "25", "--time", "11:40",
+        "--utc-offset", "+05:30", "--lon", "86:00E", "--lat", "28:00N",
+        "--tropical", "--unit", "hour", "--step", "6", "--count", "1",
+        "--report", "--name", "QUAKE", "--place", "NEPAL", "--no-aspects",
+        "--out", str(tmp_path),
+    ])
+    assert rc == 0
+    text = (tmp_path / "horoscope.txt").read_text()
+    assert "Full name..: QUAKE" in text
+    assert "Siderial time....:  2 H  6 M 47 S" in text
+    assert "Dasa at birth Mer" in text and "NAVAMSAM " in text
+
+
 def test_cosine_style_and_no_aspects(tmp_path):
     rc = main([
         "--year", "2010", "--month", "6", "--day", "15", "--time", "06:00",

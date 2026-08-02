@@ -63,6 +63,7 @@ descend the lens for the fast ones (each planet comes one by one).
 | `scope/row_NN.svg`, `scope/event_NNN_*.svg` | — | scope wheels with aspect lines (`--scope`) |
 | `horary.csv`, `horary_events.csv` | — | classical 27-star nakshatra/pada/navam (`--horary`); 252-grid + crossings with `--ladder 28` |
 | `rasi_navamsam.txt` | — | RASI + NAVAMSAM box charts, QUAKE.pdf layout, per period row and per aspect event (`--rasi`) |
+| `horoscope.txt` | — | the full ASTROLOG report page: header, Koch cusps, planet table, Dasa/Bukti, boxes (`--report`) |
 | `precession_wheel.svg` | — | 28-sector precession wheel with equinox needle (`--precession`) |
 
 The default plot is wrapped 0–360° with line breaks at the wrap — no more
@@ -197,6 +198,20 @@ E or W" at run time and a blank answer takes the Koch path, which is why Koch
 is this CLI's default; `--equal` selects the equal path, the PRATEEK oracle
 setting. The oft-quoted `EQL$ = "KOCH"` at ASTGRAF.BAS:45 is a dead
 assignment — never read.)
+
+## The full report page (`--report`)
+
+`--report --name X --place Y` writes `horoscope.txt` for the start moment —
+the complete ASTROLOG.BAS printout as in QUAKE.pdf: the header block
+(including the sidereal time with the canon's rounded-minute display quirk),
+the 12 Koch house cusps (CO960 ported verbatim: ascensional difference +
+oblique-ascension chain; the First cusp reproduces the AZ55 Ascendant to
+1e-6°), the planet table with Retro/Ruler (the LUCK rulership table) and
+Nakshatra/Pada/Navam columns, Dasa/Bukti at birth (Vimshottari from the
+Moon), Nakshatra at birth, and both box charts. The QUAKE.pdf cusp table
+reproduces value-for-value; Dasa/Bukti day fields are sensitive to the
+engine-vs-BAS sub-arcminute Moon difference (±few days) — lords, years, and
+months match the printout.
 
 ## The matrix, the atlas, and the outcome logger
 

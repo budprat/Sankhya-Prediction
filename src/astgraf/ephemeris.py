@@ -114,6 +114,39 @@ def _co950(x: float, y: float) -> tuple[float, float]:
     return r, a
 
 
+def _midheaven(ra: float, ob_rad: float) -> float:
+    """MC per the BASIC :106-111 block: fold RA through CO930/CO950 with cos(OB)."""
+    x, y = _co930(1.0, ra)
+    x *= math.cos(ob_rad)
+    _, a = _co950(x, y)
+    return _deg(a)
+
+
+def _house_cusps(ra: float, lat_rad: float, ob_abs: float, mc: float) -> list[float]:
+    """CO960 verbatim: ascensional difference + oblique-ascension chain.
+
+    Cusps 10th..3rd from the trisected semi-arc; 4th..9th as +180 opposites.
+    On the equal path (ob_abs = 0) this degenerates exactly as the BASIC does.
+    """
+    xx = math.sin(ra) * math.tan(ob_abs) * math.tan(lat_rad)
+    ad = math.atan(xx / math.sqrt(1 - xx * xx))          # ANX
+    oa = ra - ad
+    ax = (PI / 2 + ad) / 3
+    hc = [mc]
+    for i in range(1, 6):
+        ko = _rad(_norm360(_deg(oa + ax * i)))
+        aa = math.atan(math.tan(lat_rad) / math.cos(ko))
+        ab = aa + ob_abs
+        lo = math.atan(math.tan(ko) * math.cos(aa) / math.cos(ab))
+        if lo < 0:
+            lo += PI
+        if math.sin(ko) < 0:
+            lo += PI
+        hc.append(_deg(lo))
+    return ([_norm360(c) for c in hc]
+            + [_norm360(c + 180) for c in hc])
+
+
 def _ascendant(ra: float, lat_rad: float, obliquity_rad: float) -> float:
     """Oblique-ascension Ascendant (the FLAG=2 pass of the BASIC AZ55 block)."""
     ob = -obliquity_rad
@@ -152,6 +185,14 @@ def compute_raw(year: int, month: int, day: float, local_hours: float,
     # Equal houses run the Ascendant with OB=0, exactly as the BASIC E-path does.
     ob_house = 0.0 if equal_houses else _rad(23.45229444 - 0.0130125 * t)
     asc = _ascendant(ra, lat_rad, ob_house)
+    mc = _midheaven(ra, ob_house)
+    cusps = _house_cusps(ra, lat_rad, abs(ob_house), mc)
+    # ST$ block (:134-144): RA back to degrees, southern-hemisphere 180 flip,
+    # ayanamsa restored — the sidereal time the suite prints.
+    st_deg = _deg(ra)
+    if latitude_north < 0:
+        st_deg = _norm360(st_deg + 180)
+    sidereal_time_deg = st_deg + nam
 
     positions: dict[str, BodyPosition] = {}
     m1 = c1_rad = x1 = y1 = z1 = 0.0
@@ -238,7 +279,8 @@ def compute_raw(year: int, month: int, day: float, local_hours: float,
 
     ordered = {name: positions[name] for name in BODY_ORDER}
     return ChartResult(positions=ordered, ayanamsa=nam, jd=j + f - 0.5,
-                       gmst=gmst, obliquity=obliquity_real)
+                       gmst=gmst, obliquity=obliquity_real, mc=mc, cusps=cusps,
+                       sidereal_time_deg=sidereal_time_deg)
 
 
 def compute_chart(moment: ChartMoment, hour_offset: float = 0.0) -> ChartResult:

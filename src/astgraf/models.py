@@ -120,6 +120,9 @@ class ChartResult(BaseModel):
     jd: float
     gmst: float = 0.0        # Greenwich mean sidereal time, degrees
     obliquity: float = 0.0   # real obliquity at the instant, degrees
+    mc: float = 0.0          # Midheaven HC(1), degrees (BAS :106-111)
+    cusps: list[float] = Field(default_factory=list)  # 12 cusps, HC order 10th..9th
+    sidereal_time_deg: float = 0.0  # local sidereal time, ayanamsa restored (ST$)
 
 
 class AspectEvent(BaseModel):

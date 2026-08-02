@@ -12,8 +12,10 @@ from .ephemeris import compute_raw
 from .grid import label_for_jd
 from .locator import locate
 
+# Koch Ascendant path throughout (NU ruling 2026-08-02, matching the BAS blank
+# E/W answer and the tropical/Koch oracle charts the Asc rules were tuned on).
 SITE_FREE = dict(engine_gmt=0.0, engine_longitude=0.0, latitude_north=0.0,
-                 sidereal=True, equal_houses=True)
+                 sidereal=True, equal_houses=False)
 
 
 def load_catalog(path: str) -> list[dict]:
@@ -172,12 +174,13 @@ def run_rules(args, start, steps, step_hours, step_days) -> int:
     utc_offset = parse_utc_offset(args.utc_offset)
     moment = ChartMoment(year=start.year, month=start.month, day=start.day,
                          hour=0, minute=0, utc_offset_hours=utc_offset,
-                         longitude_east=site_lon, latitude_north=site_lat)
+                         longitude_east=site_lon, latitude_north=site_lat,
+                         equal_houses=False)
     chart_at = make_chart_at_jd(moment)
     spans: dict[str, list[_Span]] = {r.name: [] for r in rules}
     for k in range(steps):
         result = compute_raw(start.year, start.month, start.day, k * step_hours,
-                             -utc_offset, -site_lon, site_lat, True, True)
+                             -utc_offset, -site_lon, site_lat, True, False)
         label = label_for_jd(result.jd)
         for rule in rules:
             state = evaluate_rule(result, rule)
