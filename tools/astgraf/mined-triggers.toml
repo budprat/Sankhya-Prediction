@@ -1,0 +1,34 @@
+# MINED candidate triggers — RETIRED 2026-08-02 (batch-3 re-mining v2).
+# The v1 lifts (1.80/1.76/1.52) were artifacts of aliased event-shifted
+# controls and a leaky even/odd split. Under the honest design — declustered
+# post-1900 corpus, time-uniform climatology controls, 2-year-block split,
+# add-one smoothed lifts, 200-permutation calibration — no predicate survives:
+# observed max lift 1.79 vs null median 1.73 (95th pct 2.12), p = 0.35; none
+# of these three rules ranks near the top. Locator spatial skill nil (4,896 km
+# vs 5,007 km shuffled). The rules stay loadable ONLY because their forward
+# windows were pre-registered in WATCHLIST.md before the re-mining — the
+# outcome protocol still grades them as a falsifiable experiment; they carry
+# NO statistical support. Provenance: scripts/mine_usgs.py (v2) over
+# data/usgs-m7-1850-2020.csv -> out/signatures-m7-v2, 2026-08-02.
+# Watch-list quality: firings mark windows to observe, not predictions.
+
+[[rule]]
+name = "mined-real-uranus-saturn-conj"
+description = "[RETIRED 2026-08-02: v1 lift 1.80/1.64 did not survive honest re-mining, p=0.35 family-wise] real-Uranus conjunct Saturn"
+conditions = [
+  { type = "conjunction", bodies = ["real:Uranus", "Saturn"], orb = 3.0 },
+]
+
+[[rule]]
+name = "mined-real-neptune-mercury-opp"
+description = "[RETIRED 2026-08-02: v1 lift 1.76/1.41 did not survive honest re-mining] real-Neptune opposition Mercury"
+conditions = [
+  { type = "opposition", bodies = ["real:Neptune", "Mercury"], orb = 3.0 },
+]
+
+[[rule]]
+name = "mined-real-uranus-sun-trine"
+description = "[RETIRED 2026-08-02: v1 lift 1.52/1.31 did not survive honest re-mining] real-Uranus trine Sun (Nepal-signature family)"
+conditions = [
+  { type = "trine", bodies = ["real:Uranus", "Sun"], orb = 3.0 },
+]
