@@ -39,7 +39,13 @@ division, exactly opposite Punarvasu (ruling 2026-08-02; Predict.pdf's own
 table said 22nd — overridden by the opposition argument and the Atharvaveda
 19.7 order, and the tension is on record). Classical
 practice fell back to 27 because Abhijit's observable spread collapsed
-(<1°) — a deliberate 1/28 accuracy loss. Empirical rules end at Saturn:
+(<1°) — a deliberate 1/28 accuracy loss. NU ruling 2026-08-02 ("follow
+exactly whats in ASTGRAF.BAS, we will decide later for Abhijit 28"): the
+tool's default nakshatra layer is the classical 27-star system exactly as
+the BAS carries it ("Magha" kept per the earlier ruling); the 28-equal
+ladder stays implemented behind `--ladder 28`, parked until the Abhijit-28
+decision. The 28-based band table and 28-sector precession clock are
+untouched — their 28-ness is Predict.pdf's and the book's own. Empirical rules end at Saturn:
 in the ancients' 120-year observation window Saturn completed 4 cycles,
 Uranus and Neptune not even two, so no empirical calibration was possible
 for them.
@@ -138,14 +144,15 @@ Vyuham 1/126 yr — on the exact window NU named from memory).
 |---|---|---|
 | Ephemeris canon | `ephemeris.py` (truncated π, suite constants) | bit-parity with corrected JS engine; PRATEEK.docx (sidereal/E); QUAKE.pdf (tropical/Koch) |
 | Precession clock | `precession.py`, `--precession` | book's own arithmetic (Kritika 158 CE, Punarvasu 4438 BC, 30,170 BC) |
-| 252/1764 horary grid | `horary.py`, `--horary` | sample Asc → Punarvasu/Jupiter = docx C.Planet |
+| Nakshatra layer | `horary.py`, `--horary` (classical 27 default; 252/1764 ladder behind `--ladder 28`) | QUAKE.pdf star/pada/navam rows; sample Asc → Punarvasu/Jupiter = docx C.Planet |
+| Report layer | `rasi.py`, `report.py`, `--rasi`, `--report` (boxes, Koch cusps, MC, sidereal time, Dasa/Bukti) | QUAKE.pdf page reproduced value-for-value |
 | Band table + triggers | `bands.py`, `astgraf-bands` (`--level`, `--proximity`) | 2013–15 + 30-yr censuses; catalog scoring |
 | Chatur Vyuham | `vyuha_state`, `--vyuha` | unique June 2016 detection, 126-yr census |
 | Real positions | `real_longitude` (Ura/Nep only) | Nepal chart: real-Nep→Ketu 0.34°, real-Ura→Sun 0.7° |
 | Event location | `locator.py`, `--locate` | rule confirmed by NU; 12-spot archive check: 0 hits, 1 near-miss (honest negative) |
-| Aspect geometry / scope | `aspects.py`, `scope.py`, `--scope` | Ura/Nep/Ketu 2000–2016 event set |
+| Aspect geometry / scope | `aspects.py`, `scope.py`, `--scope` (wrap-safe multi-crossing, lens contract) | 2010–11 Jup–Sat triple opposition at a yearly lens; every event exact at its instant |
 | Trigger rules as data | `triggers.py`, `doctrine-triggers.toml`, `mined-triggers.toml`, `--rules` | all doctrine rules fire on their ground-truth charts |
-| Inverse learning (signatures/mining) | `signatures.py`, `scripts/mine_usgs.py`, `data/usgs-m7-1850-2020.csv` | split-half validation; real-position predicates replicate |
+| Inverse learning (signatures/mining) | `signatures.py`, `scripts/mine_usgs.py` (v2: declustered, climatology controls, permutation null) | NO survivors — max lift 1.79 vs null median 1.73, p = 0.35; mined rules RETIRED 2026-08-02 |
 | Forecast register | `WATCHLIST.md` | 19 windows (9 mined: instants+spots; 6 band: instants; 4 nodes: instants+Jupiter spots), outcome protocol |
 | Long-cycle families | conjunction rules in `doctrine-triggers.toml` | census: Ura-Nep ~171 y synodic (next ~2165); Jup-Sat 1881→Krakatoa, 2000→2004 |
 
@@ -172,6 +179,6 @@ Vyuham 1/126 yr — on the exact window NU named from memory).
 - `FRAMEWORK.md` — this file: the theory and its implementation status.
 - `README.md` — tool-by-tool usage, the 60-period drill, honesty notes.
 - `WATCHLIST.md` — registered forward windows, spots, outcome protocol.
-- `doctrine-triggers.toml` / `mined-triggers.toml` — rules as data (NU's vs mined).
+- `doctrine-triggers.toml` / `mined-triggers.toml` — rules as data (NU's vs mined — the mined three RETIRED 2026-08-02; their pre-registered windows stay graded).
 - `data/usgs-m7-1850-2020.csv` — pinned training corpus.
 - `.claude/tasks/ASTGRAF_TOOL.md` (repo) — decision ledger, every ruling dated.

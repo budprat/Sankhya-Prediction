@@ -158,14 +158,25 @@ with `--aspect-bodies` for full coverage.
 ## Trigger rules — how the system scales (`--rules doctrine-triggers.toml`)
 
 Every trigger pattern is DATA, not code: `doctrine-triggers.toml` holds the
-taught patterns (Chatur Vyuham, the band trigger, Neptune-on-Ketu, the Nepal
-double) as declarative rules built from eight primitives — conjunction, opposition,
-square, trine, axis_cross, cluster, same_band, in_band, plus nodes_occupied
-(the Hyderabad both-node-ends pattern, Moon excluded as the fast hand) — with `real:`
-prefixes for doctrinal ahead-positions and `escalate` blocks for severity.
-New inputs about what positions trigger events become a few lines in the
-file; `astgraf-bands --rules FILE` sweeps and scores every rule uniformly.
-The theory itself is documented in FRAMEWORK.md.
+taught patterns (both Chatur Vyuham variants, the band trigger, Neptune-on-Ketu,
+the Nepal double, the node/site rules) as declarative rules built from ten
+primitives — conjunction, opposition, square, trine, axis_cross (evaluated on
+the order-independent midline of both axis endpoints), cluster, same_band,
+in_band (single band or a band list, e.g. the Jupiter–Saturn Java-family
+sector), near_any (the scanner's giant-escalation geometry), and
+nodes_occupied (the Hyderabad both-node-ends pattern, Moon excluded as the
+fast hand) — with `real:` prefixes for doctrinal ahead-positions and
+`escalate` blocks for severity. Loading is guarded: unknown keys, unknown
+body names, structurally incomplete conditions, offset-less `real:` prefixes,
+and empty rulesets all fail the load instead of no-oping silently.
+
+`astgraf-bands --rules FILE` sweeps every rule uniformly, with fast-body
+rules on their own fine steps automatically (Ascendant 0.25 h, Moon 1 h);
+each episode gets its tightest instant (refined per the rule's own exactness
+metric, earliest-exact deterministic) and an acting-body spot only when a
+locatable body is genuinely within its condition's orb at that instant.
+Catalog scoring uses the step-honest chance baseline and reports
+out-of-range events separately. The theory itself is in FRAMEWORK.md.
 
 ## The nakshatra layer (`--horary`)
 
@@ -235,8 +246,12 @@ months match the printout.
 - **`astgraf-outcomes --episodes .../rules_episodes.csv`** — the
   assiduous-search step automated: for every passed watch window, query the
   USGS catalog (±window, radius around the spot) and log hit/clear/pending
-  to `outcomes.csv`. Future windows never touch the network. The news
-  channel joins when firecrawl has credits.
+  to `outcomes.csv`, each spot with its `spatial_chance` (the historical
+  fraction of M7+ events within the grading radius — the base rate behind
+  any hit; `--corpus` sets the reference catalog). Windows without a spot
+  stay on the ledger as `unassessed (no spot)`. Future windows never touch
+  the network. Only the quake channel is graded — the flood/volcanic
+  families need the news search (firecrawl credits pending).
 
 ## Honesty notes
 

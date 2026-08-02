@@ -129,7 +129,9 @@ place, not dates on a calendar.
   **1881 conjunction in Aswini → Krakatoa 1883; 2000 conjunction in
   Kritika → 2004 Sumatra tsunami** (both conjunctions in the Aswini–Kritika
   sector, both followed by Indonesian mega-events within 2–4 years). Last:
-  2020-12-21 (Uthrashada). Next: ~2040 — outside this register's span.
+  2020-12-21 (Uthrashada — outside the family sector, as is 2040's). The
+  family period is ~119 y (1881 → 2000), so the next Java-family return is
+  ~2119 — far outside this register's span.
 
 ## Amendment 2026-08-02 — locator rule v2 (distance-true light-times)
 
