@@ -516,3 +516,17 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   ruling (27 default, ladder parked, bands/precession untouched); (6)
   WATCHLIST Jup-Sat line — 2040 is outside the family sector; the ~119-y
   family period puts the next Java return ~2119.
+
+## 2026-08-03 — Migration: the engine has its own repo
+- NU: separate the system/engine from the iOS app. New home:
+  /Users/macbookpro/Sankhya-Prediction (tools/astgraf shape kept), fresh git
+  history, import commit 439de21 (from Astro working tree @ 3db9366).
+- Carried: the full engine + tests + docs + doctrine sources + AUDIT.md +
+  registered out/ artifacts (on disk; out/ stays git-ignored as before), this
+  ledger, and the BASIC canon into canon/ (closes audit F20 — the verbatim
+  port is now verifiable in-tree). de440.bsp kept on disk, git-ignored.
+  Session memory copied to the new project store and repointed.
+- Verified in the new location: uv sync clean, 183/183 tests, QUAKE.pdf
+  report reproduces (sidereal 2 H 6 M 47 S exact).
+- The Astro repo keeps the iOS app and its history; branches
+  feature/astgraf-tool and fix/engine-ss2-shim remain there unmerged.
