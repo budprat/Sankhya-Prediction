@@ -138,7 +138,7 @@ def test_horary_default_is_classical_27(tmp_path):
         "--year", "1987", "--month", "8", "--day", "28", "--time", "02:55",
         "--utc-offset", "+05:30", "--lon", "76:57E", "--lat", "28:48N",
         "--unit", "hour", "--step", "6", "--count", "3",
-        "--horary", "--no-aspects",
+        "--horary", "--no-aspects", "--equal",
         "--out", str(tmp_path),
     ])
     assert rc == 0
@@ -149,6 +149,8 @@ def test_horary_default_is_classical_27(tmp_path):
     assert len(rows) == 3 * 13
     assert "nakshatra" in fields and "pada" in fields and "navam" in fields
     assert "sub" not in fields and "division" not in fields
+    payload = json.loads((tmp_path / "positions.json").read_text())
+    assert payload["params"]["houses"] == "equal"
     asc = next(r for r in rows if r["index"] == "0" and r["body"] == "Ascendant")
     # 80.1068 deg sidereal: 25th pada -> Punarvasu 1, navamsa cycle restarts at Ari.
     assert asc["nakshatra"] == "Punarvasu"
@@ -170,7 +172,7 @@ def test_horary_ladder_28_flag_restores_252_grid(tmp_path):
         "--year", "1987", "--month", "8", "--day", "28", "--time", "02:55",
         "--utc-offset", "+05:30", "--lon", "76:57E", "--lat", "28:48N",
         "--unit", "hour", "--step", "6", "--count", "3",
-        "--horary", "--ladder", "28", "--no-aspects",
+        "--horary", "--ladder", "28", "--no-aspects", "--equal",
         "--out", str(tmp_path),
     ])
     assert rc == 0
@@ -193,14 +195,18 @@ def test_horary_ladder_28_flag_restores_252_grid(tmp_path):
 def test_rasi_output_at_nepal_quake_moment(tmp_path):
     # End to end: the QUAKE.pdf chart moment (tropical) must yield the PDF's
     # own RASI/NAVAMSAM placements from live engine positions.
+    # No house flag: Koch must be the DEFAULT (NU ruling 2026-08-02, matching
+    # ASTGRAF.BAS line 45 EQL$ = "KOCH") — the PDF placements depend on it.
     rc = main([
         "--year", "2015", "--month", "4", "--day", "25", "--time", "11:40",
         "--utc-offset", "+05:30", "--lon", "86:00E", "--lat", "28:00N",
-        "--tropical", "--koch", "--unit", "hour", "--step", "6", "--count", "1",
+        "--tropical", "--unit", "hour", "--step", "6", "--count", "1",
         "--rasi", "--no-aspects",
         "--out", str(tmp_path),
     ])
     assert rc == 0
+    payload = json.loads((tmp_path / "positions.json").read_text())
+    assert payload["params"]["houses"] == "koch"
     lines = (tmp_path / "rasi_navamsam.txt").read_text().splitlines()
     # File layout: label, blank, 21-line RASI box, blank, 21-line NAVAMSAM box.
     rasi_box, nav_box = lines[2:23], lines[24:45]

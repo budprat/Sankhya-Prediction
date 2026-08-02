@@ -48,8 +48,13 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--lat", default="0", help="latitude, e.g. 28:48N or 28.8")
     p.add_argument("--tropical", action="store_true",
                    help="tropical zodiac (default is sidereal with the suite ayanamsa)")
-    p.add_argument("--koch", action="store_true",
-                   help="Koch-style Ascendant (real obliquity); default is the equal path")
+    houses = p.add_mutually_exclusive_group()
+    houses.add_argument("--koch", action="store_true",
+                        help="Koch-style Ascendant (real obliquity) — the DEFAULT: "
+                             "the BAS's blank E/W prompt answer takes this path")
+    houses.add_argument("--equal", action="store_true",
+                        help="equal-house Ascendant path (the BAS's 'E' answer; "
+                             "the PRATEEK oracle setting)")
     p.add_argument("--style", choices=["wrapped", "cosine"], default="wrapped")
     p.add_argument("--locate", action="store_true",
                    help="write locations.csv: the light-time event spot for each aspect "
@@ -99,7 +104,7 @@ def main(argv: list[str] | None = None) -> int:
         utc_offset_hours=parse_utc_offset(args.utc_offset),
         longitude_east=parse_longitude(args.lon),
         latitude_north=parse_latitude(args.lat),
-        sidereal=not args.tropical, equal_houses=not args.koch,
+        sidereal=not args.tropical, equal_houses=args.equal,
         ayanamsa_rate_arcsec=args.ayanamsa_rate, ayanamsa_zero_year=args.ayanamsa_zero)
     spec = GridSpec(unit=PeriodUnit(args.unit), step=args.step, count=args.count)
 
@@ -134,7 +139,7 @@ def main(argv: list[str] | None = None) -> int:
             "utc_offset": args.utc_offset, "longitude_east": start.longitude_east,
             "latitude_north": start.latitude_north,
             "zodiac": "tropical" if args.tropical else "sidereal",
-            "houses": "koch" if args.koch else "equal",
+            "houses": "equal" if args.equal else "koch",
             "unit": spec.unit.value, "step": spec.step, "count": spec.count,
             "ayanamsa_formula": "(year - 294) * 151 / 10800",
             "accuracy_note": ACCURACY_NOTE,

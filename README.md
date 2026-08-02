@@ -23,8 +23,9 @@ uv run astgraf --year 2000 --month 1 --day 1 --time 12:00 \
 
 Units: `year | month | day | hour`, any step (60 hourly steps resolve
 conjunctions to the minute; `--unit year --step 800 --count 60` spans 48,000
-years). `--tropical` disables the ayanamsa; `--koch` uses the real-obliquity
-Ascendant path; `--style cosine` reproduces the heritage GRAPHDO fold.
+years). `--tropical` disables the ayanamsa; the real-obliquity (Koch)
+Ascendant path is the default, as in the BAS's blank E/W answer — `--equal`
+selects the equal path; `--style cosine` reproduces the heritage GRAPHDO fold.
 
 ## The 60-period drill (NU's canonical workflow)
 
@@ -190,9 +191,12 @@ deliberate omission of Ura/Nep/Plu from the NAVAMSAM chart. One block per
 period row plus one per refined aspect event. ASCII `|`/`-` stand in for the
 BAS's CP437 border glyphs. To reproduce QUAKE.pdf itself:
 `--year 2015 --month 4 --day 25 --time 11:40 --utc-offset +05:30 --lon 86:00E
---lat 28:00N --tropical --koch --rasi` (the PDF chart is the Koch path — the
-canon's equal/Koch setting changes the Ascendant itself, and ASTGRAF.BAS
-hardcodes `EQL$ = "KOCH"`).
+--lat 28:00N --tropical --rasi` (the PDF chart is the Koch path — the canon's
+E/W house answer changes the Ascendant itself. ASTGRAF.BAS asks "House system
+E or W" at run time and a blank answer takes the Koch path, which is why Koch
+is this CLI's default; `--equal` selects the equal path, the PRATEEK oracle
+setting. The oft-quoted `EQL$ = "KOCH"` at ASTGRAF.BAS:45 is a dead
+assignment — never read.)
 
 ## The matrix, the atlas, and the outcome logger
 
