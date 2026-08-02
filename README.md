@@ -45,9 +45,10 @@ uv run astgraf --year 2015 --month 1 --day 16 --unit hour --step 12 --count 60 \
 
 Bisection refinement makes the lenses agree to the minute (both give the
 2015-01-31 08:17 UT Uranus–Ketu conjunction) and `--locate` applies the
-light-time rotation — Jup 40 min, Sat 80, Ura 150, Nep 240, west from the
-culmination meridian — to give the spot (here 80.55E 4.67N, off southern
-Sri Lanka). One caveat: a coarse lens only resolves pairs whose relative
+light-time rotation — distance-true minutes (locator v2; the fixed
+40/80/150/240 anchors are the fallback), west from the culmination
+meridian — to give the spot (here 75.46E 4.67N, southern Laccadive Sea;
+Uranus's actual distance gave 170.4 light-minutes at this instant). One caveat: a coarse lens only resolves pairs whose relative
 motion per division stays under ~90° — at yearly steps use the slow bodies;
 descend the lens for the fast ones (each planet comes one by one).
 

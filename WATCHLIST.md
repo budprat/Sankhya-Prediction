@@ -116,9 +116,14 @@ place, not dates on a calendar.
 ## Doctrine: long-cycle families (added 2026-08-02)
 
 - **Uranus–Neptune conjunction** (flood-catastrophe family): engine census
-  1600–2030 shows triple-conjunction clusters every **167.6 years** —
-  1649–52, 1820–23, 1991–94 (Abhijit/Uthrashada). Next cluster ~2159.
-  No forward window in this register's span.
+  1600–2030 shows conjunction clusters every **~171 years** (the Ura–Nep
+  synodic; engine 171.0, modern 171.4) — 1649–52, 1820–23, 1991–94
+  (Abhijit/Uthrashada). Next cluster **~2165** (DE440: 2165-01). The 167.6
+  figure previously here was the doubled-Uranus/"168-year Neptune" convention
+  (engine 2×83.85 = 167.7), not the conjunction recurrence. Candidate clocks
+  for NU's ~163-y flood records (list awaited): Neptune TROPICAL return
+  163.5 y, Neptune sidereal return 164.5 y, Ura–Nep conjunction 171.0 y.
+  No forward window in this register's span on any of the three.
 - **Jupiter–Saturn conjunction** (Java/tsunami-volcanic family): ~19–20 y
   rhythm; the doctrine's ~120-year episode is concrete in the census —
   **1881 conjunction in Aswini → Krakatoa 1883; 2000 conjunction in

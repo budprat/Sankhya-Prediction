@@ -23,6 +23,14 @@ def _x(year: float, start: float, end: float, left: float, width: float) -> floa
     return left + (year - start) / (end - start) * width
 
 
+def sector_for_interval_end(end_year: float) -> str:
+    """Equinox sector for the passage ENDING at end_year: precession is
+    retrograde, so the walk counts sectors BACK from the 1996 Aswini exit
+    (consistent with precession.sector_occupancy)."""
+    back = round((DEFAULT_ZERO_YEAR - end_year) / SECTOR_YEARS)
+    return HORARY_NAKSHATRAS_28[back % 28]
+
+
 def render_atlas() -> str:
     width, left, panel_w = 1500, 90, 1350
     deep_top, deep_h = 70, 150
@@ -51,9 +59,7 @@ def render_atlas() -> str:
     marker_names = {"Punarvasu", "Magha", "Aswini", "Abhijit"}
     for i in range(len(boundaries) - 1):
         y0, y1 = boundaries[i], boundaries[i + 1]
-        # Sector occupied during [y0, y1): index walks backward from Aswini exit.
-        index = (0 - (len(boundaries) - 2 - i)) % 28
-        name = HORARY_NAKSHATRAS_28[index]
+        name = sector_for_interval_end(y1)
         x0 = _x(y0, DEEP_START, DEEP_END, left, panel_w)
         x1 = _x(y1, DEEP_START, DEEP_END, left, panel_w)
         fill = "#f6e7c8" if name in marker_names else ("#f0f0f0" if i % 2 else "#fafafa")
@@ -85,7 +91,7 @@ def render_atlas() -> str:
     # ---- Modern panel: conjunction cycles + event returns.
     parts.append(f'<text x="{left}" y="{modern_top - 10}" font-size="12" fill="#333">'
                  f'{MODERN_START} … {MODERN_END}: Jupiter–Saturn (~20 y ticks) and '
-                 'Uranus–Neptune (167.6 y clusters, engine census)</text>')
+                 'Uranus–Neptune (~171 y synodic clusters, engine census)</text>')
     parts.append(f'<rect x="{left}" y="{modern_top}" width="{panel_w}" '
                  f'height="{modern_h}" fill="none" stroke="#999"/>')
     for year in range(MODERN_START, MODERN_END + 1, 50):
@@ -106,9 +112,9 @@ def render_atlas() -> str:
     parts.append(f'<text x="{_x(1991, MODERN_START, MODERN_END, left, panel_w):.1f}" '
                  f'y="{modern_top + 14}" font-size="10" fill="#3333aa" '
                  'text-anchor="middle">Ura-Nep 1991-94</text>')
-    x2159 = _x(2100, MODERN_START, MODERN_END, left, panel_w)
-    parts.append(f'<text x="{x2159 - 4:.1f}" y="{modern_top + 40}" font-size="10" '
-                 'fill="#3333aa" text-anchor="end">next ~2159 →</text>')
+    x_edge = _x(2100, MODERN_START, MODERN_END, left, panel_w)
+    parts.append(f'<text x="{x_edge - 4:.1f}" y="{modern_top + 40}" font-size="10" '
+                 'fill="#3333aa" text-anchor="end">next ~2165 →</text>')
     for year, label in EVENT_MARKS:
         x = _x(year, MODERN_START, MODERN_END, left, panel_w)
         parts.append(f'<circle cx="{x:.1f}" cy="{modern_top + 80}" r="4" fill="#a33"/>')

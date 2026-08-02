@@ -91,9 +91,12 @@ connection; at nearest position the displacements are ~1000 km (Jupiter),
 ~6700-7200 km, tension on record.
 
 **Long-cycle families (NU, 2026-08-02).** A 1000-year record list exists
-(NU to share) for the Uranus–Neptune conjunction — engine-measured period
-167.6 y — as the large-flood family (2011–15 cluster: Uttarakhand, Kashmir,
-China, Europe, US/Canada). The Jupiter–Saturn conjunction's ~120-year
+(NU to share) for the Uranus–Neptune flood family (2011–15 cluster:
+Uttarakhand, Kashmir, China, Europe, US/Canada). The conjunction recurs at
+the **~171-y synodic** (engine 171.0; next cluster ~2165); NU's quoted
+"~163 years" matches Neptune's TROPICAL return (engine 163.5 y) and the
+old "168-year Neptune" is the doubled-Uranus convention (engine 167.7) —
+the awaited records list discriminates between these three clocks. The Jupiter–Saturn conjunction's ~120-year
 same-region return is the Java family: 1881 Aswini conjunction → Krakatoa
 1883; 2000 Kritika conjunction → 2004 Sumatra tsunami. Each 28×11 matrix
 cell is to accumulate confirmed event-synchronisation factors from past
@@ -106,9 +109,10 @@ records through assiduous search and only then it can be predictable."
 Retrodiction against recorded events is internal to the method, and the
 system "can be made as accurate as one wants" by descending the ladder.
 Scores are reported against chance baselines, pre-registered criteria,
-hits and misses alike (see ledger: band trigger 0/31 vs 3.45 expected;
-proximity census 4 episodes/30 yr; Chatur Vyuham 1/126 yr — on the exact
-window NU named from memory).
+hits and misses alike (see ledger: band trigger, grid mode 0/31 catalog
+hits vs 1.12 expected by chance; proximity mode 1/31 — March 2015 North
+India rain — vs 3.45 expected; proximity census 4 episodes/30 yr; Chatur
+Vyuham 1/126 yr — on the exact window NU named from memory).
 
 ## 4. Implementation map
 
@@ -125,7 +129,7 @@ window NU named from memory).
 | Trigger rules as data | `triggers.py`, `doctrine-triggers.toml`, `mined-triggers.toml`, `--rules` | all doctrine rules fire on their ground-truth charts |
 | Inverse learning (signatures/mining) | `signatures.py`, `scripts/mine_usgs.py`, `data/usgs-m7-1850-2020.csv` | split-half validation; real-position predicates replicate |
 | Forecast register | `WATCHLIST.md` | 15 windows with v2 instants/spots, outcome protocol |
-| Long-cycle families | conjunction rules in `doctrine-triggers.toml` | census: Ura-Nep 167.6 y; Jup-Sat 1881→Krakatoa, 2000→2004 |
+| Long-cycle families | conjunction rules in `doctrine-triggers.toml` | census: Ura-Nep ~171 y synodic (next ~2165); Jup-Sat 1881→Krakatoa, 2000→2004 |
 
 ## 5. Open questions (NU's to close)
 

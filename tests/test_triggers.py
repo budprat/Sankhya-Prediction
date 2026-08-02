@@ -44,6 +44,34 @@ def test_axis_cross_and_cluster_and_bands():
         Condition(type="in_band", bodies=["Moon"], band="Aswini")])).fired
 
 
+def test_near_any_primitive_matches_scanner_escalation():
+    # bands.py GIANTS semantics: escalation when a giant is within `orb` of ANY
+    # of the target bodies (min arc-distance <= one 28-band span).
+    span = 12.857142857142858
+    cond = Condition(type="near_any", bodies=["Uranus", "Neptune"],
+                     targets=["Moon", "Ketu", "Mars"], orb=span)
+    near = make_result({"Moon": 40.1, "Ketu": 40.6, "Mars": 41.0,
+                        "Uranus": 200.0, "Neptune": 50.0})
+    assert evaluate_rule(near, TriggerRule(name="n", conditions=[cond])).fired
+    far = make_result({"Moon": 40.1, "Ketu": 40.6, "Mars": 41.0,
+                       "Uranus": 200.0, "Neptune": 120.0})
+    assert not evaluate_rule(far, TriggerRule(name="n", conditions=[cond])).fired
+
+
+def test_band_trigger_escalates_on_either_giant():
+    # Predict.pdf p.1 names Uranus AND Neptune; the validated scanner escalates
+    # on either giant. The TOML must not silently drop Neptune (audit F1).
+    rules = {r.name: r for r in load_rules(DOCTRINE)}
+    rule = rules["band-trigger"]
+    base = {"Moon": 40.1, "Ketu": 40.6, "Mars": 41.0}
+    neptune_only = make_result({**base, "Neptune": 50.0, "Uranus": 200.0})
+    assert evaluate_rule(neptune_only, rule).level == "catastrophic"
+    uranus_only = make_result({**base, "Uranus": 50.0, "Neptune": 200.0})
+    assert evaluate_rule(uranus_only, rule).level == "catastrophic"
+    neither = make_result({**base, "Uranus": 200.0, "Neptune": 120.0})
+    assert evaluate_rule(neither, rule).level == "disruptive"
+
+
 def test_escalation_level():
     r = make_result({"Moon": 40.1, "Ketu": 40.6, "Mars": 41.0, "Uranus": 45.0})
     rule = TriggerRule(name="e", conditions=[

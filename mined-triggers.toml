@@ -1,6 +1,9 @@
 # MINED candidate triggers — NOT doctrine. Screened on half the USGS M7+ corpus
-# (1900-2020), replicated on the held-out half, but below formal significance
-# after multiple-comparison correction (~300 predicates screened). Provenance:
+# (1857-2020, the pinned 1850-2020 file), replicated on the held-out half, but
+# below formal significance after multiple-comparison correction (~300
+# predicates screened; audit 2026-08-02: the even/odd split is temporal leakage
+# for slow-planet predicates and the control offsets are aliased — treat the
+# lifts as upper bounds pending the batch-3 re-mining). Provenance:
 # scripts/mine_usgs.py over data/usgs-m7-1850-2020.csv, 2026-08-02.
 # Watch-list quality: firings mark windows to observe, not predictions.
 

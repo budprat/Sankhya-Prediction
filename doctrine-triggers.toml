@@ -20,8 +20,10 @@ description = "Predict.pdf: Moon+Ketu+Mars within one 28-band span (proximity re
 conditions = [
   { type = "cluster", bodies = ["Moon", "Ketu", "Mars"], max_spread = 12.857142857142858 },
 ]
+# Either giant within one 28-band span of any trio member — the validated
+# scanner's exact semantics (bands.py GIANTS; Predict.pdf names both giants).
 escalate = [
-  { type = "cluster", bodies = ["Moon", "Ketu", "Mars", "Uranus"], max_spread = 25.714285714285715 },
+  { type = "near_any", bodies = ["Uranus", "Neptune"], targets = ["Moon", "Ketu", "Mars"], orb = 12.857142857142858 },
 ]
 
 [[rule]]
