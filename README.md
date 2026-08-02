@@ -241,18 +241,57 @@ months match the printout.
   canon. The port is pinned bit-close (10 decimals, 13 bodies) to the app's JS
   engine run with its `ss2` table corrected to the BASIC DATA.
 - Keplerian mean elements are calibrated near epoch 1900: minute-level timing
-  near the modern era, degrees-level drift at tens of millennia. Deep-time
-  plots show cycle shapes, not minute-accurate positions.
-- Aspect events are only meaningful for bodies whose motion the sampling step
-  resolves: at yearly steps, Moon/Ascendant/inner-planet events are aliased
-  noise (the BASIC had the same limit); use day or hour steps for those, or
-  `--aspect-bodies Uranus,Neptune,Ketu` to restrict detection to named bodies
-  (plotting is unaffected).
+  near the modern era, but drift is already **degrees-level by the 1600s**
+  (Jupiter–Saturn conjunction timing −16 d at 1603, −31 d at 1623, vs DE440)
+  and grows beyond. Census years near the 1600s are trustworthy to ~a year,
+  not a day; deep-time plots show cycle shapes, not positions.
+- Aspect events are only emitted within the lens contract (relative motion up
+  to ~one cycle per division — wrap-safe and complete inside it, including
+  retrograde multi-passes). Pairs faster than the lens are **skipped with a
+  printed note**, never emitted as aliased noise; use day or hour steps for
+  Moon/Ascendant/inner-planet events, or `--aspect-bodies` to restrict.
 - The default ayanamsa is the suite's chart formula `(year − 294) · 151 / 10800`
   (50.333″/yr, wrapping in ~25,748 years) — kept for parity with the app engine.
   The doctrinal cycle is **25,739 years = 50.352″/yr** (Secrets of Sankhya);
   the precession clock uses it natively, and `--ayanamsa-rate 50.35` applies it
   to chart longitudes too.
+
+## Deliberate divergences from the BASIC canon
+
+The computation core is the BAS verbatim (oracle-pinned to the PRATEEK and
+QUAKE.pdf printouts and bit-close to the corrected JS engine). Exactly **two**
+engine behaviors deliberately diverge from the canon, both bug fixes, both
+tested, both ledger-recorded:
+
+1. **The Gregorian reform day** (`ephemeris.py`, `julian_day_number`). The
+   BAS/JS canon's strict `IF J > 2299171` misses the first Gregorian day
+   itself: 1582-10-15 mapped to a JDN ten days too big and JD ran *backward*
+   into 10-16. The port uses `>=` — one comparison changed. Pinned by
+   `test_gregorian_reform_day_maps_correctly` (1582-10-04 → 2299160,
+   1582-10-15 → 2299161). Residual on record: stepping calendar *fields*
+   across October 1582 still double-covers the ten phantom dates (Oct 5–14
+   don't exist); JD-driven paths (sweeps, `make_chart_at_jd`) are immune.
+
+2. **The ayanamsa year follows the instant** (`ephemeris.py`,
+   `compute_raw`). The canon takes the year from the input field; the port
+   derives it from the actual JD. For every run the BASIC could perform this
+   is **identical** — the BAS steps its year field so its `YR` was always
+   current, and its hour grids capped at 63 periods. It differs only on
+   multi-year hour-overflow sweeps (impossible in the BAS), which previously
+   froze the ayanamsa at the start year and corrupted every long census; plus
+   one sub-print-resolution edge (a 63-hour BAS grid crossing New Year holds
+   the old year's ayanamsa a few hours longer — ~50″, under the printout's
+   0.1° resolution). Pinned by
+   `test_ayanamsa_follows_the_instant_not_the_start_field`.
+
+One **ruled exception** (not a silent divergence): the nakshatra name
+**"Magha"** where the BAS DATA prints "Makha" — NU's explicit ruling,
+2026-08-02. Pre-existing port-level differences (double precision vs QBasic
+singles, ASTGRAF's `+7` where ASTROLOG has `+6`, the corrected `Z1 = Z1`
+typo, CSV/SVG in place of `.GRF`/VGA output, six decimals vs the `.GRF`'s
+one, real date labels vs the broken `YR` column, decimal hours vs packed
+`HH.MM` steps) are inventoried in `AUDIT.md` Part III §G and the decision
+ledger — none is silent.
 
 ## Tests
 
