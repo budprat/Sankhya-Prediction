@@ -207,3 +207,27 @@ The canonical artifacts `out/mined-forward/rules_episodes.csv` and
 `out/doctrine-forward/rules_episodes.csv` now hold the v3 rows; the outcome
 protocol (astgraf-outcomes) grades these. Spot caveat unchanged: ±1 h of
 timing moves a spot ±15° of longitude; names mark watch-region centers.
+
+## Amendment 2026-08-02 (v4) — mined rules retired; windows stay as the experiment
+
+The batch-3 honest re-mining (declustered post-1900 corpus, time-uniform
+climatology controls, 2-year-block split, add-one smoothed lifts, 200-run
+permutation calibration; `scripts/mine_usgs.py` v2 → `out/signatures-m7-v2`)
+retires all three mined rules: observed family-wise max lift **1.79** vs a
+permutation null median of 1.73 (95th percentile 2.12), **p = 0.35**; every
+top screening lift collapses on the held-out block-half; locator spatial
+skill is nil (median nearest-spot 4,896 km vs 5,007 km shuffled). The v1
+lifts (1.80/1.76/1.52) are attributed to aliased event-shifted controls and
+a leaky even/odd split. A methodological note for the record: a circular-
+shift pilot design promoted `sep:Uranus-Neptune@opp` to lift 55 purely
+through the catalog's pre-1900 completeness gradient meeting an era-locked
+predicate — era-locked slow-planet predicates cannot be assessed against
+event-shifted controls at all.
+
+**The 9 mined windows above REMAIN registered**: they were pre-registered
+before the re-mining, and the outcome protocol grades them regardless — as
+a falsifiable experiment now carrying no statistical support. The doctrine
+channel (band trigger, nodes, vyuham, site rules) is untouched by this
+verdict. `astgraf-outcomes` now also writes a `spatial_chance` column — the
+historical fraction of M7+ events within the grading radius of each spot —
+so any future "hit" is read against its base rate.

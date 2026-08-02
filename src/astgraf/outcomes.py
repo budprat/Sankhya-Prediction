@@ -42,6 +42,9 @@ def main(argv: list[str] | None = None, fetch=None) -> int:
     p.add_argument("--window-days", type=float, default=3.0)
     p.add_argument("--radius-km", type=float, default=1000.0)
     p.add_argument("--min-mag", type=float, default=5.5)
+    p.add_argument("--corpus", default="data/usgs-m7-1850-2020.csv",
+                   help="historical corpus for the spatial chance baseline "
+                        "(blank chance column if missing)")
     p.add_argument("--out", default="outcomes.csv")
     args = p.parse_args(argv)
     fetch = fetch or _default_fetch
@@ -51,20 +54,42 @@ def main(argv: list[str] | None = None, fetch=None) -> int:
         episodes = [r for r in csv.DictReader(fh)
                     if r.get("exact_instant") and r.get("spot_lon_east")]
 
+    corpus: list[tuple[float, float]] = []
+    try:
+        with open(args.corpus, newline="") as fh:
+            corpus = [(float(r["latitude"]), float(r["longitude"]))
+                      for r in csv.DictReader(fh)
+                      if r.get("latitude") and r.get("longitude")]
+    except OSError:
+        pass
+
+    def spatial_chance(lat: float, lon: float) -> str:
+        """Fraction of historical corpus events within the grading radius —
+        the honest base rate behind any 'hit' (audit findings 22/31)."""
+        if not corpus:
+            return ""
+        from .signatures import _gc_km
+        near = sum(1 for clat, clon in corpus
+                   if _gc_km(lat, lon, clat, clon) <= args.radius_km)
+        return f"{near / len(corpus):.4f}"
+
     results = []
     for e in episodes:
         instant = dt.date.fromisoformat(e["exact_instant"][:10])
         lo = instant - dt.timedelta(days=args.window_days)
         hi = instant + dt.timedelta(days=args.window_days)
+        chance = spatial_chance(float(e["spot_lat_north"]),
+                                float(e["spot_lon_east"]))
         if hi >= today:
-            results.append({**e, "verdict": "pending", "quakes": ""})
+            results.append({**e, "verdict": "pending", "quakes": "",
+                            "spatial_chance": chance})
             continue
         quakes = check_spot(float(e["spot_lat_north"]), float(e["spot_lon_east"]),
                             lo, hi + dt.timedelta(days=1),
                             args.radius_km, args.min_mag, fetch)
         summary = "; ".join(f"M{q['mag']} {q['place']}" for q in quakes)
         results.append({**e, "verdict": "hit" if quakes else "clear",
-                        "quakes": summary})
+                        "quakes": summary, "spatial_chance": chance})
 
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)

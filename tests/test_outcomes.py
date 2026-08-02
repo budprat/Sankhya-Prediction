@@ -41,13 +41,23 @@ def test_outcomes_verdicts_and_csv(tmp_path):
         calls.append(url)
         return fake_fetch(url)
 
+    corpus = tmp_path / "corpus.csv"
+    with open(corpus, "w", newline="") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(["time", "latitude", "longitude", "mag"])
+        writer.writerow(["2011-03-11T05:46:24.000Z", "4.9", "80.3", "7.0"])
+        writer.writerow(["2004-12-26T00:58:53.000Z", "-60.0", "-170.0", "7.1"])
     rc = main(["--episodes", str(episodes), "--today", "2026-08-02",
+               "--corpus", str(corpus),
                "--out", str(tmp_path / "outcomes.csv")], fetch=counting_fetch)
     assert rc == 0
     with open(tmp_path / "outcomes.csv", newline="") as fh:
         rows = {r["rule"]: r for r in csv.DictReader(fh)}
     assert rows["r-hit"]["verdict"] == "hit"
     assert "6.1" in rows["r-hit"]["quakes"]
+    # Spatial chance: 1 of 2 corpus events sits within 1000 km of the r-hit
+    # spot — the base rate is written next to the verdict (audit 22/31).
+    assert rows["r-hit"]["spatial_chance"] == "0.5000"
     assert rows["r-clear"]["verdict"] == "clear"
     assert rows["r-pending"]["verdict"] == "pending"
     assert "r-no-spot" not in rows
