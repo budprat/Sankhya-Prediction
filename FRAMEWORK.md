@@ -90,6 +90,21 @@ connection; at nearest position the displacements are ~1000 km (Jupiter),
 ~2000 (Saturn), ~4000 (Uranus) — NU's Neptune 8000 exceeds the physical
 ~6700-7200 km, tension on record.
 
+**Two-channel ruling (NU, 2026-08-02): real positions TIME the crossing;
+the OBSERVED image PLACES the marker.** The substratum channel is instant
+and lives at the real (ahead) positions — in every taught instance the
+Mathcad offsets decide which alignment is exact and when (Nepal's
+real-Uranus-on-Sun / real-Neptune-on-Ketu, Hyderabad's arithmetic), never
+geography. The marker channel is light: the effect manifests where the
+marker lands at arrival, and light arrives from the observed direction —
+so `real:`-timed rules still locate from the observed meridian with the
+light-time rotation. The coherent alternative is NOT real-meridian-plus-
+rotation (an instant channel does not wait 40–240 minutes) but
+real-meridian-with-ZERO-rotation; the two schemes differ by ~18–29° plus
+the rotation term, so the first confirmed forward hit discriminates them.
+Site rules (Ascendant crossings — Ulsoor, Hyderabad) are the instant
+channel's local geometry, consistent with this split.
+
 **Long-cycle families (NU, 2026-08-02).** A 1000-year record list exists
 (NU to share) for the Uranus–Neptune flood family (2011–15 cluster:
 Uttarakhand, Kashmir, China, Europe, US/Canada). The conjunction recurs at
