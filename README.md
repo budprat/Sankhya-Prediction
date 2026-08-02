@@ -1,0 +1,154 @@
+# Sankhya Prediction Engine
+
+**A Sankhyan event-prediction system**: planetary transit geometry → falsifiable,
+dated, located forecast windows — with the verification machinery to grade its
+own predictions against real-world event catalogs.
+
+Built as a faithful modern port of a family BASIC astrology suite
+(ASTGRAF/ASTROLOG/GRAPHDO/HORARY, preserved in [`canon/`](canon/)), extended
+into a full prediction pipeline from the Sankhyan doctrine of
+*Secrets of Sankhya* and its worked instances. Python 3.12 · zero heavy
+dependencies · 183 tests · MIT.
+
+```
+canon/                      The original BASIC suite (the computation canon, in-tree)
+tools/astgraf/              The engine: CLI tools, tests, doctrine rules, documents
+  ├── FRAMEWORK.md          The theory — how prediction works in this system
+  ├── WATCHLIST.md          Registered forward windows + outcome protocol
+  ├── AUDIT.md              Full adversarial audit: 127 findings, all resolved
+  ├── README.md             Tool-level docs: every CLI, flag, and output
+  ├── doctrine-triggers.toml  Taught trigger patterns as declarative rules
+  ├── mined-triggers.toml     Data-mined candidates (retired — see below)
+  └── data/                 Pinned USGS M7+ corpus 1850–2020
+.claude/tasks/ASTGRAF_TOOL.md   Dated decision ledger — every ruling, every change
+```
+
+## What it does
+
+**The engine** (`astgraf`) computes geocentric positions for 13 bodies with the
+canon's own arithmetic — truncated π, 1900-epoch Keplerian elements, 20-term
+Brown Moon, mean nodes, oblique-ascension Ascendant — pinned digit-for-digit
+against the original suite's printouts. On top of it:
+
+- **Period grids & graphs** — the suite's 60-period drill as one-command
+  "lenses": coarse year-grids to find an era's crossings, hour-grids to refine
+  an instant to the minute. SVG plots replace the VGA screen, CSV/JSON replace
+  the `.GRF` files.
+- **Aspect events** — wrap-safe, retrograde-aware crossing detection
+  (the 2010–11 Jupiter–Saturn triple opposition resolves at a *yearly* lens),
+  bisection-refined to the minute.
+- **The nakshatra layer** — classical 27-star position/pada/navamsam exactly
+  per the canon; the Sankhyan 28×9×7 = 1764 "instant" ladder available behind
+  `--ladder 28`.
+- **Band-coincidence scanner** (`astgraf-bands`) — the doctrine's 28-band ×
+  11-body table swept over any date range: Moon+Ketu+Mars coincidences,
+  giant-planet escalation, episode merging, catalog scoring against a
+  step-honest chance baseline.
+- **Declarative trigger rules** — every taught pattern is *data*, not code:
+  ten geometric primitives in TOML with schema-guarded loading. New doctrine
+  becomes a few lines in a file, swept and scored uniformly.
+- **The event locator** — the doctrine's light-time rule: crossings act
+  instantly in the substratum; the marker arrives at light speed; the spot is
+  the culmination meridian rotated west by light-minutes × 15°/h, latitude
+  from declination. Distance-true light-times from the engine's own geometry.
+- **Chatur Vyuham detector** — the fourfold array (crossing oppositions +
+  nodal lock); its 1900–2026 census fires exactly once: June 1–6, 2016.
+- **Precession clock** — the 25,739-year equinox cycle, 919.25 years per
+  sector, with the deep-time atlas SVG (48,000 years of sector passages).
+- **The report layer** (`--rasi`, `--report`) — the full classical horoscope
+  page: Koch house cusps, planet table with nakshatra/pada/navamsam, Vimshottari
+  Dasa/Bukti, and the RASI/NAVAMSAM box charts, reproducing the canon's own
+  printout value-for-value.
+- **Inverse learning & outcome grading** — signature extraction over the USGS
+  M7+ corpus, honest mining (declustered, climatology controls, permutation
+  null), and `astgraf-outcomes`: automatic grading of every passed forecast
+  window against the quake catalog, each spot with its spatial base rate.
+
+## Quick start
+
+```bash
+cd tools/astgraf
+uv sync
+
+# A 17-year yearly lens with aspect events and plots:
+uv run astgraf --year 2000 --month 1 --day 1 --time 12:00 \
+  --unit year --step 1 --count 17 --out out/demo
+
+# The classical horoscope page for the 2015 Nepal-earthquake chart
+# (reproduces the canon's QUAKE printout value-for-value):
+uv run astgraf --year 2015 --month 4 --day 25 --time 11:40 \
+  --utc-offset +05:30 --lon 86:00E --lat 28:00N --tropical \
+  --unit hour --step 6 --count 1 --report --name QUAKE --place NEPAL \
+  --no-aspects --out out/quake
+
+# Sweep the doctrine rules over a date range and score them:
+uv run astgraf-bands --start 2016-05-25 --days 15 \
+  --rules doctrine-triggers.toml --out out/vyuha-2016
+
+uv run pytest   # 183 tests
+```
+
+Full CLI documentation: [`tools/astgraf/README.md`](tools/astgraf/README.md).
+
+## The epistemic contract
+
+This project treats prediction claims the way its own doctrine demands —
+*"the predicting researchers should confirm such events from records through
+assiduous search and only then it can be predictable"*:
+
+- **Everything taught is a retrodiction** until a registered forward window
+  resolves. The taught instances (Nepal 2015, Hyderabad 2016, Ulsoor 2016,
+  the June 2016 vyuham, Krakatoa→2004) all reproduce under live execution —
+  and are labeled as retrodictions, not evidence of forward skill.
+- **Forward windows are pre-registered** in
+  [`WATCHLIST.md`](tools/astgraf/WATCHLIST.md) with exact instants, located
+  spots, and regeneration commands, then graded automatically by
+  `astgraf-outcomes` with spatial base rates. Nearest windows:
+  **Sept 30 – Oct 4 and Oct 13 – 19, 2026**.
+- **Negative results stay on the record.** The three data-mined candidate
+  rules were *retired* when honest re-mining (declustered corpus, time-uniform
+  climatology controls, 2-year-block split, 200-run permutation calibration)
+  showed their lifts were artifacts — max lift 1.79 vs a null median of 1.73,
+  p = 0.35. Their pre-registered windows remain graded as a falsifiable
+  experiment. The doctrine channel is untouched by this verdict.
+- **The whole system was adversarially audited**: two multi-agent audit
+  passes (135 fidelity checks + 53 executed-repro flaw hunts), every finding
+  fixed, ruled on, or recorded as a residual with its reason —
+  [`AUDIT.md`](tools/astgraf/AUDIT.md) is the complete ledger.
+
+## Provenance & fidelity
+
+- **The canon is in-tree** ([`canon/`](canon/)) and the port is verifiable
+  against it: all 144 planetary coefficients digit-for-digit, the truncated
+  `PI = 3.141592654`, the epoch arithmetic, the Ascendant chain — pinned by
+  oracle tests against the suite's own printouts (PRATEEK, QUAKE) and
+  bit-close parity with the corrected JS descendant of the suite.
+- **Exactly two engine behaviors deliberately diverge from the canon** (the
+  Gregorian reform-day comparison and the instant-derived ayanamsa year), both
+  bug fixes, both tested, both documented — see
+  ["Deliberate divergences"](tools/astgraf/README.md#deliberate-divergences-from-the-basic-canon).
+- **Accuracy honestly stated**: minute-level near the modern era,
+  degrees-level drift by the 1600s (cross-checked against JPL DE440);
+  deep-time plots show cycle shapes, not positions.
+
+## History
+
+`main` begins at the migration snapshot (the engine was developed inside the
+local Astro app repository). The complete 45-commit
+development history — every audit batch, ruling, and fix with its message —
+is preserved on the [`astro-history`](../../tree/astro-history) branch, and
+narratively in the [decision ledger](.claude/tasks/ASTGRAF_TOOL.md).
+
+## Status & roadmap
+
+Open doctrine inputs awaited: the NR/Rs/Ro constants table (Jupiter/Saturn
+real-position offsets), `precess.mcd`, the Vimshottari lords for the 7-fold
+instant level, and the 1,000-year flood-records list — which will
+discriminate between the three candidate long-cycle clocks (Neptune tropical
+163.5 y / Neptune sidereal 164.5 y / Uranus–Neptune synodic 171.0 y). The
+Abhijit-28 ladder decision is parked; the news-archive outcome channel joins
+when crawling credits allow.
+
+## License
+
+[MIT](LICENSE).
