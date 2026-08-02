@@ -42,7 +42,8 @@ def render_atlas() -> str:
              f'<text x="{left}" y="30" font-size="17" fill="#222">The deep-time atlas '
              '— 25,739-year precession clock and the modern conjunction cycles</text>',
              f'<text x="{left}" y="50" font-size="11" fill="#777">precession layer is '
-             'exact by construction (linear clock); planetary layers shown only in the '
+             'exact by construction (linear-clock doctrine; the real precession rate '
+             'varies); planetary layers shown only in the '
              'modern engine-validated window; deep-time planetary positions are '
              'qualitative</text>']
 

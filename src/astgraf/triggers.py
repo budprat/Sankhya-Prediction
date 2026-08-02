@@ -27,7 +27,7 @@ class Condition(BaseModel):
     orb: float = 3.0
     max_spread: float | None = None     # cluster
     level: int = 0                      # same_band grid level
-    band: str | int | None = None       # in_band target (name or 1..28)
+    band: str | int | list[str | int] | None = None  # in_band target(s)
     require: Literal["both", "either"] = "both"   # nodes_occupied: which node ends
 
     @model_validator(mode="after")
@@ -70,6 +70,17 @@ def _lon(result: ChartResult, name: str) -> float:
     return result.positions[name].longitude
 
 
+def _axis_dir(result: ChartResult, axis: list[str]) -> float:
+    """Axis direction from BOTH declared endpoints — the midline — so the
+    verdict cannot depend on the listed order (audit findings 19/29)."""
+    a = _lon(result, axis[0])
+    if len(axis) < 2:
+        return a
+    b = _lon(result, axis[1]) + 180.0
+    d = (b - a + 180.0) % 360.0 - 180.0
+    return (a + d / 2.0) % 360.0
+
+
 def _holds(result: ChartResult, c: Condition) -> bool:
     if c.type in ("conjunction", "opposition", "square", "trine"):
         a, b = (_lon(result, n) for n in c.bodies)
@@ -78,7 +89,8 @@ def _holds(result: ChartResult, c: Condition) -> bool:
                   "square": 90.0, "trine": 120.0}[c.type]
         return abs(sep - target) <= c.orb
     if c.type == "axis_cross":
-        cross = axis_angle(_lon(result, c.axes[0][0]), _lon(result, c.axes[1][0]))
+        cross = axis_angle(_axis_dir(result, c.axes[0]),
+                           _axis_dir(result, c.axes[1]))
         return abs(cross - c.angle) <= c.orb
     if c.type == "cluster":
         spread = circular_spread([_lon(result, n) for n in c.bodies])
@@ -104,9 +116,10 @@ def _holds(result: ChartResult, c: Condition) -> bool:
         return (held_rahu or held_ketu) if c.require == "either" \
             else (held_rahu and held_ketu)
     if c.type == "in_band":
-        index = (HORARY_NAKSHATRAS_28.index(c.band) + 1
-                 if isinstance(c.band, str) else int(c.band))
-        return all(division_of(_lon(result, n), 0) == index for n in c.bodies)
+        bands = c.band if isinstance(c.band, list) else [c.band]
+        indices = {HORARY_NAKSHATRAS_28.index(b) + 1 if isinstance(b, str)
+                   else int(b) for b in bands}
+        return all(division_of(_lon(result, n), 0) in indices for n in c.bodies)
     raise ValueError(c.type)
 
 

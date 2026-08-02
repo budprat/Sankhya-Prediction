@@ -78,7 +78,8 @@ lock, standing for weeks to months:
 
 **Fast layer — the trigger.** The Moon, Sun, and Ascendant crossing the
 loaded axes date the event to the day and hour (Hyderabad: Moon squares the
-Sun–Jupiter conjunction ~14h IST on the peak flood day; the Asc sweeps the
+Sun–Jupiter conjunction (engine: exact squares 15:30–19:30 IST) on the peak
+flood day; the Asc sweeps the
 cross arms twice daily). The Moon is the fast hand throughout: bands are
 named from it, and its dwell time sets every sweep step.
 
@@ -143,7 +144,7 @@ Vyuham 1/126 yr — on the exact window NU named from memory).
 | Aspect geometry / scope | `aspects.py`, `scope.py`, `--scope` | Ura/Nep/Ketu 2000–2016 event set |
 | Trigger rules as data | `triggers.py`, `doctrine-triggers.toml`, `mined-triggers.toml`, `--rules` | all doctrine rules fire on their ground-truth charts |
 | Inverse learning (signatures/mining) | `signatures.py`, `scripts/mine_usgs.py`, `data/usgs-m7-1850-2020.csv` | split-half validation; real-position predicates replicate |
-| Forecast register | `WATCHLIST.md` | 15 windows with v2 instants/spots, outcome protocol |
+| Forecast register | `WATCHLIST.md` | 19 windows (9 mined: instants+spots; 6 band: instants; 4 nodes: instants+Jupiter spots), outcome protocol |
 | Long-cycle families | conjunction rules in `doctrine-triggers.toml` | census: Ura-Nep ~171 y synodic (next ~2165); Jup-Sat 1881→Krakatoa, 2000→2004 |
 
 ## 5. Open questions (NU's to close)

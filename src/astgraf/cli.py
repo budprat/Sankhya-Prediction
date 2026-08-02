@@ -91,8 +91,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--ayanamsa-rate", type=float, default=None, metavar="ARCSEC",
                    help="ayanamsa arcsec/year override (e.g. 50.35); default keeps "
                         "the suite formula 151/10800 deg/yr")
-    p.add_argument("--ayanamsa-zero", type=int, default=294, metavar="YEAR",
-                   help="ayanamsa zero year for the rate override (default 294)")
+    p.add_argument("--ayanamsa-zero", type=int, default=None, metavar="YEAR",
+                   help="ayanamsa zero year for the rate override (default: 1996 "
+                        "— the ruled Aswini anchor — when --ayanamsa-rate is "
+                        "given; 294 for the suite formula)")
     p.add_argument("--no-aspects", action="store_true")
     p.add_argument("--aspect-bodies", default=None, metavar="A,B,...",
                    help="restrict aspect detection to these bodies "
@@ -112,7 +114,11 @@ def main(argv: list[str] | None = None) -> int:
         longitude_east=parse_longitude(args.lon),
         latitude_north=parse_latitude(args.lat),
         sidereal=not args.tropical, equal_houses=args.equal,
-        ayanamsa_rate_arcsec=args.ayanamsa_rate, ayanamsa_zero_year=args.ayanamsa_zero)
+        ayanamsa_rate_arcsec=args.ayanamsa_rate,
+        # Rate override without an explicit zero anchors at 1996 (NU's ruled
+        # equinox-at-0-Aswini anchor for the 50.35 reckoning; audit F-medium).
+        ayanamsa_zero_year=(args.ayanamsa_zero if args.ayanamsa_zero is not None
+                            else (1996 if args.ayanamsa_rate is not None else 294)))
     spec = GridSpec(unit=PeriodUnit(args.unit), step=args.step, count=args.count)
 
     aspect_bodies = None

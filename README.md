@@ -124,9 +124,12 @@ meridian) and rotate **west by light-time × 15°/hour**; latitude from the
 planet's declination. Rule v2 (2026-08-02): the light-time is computed from
 the planet's **actual distance at the instant** (engine geocentric distance,
 8.3167 min/AU) — NU's fixed minutes (Jup 40, Sat 80, Ura 150, Nep 240) remain
-the nearest-position anchors and the fallback. At nearest position the surface
-displacement is ~1000 km (Jupiter), ~2000 (Saturn), ~4000 (Uranus); NU's
-Neptune 8000 vs the physical ~6700–7200 km is a recorded tension.
+the fallback. Anchor honesty (audit): at the engine's nearest distances only
+Uranus (153.2) and Neptune (240.4) reproduce their figures; Jupiter 40 and
+Saturn 80 match the **mean** distances (nearest are 32.9 / 67.0). At nearest
+position the surface displacement is ~1000 km (Jupiter), ~2000 (Saturn),
+~4000 (Uranus); NU's Neptune 8000 vs the physical ~6700–7200 km is a
+recorded tension.
 `locations.csv` gives the spot for every event involving those four planets.
 
 ## Precession clock (`--precession YEAR`)
@@ -184,7 +187,8 @@ every 1/252-boundary crossing, bisection-refined, wrap- and retrograde-aware.
 Conventions (stated for correction): division *n* takes Vimshottari lord
 (*n*−1 mod 9); a division's first sub takes the division's own lord and cycles;
 sub-subs likewise from the sub's lord. `--ayanamsa-rate 50.35` switches to NU's
-50.35″/yr reckoning (`--ayanamsa-zero` sets its zero year, default 294).
+50.35″/yr reckoning, anchored at the ruled 1996 Aswini zero by default
+(`--ayanamsa-zero` overrides; the suite formula keeps its 294 CE zero).
 
 ## RASI and NAVAMSAM boxes (`--rasi`)
 

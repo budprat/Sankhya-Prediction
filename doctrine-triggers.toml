@@ -2,6 +2,13 @@
 # the system with new position inputs; no code changes needed.
 # Body names take a "real:" prefix for doctrinal ahead-positions (Ura/Nep).
 
+# The two chatur-vyuham rules encode the Neptune- and Uranus-partner variants
+# (doctrine accepts either as Jupiter's opposition arm; bands.py vyuha_state is
+# the validated full detector and --vyuha remains its canonical run). Known
+# narrowing, on record: each rule's node-lock escalate checks the Jupiter arm
+# only; the detector accepts either arm.
+# Orb rationale: opposition 3.0 = the census dwell orb; cross 5.0 and node-lock
+# 5.0 admit the June 2016 ground truth (cross 89.56, node axis 3.2 off the arm).
 [[rule]]
 name = "chatur-vyuham"
 description = "Fourfold array: Sun-Saturn x Jupiter-Neptune oppositions crossing at 90; nodes lock escalates"
@@ -12,6 +19,18 @@ conditions = [
 ]
 escalate = [
   { type = "axis_cross", axes = [["Rahu", "Ketu"], ["Jupiter", "Neptune"]], angle = 0.0, orb = 5.0 },
+]
+
+[[rule]]
+name = "chatur-vyuham-uranus"
+description = "Fourfold array, Uranus-partner variant: Sun-Saturn x Jupiter-Uranus crossing at 90; nodes lock escalates"
+conditions = [
+  { type = "opposition", bodies = ["Sun", "Saturn"], orb = 3.0 },
+  { type = "opposition", bodies = ["Jupiter", "Uranus"], orb = 3.0 },
+  { type = "axis_cross", axes = [["Sun", "Saturn"], ["Jupiter", "Uranus"]], angle = 90.0, orb = 5.0 },
+]
+escalate = [
+  { type = "axis_cross", axes = [["Rahu", "Ketu"], ["Jupiter", "Uranus"]], angle = 0.0, orb = 5.0 },
 ]
 
 [[rule]]
@@ -29,13 +48,19 @@ escalate = [
 [[rule]]
 name = "neptune-on-ketu"
 description = "Giant at node, observed positions (Hyderabad 2016-09: sep 1.15)"
+# Orb rationale: 2.0 admits the Hyderabad ground truth (1.13-1.15 across the
+# flood days) with margin, and stays under the nodes-occupied 4.0 general orb.
 conditions = [
   { type = "conjunction", bodies = ["Neptune", "Ketu"], orb = 2.0 },
 ]
 
 [[rule]]
 name = "uranus-neptune-conjunction"
-description = "NU: ~163-year cycle of large-scale flood catastrophes (2011-2015 cluster: Uttarakhand, Kashmir, China, Europe, US/Canada); 1000-year record list exists"
+description = "NU: large-scale flood-catastrophe family (2011-2015 cluster: Uttarakhand, Kashmir, China, Europe, US/Canada); 1000-year record list exists"
+# The conjunction recurs at the ~171-y synodic (next cluster ~2165). NU's
+# quoted ~163 years matches Neptune's TROPICAL return (163.5 y) — three
+# candidate clocks are on record in WATCHLIST; the records list discriminates.
+# Orb 3.0 = the census dwell orb (defines the 1649-52/1820-23/1991-94 spans).
 conditions = [
   { type = "conjunction", bodies = ["Uranus", "Neptune"], orb = 3.0 },
 ]
@@ -43,8 +68,13 @@ conditions = [
 [[rule]]
 name = "jupiter-saturn-conjunction"
 description = "NU: ~120-year same-position return - Krakatoa 1883 to the 2004 Java/Sumatra tsunami family"
+# Same-position membership (audit fix): the Java family lives in the
+# Aswini-Kritika sector (census: 1881 Aswini -> Krakatoa 1883; 2000 Kritika ->
+# 2004 tsunami). Conjunctions elsewhere (e.g. 2020 Uthrashada) are the ~20-y
+# rhythm, not this family. Orb 3.0 = the census dwell orb.
 conditions = [
   { type = "conjunction", bodies = ["Jupiter", "Saturn"], orb = 3.0 },
+  { type = "in_band", bodies = ["Jupiter"], band = ["Aswini", "Bharani", "Kritika"] },
 ]
 
 [[rule]]
@@ -53,6 +83,8 @@ description = "Hyderaba-floods.docx pattern (24-09-2016): nodal axis held at bot
 # The Moon is excluded from the holders: it is the fast trigger hand
 # (FRAMEWORK section 2), not a standing constraint - with it the rule fires
 # monthly and scores at chance.
+# Orb rationale: 4.0 admits the Hyderabad holders (Mercury 3.7 on Rahu,
+# Neptune 1.1 on Ketu) — the widest taught holder plus margin.
 conditions = [
   { type = "nodes_occupied", bodies = ["Sun", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"], orb = 4.0 },
 ]
@@ -65,6 +97,8 @@ name = "nodes-held-ascendant-cross"
 description = "Hyderabad flood site trigger (NU): the standing nodes-doubly-occupied constraint PLUS the local Ascendant crossing either held axis end - at Hyderabad 2016-09-23/24 the Asc crossed Mercury@Rahu ~04:49 IST and Neptune@Ketu ~17:04 IST (evening cloudburst); site-specific"
 conditions = [
   { type = "nodes_occupied", bodies = ["Sun", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"], orb = 4.0 },
+  # Asc orb 5.0: the Asc moves ~1 deg/4 min, so 5 deg = the ~40-min site
+  # window each crossing (matches the taught 04:49/17:04 IST Hyderabad hours).
   { type = "nodes_occupied", bodies = ["Ascendant"], orb = 5.0, require = "either" },
 ]
 escalate = [
@@ -81,6 +115,8 @@ conditions = [
 [[rule]]
 name = "nepal-double"
 description = "Mathcad-QUAKE: real-Neptune on Ketu AND real-Uranus on the Sun simultaneously"
+# Orb rationale: 1.5 admits the Nepal ground truth (0.34 and 0.69) with margin
+# while keeping the double signature rare (4 firings in 126 years).
 conditions = [
   { type = "conjunction", bodies = ["real:Neptune", "Ketu"], orb = 1.5 },
   { type = "conjunction", bodies = ["real:Uranus", "Sun"], orb = 1.5 },

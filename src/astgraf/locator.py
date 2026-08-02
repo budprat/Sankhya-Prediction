@@ -12,9 +12,12 @@ from .models import ChartResult
 # planet-to-Earth light times: rotation west = minutes x 0.25 deg. Refined
 # 2026-08-02: the displacement follows the planet's ACTUAL distance ("these
 # figures are for the nearest position") — when the chart carries a distance,
-# the light-time is computed from it; these constants remain the fallback and
-# the nearest-position anchors (Jup ~1000 km, Sat ~2000, Ura ~4000; NU's
-# Neptune 8000 exceeds the physical ~6700-7200 km — tension on record).
+# the light-time is computed from it; these constants remain the fallback.
+# Anchor honesty (audit): at the engine's own NEAREST distances only Uranus
+# (153.2) and Neptune (240.4) reproduce their figures; Jupiter 40 and Saturn
+# 80 match the MEAN distances (engine 43.7 / 80.2 — nearest are 32.9 / 67.0).
+# Ground-scale notes: Jup ~1000 km, Sat ~2000, Ura ~4000; NU's Neptune 8000
+# exceeds the physical ~6700-7200 km — tension on record.
 LIGHT_MINUTES = {"Jupiter": 40.0, "Saturn": 80.0, "Uranus": 150.0, "Neptune": 240.0}
 
 ENGINE_UNITS_PER_AU = 3.141592654 / 180   # the suite's AU-through-ANR quirk

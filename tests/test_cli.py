@@ -225,6 +225,26 @@ def test_rasi_output_at_nepal_quake_moment(tmp_path):
     assert "Plu" not in nav_text
 
 
+def test_ayanamsa_rate_override_anchors_at_1996(tmp_path):
+    # Audit F-medium: --ayanamsa-rate 50.35 used to keep the 294 CE zero; the
+    # ruled anchor for that reckoning is the 1996 Aswini zero.
+    suns = {}
+    for tag, extra in (("plain", []), ("z1996", ["--ayanamsa-zero", "1996"]),
+                       ("z294", ["--ayanamsa-zero", "294"])):
+        rc = main(["--year", "2015", "--month", "4", "--day", "25",
+                   "--time", "11:40", "--utc-offset", "+05:30",
+                   "--lon", "86:00E", "--lat", "28:00N",
+                   "--ayanamsa-rate", "50.35",
+                   "--unit", "hour", "--step", "6", "--count", "1",
+                   "--no-aspects", "--out", str(tmp_path / tag), *extra])
+        assert rc == 0
+        with open(tmp_path / tag / "positions.csv", newline="") as fh:
+            row = next(csv.DictReader(fh))
+        suns[tag] = float(row["Sun"])
+    assert suns["plain"] == pytest.approx(suns["z1996"], abs=1e-9)
+    assert abs(suns["plain"] - suns["z294"]) > 1.0
+
+
 def test_report_flag_writes_quake_page(tmp_path):
     rc = main([
         "--year", "2015", "--month", "4", "--day", "25", "--time", "11:40",

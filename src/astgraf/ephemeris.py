@@ -57,7 +57,7 @@ PLANET_ELEMENTS = [
 
 
 def ayanamsa(year: int) -> float:
-    """Linear ayanamsa of the suite; wraps a full circle in ~25,720 years."""
+    """Linear ayanamsa of the suite; wraps a full circle in ~25,748 years."""
     return (year - 294) * 151 / 10800
 
 

@@ -44,6 +44,59 @@ def test_axis_cross_and_cluster_and_bands():
         Condition(type="in_band", bodies=["Moon"], band="Aswini")])).fired
 
 
+def test_axis_cross_uses_both_endpoints_order_independent():
+    # Audit findings 19/29: anchoring on each axis's FIRST body made marginal
+    # firings depend on the declared order. The midline of both endpoints is
+    # order-independent: Sun 73/Saturn 251 -> axis 72; Jup 163/Nep 345 -> 164;
+    # cross = 92 deg — same verdict both ways, at any orb.
+    r = make_result({"Sun": 73.0, "Saturn": 251.0,
+                     "Jupiter": 163.0, "Neptune": 345.0})
+
+    def fired(axes, orb):
+        rule = TriggerRule(name="x", conditions=[
+            Condition(type="axis_cross", axes=axes, angle=90.0, orb=orb)])
+        return evaluate_rule(r, rule).fired
+    fwd = [["Sun", "Saturn"], ["Jupiter", "Neptune"]]
+    swap = [["Saturn", "Sun"], ["Neptune", "Jupiter"]]
+    for orb in (0.5, 2.5):
+        assert fired(fwd, orb) == fired(swap, orb), orb
+    assert not fired(fwd, 0.5)      # midline cross is 92, not 90
+    assert fired(fwd, 2.5)
+
+
+def test_in_band_accepts_a_band_list():
+    # Sector membership (Java-family encoding): Aswini..Kritika = bands 1-3.
+    r = make_result({"Jupiter": 30.0})          # 30 deg = band 3 (Kritika)
+    rule = TriggerRule(name="b", conditions=[
+        Condition(type="in_band", bodies=["Jupiter"],
+                  band=["Aswini", "Bharani", "Kritika"])])
+    assert evaluate_rule(r, rule).fired
+    out = make_result({"Jupiter": 260.0})       # Abhijit — outside the family
+    assert not evaluate_rule(out, rule).fired
+
+
+def test_jupiter_saturn_rule_requires_the_java_family_sector():
+    # Audit F-medium: the rule described the ~120-y same-position Java family
+    # but fired on EVERY ~20-y conjunction. It must fire on 2000-05 (Kritika,
+    # -> 2004 tsunami family) and NOT on 2020-12 (Uthrashada).
+    rules = {r.name: r for r in load_rules(DOCTRINE)}
+    rule = rules["jupiter-saturn-conjunction"]
+    kritika = compute_raw(2000, 5, 28, 12.0, 0.0, 0.0, 0.0, True, False)
+    assert evaluate_rule(kritika, rule).fired
+    uthrashada = compute_raw(2020, 12, 21, 12.0, 0.0, 0.0, 0.0, True, False)
+    assert not evaluate_rule(uthrashada, rule).fired
+
+
+def test_chatur_vyuham_uranus_partner_rule_exists():
+    # Audit F-medium: doctrine accepts Uranus as Jupiter's opposition partner
+    # (bands.py vyuha_state does); the TOML now carries both variants.
+    rules = {r.name: r for r in load_rules(DOCTRINE)}
+    assert "chatur-vyuham-uranus" in rules
+    axes = [ax for c in rules["chatur-vyuham-uranus"].conditions
+            for ax in c.axes]
+    assert ["Jupiter", "Uranus"] in axes or ["Uranus", "Jupiter"] in axes
+
+
 def test_toml_schema_guards_reject_silent_traps(tmp_path):
     # Audit findings 12/23/30/48: typo keys, empty rulesets, unknown bodies,
     # and offset-less real: prefixes must FAIL the load, not no-op silently.
@@ -158,8 +211,9 @@ def test_escalation_level():
 
 def test_doctrine_rules_load_and_fire_on_ground_truths():
     rules = {r.name: r for r in load_rules(DOCTRINE)}
-    assert set(rules) == {"chatur-vyuham", "band-trigger", "neptune-on-ketu",
-                          "nepal-double", "uranus-neptune-conjunction",
+    assert set(rules) == {"chatur-vyuham", "chatur-vyuham-uranus", "band-trigger",
+                          "neptune-on-ketu", "nepal-double",
+                          "uranus-neptune-conjunction",
                           "jupiter-saturn-conjunction", "nodes-doubly-occupied",
                           "uranus-neptune-combo-on-ascendant",
                           "nodes-held-ascendant-cross"}
