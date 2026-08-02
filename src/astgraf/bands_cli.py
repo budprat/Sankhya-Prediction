@@ -79,10 +79,13 @@ def main(argv: list[str] | None = None) -> int:
     if args.vyuha:
         return run_vyuha(args, start, steps, step_hours, step_days)
 
+    from .models import parse_utc_offset
+    # --utc-offset shifts the sweep clock in every mode (audit finding 51).
+    site = dict(SITE_FREE, engine_gmt=-parse_utc_offset(args.utc_offset))
     samples = []
     for k in range(steps):
         hours = k * step_hours
-        result = compute_raw(start.year, start.month, start.day, hours, **SITE_FREE)
+        result = compute_raw(start.year, start.month, start.day, hours, **site)
         state = trigger_state(result, level=args.level, proximity=args.proximity)
         samples.append((result.jd, label_for_jd(result.jd), state))
 
@@ -125,8 +128,10 @@ def main(argv: list[str] | None = None) -> int:
             for giant in e.giants:
                 spot = locate(tight_chart, giant)
                 if spot:
-                    spots.append(f"{giant}:{spot.event_longitude_east:.2f}E,"
-                                 f"{spot.event_latitude_north:.2f}N")
+                    lon, lat = spot.event_longitude_east, spot.event_latitude_north
+                    spots.append(
+                        f"{giant}:{abs(lon):.2f}{'E' if lon >= 0 else 'W'},"
+                        f"{abs(lat):.2f}{'N' if lat >= 0 else 'S'}")
             writer.writerow([e.start_label, e.end_label, e.band, e.division,
                              "->".join(e.nakshatras), e.level,
                              label_for_jd(jd_tight), " ".join(e.giants),
@@ -279,10 +284,12 @@ def run_rules(args, start, steps, step_hours, step_days) -> int:
 
 
 def run_vyuha(args, start, steps, step_hours, step_days) -> int:
+    from .models import parse_utc_offset
+    site = dict(SITE_FREE, engine_gmt=-parse_utc_offset(args.utc_offset))
     samples = []
     for k in range(steps):
         result = compute_raw(start.year, start.month, start.day,
-                             k * step_hours, **SITE_FREE)
+                             k * step_hours, **site)
         samples.append((result.jd, label_for_jd(result.jd), vyuha_state(result)))
 
     out = Path(args.out)

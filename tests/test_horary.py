@@ -116,6 +116,19 @@ def _rows(samples):
     return rows
 
 
+def test_boundary_longitudes_stay_internally_consistent():
+    # Audit finding 42: exact k*span boundaries could pair one level's cell
+    # with the neighbour's at another level. Every level must nest.
+    for k in range(252):
+        for lon in (k * SUB_SPAN_FOR_TEST, k * SUB_SPAN_FOR_TEST + 1e-9):
+            p = horary_position(lon)
+            assert (p.division - 1) * 9 < p.sub <= p.division * 9, (k, lon)
+            assert (p.sub - 1) * 7 < p.subsub <= p.sub * 7, (k, lon)
+
+
+SUB_SPAN_FOR_TEST = 360.0 / 252
+
+
 def test_sub_boundary_crossing_detected_and_refined():
     # Boundary between subs 56 and 57 sits at exactly 80.0 deg (56 * 360/252).
     def pos(jd):

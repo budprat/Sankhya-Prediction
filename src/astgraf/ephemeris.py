@@ -73,7 +73,10 @@ def julian_day_number(year: int, month: int, day: float) -> float:
     im = 12 * (year + 4800) + month - 3
     j = (2 * (im - math.floor(im / 12) * 12) + 7 + 365 * im) / 12
     j = math.floor(j) + day + math.floor(im / 48) - 32083
-    if j > 2299171:
+    # >= not > (audit finding 34): the BAS/JS canon's strict test misses the
+    # first Gregorian day itself — 1582-10-15 came out 10 days too big and JD
+    # ran backward into 10-16. Deliberate one-comparison divergence, on record.
+    if j >= 2299171:
         j += math.floor(im / 4800) - math.floor(im / 1200) + 38
     return j
 

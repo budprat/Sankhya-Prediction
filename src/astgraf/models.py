@@ -59,6 +59,18 @@ class ChartMoment(BaseModel):
     # Ayanamsa override: None keeps the suite formula (151/10800 deg/yr, zero 294 CE).
     # NU's alternative reckoning is 50.35 arcsec/yr from the Aswini zero.
     ayanamsa_rate_arcsec: float | None = None
+
+    @model_validator(mode="after")
+    def _calendar_date_exists(self):
+        # Audit finding 50: Feb 31 used to normalize silently to a different
+        # date. (Row stepping overflows through compute_raw, not this model.)
+        import calendar
+        if self.year >= 1:
+            last = calendar.monthrange(self.year, self.month)[1]
+            if self.day > last:
+                raise ValueError(
+                    f"impossible date {self.year}-{self.month:02d}-{self.day:02d}")
+        return self
     ayanamsa_zero_year: int = 294
 
     @property

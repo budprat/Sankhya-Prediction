@@ -65,14 +65,29 @@ def render_scope(positions: dict[str, float], title: str = "", orb: float = 3.0)
 
     # Bodies, with labels staggered when neighbors crowd within 6 degrees.
     ordered = sorted(positions.items(), key=lambda kv: kv[1])
+    staggers = []
     stagger = 0
     prev_lon = None
-    for name, lon in ordered:
+    for _, lon in ordered:
         if prev_lon is not None and (lon - prev_lon) % 360 < 6:
             stagger = (stagger + 1) % 3
         else:
             stagger = 0
+        staggers.append(stagger)
         prev_lon = lon
+    # Wrap seam (audit finding 43): bodies straddling 0 Aries crowd too — if
+    # the first shares the last one's stagger, re-walk the leading crowd.
+    if (len(ordered) > 1 and (ordered[0][1] - ordered[-1][1]) % 360 < 6
+            and staggers[0] == staggers[-1]):
+        stagger = staggers[-1]
+        prev_lon = ordered[-1][1] - 360
+        for i, (_, lon) in enumerate(ordered):
+            if (lon - prev_lon) % 360 >= 6:
+                break
+            stagger = (stagger + 1) % 3
+            staggers[i] = stagger
+            prev_lon = lon
+    for (name, lon), stagger in zip(ordered, staggers):
         color = PALETTE.get(name, "#000")
         bx, by = wheel_xy(lon, R_BODY)
         lx, ly = wheel_xy(lon, R_BODY - 26 - 20 * stagger)

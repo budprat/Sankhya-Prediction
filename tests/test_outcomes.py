@@ -60,6 +60,7 @@ def test_outcomes_verdicts_and_csv(tmp_path):
     assert rows["r-hit"]["spatial_chance"] == "0.5000"
     assert rows["r-clear"]["verdict"] == "clear"
     assert rows["r-pending"]["verdict"] == "pending"
-    assert "r-no-spot" not in rows
+    # No-spot windows stay on the ledger as unassessed (audit finding 24).
+    assert rows["r-no-spot"]["verdict"] == "unassessed (no spot)"
     # Pending windows must not hit the network.
     assert all("latitude=10.0" not in url for url in calls)

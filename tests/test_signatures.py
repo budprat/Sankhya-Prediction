@@ -129,6 +129,14 @@ def test_spot_features_match_the_forward_model():
     assert 50 <= delta <= 70      # ~60 deg for Neptune's ~4 h of rotation
 
 
+def test_chart_for_time_accepts_timestamps_without_milliseconds():
+    # Audit finding 52: "…:24Z" (no .000) is a legal USGS timestamp.
+    from astgraf.signatures import _chart_for_time
+    plain = _chart_for_time("2011-03-11T05:46:24Z")
+    with_ms = _chart_for_time("2011-03-11T05:46:24.000Z")
+    assert plain.jd == pytest.approx(with_ms.jd, abs=1e-9)
+
+
 def test_permutation_null_flags_a_real_plant():
     from astgraf.signatures import permutation_max_lift
     events = [{"sep:A-B": 1.0} for _ in range(20)]

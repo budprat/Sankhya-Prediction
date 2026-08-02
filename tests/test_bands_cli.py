@@ -3,6 +3,8 @@
 
 import csv
 
+import pytest
+
 from astgraf.bands_cli import main
 
 
@@ -91,8 +93,13 @@ def test_band_episode_spots_stable_across_steps(tmp_path):
         assert rows, f"step {step}: the 2017-01 Neptune episode must appear"
         assert rows[0]["tight_instant"]
         spots[step] = rows[0]["giant_spots"]
-    lon12 = float(spots["12"].split(":")[1].split("E")[0])
-    lon3 = float(spots["3"].split(":")[1].split("E")[0])
+
+    def lon_of(spot_text):
+        import re as _re
+        m = _re.search(r"Neptune:(\d+\.\d+)([EW])", spot_text)
+        assert m, spot_text
+        return float(m.group(1)) * (1 if m.group(2) == "E" else -1)
+    lon12, lon3 = lon_of(spots["12"]), lon_of(spots["3"])
     assert abs((lon12 - lon3 + 180) % 360 - 180) < 3.0, (lon12, lon3)
 
 
@@ -110,6 +117,18 @@ def test_vyuha_cli_finds_june_2016(tmp_path):
     assert e["partner"] == "Neptune"
     assert e["start"] <= "2016-06-03" <= e["end"]
     assert abs(float(e["best_cross_deg"]) - 90) < 1
+
+
+def test_utc_offset_shifts_the_band_scan_clock(tmp_path):
+    # Audit finding 51: --utc-offset was silently ignored outside --rules.
+    jds = {}
+    for tag, offset in (("z", "+00:00"), ("e", "+06:00")):
+        rc = main(["--start", "2014-04-10", "--days", "1", "--step-hours", "24",
+                   "--utc-offset", offset, "--out", str(tmp_path / tag)])
+        assert rc == 0
+        with open(tmp_path / tag / "sweep.csv", newline="") as fh:
+            jds[tag] = float(next(csv.DictReader(fh))["jd"])
+    assert jds["z"] - jds["e"] == pytest.approx(0.25, abs=1e-6)
 
 
 def test_level1_defaults_to_hourly_steps(tmp_path):

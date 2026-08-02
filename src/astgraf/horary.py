@@ -103,11 +103,16 @@ class SubCrossing(BaseModel):
 
 def horary_position(longitude: float) -> HoraryPosition:
     lon = longitude % 360.0
-    division = int(lon // DIVISION_SPAN) + 1
-    sub = int(lon // SUB_SPAN) + 1
-    subsub = int(lon // SUBSUB_SPAN) + 1
-    division_index = division - 1
-    sub_in_division = sub - division_index * 9 - 1        # 0..8
+    # Hierarchical indexing (audit finding 42): deriving each level from the
+    # one above keeps division/sub/sub-sub consistent at exact boundaries,
+    # where independent floors could split across cells by float residue.
+    division_index = int(lon // DIVISION_SPAN)
+    offset = lon - division_index * DIVISION_SPAN
+    sub_in_division = min(8, int(offset / SUB_SPAN))      # 0..8
+    sub = division_index * 9 + sub_in_division + 1
+    offset_sub = offset - sub_in_division * SUB_SPAN
+    subsub = (sub - 1) * 7 + min(6, int(offset_sub / SUBSUB_SPAN)) + 1
+    division = division_index + 1
     sub_lord_index = (division_index + sub_in_division) % 9
     return HoraryPosition(
         longitude=lon,

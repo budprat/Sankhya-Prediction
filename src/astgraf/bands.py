@@ -257,25 +257,42 @@ def parse_event_window(year_cell, month_cell, date_cell) -> tuple[dt.date, dt.da
     lowered = text.lower()
 
     dates: list[dt.date] = []
-    # "Month 18(th)(, 2014)" and "18(th) Month (2014)"; (?!\d) stops the day pattern
-    # from eating the first digits of a four-digit year ("October 2015" is not day 20).
-    for m in re.finditer(rf"({_MONTH_RE})\.?\s+(\d{{1,2}})(?:st|nd|rd|th)?(?!\d)(?:\s*,?\s*(\d{{4}}))?",
-                         lowered):
+    # Guards (audit findings 18/36/37/39): month tokens must stand alone
+    # ((?<![a-z])...(?![a-z]) — "Marmara"/"Junction" are not months); the day
+    # must not be digits torn off a year ("2015 October 26" is not day 15,
+    # (?<!\d)) nor off a magnitude ("M7.8 May 12" is not day 8, (?<![\d.])).
+    month_tok = rf"(?<![a-z])({_MONTH_RE})(?![a-z])"
+    day_tok = r"(?<![\d.])(\d{1,2})(?:st|nd|rd|th)?(?!\d)"
+    for m in re.finditer(rf"{month_tok}\.?\s+(\d{{1,2}})(?:st|nd|rd|th)?(?!\d)"
+                         rf"(?:\s*,?\s*(\d{{4}}))?", lowered):
         dates.append(dt.date(int(m.group(3) or year), _MONTHS[m.group(1)], int(m.group(2))))
-    for m in re.finditer(rf"(\d{{1,2}})(?:st|nd|rd|th)?(?!\d)\s+({_MONTH_RE})\.?,?\s*(\d{{4}})?",
-                         lowered):
+    for m in re.finditer(rf"{day_tok}\s+(?<![a-z])({_MONTH_RE})(?![a-z])"
+                         rf"\.?,?\s*(\d{{4}})?", lowered):
         dates.append(dt.date(int(m.group(3) or year), _MONTHS[m.group(2)], int(m.group(1))))
+    # Range tails: "July 8 and 9", "July 8 - 10", "July 8 to 10" (finding 37).
+    for m in re.finditer(rf"{month_tok}\.?\s+(\d{{1,2}})(?:st|nd|rd|th)?"
+                         rf"\s*(?:and|to|[-–])\s*(\d{{1,2}})(?!\d)", lowered):
+        dates.append(dt.date(year, _MONTHS[m.group(1)], int(m.group(3))))
     if dates:
+        # Cross-year ranges ("December 28 - January 3"): a same-year reading
+        # spans most of the calendar; the early months belong to year+1.
+        if (max(dates) - min(dates)).days > 300:
+            dates = [d.replace(year=d.year + 1) if d.month <= 6 else d
+                     for d in dates]
         return min(dates), max(dates), "day"
 
-    months: list[tuple[int, int]] = []
-    for m in re.finditer(rf"({_MONTH_RE})[a-z]*\.?\s*(\d{{4}})?", lowered):
-        months.append((int(m.group(2) or year), _MONTHS[m.group(1)]))
-    if months:
-        y0, m0 = min(months)
-        y1, m1 = max(months)
-        return (dt.date(y0, m0, 1),
-                dt.date(y1, m1, calendar.monthrange(y1, m1)[1]), "month")
+    # Month precision: the free-text cell first; if it names no month (e.g. a
+    # place name), fall back to the dedicated month column.
+    for source in (lowered, f"{month_cell or ''}".strip().lower()):
+        months: list[tuple[int, int]] = []
+        for m in re.finditer(rf"(?<![a-z])({_MONTH_RE})(?![a-z])\.?\s*(\d{{4}})?",
+                             source):
+            months.append((int(m.group(2) or year), _MONTHS[m.group(1)]))
+        if months:
+            y0, m0 = min(months)
+            y1, m1 = max(months)
+            return (dt.date(y0, m0, 1),
+                    dt.date(y1, m1, calendar.monthrange(y1, m1)[1]), "month")
 
     return dt.date(year, 1, 1), dt.date(year, 12, 31), "year"
 

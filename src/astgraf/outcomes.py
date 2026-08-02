@@ -51,8 +51,13 @@ def main(argv: list[str] | None = None, fetch=None) -> int:
     today = dt.date.fromisoformat(args.today) if args.today else dt.date.today()
 
     with open(args.episodes, newline="") as fh:
-        episodes = [r for r in csv.DictReader(fh)
-                    if r.get("exact_instant") and r.get("spot_lon_east")]
+        all_rows = list(csv.DictReader(fh))
+    # Windows without a spot stay ON the ledger as unassessed — silently
+    # dropping them overstated coverage (audit finding 24). Only the quake
+    # channel is graded here; flood/volcanic families need the news search.
+    episodes = [r for r in all_rows
+                if r.get("exact_instant") and r.get("spot_lon_east")]
+    unassessed = [r for r in all_rows if r not in episodes]
 
     corpus: list[tuple[float, float]] = []
     try:
@@ -90,6 +95,9 @@ def main(argv: list[str] | None = None, fetch=None) -> int:
         summary = "; ".join(f"M{q['mag']} {q['place']}" for q in quakes)
         results.append({**e, "verdict": "hit" if quakes else "clear",
                         "quakes": summary, "spatial_chance": chance})
+    for e in unassessed:
+        results.append({**e, "verdict": "unassessed (no spot)", "quakes": "",
+                        "spatial_chance": ""})
 
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)

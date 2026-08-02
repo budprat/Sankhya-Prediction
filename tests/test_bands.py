@@ -217,7 +217,18 @@ def test_episode_keeps_band_history_across_merge():
     (2015, "November", "November Mid", (dt.date(2015, 11, 1), dt.date(2015, 11, 30), "month")),
     (2015, "Jan", "Early Jan 2015 ", (dt.date(2015, 1, 1), dt.date(2015, 1, 31), "month")),
     (2014, "", "September", (dt.date(2014, 9, 1), dt.date(2014, 9, 30), "month")),
-    (2013, "July ", "July 8 and 9.", (dt.date(2013, 7, 8), dt.date(2013, 7, 8), "day")),
+    (2013, "July ", "July 8 and 9.", (dt.date(2013, 7, 8), dt.date(2013, 7, 9), "day")),
+    # Audit findings 18/36/37/39: standalone month tokens only, no year/
+    # magnitude digit tearing, range tails kept, cross-year ranges upright.
+    (1999, "AUGUST", "Marmara region, Turkey",
+     (dt.date(1999, 8, 1), dt.date(1999, 8, 31), "month")),
+    (2011, "JUNE", "Junction city event",
+     (dt.date(2011, 6, 1), dt.date(2011, 6, 30), "month")),
+    (2015, "MAY", "M7.8 May 12", (dt.date(2015, 5, 12), dt.date(2015, 5, 12), "day")),
+    (2015, "OCTOBER", "2015 October 26",
+     (dt.date(2015, 10, 26), dt.date(2015, 10, 26), "day")),
+    (2004, "DECEMBER", "December 28 - January 3",
+     (dt.date(2004, 12, 28), dt.date(2005, 1, 3), "day")),
     (2015, "October", " 26 October 2015,", (dt.date(2015, 10, 26), dt.date(2015, 10, 26), "day")),
     (2014, "", "", (dt.date(2014, 1, 1), dt.date(2014, 12, 31), "year")),
 ])

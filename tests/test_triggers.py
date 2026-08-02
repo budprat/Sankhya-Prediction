@@ -44,6 +44,34 @@ def test_axis_cross_and_cluster_and_bands():
         Condition(type="in_band", bodies=["Moon"], band="Aswini")])).fired
 
 
+def test_toml_schema_guards_reject_silent_traps(tmp_path):
+    # Audit findings 12/23/30/48: typo keys, empty rulesets, unknown bodies,
+    # and offset-less real: prefixes must FAIL the load, not no-op silently.
+    def load(text):
+        f = tmp_path / "r.toml"
+        f.write_text(text)
+        return load_rules(str(f))
+
+    good = load('[[rule]]\nname="ok"\nconditions=[{type="conjunction",'
+                'bodies=["real:Uranus","Saturn"], orb=3.0}]\n')
+    assert len(good) == 1
+    assert good[0].name == "ok"
+    with pytest.raises(Exception, match="max_spred|[Ee]xtra"):
+        load('[[rule]]\nname="t"\nconditions=[{type="cluster",'
+             'bodies=["Moon","Mars"], max_spred=5.0}]\n')
+    with pytest.raises(ValueError, match="no \\[\\[rule\\]\\]"):
+        load('[[rules]]\nname="wrong-table"\n')
+    with pytest.raises(ValueError, match="unknown body"):
+        load('[[rule]]\nname="t"\nconditions=[{type="conjunction",'
+             'bodies=["Moom","Mars"], orb=3.0}]\n')
+    with pytest.raises(ValueError, match="no doctrinal offset"):
+        load('[[rule]]\nname="t"\nconditions=[{type="conjunction",'
+             'bodies=["real:Jupiter","Saturn"], orb=3.0}]\n')
+    with pytest.raises(Exception, match="needs at least"):
+        load('[[rule]]\nname="t"\nconditions=[{type="in_band", band="Rohini"}]\n')
+    assert load_rules(DOCTRINE), "the doctrine file must still load clean"
+
+
 def test_refine_episode_instant_works_for_cluster_rules_and_clamps():
     # Audit batch 2: band/cluster rules got no exact instant (empty CSV fields).
     # Tightest instant = minimum circular spread; result must stay in-window.

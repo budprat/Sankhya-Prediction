@@ -4,7 +4,7 @@
 import tomllib
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from .bands import (_arc_distance, axis_angle, circular_spread, division_of,
                     real_longitude)
@@ -15,6 +15,9 @@ from .models import ChartResult
 class Condition(BaseModel):
     """One geometric predicate. Body names may be prefixed 'real:' to use the
     doctrinal ahead-position (Mathcad-QUAKE offsets)."""
+    # extra="forbid" (audit finding 12): a misspelled TOML key must fail the
+    # load, not silently produce a vacuous condition.
+    model_config = ConfigDict(extra="forbid")
     type: Literal["conjunction", "opposition", "square", "trine", "axis_cross",
                   "cluster", "same_band", "in_band", "nodes_occupied", "near_any"]
     bodies: list[str] = []
@@ -27,8 +30,28 @@ class Condition(BaseModel):
     band: str | int | None = None       # in_band target (name or 1..28)
     require: Literal["both", "either"] = "both"   # nodes_occupied: which node ends
 
+    @model_validator(mode="after")
+    def _structurally_complete(self):
+        """A condition missing its operative fields must fail the load, not
+        evaluate vacuously true (audit finding 12)."""
+        needs = {"conjunction": 2, "opposition": 2, "square": 2, "trine": 2,
+                 "cluster": 2, "same_band": 2, "nodes_occupied": 1, "in_band": 1,
+                 "near_any": 1}
+        n = needs.get(self.type)
+        if n is not None and len(self.bodies) < n:
+            raise ValueError(f"{self.type} needs at least {n} bodies")
+        if self.type == "near_any" and not self.targets:
+            raise ValueError("near_any needs targets")
+        if self.type == "in_band" and self.band is None:
+            raise ValueError("in_band needs a band")
+        if self.type == "axis_cross" and (
+                len(self.axes) != 2 or any(len(ax) != 2 for ax in self.axes)):
+            raise ValueError("axis_cross needs two axes of two bodies")
+        return self
+
 
 class TriggerRule(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     name: str
     description: str = ""
     conditions: list[Condition] = Field(min_length=1)
@@ -229,4 +252,25 @@ def mentions_ascendant(rule: TriggerRule) -> bool:
 def load_rules(path: str) -> list[TriggerRule]:
     with open(path, "rb") as fh:
         data = tomllib.load(fh)
-    return [TriggerRule(**raw) for raw in data.get("rule", [])]
+    rules = [TriggerRule(**raw) for raw in data.get("rule", [])]
+    if not rules:
+        raise ValueError(f"{path}: no [[rule]] tables found "
+                         f"(top-level keys: {sorted(data) or 'none'})")
+    # Load-time name guards (audit findings 23/30): a 'real:' prefix on a body
+    # without a doctrinal offset would silently evaluate the observed position;
+    # an unknown body name would only fail (or pass vacuously) at run time.
+    from .bands import REAL_POSITION_OFFSETS
+    from .ephemeris import BODY_ORDER
+    for rule in rules:
+        for c in rule.conditions + rule.escalate:
+            names = list(c.bodies) + list(c.targets) + [n for ax in c.axes
+                                                        for n in ax]
+            for name in names:
+                bare = name.removeprefix("real:")
+                if bare not in BODY_ORDER:
+                    raise ValueError(f"rule '{rule.name}': unknown body {name!r}")
+                if name.startswith("real:") and bare not in REAL_POSITION_OFFSETS:
+                    raise ValueError(
+                        f"rule '{rule.name}': 'real:{bare}' has no doctrinal "
+                        f"offset (defined: {sorted(REAL_POSITION_OFFSETS)})")
+    return rules

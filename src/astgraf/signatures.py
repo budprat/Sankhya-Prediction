@@ -3,6 +3,7 @@
 
 import csv
 import math
+import re
 from pathlib import Path
 
 from .bands import BAND_BODIES, circular_spread, division_of, real_longitude
@@ -89,7 +90,11 @@ def extract_signature(chart: ChartResult, event_lat: float | None = None,
 
 def _chart_for_time(iso: str, day_offset: int = 0) -> ChartResult:
     year, month, day = int(iso[0:4]), int(iso[5:7]), int(iso[8:10])
-    hours = int(iso[11:13]) + int(iso[14:16]) / 60 + float(iso[17:23] or 0) / 3600
+    # Robust seconds parse (audit finding 52): "…:24Z" (no milliseconds) is a
+    # legal USGS timestamp and used to crash the fixed-width slice.
+    m = re.match(r"(\d{2}(?:\.\d+)?)", iso[17:])
+    seconds = float(m.group(1)) if m else 0.0
+    hours = int(iso[11:13]) + int(iso[14:16]) / 60 + seconds / 3600
     return compute_raw(year, month, day + day_offset, hours, 0.0, 0.0, 0.0, True, True)
 
 

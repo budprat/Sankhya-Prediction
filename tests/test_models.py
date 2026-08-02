@@ -48,6 +48,13 @@ def test_moment_validation_rejects_bad_values():
         ChartMoment(**{**base, "latitude_north": 90.5})
     with pytest.raises(ValidationError):
         ChartMoment(**{**base, "month": 13})
+    # Audit finding 50: impossible calendar dates must not normalize silently.
+    with pytest.raises(ValidationError):
+        ChartMoment(**{**base, "month": 2, "day": 31})
+    with pytest.raises(ValidationError):
+        ChartMoment(**{**base, "year": 2023, "month": 2, "day": 29})
+    leap = ChartMoment(**{**base, "year": 2024, "month": 2, "day": 29})
+    assert (leap.month, leap.day) == (2, 29)
 
 
 def test_grid_spec_bounds():

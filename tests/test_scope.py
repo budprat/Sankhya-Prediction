@@ -58,3 +58,19 @@ def test_render_scope_is_wellformed_with_bodies_and_aspect_lines():
 def test_render_scope_lists_exact_aspects_in_legend():
     svg = render_scope({"A": 10.0, "B": 130.0}, title="t", orb=3.0)
     assert "A trine B" in svg
+
+
+def test_labels_stagger_across_the_zero_aries_seam():
+    # Audit finding 43: bodies straddling 0 Aries crowd like any neighbors —
+    # their labels must sit at different radii, not overlap.
+    svg = render_scope({"A": 359.5, "B": 0.5}, title="seam")
+    root = ET.fromstring(svg)
+    texts = [el for el in root.iter() if el.tag.endswith("text")
+             and (el.text or "") in ("A", "B")]
+    assert len(texts) == 2
+    import math
+    radii = []
+    for el in texts:
+        x, y = float(el.get("x")), float(el.get("y"))
+        radii.append(math.hypot(x - 400.0, y - 400.0))
+    assert abs(radii[0] - radii[1]) > 10, radii

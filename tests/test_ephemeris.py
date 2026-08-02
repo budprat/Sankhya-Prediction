@@ -90,6 +90,17 @@ def test_all_longitudes_normalized(chart):
         assert 0 <= p.longitude < 360, name
 
 
+def test_gregorian_reform_day_maps_correctly():
+    # Audit finding 34: the canon's strict > test missed 1582-10-15 itself
+    # (JDN came out 10 too big and JD ran backward into 10-16). Deliberate
+    # one-comparison divergence from the BAS, on record in the ledger.
+    from astgraf.ephemeris import julian_day_number
+    assert julian_day_number(1582, 10, 4) == 2299160    # last Julian day
+    assert julian_day_number(1582, 10, 15) == 2299161   # first Gregorian day
+    assert julian_day_number(1582, 10, 16) == 2299162
+    assert julian_day_number(1583, 1, 1) == 2299239
+
+
 def test_ayanamsa_follows_the_instant_not_the_start_field():
     # Audit batch 2 (HIGH): sweeps advance time by hour overflow, and the
     # ayanamsa froze at the START year — a chart reached by +3 years of hours
