@@ -18,20 +18,20 @@ center of a watch region. Regenerate any row:
 
 | Exact instant (UT) | Spot | Region | Outcome |
 |---|---|---|---|
-| 2026-10-02 04:45 | 138.71W 0.05S | equatorial Pacific N of the Marquesas | *pending* |
-| 2027-10-04 20:15 | 11.50W 0.80N | equatorial Atlantic ~700 km S of Liberia | *pending* |
-| 2027-11-12 12:00 | 73.31E 0.44N | southern Maldives (~120 km from Addu Atoll) | *pending* |
-| 2028-11-06 06:15 | 167.18E 1.35N | W Pacific ~210 km from Nauru | *pending* |
+| 2026-10-02 04:43 | 138.32W 0.05S | equatorial Pacific N of the Marquesas | *pending* |
+| 2027-10-04 20:15 | 11.61W 0.80N | equatorial Atlantic ~700 km S of Liberia | *pending* |
+| 2027-11-12 12:07 | 70.84E 0.44N | central Indian Ocean W of the Maldives | *pending* |
+| 2028-11-06 06:09 | 168.16E 1.35N | W Pacific ~120 km E of Nauru | *pending* |
 
 ## Mined: real-Uranus △ Sun (lift 1.52/1.31) — Uranus spots
 
 | Exact instant (UT) | Spot | Region | Outcome |
 |---|---|---|---|
-| 2026-10-16 09:19 | 138.80W 21.01N | NE Pacific ~2,000 km E of Hawaii | *pending* |
-| 2027-02-08 13:16 | 44.71E 20.37N | SW Saudi Arabia (Najran / Rub' al Khali edge) | *pending* |
-| 2027-10-20 21:47 | 34.40E 21.77N | Nubian Desert, Egypt–Sudan border (Halaib) | *pending* |
-| 2028-02-12 23:36 | 109.89W 21.22N | Pacific off Baja California Sur (Revillagigedo) | *pending* |
-| 2028-10-24 10:43 | 159.28W 22.41N | ~45 km off Kauai, Hawaii | *pending* |
+| 2026-10-16 09:19 | 140.33W 21.01N | NE Pacific ~1,900 km E of Hawaii | *pending* |
+| 2027-02-08 13:16 | 42.20E 20.37N | SW Saudi Arabia (Asir, toward the Red Sea) | *pending* |
+| 2027-10-20 21:47 | 33.07E 21.77N | Nubian Desert, Egypt–Sudan border (Lake Nasser E) | *pending* |
+| 2028-02-12 23:36 | 112.35W 21.22N | Pacific off Baja California Sur (Revillagigedo) | *pending* |
+| 2028-10-24 10:43 | 160.46W 22.41N | ~170 km SW of Kauai, Hawaii | *pending* |
 
 ## Mined: real-Uranus ☌ Saturn (strongest, lift 1.80/1.64)
 
@@ -154,3 +154,56 @@ Region names hold at this scale except: 2027-02-08 moves ~260 km west
 (SW Saudi Arabia toward the Asir highlands); 2027-11-12 moves ~275 km west
 (still the central Indian Ocean west of the Maldives chain); 2028-10-24
 moves ~120 km further west of Kauai.
+
+## Amendment 2026-08-02 (v3) — engine fixes; re-derivation of every window
+
+The audit batch-1/2 fixes landed (wrap-safe crossing engine; per-instant
+ayanamsa in sweeps; tightest-instant refinement for ALL rule types with the
+acting body chosen, orb-gated, at the refined instant; per-rule fine sweep
+steps). Both forward sweeps were regenerated with the fixed engine and these
+exact commands (recorded for reproducibility):
+
+```
+uv run astgraf-bands --start 2026-08-02 --days 850 --rules mined-triggers.toml   --out out/mined-forward-v3
+uv run astgraf-bands --start 2026-08-02 --days 850 --rules doctrine-triggers.toml --out out/doctrine-forward-v3
+```
+
+**Mined windows: CONFIRMED unchanged.** The regenerated CSV is byte-identical
+to the registered v2 (aspect predicates are ayanamsa-invariant) — all 9 mined
+windows, instants, and spots stand exactly as registered above.
+
+**Band-trigger windows: sharpened and completed.** The 1-hour fine sweep
+(Moon rule) moves window edges by up to ~9 h, and each window now carries a
+regenerable tightest instant. No giant sits within one span at any of these
+instants, so NO giant spots exist for these windows — the v2 "giant spots
+(secondary information)" figures are RETIRED as artifacts of the old
+first-sample location:
+
+| Window (UT) | Tightest instant (UT) |
+|---|---|
+| 2026-11-02 03:00 → 11-03 13:00 | 2026-11-03 01:18 |
+| 2026-11-29 19:00 → 12-01 03:00 | 2026-11-30 04:42 |
+| 2027-02-20 01:00 → 02-21 00:00 | 2027-02-20 20:26 |
+| 2027-03-18 20:00 → 03-20 08:00 | 2027-03-19 16:16 |
+| 2027-04-15 02:00 → 04-16 12:00 | 2027-04-15 15:01 |
+| 2028-08-17 02:00 → 08-18 17:00 | 2028-08-17 23:26 |
+
+**Nodes-doubly-occupied windows: instants + Jupiter spots, now regenerable.**
+The tightest instant minimizes the both-ends holding gap; the acting body is
+the holder ON the node at that instant — Jupiter (on Ketu) in all four
+windows, confirming the Jan–Mar 2027 Jupiter-on-Ketu reading. These
+supersede the six per-holder console-derived instants in the section above
+(audit: non-regenerable); the Feb-06 eclipse-on-Rahu context stays as
+commentary only.
+
+| Window (UT) | Tightest instant (UT) | Jupiter spot | Watch-region center |
+|---|---|---|---|
+| 2027-01-24 → 01-28 | 2027-01-27 17:15 | 111.98E 14.50N | South China Sea, west of Luzon |
+| 2027-02-06 → 02-13 | 2027-02-11 01:30 | 27.65W 15.14N | mid-Atlantic, west of Cape Verde |
+| 2027-02-24 → 03-10 | 2027-03-03 01:01 | 42.70W 15.97N | western Atlantic, east of the Antilles |
+| 2027-03-14 → 03-20 | 2027-03-16 12:54 | 124.19E 16.38N | Philippine Sea, off Luzon |
+
+The canonical artifacts `out/mined-forward/rules_episodes.csv` and
+`out/doctrine-forward/rules_episodes.csv` now hold the v3 rows; the outcome
+protocol (astgraf-outcomes) grades these. Spot caveat unchanged: ±1 h of
+timing moves a spot ±15° of longitude; names mark watch-region centers.

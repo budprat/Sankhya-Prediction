@@ -90,6 +90,22 @@ def test_all_longitudes_normalized(chart):
         assert 0 <= p.longitude < 360, name
 
 
+def test_ayanamsa_follows_the_instant_not_the_start_field():
+    # Audit batch 2 (HIGH): sweeps advance time by hour overflow, and the
+    # ayanamsa froze at the START year — a chart reached by +3 years of hours
+    # must be identical to the directly-dated chart.
+    from astgraf.ephemeris import compute_raw, julian_day_number
+    direct = compute_raw(2003, 1, 27, 13.0, 0.0, 0.0, 0.0, True, False)
+    hours = (julian_day_number(2003, 1, 27)
+             - julian_day_number(2000, 1, 1)) * 24 + 13.0
+    overflowed = compute_raw(2000, 1, 1, hours, 0.0, 0.0, 0.0, True, False)
+    assert overflowed.jd == pytest.approx(direct.jd, abs=1e-9)
+    assert overflowed.ayanamsa == pytest.approx(direct.ayanamsa, abs=1e-12)
+    for body in ("Moon", "Sun", "Neptune"):
+        assert overflowed.positions[body].longitude == pytest.approx(
+            direct.positions[body].longitude, abs=1e-9), body
+
+
 def test_quake_pdf_tropical_koch_oracle():
     """QUAKE.pdf: the suite's own tropical (ayanamsa 0) Koch-path printout of the
     2015 Nepal earthquake chart — the only canon oracle exercising the W/W path."""

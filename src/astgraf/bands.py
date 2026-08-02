@@ -42,9 +42,10 @@ class Episode(BaseModel):
     end_jd: float
     start_label: str
     end_label: str
-    band: int
+    band: int                       # band at episode start
     division: int = 0
-    nakshatra: str
+    nakshatra: str                  # nakshatra at episode start
+    nakshatras: list[str] = []      # full band history across the merge
     level: str
     giants: list[str]
 
@@ -225,6 +226,8 @@ def find_episodes(samples: list[tuple[float, str, TriggerState]],
             if current is not None and jd - current.end_jd <= step_days * 1.5:
                 current.end_jd = jd
                 current.end_label = label
+                if state.nakshatra and state.nakshatra != current.nakshatras[-1]:
+                    current.nakshatras.append(state.nakshatra)
                 if state.level == "catastrophic":
                     current.level = "catastrophic"
                     current.giants = sorted(set(current.giants) | set(state.giants))
@@ -234,7 +237,8 @@ def find_episodes(samples: list[tuple[float, str, TriggerState]],
                 current = Episode(start_jd=jd, end_jd=jd, start_label=label,
                                   end_label=label, band=state.band,
                                   division=state.division,
-                                  nakshatra=state.nakshatra, level=state.level,
+                                  nakshatra=state.nakshatra,
+                                  nakshatras=[state.nakshatra], level=state.level,
                                   giants=list(state.giants))
     if current is not None:
         episodes.append(current)

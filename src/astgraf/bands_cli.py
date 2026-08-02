@@ -80,14 +80,11 @@ def main(argv: list[str] | None = None) -> int:
         return run_vyuha(args, start, steps, step_hours, step_days)
 
     samples = []
-    results = {}
     for k in range(steps):
         hours = k * step_hours
         result = compute_raw(start.year, start.month, start.day, hours, **SITE_FREE)
         state = trigger_state(result, level=args.level, proximity=args.proximity)
         samples.append((result.jd, label_for_jd(result.jd), state))
-        if state.fired:
-            results[result.jd] = result
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -102,19 +99,37 @@ def main(argv: list[str] | None = None) -> int:
                              f"{state.spread_deg:.3f}" if state.spread_deg else ""])
 
     episodes = find_episodes(samples, step_days=step_days)
+    # Tightest instant per episode (audit batch 2): spots were previously
+    # located at the sweep-quantized first fired sample — 15 deg/h of Earth
+    # rotation made the published longitude step-dependent. Refine the trio's
+    # minimum spread on a continuous chart and locate there.
+    from .grid import make_chart_at_jd
+    from .models import ChartMoment
+    from .triggers import Condition, TriggerRule, refine_episode_instant
+    chart_at = make_chart_at_jd(ChartMoment(
+        year=start.year, month=start.month, day=start.day, hour=0, minute=0,
+        utc_offset_hours=0.0, longitude_east=0.0, latitude_north=0.0,
+        sidereal=True, equal_houses=False))
+    trio_rule = TriggerRule(name="_tightest", conditions=[
+        Condition(type="cluster", bodies=["Moon", "Ketu", "Mars"],
+                  max_spread=360.0)])
     with open(out / "episodes.csv", "w", newline="") as fh:
         writer = csv.writer(fh)
         writer.writerow(["start", "end", "band", "division", "nakshatra", "level",
-                         "giants", "giant_spots"])
+                         "tight_instant", "giants", "giant_spots"])
         for e in episodes:
+            jd_tight = refine_episode_instant(
+                chart_at, e.start_jd - step_days, e.end_jd + step_days, trio_rule)
+            tight_chart = chart_at(jd_tight)
             spots = []
             for giant in e.giants:
-                spot = locate(results[e.start_jd], giant)
+                spot = locate(tight_chart, giant)
                 if spot:
                     spots.append(f"{giant}:{spot.event_longitude_east:.2f}E,"
                                  f"{spot.event_latitude_north:.2f}N")
             writer.writerow([e.start_label, e.end_label, e.band, e.division,
-                             e.nakshatra, e.level, " ".join(e.giants),
+                             "->".join(e.nakshatras), e.level,
+                             label_for_jd(jd_tight), " ".join(e.giants),
                              "; ".join(spots)])
 
     fired = sum(1 for _, _, s in samples if s.fired)
@@ -156,11 +171,26 @@ class _Span:
         self.level = level
 
 
+def _rule_step_hours(rule, base: float) -> float:
+    """Fast-body rules need finer sweeps (audit batch 2): Ascendant windows
+    last ~40 min, Moon aspects a few hours — a 12h grid walks past them."""
+    names: set[str] = set()
+    for c in list(rule.conditions) + list(rule.escalate):
+        names |= {n.removeprefix("real:") for n in c.bodies}
+        names |= {n.removeprefix("real:") for n in c.targets}
+        names |= {n.removeprefix("real:") for ax in c.axes for n in ax}
+    if "Ascendant" in names:
+        return min(base, 0.25)
+    if "Moon" in names:
+        return min(base, 1.0)
+    return base
+
+
 def run_rules(args, start, steps, step_hours, step_days) -> int:
     from .grid import make_chart_at_jd
     from .models import (ChartMoment, parse_latitude, parse_longitude,
                          parse_utc_offset)
-    from .triggers import (acting_body, evaluate_rule, load_rules,
+    from .triggers import (acting_body_at, evaluate_rule, load_rules,
                            mentions_ascendant, refine_episode_instant)
     rules = load_rules(args.rules)
     has_site = args.site_lon is not None and args.site_lat is not None
@@ -178,22 +208,33 @@ def run_rules(args, start, steps, step_hours, step_days) -> int:
                          equal_houses=False)
     chart_at = make_chart_at_jd(moment)
     spans: dict[str, list[_Span]] = {r.name: [] for r in rules}
-    for k in range(steps):
-        result = compute_raw(start.year, start.month, start.day, k * step_hours,
-                             -utc_offset, -site_lon, site_lat, True, False)
-        label = label_for_jd(result.jd)
-        for rule in rules:
-            state = evaluate_rule(result, rule)
-            if not state.fired:
-                continue
-            existing = spans[rule.name]
-            if existing and result.jd - existing[-1].end_jd <= step_days * 1.5:
-                existing[-1].end_jd = result.jd
-                existing[-1].end_label = label
-                if state.level == "catastrophic":
-                    existing[-1].level = "catastrophic"
-            else:
-                existing.append(_Span(result.jd, label, state.level))
+    groups: dict[float, list] = {}
+    for r in rules:
+        groups.setdefault(_rule_step_hours(r, step_hours), []).append(r)
+    rule_step: dict[str, float] = {}
+    for g_hours, grp in sorted(groups.items()):
+        if g_hours != step_hours:
+            print(f"  fine sweep @ {g_hours:g}h for: "
+                  f"{', '.join(r.name for r in grp)}")
+        g_days = g_hours / 24.0
+        for r in grp:
+            rule_step[r.name] = g_days
+        for k in range(int(args.days * 24 / g_hours)):
+            result = compute_raw(start.year, start.month, start.day, k * g_hours,
+                                 -utc_offset, -site_lon, site_lat, True, False)
+            label = label_for_jd(result.jd)
+            for rule in grp:
+                state = evaluate_rule(result, rule)
+                if not state.fired:
+                    continue
+                existing = spans[rule.name]
+                if existing and result.jd - existing[-1].end_jd <= g_days * 1.5:
+                    existing[-1].end_jd = result.jd
+                    existing[-1].end_label = label
+                    if state.level == "catastrophic":
+                        existing[-1].level = "catastrophic"
+                else:
+                    existing.append(_Span(result.jd, label, state.level))
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -204,19 +245,21 @@ def run_rules(args, start, steps, step_hours, step_days) -> int:
                          "acting", "spot_lon_east", "spot_lat_north"])
         for name, episodes in spans.items():
             rule = rule_by_name[name]
-            actor = acting_body(rule)
             for e in episodes:
-                instant = spot_lon = spot_lat = ""
-                if actor:
-                    jd = refine_episode_instant(
-                        chart_at, e.start_jd - step_days, e.end_jd + step_days, rule)
-                    if jd is not None:
-                        spot = locate(chart_at(jd), actor)
-                        instant = label_for_jd(jd)
+                instant = actor = spot_lon = spot_lat = ""
+                pad = rule_step.get(name, step_days)
+                jd = refine_episode_instant(
+                    chart_at, e.start_jd - pad, e.end_jd + pad, rule)
+                if jd is not None:
+                    instant = label_for_jd(jd)
+                    tight = chart_at(jd)
+                    actor = acting_body_at(rule, tight) or ""
+                    if actor:
+                        spot = locate(tight, actor)
                         spot_lon = f"{spot.event_longitude_east:.2f}"
                         spot_lat = f"{spot.event_latitude_north:.2f}"
                 writer.writerow([name, e.start_label, e.end_label, e.level,
-                                 instant, actor or "", spot_lon, spot_lat])
+                                 instant, actor, spot_lon, spot_lat])
 
     print(f"astgraf-bands --rules: {steps} samples ({args.start} +{args.days}d @ "
           f"{step_hours:g}h), {len(rules)} rules")

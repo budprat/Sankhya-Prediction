@@ -44,6 +44,53 @@ def test_axis_cross_and_cluster_and_bands():
         Condition(type="in_band", bodies=["Moon"], band="Aswini")])).fired
 
 
+def test_refine_episode_instant_works_for_cluster_rules_and_clamps():
+    # Audit batch 2: band/cluster rules got no exact instant (empty CSV fields).
+    # Tightest instant = minimum circular spread; result must stay in-window.
+    from astgraf.triggers import refine_episode_instant
+    rule = TriggerRule(name="c", conditions=[
+        Condition(type="cluster", bodies=["Moon", "Ketu", "Mars"],
+                  max_spread=13.0)])
+
+    def chart_at(jd):
+        # Moon closes on the Ketu/Mars pair, tightest at jd = 2.0, then leaves
+        # (kept outside the pair's own span so the spread minimum is strict).
+        return make_result({"Moon": 45.0 + 5.0 * abs(jd - 2.0),
+                            "Ketu": 40.0, "Mars": 41.0})
+    jd = refine_episode_instant(chart_at, 0.0, 4.0, rule)
+    assert jd == pytest.approx(2.0, abs=1e-3)
+    # Minimum at the window edge must clamp, not escape (audit finding 49).
+    jd_edge = refine_episode_instant(chart_at, 2.5, 4.0, rule)
+    assert 2.5 <= jd_edge <= 4.0
+
+
+def test_acting_body_at_picks_the_near_giant():
+    from astgraf.triggers import acting_body_at, load_rules
+    rules = {r.name: r for r in load_rules(DOCTRINE)}
+    rule = rules["band-trigger"]
+    base = {"Moon": 40.1, "Ketu": 40.6, "Mars": 41.0}
+    nep = make_result({**base, "Neptune": 50.0, "Uranus": 200.0})
+    assert acting_body_at(rule, nep) == "Neptune"
+    ura = make_result({**base, "Uranus": 45.0, "Neptune": 200.0})
+    assert acting_body_at(rule, ura) == "Uranus"
+    # A distant giant must NOT act: disruptive windows publish no spot.
+    far = make_result({**base, "Uranus": 200.0, "Neptune": 120.0})
+    assert acting_body_at(rule, far) is None
+
+
+def test_acting_body_at_nodes_prefers_the_holder_on_the_node():
+    # 2027 pattern: Jupiter exactly on Ketu; giants nowhere near a node — the
+    # escalate block's distant giants must not shadow the true holder.
+    from astgraf.triggers import acting_body_at, load_rules
+    rules = {r.name: r for r in load_rules(DOCTRINE)}
+    rule = rules["nodes-doubly-occupied"]
+    r = make_result({"Rahu": 10.0, "Ketu": 190.0, "Jupiter": 190.04,
+                     "Mercury": 11.3, "Sun": 32.6, "Venus": 27.5,
+                     "Mars": 100.0, "Saturn": 63.8, "Uranus": 112.3,
+                     "Neptune": 54.0})
+    assert acting_body_at(rule, r) == "Jupiter"
+
+
 def test_near_any_primitive_matches_scanner_escalation():
     # bands.py GIANTS semantics: escalation when a giant is within `orb` of ANY
     # of the target bodies (min arc-distance <= one 28-band span).

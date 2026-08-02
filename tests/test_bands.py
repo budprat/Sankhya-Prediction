@@ -191,6 +191,21 @@ def test_episodes_merge_consecutive_firings():
     assert episodes[1].start_jd == 3.0 and episodes[1].end_jd == 3.0
 
 
+def test_episode_keeps_band_history_across_merge():
+    # Audit finding 28: a merged episode froze the FIRST band/nakshatra even
+    # when the trio moved into the next band mid-episode.
+    def s(jd, moon):
+        state = trigger_state(make_result(
+            scatter(Moon=moon, Ketu=moon + 0.5, Mars=moon + 1.0)))
+        return jd, f"L{jd}", state
+    # Band 4 (Rohini) then band 5 (Mirgasirsa): 51.4286 is the 4/5 boundary.
+    samples = [s(0.0, 40.0), s(0.5, 50.0), s(1.0, 52.0)]
+    episodes = find_episodes(samples, step_days=0.5)
+    assert len(episodes) == 1
+    assert episodes[0].nakshatra == "Rohini"
+    assert episodes[0].nakshatras == ["Rohini", "Mirgasirsa"]
+
+
 @pytest.mark.parametrize("year,month,date,expected", [
     (2014, "APRIL", "April 18th, 2014", (dt.date(2014, 4, 18), dt.date(2014, 4, 18), "day")),
     (2013, "FEBRUARY", " 6th February 2013 ", (dt.date(2013, 2, 6), dt.date(2013, 2, 6), "day")),

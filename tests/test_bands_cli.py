@@ -55,6 +55,47 @@ def test_rules_cli_sweeps_doctrine_file(tmp_path):
     assert vyuha[0]["start"] <= "2016-06-03" <= vyuha[0]["end"]
 
 
+def test_ascendant_rule_resolves_at_default_step(tmp_path):
+    # Audit HIGH (design-gaps 1): at the default 12h step the Hyderabad
+    # ground-truth window reported 0 nodes-held-ascendant-cross episodes.
+    # Ascendant rules must now sweep on their own fine step automatically.
+    rc = main([
+        "--start", "2016-09-22", "--days", "2",
+        "--rules", "doctrine-triggers.toml",
+        "--site-lon", "78:29E", "--site-lat", "17:23N",
+        "--utc-offset", "+05:30",
+        "--out", str(tmp_path / "hyd"),
+    ])
+    assert rc == 0
+    with open(tmp_path / "hyd" / "rules_episodes.csv", newline="") as fh:
+        rows = [r for r in csv.DictReader(fh)
+                if r["rule"] == "nodes-held-ascendant-cross"]
+    assert rows, "Hyderabad dawn/evening windows must appear at the default step"
+    assert any(r["exact_instant"] for r in rows)
+
+
+def test_band_episode_spots_stable_across_steps(tmp_path):
+    # Audit HIGH (locator 1 / design-gaps 2): episode giant spots were located
+    # at the sweep-quantized first sample — 12h vs 3h steps published spots
+    # ~135 deg apart for the same 2017-01 episode. Now both must refine to the
+    # tightest instant and agree.
+    spots = {}
+    for step in ("12", "3"):
+        rc = main([
+            "--start", "2017-01-01", "--days", "4", "--step-hours", step,
+            "--out", str(tmp_path / f"s{step}"),
+        ])
+        assert rc == 0
+        with open(tmp_path / f"s{step}" / "episodes.csv", newline="") as fh:
+            rows = [r for r in csv.DictReader(fh) if r["giant_spots"]]
+        assert rows, f"step {step}: the 2017-01 Neptune episode must appear"
+        assert rows[0]["tight_instant"]
+        spots[step] = rows[0]["giant_spots"]
+    lon12 = float(spots["12"].split(":")[1].split("E")[0])
+    lon3 = float(spots["3"].split(":")[1].split("E")[0])
+    assert abs((lon12 - lon3 + 180) % 360 - 180) < 3.0, (lon12, lon3)
+
+
 def test_vyuha_cli_finds_june_2016(tmp_path):
     rc = main([
         "--start", "2016-05-15", "--days", "31", "--vyuha",

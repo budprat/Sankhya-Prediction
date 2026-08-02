@@ -170,8 +170,17 @@ def compute_raw(year: int, month: int, day: float, local_hours: float,
                 ayanamsa_zero: int = 294) -> ChartResult:
     f = (local_hours + engine_gmt) / 24          # UT fraction of day
     lat_rad = _rad(latitude_north)
-    nam = ayanamsa_value(year, ayanamsa_rate, ayanamsa_zero) if sidereal else 0.0
     j = julian_day_number(year, month, day)
+    # The ayanamsa year follows the ACTUAL instant: sweeps advance time by
+    # field overflow, and the BASIC's YR is always the current calendar year
+    # (audit batch 2 — frozen-ayanamsa fix). Identical for normally-dated
+    # charts, so oracle parity is untouched.
+    if sidereal:
+        from .grid import jd_to_calendar
+        year_eff = jd_to_calendar(math.floor(j + f))[0]
+        nam = ayanamsa_value(year_eff, ayanamsa_rate, ayanamsa_zero)
+    else:
+        nam = 0.0
     t = ((j - 2415020) + f - 0.5) / 36525
 
     # Local sidereal time -> RA of the east point, less the ayanamsa.

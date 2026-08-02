@@ -120,18 +120,82 @@ def acting_body(rule: TriggerRule) -> str | None:
     return None
 
 
+def _metric_for(rule: TriggerRule):
+    """Rule-specific exactness scalar (smaller = tighter); None if undefined.
+
+    Audit batch 2: every rule type gets a tightest-instant metric, not only
+    aspect pairs — cluster spread, axis-cross gap, node-holding tightness.
+    """
+    target = aspect_target(rule)
+    if target is not None:
+        name_a, name_b, angle, _ = target
+        return lambda r: abs(
+            _arc_distance(_lon(r, name_a), _lon(r, name_b)) - angle)
+    for c in rule.conditions:
+        if c.type == "cluster":
+            bodies = list(c.bodies)
+            return lambda r: circular_spread([_lon(r, n) for n in bodies])
+        if c.type == "axis_cross":
+            ax, ang = c.axes, c.angle
+            return lambda r: abs(
+                axis_angle(_lon(r, ax[0][0]), _lon(r, ax[1][0])) - ang)
+        if c.type == "nodes_occupied":
+            bodies, req = list(c.bodies), c.require
+
+            def node_gap(r, bodies=bodies, req=req):
+                rahu = r.positions["Rahu"].longitude
+                ketu = r.positions["Ketu"].longitude
+                dr = min(_arc_distance(_lon(r, n), rahu) for n in bodies)
+                dk = min(_arc_distance(_lon(r, n), ketu) for n in bodies)
+                return max(dr, dk) if req == "both" else min(dr, dk)
+            return node_gap
+    return None
+
+
+def acting_body_at(rule: TriggerRule, result: ChartResult) -> str | None:
+    """The locatable body acting at this instant: the aspect pair's light-time
+    body, or the nearest light-time body of a near_any / nodes condition."""
+    from .locator import LIGHT_MINUTES
+    static = acting_body(rule)
+    if static:
+        return static
+    for c in list(rule.escalate) + list(rule.conditions):
+        names = [n.removeprefix("real:") for n in c.bodies]
+        cands = [n for n in names if n in LIGHT_MINUTES]
+        if not cands:
+            continue
+        if c.type == "near_any" and c.targets:
+            def gap(b):
+                return min(_arc_distance(_lon(result, b), _lon(result, t))
+                           for t in c.targets)
+        elif c.type == "nodes_occupied":
+            rahu = result.positions["Rahu"].longitude
+            ketu = result.positions["Ketu"].longitude
+
+            def gap(b):
+                return min(_arc_distance(_lon(result, b), rahu),
+                           _arc_distance(_lon(result, b), ketu))
+        else:
+            continue
+        best = min(cands, key=gap)
+        # Only a body actually WITHIN the condition's orb acts — a distant
+        # giant must not publish a spot for a window it did not join.
+        if gap(best) <= c.orb:
+            return best
+    return None
+
+
 def refine_episode_instant(chart_at, jd_lo: float, jd_hi: float,
                            rule: TriggerRule, step_days: float = 1 / 96):
-    """Exact-aspect instant within an episode: minimum |sep - target| on a
-    15-minute grid (handles both crossings and grazing approaches)."""
-    target = aspect_target(rule)
-    if target is None:
+    """Tightest instant within an episode: minimum of the rule's exactness
+    metric on a 15-minute grid, then a one-minute pass — clamped to the
+    window (audit finding 49)."""
+    metric = _metric_for(rule)
+    if metric is None:
         return None
-    name_a, name_b, angle, _ = target
 
     def gap_at(jd: float) -> float:
-        result = chart_at(jd)
-        return abs(_arc_distance(_lon(result, name_a), _lon(result, name_b)) - angle)
+        return metric(chart_at(jd))
 
     def scan(lo: float, hi: float, step: float):
         best = None
@@ -148,8 +212,9 @@ def refine_episode_instant(chart_at, jd_lo: float, jd_hi: float,
         return None
     # Second stage: one-minute resolution around the coarse minimum, so the
     # located longitude is good to ~0.1 deg (15 deg/hour of Earth rotation).
-    fine = scan(coarse[1] - step_days, coarse[1] + step_days, 1 / 1440)
-    return fine[1]
+    fine = scan(max(jd_lo, coarse[1] - step_days),
+                min(jd_hi, coarse[1] + step_days), 1 / 1440)
+    return min(max(fine[1], jd_lo), jd_hi)
 
 
 def mentions_ascendant(rule: TriggerRule) -> bool:
