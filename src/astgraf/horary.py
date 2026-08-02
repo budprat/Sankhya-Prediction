@@ -1,17 +1,37 @@
-# ABOUTME: The 252-division horary grid per NU's Sankhyan spec: 28 EQUAL nakshatra
-# ABOUTME: divisions x 9 equal subs (1/252) x 9 sub-subs (1/2268), with lord cycling.
+# ABOUTME: Nakshatra layers: the classical 27-star position (ASTGRAF.BAS canon, the
+# ABOUTME: default) and the parked 252/1764 equal ladder (28 x 9 x 7, via --ladder 28).
 
-# NU (2026-08-01/02): the real cycle is 28 x 9 = 252 divisions (KP's 243 used 27);
-# star names are MARKERS only — divisions are equal. The refinement ladder is the
-# Predict.pdf one: /9 then /7 — 28 x 9 x 7 = 1764, "the 1/63rd fraction", the
-# instant. Abhijit is the 21st division (257.14-270), exactly opposite Punarvasu
-# (NU ruling 2026-08-02, with the Secrets-of-Sankhya opposition argument and the
-# Atharvaveda 19.7 order; Predict.pdf's own table said 22nd — overridden).
+# NU (2026-08-02): "follow exactly whats in ASTGRAF.BAS, we will decide later for
+# Abhijit 28" — the default nakshatra layer is the classical 27-star system as the
+# BASIC suite defines it (ASTGRAF.BAS DATA 348-351; position arithmetic verbatim
+# from ASTROLOG.BAS 5680-5790). The 28-division ladder below stays available
+# behind --ladder 28, unchanged, pending that decision.
+#
+# NU (2026-08-01/02, parked with the ladder): the prediction cycle is 28 x 9 =
+# 252 divisions (KP's 243 used 27); star names are MARKERS only — divisions are
+# equal. The refinement ladder is the Predict.pdf one: /9 then /7 — 28 x 9 x 7 =
+# 1764, "the 1/63rd fraction", the instant. Abhijit is the 21st division
+# (257.14-270), exactly opposite Punarvasu (with the Secrets-of-Sankhya
+# opposition argument and the Atharvaveda 19.7 order; Predict.pdf's own table
+# said 22nd — overridden).
 from collections.abc import Callable
 
 from pydantic import BaseModel
 
 from .models import PeriodRow
+
+# ASTGRAF.BAS DATA lines 348-351 verbatim: 27 names, no Abhijit. One ruled
+# exception: "Magha" spelling kept (the BAS prints "Makha").
+NAKSHATRAS_27 = [
+    "Aswini", "Bharani", "Kritika", "Rohini", "Mirgasirsa", "Rudra", "Punarvasu",
+    "Pusyam", "Ashlesha", "Magha", "Pura", "Uthra", "Hasta", "Chitra", "Swathy",
+    "Visaka", "Anuradha", "Jyestha", "Moola", "Poorvashada", "Uthrashada",
+    "Sravana", "Dhanishta", "Satabhisa", "P.Badra", "Uthra Badra", "Revathy",
+]
+
+# The suite's z$ sign order (DATA Sun,Ari,Tenth ... Ket,Pis,Ninth).
+SIGNS_12 = ["Ari", "Tau", "Gem", "Can", "Leo", "Vir",
+            "Lib", "Sco", "Sag", "Cap", "Aqu", "Pis"]
 
 HORARY_NAKSHATRAS_28 = [
     "Aswini", "Bharani", "Kritika", "Rohini", "Mirgasirsa", "Rudra", "Punarvasu",
@@ -30,6 +50,34 @@ LORD_CYCLE = ["Ketu", "Venus", "Sun", "Moon", "Mars",
 DIVISION_SPAN = 360.0 / 28
 SUB_SPAN = 360.0 / 252
 SUBSUB_SPAN = 360.0 / 1764   # /9 then /7, the PDF's 1/63rd of a nakshatra
+
+
+class StarPosition(BaseModel):
+    longitude: float
+    nakshatra: str
+    starcount: int         # 1..27
+    pada: int              # 1..4
+    navam: str             # navamsam sign, z$ order
+
+
+def star_position(longitude: float) -> StarPosition:
+    """Classical 27-star position: verbatim port of ASTROLOG.BAS 5680-5790.
+
+    y counts 3-deg-20-min padas from 0 Aries; 4 padas per star, 12 padas per
+    navamsa cycle — exactly the BASIC's INT arithmetic, oracle-pinned to the
+    QUAKE.pdf printout.
+    """
+    a = longitude % 360.0
+    y = (a / 10) * 3
+    count = int(y)
+    pada_global = count + 1                    # PADA
+    starcount = int(count / 4) + 1             # STARCOUNT
+    if starcount > 27:
+        starcount -= 27
+    navam = pada_global - (int(y / 12) * 12)   # NAVAM
+    pad = pada_global - (int(count / 4) * 4)   # PAD
+    return StarPosition(longitude=a, nakshatra=NAKSHATRAS_27[starcount - 1],
+                        starcount=starcount, pada=pad, navam=SIGNS_12[navam - 1])
 
 
 class HoraryPosition(BaseModel):

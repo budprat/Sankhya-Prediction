@@ -1,12 +1,58 @@
-# ABOUTME: Tests the 252-division horary grid (28 equal nakshatras x 9 equal subs x 9
-# ABOUTME: sub-subs = 2268), lord cycling, boundary-crossing events, ayanamsa override.
+# ABOUTME: Tests both nakshatra layers: the classical 27-star position (ASTGRAF.BAS
+# ABOUTME: canon, default) and the parked 252/1764 ladder (28 x 9 x 7, --ladder 28).
 
 import pytest
 
 from astgraf.ephemeris import ayanamsa_value, compute_chart
-from astgraf.horary import (HORARY_NAKSHATRAS_28, LORD_CYCLE, find_sub_crossings,
-                            horary_position)
+from astgraf.horary import (HORARY_NAKSHATRAS_28, LORD_CYCLE, NAKSHATRAS_27,
+                            SIGNS_12, find_sub_crossings, horary_position,
+                            star_position)
 from astgraf.models import BodyPosition, ChartMoment, PeriodRow
+
+
+def test_twenty_seven_names_follow_astgraf_bas_order():
+    # NU ruling 2026-08-02: "follow exactly whats in ASTGRAF.BAS" — DATA lines
+    # 348-351, 27 names, no Abhijit (decision parked). One ruled exception:
+    # "Magha" spelling kept where the BAS prints "Makha".
+    assert len(NAKSHATRAS_27) == 27
+    assert NAKSHATRAS_27[0] == "Aswini"
+    assert NAKSHATRAS_27[9] == "Magha"
+    assert NAKSHATRAS_27[19] == "Poorvashada"
+    assert NAKSHATRAS_27[20] == "Uthrashada"
+    assert "Abhijit" not in NAKSHATRAS_27
+    assert NAKSHATRAS_27[26] == "Revathy"
+
+
+def test_star_position_matches_quake_pdf_report():
+    # Oracle: the QUAKE.pdf planet table (an ASTROLOG.BAS printout, ayanamsa
+    # 0.000) — longitude -> Nakshatra / Pada / Navam columns, all 12 rows.
+    cases = [
+        (34.7, "Kritika", 3, "Aqu"),       # Sun
+        (116.4, "Ashlesha", 3, "Aqu"),     # Moon
+        (48.0, "Rohini", 3, "Gem"),        # Mars
+        (50.6, "Rohini", 4, "Can"),        # Mercury
+        (133.0, "Magha", 4, "Can"),        # Jupiter (PDF prints "Makha")
+        (75.7, "Rudra", 3, "Aqu"),         # Venus
+        (243.6, "Moola", 2, "Tau"),        # Saturn
+        (188.9, "Swathy", 1, "Sag"),       # Rahu
+        (8.9, "Aswini", 3, "Gem"),         # Ketu
+        (17.6, "Bharani", 2, "Vir"),       # Uranus
+        (339.5, "Uthra Badra", 2, "Vir"),  # Neptune
+        (285.9, "Sravana", 2, "Tau"),      # Pluto
+    ]
+    for lon, star, pada, navam in cases:
+        s = star_position(lon)
+        assert (s.nakshatra, s.pada, s.navam) == (star, pada, navam), lon
+
+
+def test_star_position_edges_and_wrap():
+    s0 = star_position(0.0)
+    assert (s0.nakshatra, s0.starcount, s0.pada, s0.navam) == ("Aswini", 1, 1, "Ari")
+    # Failure/edge case: negative input normalizes; 359 deg is Revathy's last pada.
+    s = star_position(-1.0)
+    assert (s.nakshatra, s.pada, s.navam) == ("Revathy", 4, "Pis")
+    assert star_position(360.0).nakshatra == "Aswini"
+    assert len(SIGNS_12) == 12 and SIGNS_12[0] == "Ari" and SIGNS_12[11] == "Pis"
 
 
 def test_twenty_eight_names_with_abhijit_twenty_first():

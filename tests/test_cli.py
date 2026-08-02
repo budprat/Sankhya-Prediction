@@ -131,12 +131,46 @@ def test_scope_wheels_for_rows_and_events(tmp_path):
     assert any(el.get("data-body") == "Uranus" for el in root.iter())
 
 
-def test_horary_grid_and_crossings(tmp_path):
+def test_horary_default_is_classical_27(tmp_path):
+    # NU ruling 2026-08-02: --horary follows ASTGRAF.BAS exactly — the classical
+    # 27-star nakshatra/pada/navam labeling; the 28-ladder is opt-in.
     rc = main([
         "--year", "1987", "--month", "8", "--day", "28", "--time", "02:55",
         "--utc-offset", "+05:30", "--lon", "76:57E", "--lat", "28:48N",
         "--unit", "hour", "--step", "6", "--count", "3",
         "--horary", "--no-aspects",
+        "--out", str(tmp_path),
+    ])
+    assert rc == 0
+    with open(tmp_path / "horary.csv", newline="") as fh:
+        reader = csv.DictReader(fh)
+        rows = list(reader)
+        fields = reader.fieldnames
+    assert len(rows) == 3 * 13
+    assert "nakshatra" in fields and "pada" in fields and "navam" in fields
+    assert "sub" not in fields and "division" not in fields
+    asc = next(r for r in rows if r["index"] == "0" and r["body"] == "Ascendant")
+    # 80.1068 deg sidereal: 25th pada -> Punarvasu 1, navamsa cycle restarts at Ari.
+    assert asc["nakshatra"] == "Punarvasu"
+    assert asc["pada"] == "1"
+    assert asc["navam"] == "Ari"
+    # No 252-boundary event file in classical mode.
+    assert not (tmp_path / "horary_events.csv").exists()
+
+
+def test_ladder_without_horary_errors(tmp_path):
+    with pytest.raises(SystemExit) as exc:
+        main(["--year", "2000", "--ladder", "28", "--no-aspects",
+              "--out", str(tmp_path)])
+    assert exc.value.code == 2
+
+
+def test_horary_ladder_28_flag_restores_252_grid(tmp_path):
+    rc = main([
+        "--year", "1987", "--month", "8", "--day", "28", "--time", "02:55",
+        "--utc-offset", "+05:30", "--lon", "76:57E", "--lat", "28:48N",
+        "--unit", "hour", "--step", "6", "--count", "3",
+        "--horary", "--ladder", "28", "--no-aspects",
         "--out", str(tmp_path),
     ])
     assert rc == 0

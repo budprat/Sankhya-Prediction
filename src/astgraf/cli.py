@@ -10,7 +10,7 @@ from pathlib import Path
 from .aspects import find_events
 from .ephemeris import BODY_ORDER
 from .grid import build_rows, label_for_jd, make_chart_at_jd, make_pos_at_jd
-from .horary import find_sub_crossings, horary_position
+from .horary import find_sub_crossings, horary_position, star_position
 from .locator import locate
 from .precession import render_precession_wheel, report_lines
 from .scope import render_scope
@@ -65,8 +65,12 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--orb", type=float, default=3.0,
                    help="aspect orb in degrees for scope wheels (default 3.0)")
     p.add_argument("--horary", action="store_true",
-                   help="write the 252-division horary grid (horary.csv) and "
-                        "sub-boundary crossing events (horary_events.csv)")
+                   help="write horary.csv: classical 27-star nakshatra/pada/navam "
+                        "per body (ASTGRAF.BAS canon)")
+    p.add_argument("--ladder", choices=["28"], default=None,
+                   help="with --horary: use the parked 28x9x7 equal-division "
+                        "ladder instead (252-grid columns + horary_events.csv); "
+                        "Abhijit-28 decision pending")
     p.add_argument("--ayanamsa-rate", type=float, default=None, metavar="ARCSEC",
                    help="ayanamsa arcsec/year override (e.g. 50.35); default keeps "
                         "the suite formula 151/10800 deg/yr")
@@ -82,6 +86,8 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    if args.ladder and not args.horary:
+        build_parser().error("--ladder requires --horary")
     hour, minute = _parse_time(args.time)
     start = ChartMoment(
         year=args.year, month=args.month, day=args.day, hour=hour, minute=minute,
@@ -140,7 +146,7 @@ def main(argv: list[str] | None = None) -> int:
             for e in events:
                 writer.writerow([e.body_a, e.body_b, e.kind, f"{e.jd:.6f}", e.label])
 
-    if args.horary:
+    if args.horary and args.ladder == "28":
         with open(out / "horary.csv", "w", newline="") as fh:
             writer = csv.writer(fh)
             writer.writerow(["index", "label", "jd", "body", "longitude", "division",
@@ -162,7 +168,20 @@ def main(argv: list[str] | None = None) -> int:
                                  f"{c.boundary_deg:.6f}", f"{c.jd:.6f}",
                                  label_for_jd(c.jd)])
         print(f"  horary: {len(rows) * len(BODY_ORDER)} grid rows, "
-              f"{len(crossings)} sub crossings")
+              f"{len(crossings)} sub crossings (28-ladder)")
+    elif args.horary:
+        with open(out / "horary.csv", "w", newline="") as fh:
+            writer = csv.writer(fh)
+            writer.writerow(["index", "label", "jd", "body", "longitude",
+                             "nakshatra", "pada", "navam"])
+            for r in rows:
+                for p in r.positions:
+                    s = star_position(p.longitude)
+                    writer.writerow([r.index, r.label, f"{r.jd:.6f}", p.name,
+                                     f"{p.longitude:.6f}", s.nakshatra, s.pada,
+                                     s.navam])
+        print(f"  horary: {len(rows) * len(BODY_ORDER)} grid rows "
+              "(classical 27; --ladder 28 for the 252-grid)")
 
     if args.locate:
         if not events:

@@ -60,7 +60,7 @@ descend the lens for the fast ones (each planet comes one by one).
 | `svg/combined.svg` | screen plot | all bodies + aspect markers |
 | `aspects.csv` | manual matching | conjunction/square/trine/opposition crossings, bisection-refined to the minute |
 | `scope/row_NN.svg`, `scope/event_NNN_*.svg` | — | scope wheels with aspect lines (`--scope`) |
-| `horary.csv`, `horary_events.csv` | — | 252-grid positions/lords and sub-boundary crossings (`--horary`) |
+| `horary.csv`, `horary_events.csv` | — | classical 27-star nakshatra/pada/navam (`--horary`); 252-grid + crossings with `--ladder 28` |
 | `precession_wheel.svg` | — | 28-sector precession wheel with equinox needle (`--precession`) |
 
 The default plot is wrapped 0–360° with line breaks at the wrap — no more
@@ -157,14 +157,22 @@ New inputs about what positions trigger events become a few lines in the
 file; `astgraf-bands --rules FILE` sweeps and scores every rule uniformly.
 The theory itself is documented in FRAMEWORK.md.
 
-## The 252-division horary grid (`--horary`)
+## The nakshatra layer (`--horary`)
 
-NU's Sankhyan prediction grid: **28 equal nakshatra divisions** (star names are
-markers only; Abhijit is the 21st division, 257.14–270°, exactly opposite
-Punarvasu — NU ruling 2026-08-02) × 9 equal subs = **1/252** of the cycle, × 7
-again = **1/1764** (the PDF's "1/63rd fraction" — the instant; numeric only,
-since the 9-lord cycle has no defined 7-fold mapping). `horary.csv` gives every
-body's division/sub/sub-sub numbers and lords each period; `horary_events.csv` records
+**Default — the classical 27 stars, exactly as ASTGRAF.BAS carries them** (NU
+ruling 2026-08-02: "follow exactly whats in ASTGRAF.BAS"; the Abhijit/28
+question is parked for a later decision). `horary.csv` gives every body's
+nakshatra, pada (1–4), and navamsam sign each period, computed with the
+verbatim ASTROLOG.BAS pada-count arithmetic (lines 5680–5790) and
+oracle-pinned to the QUAKE.pdf printout. Names follow the BAS DATA lines
+verbatim with one ruled exception: "Magha" where the BAS prints "Makha".
+
+**`--ladder 28` — the parked Sankhyan prediction grid**: 28 equal divisions
+(star names are markers only; Abhijit inserted as the 21st, 257.14–270°,
+exactly opposite Punarvasu) × 9 equal subs = **1/252** of the cycle, × 7 again
+= **1/1764** (the PDF's "1/63rd fraction" — the instant; numeric only, since
+the 9-lord cycle has no defined 7-fold mapping). In this mode `horary.csv`
+gives division/sub/sub-sub numbers and lords, and `horary_events.csv` records
 every 1/252-boundary crossing, bisection-refined, wrap- and retrograde-aware.
 Conventions (stated for correction): division *n* takes Vimshottari lord
 (*n*−1 mod 9); a division's first sub takes the division's own lord and cycles;
