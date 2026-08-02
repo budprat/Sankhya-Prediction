@@ -126,8 +126,10 @@ Retrodiction against recorded events is internal to the method, and the
 system "can be made as accurate as one wants" by descending the ladder.
 Scores are reported against chance baselines, pre-registered criteria,
 hits and misses alike (see ledger: band trigger, grid mode 0/31 catalog
-hits vs 1.12 expected by chance; proximity mode 1/31 — March 2015 North
-India rain — vs 3.45 expected; proximity census 4 episodes/30 yr; Chatur
+hits vs 0.63 expected by chance; proximity mode 1/31 — March 2015 North
+India rain — vs 1.79 expected; baselines are step-honest per the 2026-08-02
+audit fix — earlier quotes of 1.12/3.45 used the inflated formula;
+proximity census 4 episodes/30 yr; Chatur
 Vyuham 1/126 yr — on the exact window NU named from memory).
 
 ## 4. Implementation map

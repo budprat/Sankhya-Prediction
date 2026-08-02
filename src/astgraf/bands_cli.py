@@ -151,7 +151,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.catalog:
         events = load_catalog(args.catalog)
         rows, summary = score_events(episodes, events, args.window_days,
-                                     start, start + dt.timedelta(days=args.days))
+                                     start, start + dt.timedelta(days=args.days),
+                                     step_days=step_days)
         with open(out / "catalog_score.csv", "w", newline="") as fh:
             writer = csv.writer(fh)
             writer.writerow(["place", "window_start", "window_end", "precision",
@@ -277,7 +278,8 @@ def run_rules(args, start, steps, step_hours, step_days) -> int:
         events = load_catalog(args.catalog)
         for name, episodes in spans.items():
             _, summary = score_events(episodes, events, args.window_days,
-                                      start, start + dt.timedelta(days=args.days))
+                                      start, start + dt.timedelta(days=args.days),
+                                      step_days=rule_step.get(name, step_days))
             print(f"  score[{name}]: {summary['hits']}/{summary['events']} hits, "
                   f"expected by chance ≈ {summary['expected_hits_by_chance']}")
     return 0
@@ -325,7 +327,8 @@ def run_vyuha(args, start, steps, step_hours, step_days) -> int:
     if args.catalog:
         events = load_catalog(args.catalog)
         rows, summary = score_events(episodes, events, args.window_days,
-                                     start, start + dt.timedelta(days=args.days))
+                                     start, start + dt.timedelta(days=args.days),
+                                     step_days=step_days)
         with open(out / "catalog_score.csv", "w", newline="") as fh:
             writer = csv.writer(fh)
             writer.writerow(["place", "window_start", "window_end", "precision",

@@ -200,12 +200,18 @@ commentary only.
 |---|---|---|---|
 | 2027-01-24 → 01-28 | 2027-01-27 17:15 | 111.98E 14.50N | South China Sea, west of Luzon |
 | 2027-02-06 → 02-13 | 2027-02-11 01:30 | 27.65W 15.14N | mid-Atlantic, west of Cape Verde |
-| 2027-02-24 → 03-10 | 2027-03-03 01:01 | 42.70W 15.97N | western Atlantic, east of the Antilles |
+| 2027-02-24 → 03-10 | 2027-03-03 00:58 | 41.95W 15.97N | western Atlantic, east of the Antilles |
 | 2027-03-14 → 03-20 | 2027-03-16 12:54 | 124.19E 16.38N | Philippine Sea, off Luzon |
 
 The canonical artifacts `out/mined-forward/rules_episodes.csv` and
 `out/doctrine-forward/rules_episodes.csv` now hold the v3 rows; the outcome
-protocol (astgraf-outcomes) grades these. Spot caveat unchanged: ±1 h of
+protocol (astgraf-outcomes) grades these. Tie-break note (finding 13, fixed
+2026-08-02): when several equally-exact crossings exist, the EARLIEST now wins
+deterministically — re-derivation moved one registered instant (2027-03-03
+nodes window: 01:01 → 00:58 UT, Jupiter spot 42.70W → 41.95W); all other rows
+byte-identical. Chance baselines were also made step-honest (findings 21/38):
+the 2013-2015 census re-scores as grid 0/31 vs 0.63 expected, proximity 1/31
+vs 1.79 expected — the below-chance reading stands, more modestly. Spot caveat unchanged: ±1 h of
 timing moves a spot ±15° of longitude; names mark watch-region centers.
 
 ## Amendment 2026-08-02 (v4) — mined rules retired; windows stay as the experiment

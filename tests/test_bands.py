@@ -178,6 +178,31 @@ def test_level1_trigger_requires_same_fine_division():
     assert not trigger_state(loose, level=1).fired
 
 
+def test_score_events_is_step_honest_and_range_aware():
+    # Findings 21/38: the old baseline charged every episode a full day
+    # regardless of sweep step (120x inflation at level 2) and scored catalog
+    # events entirely OUTSIDE the sweep as chance-weighted misses.
+    from astgraf.bands import Episode, score_events
+    ep = Episode(start_jd=2457029.5, end_jd=2457029.5, start_label="s",
+                 end_label="s", band=1, nakshatra="Aswini",
+                 nakshatras=["Aswini"], level="disruptive", giants=[])
+    in_range = {"place": "in", "window": (dt.date(2015, 1, 7),
+                                          dt.date(2015, 1, 7), "day")}
+    out_range = {"place": "out", "window": (dt.date(2020, 6, 1),
+                                            dt.date(2020, 6, 1), "day")}
+    rows, summary = score_events([ep], [in_range, out_range], 3.0,
+                                 dt.date(2014, 12, 20), dt.date(2015, 1, 20),
+                                 step_days=0.2 / 24)
+    # A single 0.2h-step episode is ~0.0083 trigger days, not 1 full day.
+    assert summary["trigger_day_fraction"] < 0.001
+    assert summary["out_of_range"] == 1
+    assert summary["events"] == 1              # only the in-range event scored
+    by_place = {r["place"]: r for r in rows}
+    assert by_place["out"]["p_chance"] == 0
+    assert by_place["out"]["hit"] is False
+    assert 0 < by_place["in"]["p_chance"] < 1
+
+
 def test_episodes_merge_consecutive_firings():
     def s(fired, jd):
         state = trigger_state(make_result(

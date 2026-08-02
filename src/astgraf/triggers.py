@@ -238,7 +238,10 @@ def refine_episode_instant(chart_at, jd_lo: float, jd_hi: float,
         jd = lo
         while jd <= hi:
             gap = gap_at(jd)
-            if best is None or gap < best[0]:
+            # Earliest-within-tolerance (finding 13): when a retrograde loop
+            # holds several equally-exact crossings, ephemeris noise must not
+            # pick among them — the first one wins deterministically.
+            if best is None or gap < best[0] - 1e-6:
                 best = (gap, jd)
             jd += step
         return best

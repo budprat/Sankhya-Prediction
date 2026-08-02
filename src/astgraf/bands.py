@@ -302,27 +302,49 @@ def _date_to_jd(day: dt.date) -> float:
 
 
 def score_events(episodes: list[Episode], events: list[dict], margin_days: float,
-                 sweep_start: dt.date, sweep_end: dt.date):
-    """Per-event hit rows plus honest chance-baseline summary (independence approx.)."""
+                 sweep_start: dt.date, sweep_end: dt.date,
+                 step_days: float = 1.0):
+    """Per-event hit rows plus honest chance-baseline summary (independence approx.).
+
+    Audit findings 21/38: episode length is its true extent plus one sweep
+    step (a single fired sample stands for ~one step, never a full day), so
+    the baseline no longer depends on the sweep step; and catalog events
+    whose window misses the sweep entirely are reported out-of-range instead
+    of being charged as chance-weighted misses.
+    """
     total_days = (sweep_end - sweep_start).days + 1
-    trigger_days = sum(e.end_jd - e.start_jd + 1 for e in episodes)
+    sweep_lo = _date_to_jd(sweep_start)
+    sweep_hi = _date_to_jd(sweep_end) + 1
+    lengths = [(e.end_jd - e.start_jd) + step_days for e in episodes]
+    trigger_days = sum(lengths)
     p_day = min(1.0, trigger_days / total_days) if total_days else 0.0
 
     rows = []
     expected = 0.0
     hits = 0
+    out_of_range = 0
     for event in events:
         start, end, precision = event["window"]
         lo = _date_to_jd(start) - margin_days
         hi = _date_to_jd(end) + 1 + margin_days
+        if hi < sweep_lo or lo > sweep_hi:
+            out_of_range += 1
+            rows.append({**event, "hit": False, "precision": precision,
+                         "p_chance": 0})
+            continue
         hit = any(e.start_jd <= hi and e.end_jd >= lo for e in episodes)
         window_days = (end - start).days + 1 + 2 * margin_days
-        p_chance = 1 - (1 - p_day) ** window_days
+        # P(any episode, placed uniformly in the sweep, overlaps the window).
+        miss = 1.0
+        for length in lengths:
+            miss *= 1 - min(1.0, (length + window_days) / total_days)
+        p_chance = 1 - miss
         expected += p_chance
         hits += hit
         rows.append({**event, "hit": hit, "precision": precision,
                      "p_chance": round(p_chance, 4)})
-    summary = {"events": len(rows), "hits": hits,
+    summary = {"events": len(rows) - out_of_range, "hits": hits,
+               "out_of_range": out_of_range,
                "trigger_day_fraction": round(p_day, 4),
                "expected_hits_by_chance": round(expected, 2)}
     return rows, summary

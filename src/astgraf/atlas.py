@@ -8,6 +8,9 @@ from .precession import DEFAULT_ZERO_YEAR, SECTOR_YEARS, sector_occupancy
 
 # Engine-census results (regenerable: astgraf-bands --rules doctrine-triggers.toml
 # over 1600-2030 and the 1900-2026 vyuha census; documented in the ledger).
+# Cluster year-spans are 3-deg-orb dwell windows and their edges are
+# sampling-dependent to ~a year (audit finding 46); engine drift near 1650
+# adds ~a year more — treat span edges as approximate.
 URA_NEP_CLUSTERS = [(1649, 1652), (1820, 1823), (1991, 1994)]
 JUP_SAT_YEARS = [1603, 1623, 1643, 1663, 1682, 1702, 1723, 1742, 1762, 1782,
                  1802, 1821, 1842, 1861, 1881, 1901, 1921, 1940, 1961, 1981,

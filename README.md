@@ -294,8 +294,10 @@ One **ruled exception** (not a silent divergence): the nakshatra name
 singles, ASTGRAF's `+7` where ASTROLOG has `+6`, the corrected `Z1 = Z1`
 typo, CSV/SVG in place of `.GRF`/VGA output, six decimals vs the `.GRF`'s
 one, real date labels vs the broken `YR` column, decimal hours vs packed
-`HH.MM` steps) are inventoried in `AUDIT.md` Part III §G and the decision
-ledger — none is silent.
+`HH.MM` steps, the grid computing exactly `--count` rows from the start
+moment where the BAS computed count+1 from start+step, and the count
+ceiling of 2000 vs the BAS's 63) are inventoried in `AUDIT.md` Part III §G
+and the decision ledger — none is silent.
 
 ## Tests
 

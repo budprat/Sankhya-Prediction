@@ -145,6 +145,23 @@ def test_refine_episode_instant_works_for_cluster_rules_and_clamps():
     assert 2.5 <= jd_edge <= 4.0
 
 
+def test_refine_prefers_the_earliest_exact_crossing_deterministically():
+    # Finding 13: a retrograde episode can hold TWO equally-exact crossings;
+    # the choice used to fall to 1e-5-degree ephemeris noise (61-deg spot
+    # jitter). The earliest crossing now wins within a 1e-6 tolerance.
+    from astgraf.triggers import refine_episode_instant
+    rule = TriggerRule(name="p", conditions=[
+        Condition(type="conjunction", bodies=["A", "B"], orb=3.0)])
+
+    def chart_at(jd):
+        gap = min(abs(jd - 1.0), abs(jd - 5.0))
+        if abs(jd - 1.0) < abs(jd - 5.0):
+            gap += 5e-7        # noise makes the EARLIER zero microscopically worse
+        return make_result({"A": 0.0, "B": gap})
+    jd = refine_episode_instant(chart_at, 0.0, 6.0, rule)
+    assert jd == pytest.approx(1.0, abs=2e-3)
+
+
 def test_acting_body_at_picks_the_near_giant():
     from astgraf.triggers import acting_body_at, load_rules
     rules = {r.name: r for r in load_rules(DOCTRINE)}
