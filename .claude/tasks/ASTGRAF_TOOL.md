@@ -562,3 +562,16 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   own chance bar). M>=9 (n=5): no shared doctrine signature (mkm spreads
   40-210 deg, no simultaneous vyuha components; single cells near aspects are
   chance at 6x5 looks). 184 tests passing.
+
+## 2026-08-04 — NU standing rule: canon code is FROZEN
+- NU: "never change any code that is based on the BAS files." Confirmed
+  signatures.py contains no BAS-derived code (modern statistics layer; it only
+  CALLS compute_raw) — the recent decluster/control-grid fixes touched no
+  canon. Canon-bearing map recorded (frozen): ephemeris.py entire; horary.py
+  star_position/NAKSHATRAS_27/SIGNS_12; rasi.py entire; report.py entire;
+  grid.py jd_to_calendar + overflow stepping; svgplot.py GRAPHDO constants.
+  Modern (changeable): aspects, bands, bands_cli, triggers, locator,
+  signatures, matrix, atlas, outcomes, precession, scope, models, cli. The two
+  documented divergences (Gregorian >=, instant ayanamsa year) pre-date this
+  rule and stand as ruled exceptions; any future canon change requires an
+  explicit NU ruling first.
