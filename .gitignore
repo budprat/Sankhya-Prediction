@@ -10,3 +10,4 @@ tools/astgraf/de440.bsp
 .claude/state/
 .claude/knowledge/
 .claude/test-quality-flags.log
+.claude/memory/
