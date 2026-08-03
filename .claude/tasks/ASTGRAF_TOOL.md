@@ -645,3 +645,29 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   pre-dawn Asc sweeping Neptune -> rNeptune/Ketu -> Uranus -> Sun/rUranus in
   the hours before the quake — an Ulsoor-like chain, on record as an
   observation only.
+
+## 2026-08-04 — Location-layer variants (a) and (b): tested, BOTH AT CHANCE
+- NU ran the two recorded alternatives (scratchpad/spot_variant_test.py;
+  1,435 declustered mainshocks; best-of-4-bodies longitude gap; null = 20
+  epicenter permutations, seed 42):
+    M1 current rule (trigger-chart locate)      median 28.9 vs null 28.6, hits<=15deg 419 vs 421
+    M2 variant b (locate at the event minute)   median 29.2 vs null 29.3, hits 419 vs 415
+    M3 variant a (ZERO-rotation REAL-meridian)  median 29.9 vs null 28.8, hits 412 vs 417
+    M4 sanity (zero-rotation observed meridian) median 28.9 — confirms M1~=M4
+  Per-body medians all ~88-90 deg = the uniform-chance value. No formulation
+  of the world-spot channel has corpus-level skill; the discriminating
+  forward-hit question between the two ruled schemes is now moot for M7+
+  quakes — both measure at chance retrospectively.
+- Structural insight ON RECORD: the current forward model (locate from the
+  light-time-earlier trigger chart, then rotate west) is arithmetically
+  near-identical to the zero-rotation OBSERVED meridian at the arrival
+  minute — the westward rotation cancels against the earlier chart's
+  eastward meridian offset (Nepal: M1 Uranus 70.8E vs M4 70.6E). The
+  "rotation" as implemented is self-canceling with respect to arrival.
+- Nepal case study stays the tension: variant (a) real-Uranus meridian lands
+  87.5E — 2.8 deg from Gorkha's longitude (1,746 km with the declination
+  cage) — the formal version of the Sun-on-MC reading; but the corpus shows
+  it does not generalize (M3 at/below its own null). Combined with the
+  angle-channel p=0.25 verdict (same day), every location formulation tested
+  for M7+ earthquakes sits at chance; the timing layers remain the doctrine's
+  proven core. Location doctrine awaits NU's NR/Rs/Ro table or a new ruling.
