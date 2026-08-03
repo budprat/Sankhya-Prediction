@@ -72,20 +72,54 @@ def test_mine_lifts_flags_planted_pattern():
     assert zero_ctrl[0]["lift"] != float("inf")
 
 
-def test_decluster_drops_near_repeats():
+def test_decluster_keeps_the_largest_not_the_first():
     from astgraf.signatures import decluster
     rows = [
-        {"time": "2011-03-11T05:46:24.000Z", "latitude": "38.3", "longitude": "142.4"},
-        {"time": "2011-03-11T06:15:00.000Z", "latitude": "36.2", "longitude": "141.1"},
-        {"time": "2011-03-13T01:00:00.000Z", "latitude": "39.0", "longitude": "143.0"},
-        {"time": "2011-03-12T00:00:00.000Z", "latitude": "-30.0", "longitude": "-70.0"},
-        {"time": "2011-06-01T00:00:00.000Z", "latitude": "38.3", "longitude": "142.4"},
+        # Tohoku sequence: M7.3 foreshock Mar 9, M9.1 mainshock Mar 11,
+        # M7.9 aftershock — keeping first-in-time would DROP the mainshock
+        # (this is exactly how 1960 Valdivia and 2011 Tohoku vanished from
+        # the v2 corpus).
+        {"time": "2011-03-09T02:45:00.000Z", "latitude": "38.4",
+         "longitude": "142.8", "mag": "7.3"},
+        {"time": "2011-03-11T05:46:24.000Z", "latitude": "38.3",
+         "longitude": "142.4", "mag": "9.1"},
+        {"time": "2011-03-11T06:15:00.000Z", "latitude": "36.2",
+         "longitude": "141.1", "mag": "7.9"},
+        {"time": "2011-03-12T00:00:00.000Z", "latitude": "-30.0",
+         "longitude": "-70.0", "mag": "7.1"},
+        {"time": "2011-06-01T00:00:00.000Z", "latitude": "38.3",
+         "longitude": "142.4", "mag": "7.0"},
     ]
     kept = decluster(rows)
-    # The two Tohoku aftershocks (within 7 d / 500 km) drop; the far-away
-    # Chile event and the June repeat (outside 7 d) survive.
     assert len(kept) == 3
-    assert kept[0]["time"].startswith("2011-03-11T05")
+    mags = {r["mag"] for r in kept}
+    assert "9.1" in mags, "the mainshock must survive declustering"
+    assert "7.3" not in mags and "7.9" not in mags
+    assert "7.1" in mags and "7.0" in mags   # far-away + out-of-window survive
+    # Output stays time-ordered.
+    times = [r["time"] for r in kept]
+    assert times == sorted(times)
+
+
+def test_control_grid_does_not_resonate_with_the_moon(tmp_path):
+    # A strictly uniform stride (span/N) sat at a near 3:8 commensurability
+    # with the lunar cycle — control Moon phases formed an 8-tooth comb whose
+    # holes landed on the aspect zones, faking a p=0 "discovery" for Moon
+    # predicates. The golden-ratio sequence must cover every 15-degree bin of
+    # a Moon separation.
+    import csv as _csv
+    catalog = tmp_path / "mini.csv"
+    with open(catalog, "w", newline="") as fh:
+        writer = _csv.writer(fh)
+        writer.writerow(["time", "latitude", "longitude", "mag", "id", "place"])
+        for year in range(1920, 2020, 2):
+            writer.writerow([f"{year}-06-15T12:00:00.000Z", "10", "100",
+                             "7.0", f"e{year}", "x"])
+    run_corpus(str(catalog), str(tmp_path / "out"))
+    with open(tmp_path / "out" / "controls.csv", newline="") as fh:
+        controls = list(_csv.DictReader(fh))
+    bins = {int(float(c["sep:Sun-Moon"]) // 15) for c in controls}
+    assert bins == set(range(12)), f"empty Moon-separation bins: {set(range(12)) - bins}"
 
 
 def test_controls_wrap_inside_the_corpus_span(tmp_path):

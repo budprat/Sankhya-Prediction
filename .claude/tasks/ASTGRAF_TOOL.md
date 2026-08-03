@@ -541,3 +541,24 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   cell 0.204081...). Consistency point in favor of the ruled /9/7 ladder
   (closes onto the band-span; /9/9 has no such closure); does NOT by itself
   decide the parked Abhijit-28 question.
+
+## 2026-08-04 — Magnitude-stratified pattern search (NU) + two data fixes it caught
+- NU asked whether patterns exist in M7/M8/M9 strata. Running it exposed two
+  real corpus flaws, both fixed test-first:
+  (1) decluster kept the FIRST event of a cluster — foreshocks silently
+  displaced the 1960 Valdivia M9.5 and 2011 Tohoku M9.1 mainshocks. Now
+  keep-largest greedy (time-ordered output); both restored.
+  (2) The time-uniform control grid stride (span/4305 ~ 10.238 d) sat at a
+  near 3:8 commensurability with the lunar cycle — control Moon phases formed
+  a drifting comb whose holes landed on aspect zones after the real-offset
+  fold, faking rsep:Neptune-Moon@sq at lift 165, p=0.000. Controls now use a
+  golden-ratio low-discrepancy sequence (deterministic, non-resonant with any
+  period); coverage test added.
+- Verdicts on the corrected corpus (1435 events, mainshocks in, clean
+  climatology): FULL M7+: max lift 1.71, null median 1.73, p = 0.595 — the
+  no-survivors retirement stands, stronger. M>=7.5 (454): max 2.15 vs null
+  median 2.31, p = 0.74. M>=8 (94): max 4.08 vs null median 4.64, p = 0.74
+  (top cells rsep:Neptune-node@conj/opp — doctrine-adjacent theme, below its
+  own chance bar). M>=9 (n=5): no shared doctrine signature (mkm spreads
+  40-210 deg, no simultaneous vyuha components; single cells near aspects are
+  chance at 6x5 looks). 184 tests passing.

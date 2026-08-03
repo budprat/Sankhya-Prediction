@@ -107,24 +107,23 @@ def _chart_at_jd(jd: float) -> ChartResult:
 
 
 def decluster(rows: list[dict], days: float = 7.0, km: float = 500.0) -> list[dict]:
-    """Drop aftershock-like rows: within `days` AND `km` of a retained earlier
-    event (audit batch 3, finding 33 — ~a quarter of the corpus clusters)."""
+    """Drop fore/aftershock-like rows: within `days` AND `km` of a retained
+    LARGER event (audit batch 3, finding 33; keep-largest greedy — a
+    keep-first walk silently dropped the 1960 Valdivia and 2011 Tohoku
+    mainshocks in favor of their foreshocks)."""
     def jd_of(r):
         return _chart_for_time(r["time"]).jd
-    kept: list[tuple[float, float, float, dict]] = []
-    for r in sorted(rows, key=lambda r: r["time"]):
-        jd = jd_of(r)
-        lat, lon = float(r["latitude"]), float(r["longitude"])
-        duplicate = False
-        for kjd, klat, klon, _ in reversed(kept):
-            if jd - kjd > days:
-                break
-            if _gc_km(lat, lon, klat, klon) <= km:
-                duplicate = True
-                break
-        if not duplicate:
-            kept.append((jd, lat, lon, r))
-    return [r for _, _, _, r in kept]
+    candidates = [(float(r.get("mag") or 0), jd_of(r),
+                   float(r["latitude"]), float(r["longitude"]), i, r)
+                  for i, r in enumerate(rows)]
+    kept: list[tuple[float, float, float, float, int, dict]] = []
+    for cand in sorted(candidates, key=lambda c: (-c[0], c[1])):
+        _, jd, lat, lon, _, _ = cand
+        clustered = any(abs(jd - kjd) <= days and _gc_km(lat, lon, klat, klon) <= km
+                        for _, kjd, klat, klon, _, _ in kept)
+        if not clustered:
+            kept.append(cand)
+    return [r for *_, r in sorted(kept, key=lambda c: c[1])]
 
 
 def run_corpus(catalog_path: str, out_dir: str,
@@ -154,9 +153,15 @@ def run_corpus(catalog_path: str, out_dir: str,
                     "lat": lat, "lon": lon})
         event_sigs.append(sig)
 
+    # Golden-ratio low-discrepancy sequence, NOT a uniform stride: a strict
+    # span/N stride sat at a near 3:8 commensurability with the lunar cycle,
+    # so control Moon phases formed a drifting comb whose holes landed on the
+    # aspect zones (a fake p=0 "discovery"). frac(k*phi) is equidistributed
+    # and non-resonant with every periodic signal, and stays deterministic.
+    phi = 0.6180339887498949
     n_controls = CONTROLS_PER_EVENT * len(rows)
     for k in range(n_controls):
-        control_jd = span_lo + span_len * (k + 0.5) / n_controls
+        control_jd = span_lo + span_len * ((k * phi) % 1.0)
         control = extract_signature(_chart_at_jd(control_jd),
                                     chart_at=_chart_at_jd)
         control.update({"id": f"grid~{k}"})
