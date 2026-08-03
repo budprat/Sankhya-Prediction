@@ -253,6 +253,42 @@ months match the printout.
   the network. Only the quake channel is graded — the flood/volcanic
   families need the news search (firecrawl credits pending).
 
+## The anchor library (`astgraf-anchors`)
+
+The recurrence principle (NU, 2026-08-04) as machinery: past major events are
+the anchors prediction works from. `anchors.toml` holds the library — the
+taught instances (Nepal, Hyderabad, Ulsoor, the 2016 vyuham, Krakatoa, 2004
+Sumatra) plus the corpus M9 set — and `astgraf-anchors` builds each anchor's
+dossier:
+
+```bash
+uv run astgraf-anchors --list                  # the library
+uv run astgraf-anchors --anchor nepal-2015     # one dossier to stdout
+uv run astgraf-anchors --out out/anchors       # all dossiers as .json/.txt
+```
+
+A dossier is the event's full configuration readout, **every fired rule with
+its trigger instant refined below one minute**:
+
+- **Contacts** — all pairs (11 bodies + real-Uranus/Neptune) within 5° of an
+  aspect angle, doctrine-orb (3°) hits starred; each starred contact carries
+  the exact instant the aspect perfects (UTC minute), its offset from the
+  event, and the residual if it never perfects (Nepal: real-Uranus reaches
+  the Sun exactly 18.1 h after the quake; real-Neptune reaches Ketu +107 h).
+- **The site timetable** — for located anchors, every Ascendant conjunction
+  (observed and real positions) within ±12 h, minute-refined in the tropical
+  (physical rising) frame. Oracle-tested against NU's taught minutes:
+  Hyderabad Asc–Rahu 04:50 vs taught ~04:49 IST, Asc–Ketu 17:06 vs ~17:04;
+  Ulsoor Asc–Neptune 06:12 exact, Asc–Uranus 08:21 vs 08:20, sweep order
+  Neptune → Sun → Ketu → Uranus reproduced.
+- **Band state and vyuha** — Moon/Ketu/Mars spread, band stack, and the
+  Chatur Vyuham state at the instant.
+
+Anchors with `time_quality = "approximate"` (Krakatoa's paroxysm, the
+Hyderabad cloudburst hour) keep valid slow-layer exactness instants — those
+are found by geometry near the date — while the fast-layer readouts inherit
+the time uncertainty.
+
 ## Honesty notes
 
 - The ephemeris is the ASTROLOG.BAS/ASTGRAF.BAS canon verbatim, including its

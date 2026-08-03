@@ -620,3 +620,28 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   path is Asc-90 by construction, unusable for culmination tests; the Koch
   path is domain-limited to |lat| < ~66.6 — one event excluded (Baffin Bay,
   73.15N), the canon itself cannot cast that chart.
+
+## 2026-08-04 — Anchor library built (recurrence gap 3) + minute-refined trigger instants
+- NU: build the anchor library; the rules need the trigger instant defined to
+  minutes. Built test-first in the modern layer (no canon touched):
+  anchors.toml (data: the 6 taught anchors incl. the vyuham configuration and
+  Krakatoa, + the 5 corpus M9 events with exact catalog instants; approximate
+  times flagged with time_quality) + anchors.py + astgraf-anchors CLI
+  (--list / --anchor ID / --out dir, .json + .txt dossiers).
+- A dossier = the anchor's configuration readout with every fired rule's
+  TRIGGER INSTANT refined below one minute: contacts (55 pairs + real-Ura/Nep
+  x 10, listed at 5 deg, doctrine-fired at 3 deg; degenerate Rahu-Ketu pair
+  excluded) each with exact UTC minute + offset + residual; the site
+  Ascendant timetable (13 positions, tropical/physical-rising frame, Koch
+  path, +-12 h); band state (mkm spread, stack); vyuha state.
+- ORACLES REPRODUCED (tests pin them at +-5 min): Hyderabad Asc-Rahu 04:50
+  IST (taught ~04:49) and Asc-Ketu 17:06 (taught ~17:04) on 2016-09-23;
+  Ulsoor Asc-Neptune 06:12 (taught 06:12) and Asc-Uranus 08:21 (taught
+  08:20) with the sweep order Neptune->Sun->Ketu->Uranus; Nepal double
+  signature 0.69/0.34 deg with real-Ura->Sun exactness +18.1 h after the
+  quake; vyuham-2016 dossier fires the full array with each arm's exactness
+  minute. 193 tests passing.
+- Observation for NU (not doctrine): Nepal's own site timetable shows the
+  pre-dawn Asc sweeping Neptune -> rNeptune/Ketu -> Uranus -> Sun/rUranus in
+  the hours before the quake — an Ulsoor-like chain, on record as an
+  observation only.

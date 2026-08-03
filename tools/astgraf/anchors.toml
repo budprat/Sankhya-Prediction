@@ -1,0 +1,125 @@
+# ABOUTME: The anchor library — past major events whose configurations are the basis of
+# ABOUTME: prediction (NU's recurrence principle, 2026-08-04). Data only; astgraf-anchors reads it.
+#
+# Required keys: id, category, time (ISO UTC), place. Optional: lat, lon (deg, north/east
+# positive), mag, taught (NU-taught instance vs corpus-imported), utc_offset (display
+# hours), time_quality ("exact" | "approximate"), source, notes.
+# time_quality=approximate: slow-layer exactness instants stay valid (found by geometry
+# near the date); fast-layer readouts (Moon/Asc) inherit the time uncertainty.
+
+[[anchor]]
+id = "nepal-2015"
+category = "earthquake"
+time = "2015-04-25T06:11:25.950Z"
+lat = 28.2305
+lon = 84.7314
+mag = 7.8
+place = "Gorkha, Nepal"
+taught = true
+utc_offset = 5.75
+source = "USGS us20002926; QUAKE.pdf oracle chart (11:40 IST, 86:00E 28:00N)"
+notes = "The taught double signature: real-Uranus on the Sun (0.7) + real-Neptune on Ketu (0.34)."
+
+[[anchor]]
+id = "hyderabad-2016"
+category = "flood"
+time = "2016-09-23T11:34:00Z"
+lat = 17.385
+lon = 78.487
+place = "Hyderabad, India"
+taught = true
+utc_offset = 5.5
+time_quality = "approximate"
+source = "Hyderaba-floods.docx (NU's own cast, 24-09-2016)"
+notes = "Both nodes held: Neptune on Ketu (1.1) + exalted Mercury on Rahu (3.7), Sun conj Jupiter (1.6), Moon crossing their square. Site layer: Asc crossed the Rahu end ~04:49 IST and the Ketu end ~17:04 IST each flood day; anchor time = the taught evening cloudburst hour, Sep 23."
+
+[[anchor]]
+id = "ulsoor-2016"
+category = "biological"
+time = "2016-03-07T00:42:00Z"
+lat = 12.98
+lon = 77.62
+place = "Ulsoor Lake, Bengaluru, India"
+taught = true
+utc_offset = 5.5
+time_quality = "approximate"
+source = "NU, 2026-08-02 (fish kill, 2016-03-07)"
+notes = "First site-specific trigger: at dawn the Asc swept Neptune -> Sun -> Ketu -> Uranus, exact crossings 06:12 and 08:20 IST; Sun 5 deg from Ketu two days before the total solar eclipse at that node. Anchor time = the taught first crossing."
+
+[[anchor]]
+id = "vyuham-2016"
+category = "configuration"
+time = "2016-06-03T12:00:00Z"
+place = "global (Chatur Vyuham window June 1-6, 2016)"
+taught = true
+source = "NU's window; engine census fires once in 1900-2026"
+notes = "The fourfold array: Sun-Saturn x Jupiter-Neptune oppositions crossing at 90 deg with the nodal axis locked in. A configuration anchor, not a located event; anchor time = mid-window."
+
+[[anchor]]
+id = "krakatoa-1883"
+category = "volcanic"
+time = "1883-08-27T02:55:00Z"
+lat = -6.102
+lon = 105.423
+place = "Krakatoa, Sunda Strait"
+taught = true
+utc_offset = 7.0
+time_quality = "approximate"
+source = "NU's Java family (1881 Aswini Jup-Sat conjunction -> Krakatoa 1883); paroxysm ~10:02 local Batavia time"
+notes = "Jupiter-Saturn ~120-year same-region family, first taught member."
+
+[[anchor]]
+id = "sumatra-2004"
+category = "earthquake"
+time = "2004-12-26T00:58:53.450Z"
+lat = 3.295
+lon = 95.982
+mag = 9.1
+place = "Sumatra-Andaman"
+taught = true
+source = "USGS official20041226005853450_30; NU's Java family (2000 Kritika conjunction -> 2004 tsunami)"
+notes = "Second taught member of the Jupiter-Saturn Java family."
+
+[[anchor]]
+id = "valdivia-1960"
+category = "earthquake"
+time = "1960-05-22T19:11:20.000Z"
+lat = -38.143
+lon = -73.407
+mag = 9.5
+place = "Valdivia, Chile"
+source = "USGS official19600522191120_30"
+notes = "Largest instrumentally recorded event; corpus-imported M9 anchor."
+
+[[anchor]]
+id = "kamchatka-1952"
+category = "earthquake"
+time = "1952-11-04T16:58:30.000Z"
+lat = 52.623
+lon = 159.779
+mag = 9.0
+place = "Kamchatka"
+source = "USGS official19521104165830_30"
+notes = "Corpus-imported M9 anchor."
+
+[[anchor]]
+id = "alaska-1964"
+category = "earthquake"
+time = "1964-03-28T03:36:16.000Z"
+lat = 60.908
+lon = -147.339
+mag = 9.2
+place = "Prince William Sound, Alaska"
+source = "USGS official19640328033616_30"
+notes = "Corpus-imported M9 anchor."
+
+[[anchor]]
+id = "tohoku-2011"
+category = "earthquake"
+time = "2011-03-11T05:46:24.120Z"
+lat = 38.297
+lon = 142.373
+mag = 9.1
+place = "Tohoku, Japan"
+source = "USGS official20110311054624120_30"
+notes = "Corpus-imported M9 anchor."

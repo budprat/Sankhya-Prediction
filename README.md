@@ -19,6 +19,7 @@ tools/astgraf/              The engine: CLI tools, tests, doctrine rules, docume
   ├── README.md             Tool-level docs: every CLI, flag, and output
   ├── doctrine-triggers.toml  Taught trigger patterns as declarative rules
   ├── mined-triggers.toml     Data-mined candidates (retired — see below)
+  ├── anchors.toml            The anchor library: past major events as data
   └── data/                 Pinned USGS M7+ corpus 1850–2020
 .claude/tasks/ASTGRAF_TOOL.md   Dated decision ledger — every ruling, every change
 ```
@@ -59,6 +60,11 @@ against the original suite's printouts. On top of it:
   page: Koch house cusps, planet table with nakshatra/pada/navamsam, Vimshottari
   Dasa/Bukti, and the RASI/NAVAMSAM box charts, reproducing the canon's own
   printout value-for-value.
+- **The anchor library** (`astgraf-anchors`) — the recurrence principle as
+  machinery: dossiers of past major events (the taught instances + the M9
+  set), every fired contact with its trigger instant refined below one
+  minute and the site's Ascendant timetable — oracle-tested against the
+  taught minutes (Hyderabad 04:49/17:04 IST, Ulsoor 06:12/08:20).
 - **Inverse learning & outcome grading** — signature extraction over the USGS
   M7+ corpus, honest mining (declustered, climatology controls, permutation
   null), and `astgraf-outcomes`: automatic grading of every passed forecast

@@ -14,6 +14,7 @@ astgraf-bands = "astgraf.bands_cli:main"
 astgraf-matrix = "astgraf.matrix:main"
 astgraf-atlas = "astgraf.atlas:main"
 astgraf-outcomes = "astgraf.outcomes:main"
+astgraf-anchors = "astgraf.anchors:main"
 
 [dependency-groups]
 dev = ["pytest>=8", "defusedxml>=0.7"]
