@@ -587,3 +587,36 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   anchor chart's slow-layer configuration re-form), category-tagged pattern
   library per Predict.pdf's per-cell spec, and composite (multi-condition)
   pattern matching. Awaiting NU's build order.
+
+## 2026-08-04 — Angle-localization hypothesis: tested, DOES NOT SURVIVE
+- Origin: the "why spots are from Gorkha" reading found the Sun (carrying
+  real-Uranus at 0.69 deg) standing 1.06 deg from the site MC in the QUAKE
+  chart — suggesting the site's own angles (MC/Asc), not rotated spots, mark
+  the place, matching the Hyderabad/Ulsoor Ascendant instances. NU ruled: run
+  the test across the corpus; rebuild the location layer on the angle channel
+  ONLY if it survives.
+- Pre-registered design (scratchpad/angle_localization_test.py): declustered
+  post-1900 M7+ mainshocks; per event a chart AT the epicenter at the event
+  minute; 26 primary predicates = {11 band bodies + real-Ura + real-Nep} x
+  {site MC, site Asc}, point conjunction, 3.0-deg orb; 5 golden-ratio control
+  instants per event AT THE SAME site (matches the Asc's latitude-dependent
+  sweep exactly); verdict = family max smoothed lift vs 500-run label-
+  permutation null. Oracle gates passed before unblinding: QUAKE printout
+  (MC 33.68 / Asc 128.97) and the in-corpus Nepal row.
+- VERDICT: 1,434 events / 7,170 controls — observed max lift 1.62
+  (Neptune-MC), null median 1.52, p = 0.25. Sensitivity incl. 53-predicate
+  axis family: p = 0.25. Combined any-doctrine-body-on-any-angle: lift 1.13.
+  Sun-MC (the Nepal cell) tops the doctrine cells at lift 1.60 (33 events
+  near local culmination-noon vs 21 expected) but is exactly what a
+  26-predicate family yields by chance. The location layer is NOT rebuilt;
+  the observed-meridian ruling stands; honest negative on record.
+- Design findings under the oracle gates (both recorded, no canon touched):
+  (1) At the TRUE epicenter (84.73E) the Nepal Sun-MC separation is 2.00 deg
+  — the 1.06 figure was an artifact of the canon chart's rounded 86:00E site.
+  (2) The canon's sidereal mode shifts the ANGLES by ayanamsa in RA space,
+  not ecliptic — body-angle separations are frame-DEPENDENT (Nepal Sun-MC:
+  2.00 tropical vs 3.63 sidereal); the test ran tropical = the physical
+  culmination/rising frame, matching the QUAKE oracle. (3) The equal-house
+  path is Asc-90 by construction, unusable for culmination tests; the Koch
+  path is domain-limited to |lat| < ~66.6 — one event excluded (Baffin Bay,
+  73.15N), the canon itself cannot cast that chart.
