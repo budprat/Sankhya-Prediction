@@ -124,6 +124,15 @@ same-region return is the Java family: 1881 Aswini conjunction → Krakatoa
 cell is to accumulate confirmed event-synchronisation factors from past
 records, per category — the per-cell library the mining stages build.
 
+**The recurrence principle (NU, 2026-08-04, stated as the method's core):**
+prediction of future events is BASED ON the analysis of past major events —
+the same positions, conjunctions, and patterns repeat and cause similar
+events. Past-event charts are therefore not merely validation material: they
+are the anchor library from which forward windows are generated. The taught
+rules and charts (Nepal, Hyderabad, Ulsoor, the 2016 vyuham, Krakatoa→2004)
+are instances of this principle; the per-cell matrix library and the
+long-cycle families are its aggregate form.
+
 ## 3. Validation is part of the method
 
 Predict.pdf: "the predicting researchers should confirm such events from

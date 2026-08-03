@@ -575,3 +575,15 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   documented divergences (Gregorian >=, instant ayanamsa year) pre-date this
   rule and stand as ruled exceptions; any future canon change requires an
   explicit NU ruling first.
+
+## 2026-08-04 — NU ruling: the recurrence principle is the method's core
+- NU: "prediction of the future events should be based on the analysis of the
+  past major events, because the same positions, conjunctions and other
+  patterns repeat and cause similar events." Recorded in FRAMEWORK section 2/3
+  boundary as doctrine. Gap analysis against the built system delivered (see
+  conversation 2026-08-04): the system has rule-sweeps and generic predicate
+  mining but LACKS the event-anchored recurrence machinery — configuration-
+  similarity search, anchor-event dossiers, recurrence calendars (when does an
+  anchor chart's slow-layer configuration re-form), category-tagged pattern
+  library per Predict.pdf's per-cell spec, and composite (multi-condition)
+  pattern matching. Awaiting NU's build order.
