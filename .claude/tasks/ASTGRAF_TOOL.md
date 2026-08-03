@@ -530,3 +530,14 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   report reproduces (sidereal 2 H 6 M 47 S exact).
 - The Astro repo keeps the iOS app and its history; branches
   feature/astgraf-tool and fix/engine-ss2-shim remain there unmerged.
+
+## 2026-08-04 — NU observation: the 9/7 ladder-ratio identity
+- NU: 28x9x9 = 2268 and 2268/1764 = 1.28571428... Verified: the ratio is
+  exactly 9/7 (the ladders share 28x9, differing only 9-vs-7), and its cyclic
+  digits are the 28-band span's own: 360/28 = 90/7 = 12.857142... deg —
+  the correction factor between the superseded and ruled ladders IS one
+  band-span, decimally shifted. The system's constants all sit on the 1/7
+  cycle: 25/7 (PHO count), 90/7 (span), 9/7 (ladder ratio), 10/49 (instant
+  cell 0.204081...). Consistency point in favor of the ruled /9/7 ladder
+  (closes onto the band-span; /9/9 has no such closure); does NOT by itself
+  decide the parked Abhijit-28 question.
