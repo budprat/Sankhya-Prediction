@@ -1235,6 +1235,38 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   this is the quake corpus only, and single predicates only; it does not test
   the mirror inside a compound taught rule, nor for floods/biological events.
   Recorded in README (mirror section) and FRAMEWORK (implementation map).
+- SPOT BRAINSTORM, EVIDENCE FIRST (NU: "brainstorm how the spot should be
+  located"). scripts/spot_hypotheses.py, four diagnostics:
+  (1) *** FEASIBILITY, the structural finding ***: a giant's sub-planet point
+      can never leave |lat| <= 23.71 deg (its declination bound), but 44.4%
+      of M7+ epicenters (637/1435) lie OUTSIDE that band — median |lat| 20.7.
+      So a declination->latitude rule cannot locate nearly half of all major
+      quakes NO MATTER what longitude rule accompanies it. This is geometry,
+      not statistics, and it condemns the point-at-the-sub-planet family
+      independently of every lift measured so far. Alaska, Chile, Japan,
+      Kamchatka are unreachable in principle.
+  (2) LOCI instead of points — a pulse along the planet-Earth axis also marks
+      the antipode, the 90-deg "max shear" great circle and the 45/135-deg
+      small circles; circles reach EVERY latitude, so they escape (1).
+      Result: the circle loci track their nulls exactly (shear 0.256 vs
+      0.239; 45/135 0.390 vs 0.409 within 5 deg). The escape route is
+      geometrically available and empirically empty.
+  (3) The plain sub-point (observed positions, no light-time, no rotation —
+      simpler than our locator) is the ONLY construction that separates from
+      its null, and only in the tightest bin: 23/1435 within 5 deg (557 km)
+      vs a null mean of 16.9, lift 1.77, stratified-permutation p = 0.054
+      (0.016 on an earlier control draw — it moves with the draw, which is
+      itself a sign it sits at the edge of detectability). NOT a discovery:
+      ~8 geometric variants were tried, so corrected p ~0.13, and this
+      project's own mining null puts the best-of-many lift at 1.72 BY CHANCE
+      against this 1.77.
+  (4) Split-half over 2-year blocks: same direction in both (lift 1.43 p=0.115
+      and 1.66 p=0.050), significant in neither. Weak-and-consistent, or a
+      small-number artifact — only fresh data separates those.
+  STANDING: nothing is adopted, no constant or default changed. The one
+  pre-registerable candidate is the plain sub-point at 5 deg; the honest test
+  is out-of-sample (the M6.5-7.0 band, or the WATCHLIST windows as they
+  mature), NOT more variants on this corpus.
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet
