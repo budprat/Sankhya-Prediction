@@ -810,3 +810,27 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   cannot rescue the spot channel. Location-layer status (experimental,
   v5) unchanged; reinstatement paths unchanged (forward spot hit /
   flood-category corpus / new NU ruling).
+
+## 2026-08-04 — THE 130-YEAR RECURRENCE SWEEP: every pattern is a fingerprint
+- Exploratory retrodiction (not pre-registered): all 10 anchors' four-giant
+  patterns scanned 1900-2030 at 0.25 d step, FULL and n-1 levels, each
+  non-self episode to be graded against the declustered corpus (11.9 M7+/yr).
+- SELF-RECOVERY: 9/9 in-scan anchors recover their own event inside a FULL
+  episode (by construction, since patterns are extracted at the event
+  instant — the non-circular content is what follows). Windows: Nepal
+  Apr 22-25 (quake 25th), Sumatra Dec 26 single-day (M9.1 + same-day M7.2
+  Sabang in-window), Valdivia May 22 sub-day (the window that forced the
+  engine fix), Kamchatka Nov 4-7, Alaska Mar 27-30, Tohoku Mar 8-11 (window
+  opens 3 days before the quake). Krakatoa's 1883 instant pre-dates the
+  scan; its pattern never forms 1900-2030 — and notably did NOT re-form at
+  Sumatra 2004: the Java-family link is the Jup-Sat band sector, not the
+  contact fingerprint.
+- HEADLINE: ZERO non-self episodes. In 130 years x 10 patterns, at BOTH
+  match levels, no configuration ever re-formed away from its own event.
+  Assiduous-search totals: 0 episodes, 0 days, 0 expected — nothing to
+  grade, no false alarms. The channel's retrospective false-positive rate
+  is zero; its predictive skill is correspondingly UNDEMONSTRATED (no
+  independent trials exist yet). Honest reading: anchor patterns at 3-deg
+  orb individuate their own events; a future full re-formation on the
+  forward calendar will be a genuinely singular alert, roughly
+  once-per-century-plus rare per anchor.
