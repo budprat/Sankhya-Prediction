@@ -399,3 +399,20 @@ def test_observed_rule_asc_trine_real_neptune_fires_on_nepal_tropical_only():
     args = (2015, 4, 25, 6 + 11 / 60 + 25.95 / 3600, 0.0, -84.7314, 28.2305)
     assert evaluate_rule(compute_raw(*args, False, False), rule).fired
     assert not evaluate_rule(compute_raw(*args, True, False), rule).fired
+
+
+def test_observed_rules_from_the_hyderabad_reading_fire_on_their_ground_truth():
+    # NU ruling 2026-08-05: real-Uranus-trine-node (Hyderabad 0.20 deg, Rahu
+    # end) and Saturn-square-nodes (0.38 deg) join the TESTING channel. The
+    # square rule is ONE rule (square to Rahu = square to Ketu by axis
+    # symmetry); the trine is end-specific, so a variant pair like the two
+    # chatur-vyuham rules. Negative control: the Nepal chart fires neither.
+    from astgraf.ephemeris import compute_raw
+    rules = {r.name: r for r in load_rules("observed-triggers.toml")}
+    hyd = compute_raw(2016, 9, 24, 4.5, 0.0, 0.0, 0.0, False, False)
+    nepal = compute_raw(2015, 4, 25, 6 + 11 / 60, 0.0, 0.0, 0.0, False, False)
+    assert evaluate_rule(hyd, rules["real-uranus-trine-rahu"]).fired
+    assert "real-uranus-trine-ketu" in rules          # the untested variant
+    assert evaluate_rule(hyd, rules["saturn-square-nodes"]).fired
+    assert not evaluate_rule(nepal, rules["real-uranus-trine-rahu"]).fired
+    assert not evaluate_rule(nepal, rules["saturn-square-nodes"]).fired

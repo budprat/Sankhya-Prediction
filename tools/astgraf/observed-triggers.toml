@@ -16,3 +16,24 @@ description = "TESTING — site Ascendant trine real-Neptune at the event minute
 conditions = [
   { type = "trine", bodies = ["Ascendant", "real:Neptune"], orb = 1.0 },
 ]
+
+[[rule]]
+name = "real-uranus-trine-rahu"
+description = "TESTING (NU ruling 2026-08-05) — real-Uranus trine the Rahu end (Hyderabad 2016 cast: 0.20 deg, the tightest contact in the chart; exactness +334 h). The OBSERVED end; the Ketu variant below is the untested symmetric twin. Doctrine-exact Mathcad offset."
+conditions = [
+  { type = "trine", bodies = ["real:Uranus", "Rahu"], orb = 1.0 },
+]
+
+[[rule]]
+name = "real-uranus-trine-ketu"
+description = "TESTING (NU ruling 2026-08-05) — real-Uranus trine the Ketu end: the symmetric variant of real-uranus-trine-rahu (trine is end-specific, unlike squares); no observed instance yet."
+conditions = [
+  { type = "trine", bodies = ["real:Uranus", "Ketu"], orb = 1.0 },
+]
+
+[[rule]]
+name = "saturn-square-nodes"
+description = "TESTING (NU ruling 2026-08-05) — Saturn square the nodal AXIS (one rule: a square to Rahu is a square to Ketu by axis symmetry). Hyderabad 2016 cast: 0.38 deg, exactness +77 h; era backdrop Saturn-Neptune square 0.77."
+conditions = [
+  { type = "square", bodies = ["Saturn", "Rahu"], orb = 1.0 },
+]
