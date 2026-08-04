@@ -160,6 +160,80 @@ def main():
     say("   Same direction in both halves, significant in neither — a weak "
         "consistent effect, or a small-number artifact. Needs fresh data.")
 
+    # 5. The LONGITUDE channel alone — "rotate the long to suit", his words.
+    #    Latitude is bounded to the tropics; longitude is not, so if the
+    #    rotation rule works at all it should show here.
+    say("")
+    say("5. LONGITUDE ALONE (his 'rotate the long to suit'), all conventions")
+    from astgraf.locator import LIGHT_MINUTES
+
+    def sublon(jd, body, sign):
+        c = chart_at(jd)
+        p = c.positions[body]
+        ra, _ = equatorial(p.longitude % 360, p.ecliptic_latitude, c.obliquity)
+        return _wrap180(_wrap180(ra - c.gmst)
+                        + sign * LIGHT_MINUTES[body] * 0.25)
+
+    sub = random.sample(ev, 700)
+    ctl = random.sample(ct, 700)
+    for sign, label in ((-1, "west (our locator)"),
+                        (+1, "east (observer rotated)"), (0, "no rotation")):
+        o = [min(abs(_wrap180(float(r["lon"]) - sublon(float(r["jd"]), g, sign)))
+                 for g in GIANTS) for r in sub]
+        n = [min(abs(_wrap180(float(r["lon"]) - sublon(j, g, sign)))
+                 for g in GIANTS) for r, j in zip(sub, ctl)]
+        say(f"   {label:26s} obs median {statistics.median(o):6.2f} deg  "
+            f"null {statistics.median(n):6.2f} deg   within 10 deg "
+            f"{sum(1 for x in o if x <= 10)/len(o):.4f} vs "
+            f"{sum(1 for x in n if x <= 10)/len(n):.4f}")
+    say("   No convention separates from its null: the longitude channel is "
+        "flat too, so BOTH halves of the geometric construction are empty.")
+
+    # 6. The author's OTHER stated mechanism: the 28x11 matrix as a memory of
+    #    "past records" from which to "pinpoint areas on Earth".
+    say("")
+    say("6. MATRIX CELLS AS GEOGRAPHY (his 28x11 'past records' mechanism)")
+    from astgraf.bands import BAND_BODIES
+
+    def unit(la, lo):
+        p, l = math.radians(la), math.radians(lo)
+        return (math.cos(p) * math.cos(l), math.cos(p) * math.sin(l),
+                math.sin(p))
+
+    vecs = [unit(float(r["lat"]), float(r["lon"])) for r in ev]
+
+    def concentration(idx):
+        """Mean resultant length: 1 = one spot, 0 = spread over the globe."""
+        x = sum(vecs[i][0] for i in idx)
+        y = sum(vecs[i][1] for i in idx)
+        z = sum(vecs[i][2] for i in idx)
+        return math.sqrt(x * x + y * y + z * z) / len(idx)
+
+    allidx = list(range(len(ev)))
+    say(f"   whole-catalog concentration R = {concentration(allidx):.4f} "
+        "(the Ring-of-Fire baseline the null must respect)")
+    passed = tested_cells = 0
+    for body in BAND_BODIES:
+        key = f"band:{body}"
+        for band in range(1, 29):
+            idx = [i for i, r in enumerate(ev)
+                   if r.get(key) not in (None, "")
+                   and int(float(r[key])) == band]
+            if len(idx) < 25:
+                continue
+            tested_cells += 1
+            obs_r = concentration(idx)
+            draws = [concentration(random.sample(allidx, len(idx)))
+                     for _ in range(200)]
+            if sum(1 for x in draws if x >= obs_r) / len(draws) < 0.05:
+                passed += 1
+    say(f"   cells tested (n>=25): {tested_cells}; beating p<0.05: {passed} "
+        f"(expected by chance {0.05 * tested_cells:.1f}) — a {passed / max(0.05 * tested_cells, 1e-9):.1f}x "
+        "excess, not significant")
+    say("   Single cells do not carry geography in THIS corpus. Note the "
+        "corpus caveat: the author's memory half is indexed on a "
+        "multi-category 1000-year record we do not have, not on M7+ quakes.")
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text("\n".join(lines) + "\n")
     print(f"wrote {OUT}")

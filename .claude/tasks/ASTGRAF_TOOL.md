@@ -1267,6 +1267,43 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   pre-registerable candidate is the plain sub-point at 5 deg; the honest test
   is out-of-sample (the M6.5-7.0 band, or the WATCHLIST windows as they
   mature), NOT more variants on this corpus.
+- FULL RE-READ OF THE AUTHOR'S CONTEXT (NU: "brainstorm, deep research and
+  interpret yourself"). Two sections added to spot_hypotheses.py:
+  (5) THE LONGITUDE CHANNEL ALONE — he says "rotate the LONG to suit", and
+      unlike latitude, longitude has no tropical bound, so this is the
+      geometric construction's last hope. All three conventions tested (west
+      = our locator, east = the "observer rotated away" reading, none): every
+      one tracks its null (within 10 deg: 0.183/0.219, 0.191/0.189,
+      0.209/0.200). BOTH halves of the geometry are now empty — latitude by
+      impossibility, longitude by measurement.
+  (6) THE MATRIX AS MEMORY — his OTHER stated mechanism, and the one I had
+      been ignoring: "each of these matrix points would contain confirmed
+      event synchronisation factors from past records... an algorithm to
+      pinpoint areas on Earth that would be affected". Tested whether events
+      sharing a 28x11 cell cluster geographically MORE than random catalog
+      events (null respects the Ring of Fire): 21 of 296 cells beat p<0.05
+      where 14.8 are expected — 1.4x, not significant. Caveat that matters:
+      his memory half is indexed on a multi-category 1000-year record (open
+      question 7, never supplied), not on M7+ quakes.
+  *** THE INTERPRETIVE FINDING ***: the author never claims a WORKING
+  location algorithm. "Computerisation and development of algorithm to
+  pinpoint areas on Earth that would be affected in each category WOULD BE
+  NECESSARY" — future tense, in his own text. We have been reverse-
+  engineering a finished method from a description of an intended one. His
+  location theory has two halves: geometry (light-time x rotation, "rotate
+  the long to suit") which we implemented and which measures flat, and
+  memory (the matrix cells learned from records) which HE leaves unbuilt.
+  LIGHT-TIME DISCREPANCY BETWEEN HIS OWN TWO SOURCES, now quantified:
+  the Mathcad offsets decode to (a/2-1) AU = 13.3/31.5/71.4/116.4 min for
+  Jup/Sat/Ura/Nep, while the prose gives 40/80/150/240 min = exactly the
+  NEAREST-approach distance (a-1) AU, which his own sentence confirms
+  ("these figures are for the nearest position"). Ratio 3.00/2.54/2.10/2.06.
+  We use BOTH — Mathcad offsets for real-position timing (validated by the
+  taught Nepal 0.34 deg signature) and prose minutes for the spot rotation —
+  which may be correct (two quantities, two roles) but must be put to him.
+  His km series (1000/2000/4000/8000) is a clean doubling that matches the
+  physics for Jup/Sat/Ura (1116/2232/4186) and BREAKS for Neptune (6697),
+  another sign the spot figures were reasoned by pattern, not computed.
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet
