@@ -65,7 +65,9 @@ def locate(result: ChartResult, body: str) -> EventLocation | None:
     tropical = (position.longitude + result.ayanamsa) % 360
     ra, dec = equatorial(tropical, position.ecliptic_latitude, result.obliquity)
     culmination = _wrap180(ra - result.gmst)
-    event_longitude = _wrap180(culmination - minutes * 0.25)
+    # The rotation IS the Mathcad offset — say so here rather than deriving it
+    # back out of the minutes (identical value, but the rule stays visible).
+    event_longitude = _wrap180(culmination - ROTATION_DEGREES[body])
     return EventLocation(body=body, light_minutes=minutes,
                          culmination_longitude_east=culmination,
                          event_longitude_east=event_longitude,

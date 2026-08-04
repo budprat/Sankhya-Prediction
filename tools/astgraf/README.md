@@ -47,7 +47,7 @@ Bisection refinement makes the lenses agree to the minute (both give the
 2015-01-31 08:17 UT Uranus–Ketu conjunction) and `--locate` applies the
 light-time rotation — the Mathcad offsets (locator v3, NU ruling
 2026-08-05), west from the culmination meridian — to give the spot
-(here 100.17E 4.67N, the Malay peninsula near the Thai–Malaysian border;
+(here 100.17E 4.67N, the Strait of Malacca ~50 km off Perak, Malaysia;
 Uranus's actual distance gave 170.4 light-minutes at this instant). The lens contract is enforced: pairs whose
 relative motion exceeds ~one cycle per division are skipped with a printed
 note — at yearly steps use the slow bodies; descend the lens for the fast

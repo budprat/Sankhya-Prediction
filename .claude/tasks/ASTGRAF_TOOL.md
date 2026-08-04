@@ -1341,6 +1341,33 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
     at all — but that is an audited behaviour (finding 11), so it is left in
     place pending a ruling. Until then the ruling changes CLI/bands spots but
     not signature-corpus spots.
+- SELF-AUDIT of the two ruling commits (NU: "check every change... useful and
+  intentional"). Code verified clean: the deleted ENGINE_UNITS_PER_AU /
+  LIGHT_MINUTES_PER_AU are referenced nowhere; BodyPosition.distance is still
+  consumed by bands (Saturn closeness) and signatures (dist: features) so no
+  orphan; light_minutes_for's now-unused `result` parameter is deliberate and
+  documented (callers unchanged). THREE DEFECTS FOUND AND FIXED:
+  (1) ROTATION_DEGREES was public but production code never used it — locate()
+      round-tripped through minutes x 0.25. locate() now applies
+      ROTATION_DEGREES directly so the rule is visible where it acts (same
+      value; x4 then x0.25 is exact in binary).
+  (2)+(3) THREE PLACE NAMES WERE WRONG. I generated the region wording from
+      coordinates by reasoning, with no geocoder, and did not verify:
+        * 1.9E 13.3N called "Burkina Faso / Benin border" — it is SW NIGER,
+          31 km from Niamey (Benin's northern tip is ~12.4N, so 13.3N cannot
+          be Benin at all);
+        * 49.7E 15.6N called "Gulf of Aden off Somaliland" — it is INLAND
+          YEMEN, ~140 km north of Mukalla (the Gulf lies south of that coast);
+        * README's worked example 100.17E 4.67N called "the Malay peninsula
+          near the Thai-Malaysian border" — it is the Strait of Malacca ~50 km
+          off Perak, ~200 km south of that border.
+      All three corrected, several others loosened (Andhra->Vijayawada,
+      Darfur->N Kordofan, Tak->Kanchanaburi, Makran->"~530 km S of the coast"),
+      and WATCHLIST now carries an explicit caveat that lat/long are
+      authoritative while the region wording is a hand-derived reading aid.
+      LESSON: coordinates computed by the engine are trustworthy; prose
+      geography written from them is not, and must be checked against
+      landmarks before it enters a register.
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet
