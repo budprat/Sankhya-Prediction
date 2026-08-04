@@ -239,3 +239,33 @@ channel (band trigger, nodes, vyuham, site rules) is untouched by this
 verdict. `astgraf-outcomes` now also writes a `spatial_chance` column — the
 historical fraction of M7+ events within the grading radius of each spot —
 so any future "hit" is read against its base rate.
+
+## Amendment 2026-08-04 (v5) — spots demoted to experimental; quake windows are time-only claims
+
+NU ratified the location-layer re-scoping after the 2026-08-04 test battery
+(ledger, same date): the world-spot channel measures at chance on 1,435
+declustered M7+ mainshocks in EVERY tested formulation — the current rule
+(median longitude gap 28.9° vs 28.6° shuffled), locate-at-the-event-minute
+(29.2° vs 29.3°), the zero-rotation real-meridian alternative (29.9° vs
+28.8°), and the site-angle channel (family p = 0.25); per-body gap
+distributions match uniform. The rotation as implemented is self-canceling
+against the trigger-chart offset (the current rule ≈ the observed
+culmination meridian at arrival).
+
+Consequences for this register:
+
+- **Every spot above and in `rules_episodes.csv` REMAINS registered and
+  will be graded** by `astgraf-outcomes` with its `spatial_chance` base
+  rate — but all spots now carry the status **experimental: retrospectively
+  at chance**. A graded forward hit above base rate is the reinstatement
+  criterion.
+- **The claims of this watch-list are the INSTANTS.** For earthquake
+  windows the located names mark grading regions for the experiment, not
+  point-predictions of the system.
+- **The site channel (Ascendant/MC over held axes) is scoped to the taught
+  local categories** (Hyderabad-type floods, Ulsoor-type local events):
+  it interrogates a named candidate site; it is not a world-search. Its
+  corpus test awaits the flood-records list and the news outcome channel.
+- The awaited NR/Rs/Ro table cannot rescue the quake-spot channel (a
+  constant longitude offset leaves a uniform gap distribution uniform); its
+  bearing is on TIMING — which alignments are exact and when.

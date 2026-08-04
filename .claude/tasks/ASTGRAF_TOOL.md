@@ -671,3 +671,17 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   angle-channel p=0.25 verdict (same day), every location formulation tested
   for M7+ earthquakes sits at chance; the timing layers remain the doctrine's
   proven core. Location doctrine awaits NU's NR/Rs/Ro table or a new ruling.
+
+## 2026-08-04 — NU RULING: location layer demoted to experimental (proposal ratified)
+- NU: "proceed with your proposals." The four-point re-scoping is now in
+  force: (1) implementation kept in full (doctrine, faithfully ported);
+  (2) earthquake windows are TIME-ONLY claims — registered spots remain
+  graded as a pre-registered experiment marked "experimental:
+  retrospectively at chance" (WATCHLIST amendment v5); (3) the site channel
+  (Asc/MC over held axes) is scoped to the taught local categories and
+  interrogates named candidate sites, not the world; (4) reinstatement
+  criteria: a graded forward spot hit above spatial base rate, a
+  flood-category corpus win, or a new NU ruling on the spot channel's role.
+  Recorded in FRAMEWORK (location-layer status), WATCHLIST v5, both READMEs.
+  On record: the NR/Rs/Ro table cannot rescue quake spots (constant offsets
+  leave a uniform gap distribution uniform); it bears on timing.

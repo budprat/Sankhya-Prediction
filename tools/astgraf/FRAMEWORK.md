@@ -112,6 +112,26 @@ the rotation term, so the first confirmed forward hit discriminates them.
 Site rules (Ascendant crossings — Ulsoor, Hyderabad) are the instant
 channel's local geometry, consistent with this split.
 
+**Location-layer status (NU-ratified 2026-08-04, after the full test
+battery — ledger, same date).** On 1,435 declustered M7+ mainshocks, every
+tested formulation of the world-spot channel measures at chance: the
+current rule, locate-at-the-event-minute, the zero-rotation real-meridian
+alternative, and the site-angle channel (family p = 0.25); per-body
+longitude-gap distributions match uniform, and the latitude channel is
+structurally caged by declination (median unavoidable gap 9.1°). The
+implementation stays (the rule is doctrine, ported faithfully and audited
+clean), but its claims are re-scoped: **earthquake windows are time-only
+claims**; registered spots remain graded as a pre-registered experiment
+marked "experimental: retrospectively at chance"; the **site channel is
+scoped to the taught local categories** (floods, biological), where it
+reproduces NU's minutes 3-for-3 and awaits its own corpus; the NR/Rs/Ro
+table bears on timing, not on rescuing quake spots (a constant offset
+leaves a uniform gap distribution uniform). Reinstatement criteria: a
+graded forward spot hit above spatial base rate, a flood-category corpus
+win, or a new NU ruling on the spot channel's role. The timing layers —
+which reproduce every taught number to the minute — are the doctrine's
+proven core.
+
 **Long-cycle families (NU, 2026-08-02).** A 1000-year record list exists
 (NU to share) for the Uranus–Neptune flood family (2011–15 cluster:
 Uttarakhand, Kashmir, China, Europe, US/Canada). The conjunction recurs at

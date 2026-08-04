@@ -132,6 +132,14 @@ position the surface displacement is ~1000 km (Jupiter), ~2000 (Saturn),
 recorded tension.
 `locations.csv` gives the spot for every event involving those four planets.
 
+**Status (NU-ratified 2026-08-04): experimental.** Every tested formulation
+of this channel — the rule above, locate-at-the-event-minute, and the
+zero-rotation real-meridian alternative — measures at chance on 1,435
+declustered M7+ mainshocks (per-body longitude gaps match uniform), and the
+rotation as implemented self-cancels against the trigger-chart offset.
+Earthquake windows are therefore **time-only claims**; registered spots
+stay graded (WATCHLIST amendment v5) as a pre-registered experiment.
+
 ## Precession clock (`--precession YEAR`)
 
 The 25,739-year cycle from Secrets of Sankhya: equinox drift at 50.352″/yr

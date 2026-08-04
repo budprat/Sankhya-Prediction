@@ -111,6 +111,13 @@ assiduous search and only then it can be predictable"*:
   spots, and regeneration commands, then graded automatically by
   `astgraf-outcomes` with spatial base rates. Nearest windows:
   **Sept 30 – Oct 4 and Oct 13 – 19, 2026**.
+- **The location layer is demoted to experimental** (ratified 2026-08-04):
+  every tested formulation of the world-spot rule measures at chance on
+  1,435 M7+ mainshocks, so earthquake windows are *time-only* claims;
+  registered spots stay graded as a pre-registered experiment, and the
+  site channel is scoped to the taught local categories. The timing
+  layers — which reproduce the taught instances to the minute — are the
+  system's proven core.
 - **Negative results stay on the record.** The three data-mined candidate
   rules were *retired* when honest re-mining (declustered corpus, time-uniform
   climatology controls, 2-year-block split, 200-run permutation calibration)
