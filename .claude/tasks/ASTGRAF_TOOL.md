@@ -876,3 +876,17 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   README sections for all six CLIs, FRAMEWORK implementation map rows,
   test counts (211), WATCHLIST amendments v5/v6 + annotations, candidate
   offset table, all ledger entries for verdicts and rulings.
+
+## 2026-08-04 — P2 done: outcome-grading dry run + season protocol
+- Both channels ran end-to-end at the true date: mined 9/9 pending;
+  doctrine-forward-v3 4 pending + 6 unassessed-no-spot (band windows, as
+  registered). No network for future windows (verified behavior); the
+  hit/clear fetch path is covered by test_outcomes (injected fetch) in the
+  211-test suite. Deliberately NOT simulated with --today beyond the real
+  date: grading an unpassed window against live USGS would log a false
+  "clear".
+- Season protocol table added to WATCHLIST (run dates Oct 7 / Oct 22 /
+  Nov 6 / Nov 23 with verbatim commands). Observation on record: the first
+  window's spot has spatial_chance 0.0000 (equatorial Pacific, no corpus
+  M7+ within radius) — a hit would be extraordinary, a clear is
+  near-certain and carries almost no evidence either way.

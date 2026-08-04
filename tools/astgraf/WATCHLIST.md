@@ -321,3 +321,28 @@ anchor-recurrence scans use `step=0.25` days (the engine's `step`
 parameter); the daily default remains for quick looks. The episode
 refiner is also constrained to the episode's own match level — an
 unconstrained tightest-instant could drift outside the window it labels.
+
+## Season protocol (autumn 2026) — dry run passed 2026-08-04
+
+Both channels graded end-to-end today with every window still future: mined
+9/9 pending; doctrine 4 pending + 6 unassessed-no-spot (the band windows,
+as registered). No network touched for future windows. Grading runs after
+each window closes (USGS finality slack ~3 days):
+
+| Run on | Grades |
+|---|---|
+| 2026-10-07 | Sept 30 – Oct 4 (mined real-Nep☍Mercury; exact 10-02 04:43) |
+| 2026-10-22 | Oct 13 – 19 (mined real-Ura△Sun; exact 10-16 09:19) |
+| 2026-11-06 | Nov 2 – 3 (band trigger tightest 11-03 01:00) |
+| 2026-11-23 | Nov 15 – 20 (anchor-recurrence alaska row, annotated) |
+
+Commands (verbatim):
+`uv run astgraf-outcomes --episodes out/mined-forward/rules_episodes.csv --out out/mined-forward/outcomes.csv`
+`uv run astgraf-outcomes --episodes out/doctrine-forward-v3/rules_episodes.csv --out out/doctrine-forward-v3/outcomes.csv`
+
+Base-rate note from the dry run: the first window's Neptune spot
+(138.32W 0.05S, equatorial Pacific) has **spatial_chance 0.0000** — no
+historical M7+ within the grading radius in the whole corpus. Read both
+ways, honestly: a hit there would be extraordinary; a "clear" there is the
+near-certain outcome and carries almost no information against the spot
+channel's experimental status.
