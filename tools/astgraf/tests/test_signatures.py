@@ -19,6 +19,7 @@ def test_signature_contains_pair_and_context_features():
     assert sig["sep:Sun-Saturn"] == pytest.approx(179.75, abs=0.1)
     assert sig["sep:Jupiter-Neptune"] == pytest.approx(178.05, abs=0.1)
     assert sig["rsep:Neptune-Ketu"] != sig["sep:Ketu-Neptune"]  # real offset applied
+    assert "rsep:Jupiter-Sun" in sig and "rsep:Saturn-Moon" in sig  # four giants
     assert 1 <= sig["band:Moon"] <= 28
     assert sig["mkm_spread"] > 0
     assert sig["stack_max"] >= 1

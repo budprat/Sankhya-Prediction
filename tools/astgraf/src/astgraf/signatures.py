@@ -19,7 +19,7 @@ from .models import ChartResult
 # the Ura-opp-Nep era — to lift 55). A uniform grid IS the climatology.
 CONTROLS_PER_EVENT = 3
 
-REAL_BODIES = ("Uranus", "Neptune")
+REAL_BODIES = ("Jupiter", "Saturn", "Uranus", "Neptune")
 
 ASPECTS = {"conj": 0.0, "sq": 90.0, "tri": 120.0, "opp": 180.0}
 ASPECT_ORB = 3.0

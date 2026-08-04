@@ -935,3 +935,13 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   Moon (~10 days of balance) when the value sits on a print-rounding
   boundary. PRATEEK/QUAKE oracles were away from boundaries. NU may rule
   single-precision fidelity if family-print parity is ever preferred.
+
+## 2026-08-05 — P4 done: M9 shared structure — NONE, even with four giants
+- The five M9 dossier contact sets (doctrine orb, four-giant rsep included;
+  6-14 fired contacts each of ~376 possible keys): shared by 5/5: 0; by
+  4/5: 0; by 3/5: 0. The earlier stratified-mining M9 negative
+  reconfirmed at the dossier level with the extended features. The M9
+  class carries no common configuration element at contact grain — each
+  event is its own fingerprint, consistent with the 130-year sweep. Family
+  grain (band sectors) remains the only place M9-class recurrence could
+  live; awaiting the flood-records list and category records for that.
