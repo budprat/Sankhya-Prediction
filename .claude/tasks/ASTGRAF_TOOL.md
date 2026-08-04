@@ -1191,6 +1191,32 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
     WHEN we can predict spot on". Refining a spot to 1.2 km while the
     location layer grades at chance would be false precision on a marker
     that is not yet in the right place. Recorded as a finishing step.
+- ASCENDANT LOCATION MECHANISM RULED OUT (NU: "are they useful for the
+  location-layer"). I had proposed the Asc as the likely real mechanism
+  (2026-08-05, "the taught site examples pinpoint TIMES at a known site —
+  the inverse problem — which may be the doctrine's actual location
+  mechanism"), and NU's 1/81 budget states its cell in lat/long terms, so it
+  was the strongest surviving candidate. TESTED instead of assumed:
+  scripts/asc_fingerprint.py computes the Asc AT the true epicenter AT the
+  true instant and compares it with a null that keeps the same sites and the
+  same instants but breaks their pairing — which rules out the whole family
+  without having to guess the specific rule (cell, lord or aspect).
+  Result, stable across seeds: Asc round the zodiac p = 0.12/0.23, within a
+  nakshatra p = 0.59/0.88, within a horary sub p = 0.85/0.36; Asc-to-nearest-
+  real-giant within 3 deg 6.3% (chance ~6%); and in the doctrinally faithful
+  slice where a taught crossing is actually in force, p = 0.35-0.99 at both
+  orb 3 (n=148) and orb 1 (n=44). NOTHING anywhere.
+  Method notes kept honest: (a) an early version compared chi2 across
+  different sample sizes, which is invalid since chi2 scales with N — fixed
+  by drawing same-N null subsamples for an empirical p; (b) with only 3
+  nulls per event the null median swung 13.6-22.1 between runs and the
+  p-value with it (0.06 vs 0.45), so the pool went to 12 per event and the
+  numbers stabilised; (c) high-latitude events where the canon's Koch cusps
+  are undefined are skipped and COUNTED (0 of 600 in the main sample).
+  CONSEQUENCE: two whole families are now closed — no rotation-based spot
+  construction (4 variants, loc_backtest.py) and no Ascendant-based rule
+  places these events. What remains is either a dwell/crossing definition
+  unlike every reading tested, or a piece of the doctrine we do not have.
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet
