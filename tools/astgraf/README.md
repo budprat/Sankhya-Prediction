@@ -297,6 +297,34 @@ Hyderabad cloudburst hour) keep valid slow-layer exactness instants — those
 are found by geometry near the date — while the fast-layer readouts inherit
 the time uncertainty.
 
+## The recurrence calendar (`astgraf-recur`)
+
+The similarity engine over the anchor library — the recurrence principle
+run forward. An anchor's **pattern** is its slow layer: the doctrine-orb
+contacts at its instant, Moon pairs excluded (the Moon is the fast hand,
+not the configuration). The engine scans any span for **episodes** where
+the whole pattern (or `--min-match` of it) stands within orb
+simultaneously, refines each episode's tightest instant below one minute,
+and then completes the anchor's own Moon contacts inside the episode — the
+fast hand dating the window, exactly as in the taught instances. Timing
+only: no spots (the location layer is experimental, WATCHLIST v5).
+
+```bash
+# When does the Nepal configuration re-form?
+uv run astgraf-recur --anchor nepal-2015 --start 2015-03-01 --end 2015-07-01
+# -> exactly one episode: 2015-04-23 .. 2015-04-25 (the quake was Apr 25)
+
+# The forward calendar over every anchor:
+uv run astgraf-recur --start 2026-08-04 --years 2 --out out/recur
+# -> full re-formations 2026-28: none; at --min-match all-but-one, a single
+#    near-episode (alaska-1964, 3/4, Nov 15-20 2026) - the selectivity is
+#    the point.
+```
+
+Outputs: `recurrence.csv` / `.txt` / `.json` — one chronological calendar
+across anchors, each row with the episode span, match level, tightest
+instant, per-contact separations, and fast-hand trigger minutes.
+
 ## Honesty notes
 
 - The ephemeris is the ASTROLOG.BAS/ASTGRAF.BAS canon verbatim, including its

@@ -685,3 +685,28 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   Recorded in FRAMEWORK (location-layer status), WATCHLIST v5, both READMEs.
   On record: the NR/Rs/Ro table cannot rescue quake spots (constant offsets
   leave a uniform gap distribution uniform); it bears on timing.
+
+## 2026-08-04 — Similarity engine + recurrence calendar built (recurrence gaps 1+2)
+- NU: "go-ahead with configuration-similarity engine + recurrence calendar,
+  build on the anchor library." Built test-first in the modern layer:
+  recurrence.py + astgraf-recur (--anchor/--all, --start/--end/--years,
+  --min-match, --out -> recurrence.csv/.txt/.json, one chronological
+  calendar across anchors).
+- Design per the two-layer doctrine: an anchor's PATTERN = its slow layer
+  (doctrine-orb contacts at the anchor instant, Moon pairs excluded);
+  EPISODES = spans where >= min-match (default all) contacts stand within
+  orb simultaneously (adaptive scan: 1 d when the pattern touches
+  Sun/Mercury/Venus, else 5 d), each with its tightest instant refined
+  below one minute; the anchor's own Moon contacts are then completed
+  INSIDE each episode to the minute (the fast hand dating the window).
+  Timing only — no spots (location layer experimental per the v5 ruling).
+- Validation: Nepal self-recovery — scanning Mar-Jul 2015 yields exactly
+  ONE episode, 2015-04-23..25 (quake Apr 25), tightest 04-22 22:51Z;
+  vyuham-2016 does not re-form in 2017 (Jupiter left the Neptune
+  opposition); 199 tests passing.
+- FORWARD RESULT (2026-08-04 + 2 years, all 10 anchors): NO full
+  re-formations; at all-but-one, a single near-episode — ALASKA-1964
+  re-forms 3/4 on 2026-11-15..20, tightest 2026-11-17 13:02Z, missing only
+  sep:Ketu-Uranus@tri. Selectivity is the point. NOT registered on the
+  WATCHLIST — whether anchor-recurrence windows join the forecast register
+  is NU's call, pending.

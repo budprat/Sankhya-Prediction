@@ -1,0 +1,80 @@
+# ABOUTME: Tests the configuration-similarity engine and recurrence calendar: an anchor's
+# ABOUTME: slow pattern, its re-formation episodes, and fast-hand triggers to the minute.
+
+import csv
+
+from astgraf.anchors import ANCHORS_PATH, iso_jd, load_anchors
+from astgraf.recurrence import (anchor_pattern, find_episodes, main, match_at,
+                                moon_triggers)
+
+
+def anchor(aid):
+    return next(a for a in load_anchors(ANCHORS_PATH) if a.id == aid)
+
+
+def keys(pattern):
+    return {f"{c['kind']}:{c['a']}-{c['b']}@{c['aspect']}" for c in pattern}
+
+
+def test_anchor_pattern_is_the_slow_layer_without_the_moon():
+    pattern = anchor_pattern(anchor("nepal-2015"))
+    got = keys(pattern)
+    assert "rsep:Uranus-Sun@conj" in got
+    assert "rsep:Neptune-Ketu@conj" in got
+    assert not any("Moon" in k for k in got), "the fast hand is not the pattern"
+
+
+def test_match_at_the_anchor_instant_is_full():
+    a = anchor("nepal-2015")
+    pattern = anchor_pattern(a)
+    m = match_at(pattern, iso_jd(a.time))
+    assert m["count"] == m["total"] == len(pattern) >= 3
+
+
+def test_find_episodes_recovers_the_anchor_own_instant():
+    a = anchor("nepal-2015")
+    pattern = anchor_pattern(a)
+    jd0 = iso_jd(a.time)
+    episodes = find_episodes(pattern, iso_jd("2015-03-01T00:00:00Z"),
+                             iso_jd("2015-07-01T00:00:00Z"))
+    hit = [e for e in episodes if e["start_jd"] - 1.0 <= jd0 <= e["end_jd"] + 1.0]
+    assert hit, f"anchor instant not inside any episode: {episodes}"
+    e = hit[0]
+    assert e["count"] == e["total"]
+    assert e["best_utc"].endswith("Z") and ":" in e["best_utc"]   # a calendar minute
+    # Bounds are day-resolution scan samples; the tightest instant may sit up
+    # to one scan step outside the first/last in-orb sample.
+    assert e["start_jd"] - 1.0 <= e["best_jd"] <= e["end_jd"] + 1.0
+
+
+def test_vyuham_pattern_does_not_reform_in_2017():
+    # Jupiter left the Neptune opposition after 2016 - a full re-formation in
+    # 2017 is geometrically impossible.
+    pattern = anchor_pattern(anchor("vyuham-2016"))
+    episodes = find_episodes(pattern, iso_jd("2017-01-01T00:00:00Z"),
+                             iso_jd("2018-01-01T00:00:00Z"))
+    assert episodes == []
+
+
+def test_vyuham_episode_carries_the_moon_trigger_to_the_minute():
+    a = anchor("vyuham-2016")
+    pattern = anchor_pattern(a)
+    episodes = find_episodes(pattern, iso_jd("2016-05-20T00:00:00Z"),
+                             iso_jd("2016-06-15T00:00:00Z"))
+    assert episodes, "the June 2016 array must be found"
+    e = episodes[0]
+    trig = moon_triggers(a, e)
+    mm = [t for t in trig if t["key"] == "sep:Moon-Mercury@conj"]
+    assert mm, f"Moon-Mercury trigger missing: {trig}"
+    assert mm[0]["utc"].endswith("Z") and ":" in mm[0]["utc"]
+    assert e["start_jd"] - 0.5 <= mm[0]["jd"] <= e["end_jd"] + 0.5
+
+
+def test_cli_writes_the_recurrence_calendar(tmp_path):
+    main(["--anchor", "nepal-2015", "--start", "2015-03-01", "--end", "2015-07-01",
+          "--out", str(tmp_path)])
+    with open(tmp_path / "recurrence.csv", newline="") as fh:
+        rows = list(csv.DictReader(fh))
+    assert rows and rows[0]["anchor"] == "nepal-2015"
+    assert rows[0]["best_utc"].endswith("Z")
+    assert (tmp_path / "recurrence.txt").exists()

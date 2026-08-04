@@ -65,6 +65,11 @@ against the original suite's printouts. On top of it:
   set), every fired contact with its trigger instant refined below one
   minute and the site's Ascendant timetable — oracle-tested against the
   taught minutes (Hyderabad 04:49/17:04 IST, Ulsoor 06:12/08:20).
+- **The recurrence calendar** (`astgraf-recur`) — the similarity engine over
+  the anchors: scan any span for episodes where an anchor's slow pattern
+  re-forms, tightest instants below one minute, the anchor's Moon triggers
+  completed inside each episode. Self-check: scanning Mar–Jul 2015 for the
+  Nepal configuration returns exactly one episode, April 23–25.
 - **Inverse learning & outcome grading** — signature extraction over the USGS
   M7+ corpus, honest mining (declustered, climatology controls, permutation
   null), and `astgraf-outcomes`: automatic grading of every passed forecast

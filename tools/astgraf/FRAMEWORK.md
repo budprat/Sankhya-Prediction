@@ -183,6 +183,7 @@ Vyuham 1/126 yr — on the exact window NU named from memory).
 | Trigger rules as data | `triggers.py`, `doctrine-triggers.toml`, `mined-triggers.toml`, `--rules` | all doctrine rules fire on their ground-truth charts |
 | Inverse learning (signatures/mining) | `signatures.py`, `scripts/mine_usgs.py` (v2: declustered, climatology controls, permutation null) | NO survivors — max lift 1.79 vs null median 1.73, p = 0.35; mined rules RETIRED 2026-08-02 |
 | Anchor library (recurrence principle) | `anchors.py`, `anchors.toml`, `astgraf-anchors` (dossiers: fired contacts with minute-refined trigger instants, site Asc timetable, band/vyuha state) | taught minutes reproduced: Hyderabad Asc-Rahu 04:50/Asc-Ketu 17:06 IST (taught ~04:49/~17:04), Ulsoor 06:12/08:21 (taught 06:12/08:20), Nepal real-Ura→Sun exact +18.1 h |
+| Similarity engine + recurrence calendar | `recurrence.py`, `astgraf-recur` (slow pattern = non-Moon doctrine contacts; episodes with minute-refined tightest instants; Moon triggers completed inside episodes; timing only) | self-recovery: Nepal scan Mar–Jul 2015 → one episode Apr 23–25; vyuham does not re-form in 2017; 2026–28 forward: no full re-formations, one 3/4 near-episode (alaska-1964, Nov 2026) |
 | Forecast register | `WATCHLIST.md` | 19 windows (9 mined: instants+spots; 6 band: instants; 4 nodes: instants+Jupiter spots), outcome protocol |
 | Long-cycle families | conjunction rules in `doctrine-triggers.toml` | census: Ura-Nep ~171 y synodic (next ~2165); Jup-Sat 1881→Krakatoa, 2000→2004 |
 
