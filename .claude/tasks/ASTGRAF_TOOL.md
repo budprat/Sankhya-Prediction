@@ -1013,6 +1013,32 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   pinpoint TIMES at a known site via Asc crossings — the inverse problem —
   which may be the doctrine's actual location mechanism rather than a
   time->place spot rule.
+- AUTHOR BRIEFING (2026-08-05, via NU) — the scalar-pulse doctrine:
+  (1) the ecliptic-crossing impulse is IMMEDIATE — a scalar pulse, not an EM
+  wave; (2) sky-watch in the REAL frame: current ephemeris / tropical, "not
+  astrological because panchangam deducts ayanamsa" (matches our
+  observed-triggers tropical ruling); (3) plot REAL positions for ALL ecliptic
+  crossings; (4) DWELL TIME gates magnitude: > 3 SECONDS can create major
+  shock waves; Nepal's dwell was 4 MINUTES "because both Uranus and Neptune
+  crossed Ketu position one after another"; (5) location = rotation + ecliptic
+  tilt + light-travel time, months/years ahead.
+  Engine checks: real-Neptune on Ketu at the quake CONFIRMED (0.342 deg,
+  matches taught 0.34); but real-URANUS was on the SUN (0.692), 26.5 deg from
+  Ketu — "both crossed Ketu" does not hold in the longitude frame. The 3-s /
+  4-min dwell figures are EARTH-ROTATION timescales (15 arcsec/s; 1 deg per
+  4 min) — giant-planet longitude conjunctions dwell for DAYS, so his crossing
+  must live in the rotation frame (meridian/RA sweep); no longitude geometry
+  we can compute reproduces a 4-minute Nepal dwell. Reading D (scalar spot:
+  observed->REAL via ahead-offsets, immediate impulse, NO propagation
+  rotation, spot = sub-real-planet point) added to loc_backtest.py: Nepal
+  Uranus improves to 1,746 km (best of all readings) but catalog still at
+  chance (2.51% within 1,000 km vs 3.02% null; conditional orb-1 slice median
+  7,682 km, 0/47 within 1,000 km). OPEN QUESTION for the author (the crux):
+  the precise dwell definition — what crosses what, in which frame, and the
+  tolerance that makes Nepal 4 min while the threshold is 3 s. A rotation-
+  frame crossing is inherently site-specific, so that definition likely IS
+  the location mechanism. Dwell layer NOT implemented — needs his formula,
+  not our invention.
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet

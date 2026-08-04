@@ -9,14 +9,18 @@
 #   B) doctrine-conditional: only events where a taught real-giant contact
 #      (real-Ura/Nep vs Sun/Rahu/Ketu) is in force, acting giant's spot only;
 #   C) the Nepal taught anchor at the crossings' exactness instants (the
-#      forward-watchlist convention).
+#      forward-watchlist convention);
+#   D) the author's scalar-pulse reading (2026-08-05 briefing): light-time only
+#      converts observed -> REAL (the ahead-offsets), the impulse is immediate,
+#      no propagation rotation — spot = sub-REAL-planet point at the instant.
 import csv
 import random
 import statistics
 from pathlib import Path
 
 from astgraf.anchors import chart_at, iso_jd, jd_iso_minute, refine_exactness
-from astgraf.locator import light_minutes_for, locate
+from astgraf.bands import REAL_POSITION_OFFSETS
+from astgraf.locator import _wrap180, equatorial, light_minutes_for, locate
 from astgraf.signatures import _gc_km
 
 BASE = Path(__file__).resolve().parent.parent
@@ -97,6 +101,38 @@ def main() -> None:
         say(f"   exactness {a}x{b} ({jd_iso_minute(ex['jd'])}): spot "
             f"{spot.event_latitude_north:.2f}N {spot.event_longitude_east:.2f}E "
             f"-> {d:.0f} km")
+
+    # D) scalar-pulse reading: sub-REAL-planet spot, no propagation rotation.
+    def spot_real(jd, body):
+        c = chart_at(jd)
+        p = c.positions[body]
+        real = (p.longitude + c.ayanamsa + REAL_POSITION_OFFSETS[body]) % 360
+        ra, dec = equatorial(real, p.ecliptic_latitude, c.obliquity)
+        return dec, _wrap180(ra - c.gmst)
+
+    spots = [{g: spot_real(float(r["jd"]), g) for g in GIANTS} for r in rows]
+    mins_d = [min(_gc_km(float(r["lat"]), float(r["lon"]), la, lo)
+                  for la, lo in sp.values()) for r, sp in zip(rows, spots)]
+    null_d = []
+    for i, r in enumerate(rows):
+        la0, lo0 = float(r["lat"]), float(r["lon"])
+        for j, sp in enumerate(spots):
+            if i != j:
+                null_d.append(min(_gc_km(la0, lo0, la, lo)
+                                  for la, lo in sp.values()))
+    say("D) scalar-pulse reading (sub-REAL-planet spot, no rotation):")
+    say(f"   observed: median {statistics.median(mins_d):.0f} km; within "
+        f"1000/2000/3000 km {frac(mins_d, 1000):.4f}/{frac(mins_d, 2000):.4f}/"
+        f"{frac(mins_d, 3000):.4f}")
+    say(f"   shuffled null: median {statistics.median(null_d):.0f} km; "
+        f"{frac(null_d, 1000):.4f}/{frac(null_d, 2000):.4f}/"
+        f"{frac(null_d, 3000):.4f}")
+    for r in rows:
+        if "Nepal" in r.get("place", "") and r["label"].startswith("2015-04-25"):
+            for g in GIANTS:
+                la, lo = spot_real(float(r["jd"]), g)
+                say(f"   Nepal {g}: {la:.2f}N {lo:.2f}E -> "
+                    f"{_gc_km(*NEPAL, la, lo):.0f} km")
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text("\n".join(lines) + "\n")
