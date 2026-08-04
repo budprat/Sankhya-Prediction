@@ -999,6 +999,20 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   pinpoint retrospectively; the WATCHLIST forward windows (spots already pinned
   through 2028) are the registered live test, prior now set by this backtest
   (WATCHLIST caveat added; summary at out/loc-backtest/summary.txt).
+- Addendum (NU: "Jup 40 mins" — fixed taught constants): re-graded with flat
+  40/80/150/240 in place of distance-true minutes — results IDENTICAL (Nepal
+  Uranus 2,847 vs 2,846 km; catalog 3.34% within 1,000 km unchanged).
+  Structural finding: stepping the acting chart light-time EARLIER and rotating
+  WEST by the same minutes cancel to ~0.0007 deg/min — the spot is effectively
+  the sub-planet point at the event instant, so the light-time constants barely
+  move the PLACE at all (they matter to timing geometry only). The v1 reading
+  (arrival chart + rotation, no earlier stepping) also grades at chance (2.58%
+  within 1,000 km vs 2.91% null; Nepal Uranus worsens to 5,939 km). All
+  readings of "rotate the long to suit" are now tested; none pinpoints. Note
+  for the author conversation: the TAUGHT site examples (Ulsoor, Hyderabad)
+  pinpoint TIMES at a known site via Asc crossings — the inverse problem —
+  which may be the doctrine's actual location mechanism rather than a
+  time->place spot rule.
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet
