@@ -36,8 +36,12 @@ PUNARVASU_CROSSOVER_SIDEREAL = (CROSSOVER_TROPICAL_J2000 - ayanamsa(2000)) % 360
 MAGHA_AXIS_SIDEREAL = 9.5 * SECTOR             # 122.142857 deg — sector-10 center
 # ^ Magha is NOT ruled: it remains the book's sector-10 center, which makes it
 # a WHEEL value despite the _SIDEREAL name (precession.equinox_offsets uses it
-# as-is for that reason). Open question in the ledger — the galactic CENTRE
-# (Sgr A*) is suite-sidereal 243.00 (folded 63.00), 59 deg from this value.
+# as-is for that reason, while marker_longitudes below still treats it as
+# sidereal — the same frame mismatch the crossover carried until 2026-08-05,
+# left in place because fixing it means choosing a frame).
+# THE FORK, in full in FRAMEWORK.md open question 9: sector-10 centre
+# (122.143, in force) vs the galactic CENTRE, Sgr A* at suite-sidereal 243.00
+# (folded 63.00) — 59 deg apart, so no orb hides the choice.
 
 
 def marker_longitudes(result: ChartResult) -> tuple[float, float]:

@@ -1155,6 +1155,42 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   pair (78 pairs, negligible) — not worth the churn.
   Process note: commit 93b760c bundled NU's new canon files with an unrelated
   epoch correction; disclosed in the message but they should have been split.
+- MAGHA FORK DOCUMENTED (NU: "document well"). FRAMEWORK open question 9 now
+  carries the whole thing: the two readings side by side (sector-10 centre
+  122.143 in force vs the galactic CENTRE, Sgr A* ecliptic 266.852 =
+  suite-sidereal 243.00, folded 63.00), the 59 deg gap that no orb hides,
+  the two consequences (every galactic.csv Magha separation and --scope spoke
+  moves; and the wheel-vs-sidereal frame defect rides along, since 122.143 is
+  9.5 sectors OF THE WHEEL), and what would settle it. galactic.py points at
+  it. Nothing changed in behaviour — the fork is NU's/the author's to close.
+- canon/HORARYaura.docx READ: it is the HORARY.BAS listing verbatim (243
+  cusps = 27 x 9, sub and sub-sub from the Vimshottari RT years, BR lord
+  order from Ketu). No new code, but NU's covering note supplies the
+  RESOLUTION BUDGET, now FRAMEWORK section 3a:
+  * the horary divides by 9 and again by 9 -> one cell = 1/81;
+  * per degree: 240 s / 81 = 2.963 s ("about 3 sec"), 60' / 81 = 0.741'
+    ("about a min"), 111.32 km / 81 = 1374 m (his 100 km -> 1234 m);
+    equator speed 465 m/s (his 400); his headline "1200 m and 3 secs" is
+    internally consistent (3 s x 400 m/s), ~10% off the exact figures only
+    because of the 100-vs-111.32 km rounding. One more 9 (1/729) -> ~1 s,
+    ~460 m, his stated ideal ("divide these results by 3").
+  * ARITHMETIC DISCREPANCY, flagged not silently resolved: his words say
+    "1/81 of a house of 30 deg" (= 0.370 deg) but every figure he computes
+    divides ONE degree by 81 (= 0.0123 deg). The per-degree reading is the
+    operative one — it is the only one consistent with "about a min apart"
+    and with 1234 m / 3 s.
+  * *** THE 3-SECOND DWELL THRESHOLD IS NOT ARBITRARY ***: 240 s / 81 =
+    2.963 s IS one horary cell of time. His "dwell more than 3 seconds ->
+    MAJOR SHOCK WAVES" reads as "longer than one resolution cell". And the
+    Nepal dwell of 4 min = 240 s = 81 cells = exactly ONE DEGREE of rotation,
+    which is also what the taught separations sum to (0.342 + 0.692 = 1.034
+    deg). Three separate statements of his land on the same quantum — the
+    strongest support the dwell reading has, and it arrived independently of
+    the fit that produced it.
+  * NOT IMPLEMENTED, per NU: keep as a sub-program "only to improve accuracy
+    WHEN we can predict spot on". Refining a spot to 1.2 km while the
+    location layer grades at chance would be false precision on a marker
+    that is not yet in the right place. Recorded as a finishing step.
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet

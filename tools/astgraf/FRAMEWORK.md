@@ -172,6 +172,43 @@ audit fix — earlier quotes of 1.12/3.45 used the inflated formula;
 proximity census 4 episodes/30 yr; Chatur
 Vyuham 1/126 yr — on the exact window NU named from memory).
 
+## 3a. The resolution budget — what "accurate" can mean
+
+The author (NU, 2026-08-05, with `canon/HORARYaura.docx` = HORARY.BAS) fixes
+the system's grain from the horary ladder itself: the horary "divides by 9
+and again by nine", so one cell is **1/81**. Applied to one degree, and
+because one degree is simultaneously an angle, a duration and a distance:
+
+| quantity | 1 degree | ÷ 81 (one cell) | author's figure |
+|---|---|---|---|
+| time (Earth's rotation) | 4 min = 240 s | 2.963 s | "about 3 sec" |
+| arc | 60′ | 0.741′ | "lat long about a min apart" |
+| ground at the equator | 111.32 km (his 100) | 1374 m (his 1234) | "1234 meters" |
+| equatorial speed | — | — | 465 m/s (his "400 m/s") |
+
+His conclusion: **"accuracy of prediction now is 1200 m and 3 secs"** — the
+two are one statement, since 3 s × 400 m/s = 1200 m. Recomputed without his
+round numbers it is ~1374 m and ~2.96 s; the 10% spread comes from 100 vs
+111.32 km per degree. Descending one more 9 (1/729) would give ~1 s and
+~460 m — "just divide these results by 3", his stated ideal.
+
+**This retires the arbitrariness of the 3-second dwell threshold.** The
+author's earlier rule — "plot ALL ecliptic crossings with dwell time more
+than 3 seconds, for above that MAJOR SHOCK WAVES can be created" — is not a
+free parameter: 240 s ÷ 81 = 2.963 s is *one horary cell of time*. A crossing
+must persist for at least one cell to be resolvable at all. And the Nepal
+figure lands on the same ladder: its 4-minute dwell is 240 s = **81 cells =
+exactly one degree of rotation**, which is also what the taught separations
+sum to (0.342° + 0.692° = 1.034°). Three independent statements of his
+converge on the same quantum, which is the strongest support the dwell
+reading has.
+
+Status: **documented, not implemented.** NU's instruction is to keep it as a
+sub-program "only to improve accuracy WHEN we can predict spot on" — the
+location layer currently grades at chance (see `scripts/loc_backtest.py`), so
+refining a spot to 1.2 km would be false precision on a marker that is not
+yet in the right place. It is a finishing step, not a fix.
+
 ## 4. Implementation map
 
 | Framework element | Code | Validation |
@@ -231,6 +268,43 @@ Vyuham 1/126 yr — on the exact window NU named from memory).
 7. The 1000-year Uranus–Neptune records list (NU to share) — the per-cell
    matrix library's training corpus.
 8. `precess.mcd` (referenced by Secrets of Sankhya; not yet shared).
+9. **The Magha axis: sector-10 centre, or the galactic CENTRE?** The
+   crossover was closed on 2026-08-05 (NU: "crossover means the
+   galactic-ecliptic node"), and that ruling left its twin marker exposed.
+   `MAGHA_AXIS_SIDEREAL = 9.5 × 360/28 = 122.142857°` was taken as the
+   centre of the wheel's tenth sector. The author calls Magha the
+   **galactic axis**, and the natural astronomical reading of that is the
+   direction of the galactic centre — Sgr A* (RA 266.41684°,
+   Dec −29.00781°) sits at ecliptic longitude **266.852°**, which is
+   **suite-sidereal 243.00°**, folded at 180° to **63.00°**.
+
+   | reading | sidereal | folded axis | source |
+   |---|---|---|---|
+   | sector-10 centre (in force) | 122.143° | 122.143° | 9.5 × 360/28 on the wheel |
+   | galactic centre (Sgr A*) | 243.00° | 63.00° | IAU position, measured |
+
+   The gap is **59°** — a fork, not a rounding difference, so the two
+   cannot both be right and no orb hides the choice. Two consequences
+   ride on it:
+   - **Every Magha separation in `galactic.csv`** and every Magha spoke
+     drawn by `--scope` moves by 59° if the reading changes.
+   - **A frame defect rides along.** 122.142857° is 9.5 sectors *of the
+     precession wheel*, so it is a WHEEL value despite the `_SIDEREAL`
+     name — the wheel's zero is the 1996 equinox, an ayanamsa (~23.8°)
+     from the suite's sidereal zero. `precession.equinox_offsets()`
+     therefore uses it as-is (correct for a wheel value), while
+     `galactic.marker_longitudes()` still treats it as sidereal and adds
+     the ayanamsa for tropical charts. That is exactly the mismatch the
+     crossover carried until 2026-08-05, and it is left in place
+     deliberately: fixing it means choosing a frame, which is NU's call.
+     Note the galactic-centre reading is a genuine sidereal direction and
+     would resolve the defect as a side effect, the way the node did.
+
+   What would settle it: the author's own words on whether "Magha
+   galactic axis" names the flood-epoch sector of his wheel or the
+   direction of the galaxy's core. If the latter, the constant becomes
+   243.00° (or 63.00° as the folded axis) and `galactic.py` needs no
+   other change — `galactic_separations` already folds Magha at 180°.
 
 ## 6. Document map
 
@@ -241,4 +315,6 @@ Vyuham 1/126 yr — on the exact window NU named from memory).
 - `anchors.toml` — the anchor library (recurrence principle); `astgraf-recur` episodes register on the WATCHLIST.
 - `families.toml` — the long-cycle families (nakshatra-sector recurrence); `astgraf-families` computes the conjunction calendars.
 - `data/usgs-m7-1850-2020.csv` — pinned training corpus.
+- `scripts/loc_backtest.py` — the location layer graded against a shuffled null (all readings at chance; the honest prior behind every spot).
+- `../../canon/` — the author's own sources: `ASTGRAF.BAS`, `ASTROLOG.BAS`, `GRAPHDO.BAS`, `HORARY.BAS`; `ASTROC.GRF` (a SAMPLE output, the port's oracle at its print resolution); `SankhyaStellarPrediction.html` (his 2016 JS port — cos-fold graph, Koch hardcoded, 27 stars); `HORARYaura.docx` (the HORARY.BAS listing, source of the 1/81 resolution budget in §3a); `EQINAFG.pdf` (unread).
 - `.claude/tasks/ASTGRAF_TOOL.md` (repo) — decision ledger, every ruling dated.
