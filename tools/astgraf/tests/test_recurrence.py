@@ -78,3 +78,18 @@ def test_cli_writes_the_recurrence_calendar(tmp_path):
     assert rows and rows[0]["anchor"] == "nepal-2015"
     assert rows[0]["best_utc"].endswith("Z")
     assert (tmp_path / "recurrence.txt").exists()
+
+
+def test_fine_step_catches_sub_day_full_windows():
+    # valdivia-1960's FULL 5-contact window is shorter than one day - the
+    # daily grid misses it entirely (found by the 130-year sweep, 2026-08-04:
+    # the JOINT window of several contacts can be far narrower than any
+    # single contact's). A 0.25 d step must recover the anchor's own instant.
+    a = anchor("valdivia-1960")
+    pattern = anchor_pattern(a)
+    jd0 = iso_jd(a.time)
+    fine = find_episodes(pattern, iso_jd("1960-04-01T00:00:00Z"),
+                         iso_jd("1960-07-01T00:00:00Z"), step=0.25)
+    hit = [e for e in fine if e["start_jd"] - 0.5 <= jd0 <= e["end_jd"] + 0.5]
+    assert hit, f"valdivia self-recovery failed at 0.25 d: {fine}"
+    assert hit[0]["count"] == hit[0]["total"] == len(pattern)

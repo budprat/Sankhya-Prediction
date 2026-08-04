@@ -56,10 +56,13 @@ def match_at(pattern: list[dict], jd: float) -> dict:
             "deltas": [round(d, 3) for d in deltas]}
 
 
-def _refine_tightest(pattern, jd_lo, jd_hi, jd_start):
+def _refine_tightest(pattern, jd_lo, jd_hi, jd_start, need):
+    """Minimize total separation SUBJECT TO the match level: an unconstrained
+    sum drifts outside the episode (Valdivia 1960: the 4/5 sum minimum beats
+    every 5/5 instant), so instants below `need` carry a step penalty."""
     def f(jd):
-        chart = chart_at(jd)
-        return sum(_delta(chart, c) for c in pattern)
+        m = match_at(pattern, jd)
+        return m["tightness"] + 1000.0 * max(0, need - m["count"])
     best, step = jd_start, 0.25
     while step > 0.3 * MINUTE:
         local = [min(max(best + k * step, jd_lo), jd_hi) for k in range(-8, 9)]
@@ -69,15 +72,20 @@ def _refine_tightest(pattern, jd_lo, jd_hi, jd_start):
 
 
 def find_episodes(pattern: list[dict], jd_start: float, jd_end: float,
-                  min_match: int | None = None) -> list[dict]:
+                  min_match: int | None = None,
+                  step: float | None = None) -> list[dict]:
     """Spans inside [jd_start, jd_end] where at least min_match (default: all)
     of the pattern's contacts stand within orb simultaneously; each with its
-    tightest instant refined below one minute."""
+    tightest instant refined below one minute. The JOINT window of several
+    contacts can be far narrower than any single contact's — windows shorter
+    than the scan step are missed (Valdivia 1960's full window is < 1 day),
+    so exhaustive scans should pass a finer `step` (0.25 d recovers it)."""
     if not pattern:
         return []
     need = len(pattern) if min_match is None else min_match
     bodies = {c["a"] for c in pattern} | {c["b"] for c in pattern}
-    step = 1.0 if bodies & FAST_SCAN_BODIES else 5.0
+    if step is None:
+        step = 1.0 if bodies & FAST_SCAN_BODIES else 5.0
 
     samples = []
     jd = jd_start
@@ -94,7 +102,7 @@ def find_episodes(pattern: list[dict], jd_start: float, jd_end: float,
         if run:
             lo, hi = run[0][0], run[-1][0]
             seed = min(run, key=lambda r: r[1]["tightness"])[0]
-            best = _refine_tightest(pattern, lo - step, hi + step, seed)
+            best = _refine_tightest(pattern, lo - step, hi + step, seed, need)
             best_m = match_at(pattern, best)
             episodes.append({
                 "start_jd": lo, "end_jd": hi,
