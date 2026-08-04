@@ -798,3 +798,15 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   7.8696875. Spread: Jupiter <= 0.0003 deg; Saturn <= 0.019 deg (JPL Saturn
   axis is the outlier). Purpose: when NU's exact NR values arrive, matching
   them to the nearest source diagnoses what NR physically is.
+
+## 2026-08-04 — Do the new NR values help the location layer? Tested: NO
+- NU asked; prediction registered BEFORE unblinding (a constant offset
+  rotates a uniform gap distribution into a uniform one): chance expected.
+  Re-ran the zero-rotation REAL-meridian corpus variant with all FOUR
+  giants' real offsets live (provisional Jup/Sat included): best-of-4
+  median 28.9 vs null 28.8; hits<=15deg 416 vs 418; per-body medians
+  88.0/92.3/89.0/90.7 = uniform. Confirmed: the Rs/Ro decode completes the
+  TIMING layer (its role per the two-channel ruling); it does not and
+  cannot rescue the spot channel. Location-layer status (experimental,
+  v5) unchanged; reinstatement paths unchanged (forward spot hit /
+  flood-category corpus / new NU ruling).
