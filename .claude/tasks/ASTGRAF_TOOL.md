@@ -986,6 +986,19 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
 - RULING (NU, 2026-08-05): the GRF format is NOT a pipeline stage — no writer,
   no --from-grf. It exists only as the learning/verification oracle proving the
   fused pipeline (compute in memory -> one-by-one SVGs a la GRAPHDO) is correct.
+- RULING (NU, 2026-08-05): 27 stays wherever the BAS computes (reaffirmed).
+- Location-layer backtest (NU: "test nepal and other events if we can pin
+  point"): scripts/loc_backtest.py over out/signatures-m7-v2 (1,435 M7+ events
+  1850-2020, spots from light-time-earlier charts). Result: AT CHANCE on all
+  three conventions — (A) nearest-of-four at event instant: median 4,878 km vs
+  5,006 null, within-1000-km 3.34% vs 3.04%; (B) doctrine-conditional acting
+  giant (real-Ura/Nep vs Sun/Rahu/Ketu, orb 1): 47 contacts, 0 within 2,000 km,
+  median 8,892 km; (C) Nepal taught anchor: best spot Uranus 2,846 km at the
+  event instant, 8,126 km at the Uranus-Sun exactness instant, Neptune worse.
+  Honest conclusion: the current sub-planet + light-time-rotation rule does not
+  pinpoint retrospectively; the WATCHLIST forward windows (spots already pinned
+  through 2028) are the registered live test, prior now set by this backtest
+  (WATCHLIST caveat added; summary at out/loc-backtest/summary.txt).
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet

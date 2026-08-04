@@ -14,6 +14,13 @@ center of a watch region. Regenerate any row:
 `uv run astgraf-bands --start ... --rules mined-triggers.toml` (spots are in
 `rules_episodes.csv`).
 
+Spatial prior (retrospective backtest, 2026-08-05, `scripts/loc_backtest.py`):
+over 1,435 M7+ events 1850–2020 the spot machinery grades AT CHANCE — nearest
+giant within 1,000 km for 3.3% of events vs 3.0% shuffled null; the Nepal
+taught anchor's acting spots land 2,846 km (event instant) to 8,126 km
+(exactness instant) from Gorkha. These forward windows are the registered
+falsifiable test of the same math; read any spatial hit against that prior.
+
 ## Mined: real-Neptune ☍ Mercury (lift 1.76/1.41) — Neptune spots
 
 | Exact instant (UT) | Spot | Region | Outcome |
