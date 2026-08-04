@@ -1,0 +1,29 @@
+# ABOUTME: The long-cycle family library (NU's taught recurrence at nakshatra-sector
+# ABOUTME: grain) — data only; astgraf-families computes the conjunction calendars.
+#
+# A family = a slow-pair conjunction cycle whose members recur in nakshatra
+# sectors, tying same-category events across centuries. The 130-year sweep
+# (2026-08-04) showed contact-grain patterns NEVER re-form — the doctrine's
+# recurrence lives at THIS grain (Krakatoa's fingerprint did not return at
+# Sumatra 2004; the Jupiter-Saturn sector family did).
+# Required: name, pair. Members: year (the conjunction's year), sector (canon
+# nakshatra name; empty = to be confirmed), anchor (anchors.toml id), note.
+
+[[family]]
+name = "java-jupiter-saturn"
+pair = ["Jupiter", "Saturn"]
+category = "volcanic-tsunami (Java arc)"
+notes = "NU: the ~120-year same-region return. 1881 Aswini conjunction -> Krakatoa 1883; 2000 Kritika conjunction -> 2004 Sumatra tsunami; next member ~2040."
+members = [
+  { year = 1881, sector = "Aswini", anchor = "krakatoa-1883" },
+  { year = 2000, sector = "Kritika", anchor = "sumatra-2004" },
+]
+
+[[family]]
+name = "flood-uranus-neptune"
+pair = ["Uranus", "Neptune"]
+category = "flood"
+notes = "NU: the Uranus-Neptune conjunction flood family (2011-15 cluster: Uttarakhand, Kashmir, China, Europe, US/Canada, tied to the 1993 conjunction era); next return ~2165 (engine synodic 171.0 y; NU's ~163 quote and the 168 convention are the two rival clocks). The awaited 1,000-year records list populates the historical members and discriminates the three clocks."
+members = [
+  { year = 1993, sector = "Poorvashada", note = "Engine-derived (not NU-taught): the 1993 conjunction was itself a TRIPLE (Feb 2 / Aug 19 / Oct 25), all three in Poorvashada pada 4" },
+]

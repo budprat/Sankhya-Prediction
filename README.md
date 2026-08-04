@@ -8,7 +8,7 @@ Built as a faithful modern port of a family BASIC astrology suite
 (ASTGRAF/ASTROLOG/GRAPHDO/HORARY, preserved in [`canon/`](canon/)), extended
 into a full prediction pipeline from the Sankhyan doctrine of
 *Secrets of Sankhya* and its worked instances. Python 3.12 · zero heavy
-dependencies · 183 tests · MIT.
+dependencies · 211 tests · MIT.
 
 ```
 canon/                      The original BASIC suite (the computation canon, in-tree)
@@ -70,6 +70,10 @@ against the original suite's printouts. On top of it:
   re-forms, tightest instants below one minute, the anchor's Moon triggers
   completed inside each episode. Self-check: scanning Mar–Jul 2015 for the
   Nepal configuration returns exactly one episode, April 23–25.
+- **The family calendars** (`astgraf-families`) — long-cycle recurrence at
+  nakshatra-sector grain: every slow-pair conjunction with its canon sector,
+  taught members reproduced (1881 → Aswini/Krakatoa, 2000 → Kritika/Sumatra),
+  member-sector returns flagged forward (next: 2060, Kritika).
 - **Inverse learning & outcome grading** — signature extraction over the USGS
   M7+ corpus, honest mining (declustered, climatology controls, permutation
   null), and `astgraf-outcomes`: automatic grading of every passed forecast
@@ -96,7 +100,7 @@ uv run astgraf --year 2015 --month 4 --day 25 --time 11:40 \
 uv run astgraf-bands --start 2016-05-25 --days 15 \
   --rules doctrine-triggers.toml --out out/vyuha-2016
 
-uv run pytest   # 183 tests
+uv run pytest   # 211 tests
 ```
 
 Full CLI documentation: [`tools/astgraf/README.md`](tools/astgraf/README.md).

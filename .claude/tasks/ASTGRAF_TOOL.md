@@ -834,3 +834,24 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   orb individuate their own events; a future full re-formation on the
   forward calendar will be a genuinely singular alert, roughly
   once-per-century-plus rare per anchor.
+
+## 2026-08-04 — P1 built: the family-grain recurrence channel (astgraf-families)
+- Rationale from the sweep: contact fingerprints NEVER re-form; NU's taught
+  recurrence (Java family) lives at nakshatra-sector grain. Built test-first:
+  families.toml (java-jupiter-saturn with NU's two members; flood-uranus-
+  neptune with the engine-derived 1993 Poorvashada triple) + families.py +
+  astgraf-families CLI (--family/--start/--end/--out). Conjunction series:
+  20 d scan, sign-change bisection to the minute, |sep|<90 guard (opposition
+  wrap excluded), retrograde triples preserved (1940-41 and 1980-81 = three
+  events each); conjunction degree -> canon star_position + 28-band;
+  member-sector returns flagged with anchor links.
+- ORACLES REPRODUCED (tests): 1881-04-16 conjunction in Aswini (-> Krakatoa),
+  2000-05-27 in Kritika (-> Sumatra), 1980-82 triple = 3, Ura-Nep 1993 + a
+  return in the 2158-2172 window. 211 tests passing.
+- CALENDAR FINDINGS FOR NU (engine observations, labeled): (1) the "next
+  ~2040" member: 2040-10-30 falls in CHITRA - not a member sector; the next
+  MEMBER-SECTOR return is 2060-04-07 in Kritika. Both dates on record; which
+  carries the family claim is NU's reading. (2) The 1941 triple (Bharani,
+  between the taught members) is an unexamined candidate member - records
+  search open (Java arc 1940-41?). (3) The 1993 flood conjunction was itself
+  a TRIPLE, all passes Poorvashada pada 4.

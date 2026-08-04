@@ -16,6 +16,7 @@ astgraf-atlas = "astgraf.atlas:main"
 astgraf-outcomes = "astgraf.outcomes:main"
 astgraf-anchors = "astgraf.anchors:main"
 astgraf-recur = "astgraf.recurrence:main"
+astgraf-families = "astgraf.families:main"
 
 [dependency-groups]
 dev = ["pytest>=8", "defusedxml>=0.7"]

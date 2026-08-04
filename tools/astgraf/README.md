@@ -335,6 +335,32 @@ Outputs: `recurrence.csv` / `.txt` / `.json` — one chronological calendar
 across anchors, each row with the episode span, match level, tightest
 instant, per-contact separations, and fast-hand trigger minutes.
 
+## The family calendars (`astgraf-families`)
+
+Recurrence at the grain where it actually repeats. The 130-year sweep showed
+contact-fingerprint patterns never re-form; NU's taught recurrence lives at
+the **nakshatra-sector** grain — the Java family: the 1881 Jupiter–Saturn
+conjunction in Aswini → Krakatoa 1883; the 2000 conjunction in Kritika →
+the 2004 Sumatra tsunami. `families.toml` holds the families as data;
+`astgraf-families` computes each pair's full conjunction series
+(minute-refined, wrap-safe — the 1940–41 and 1980–81 triples stay three
+events each), the canon star/pada/band of every conjunction degree, and
+flags **member-sector returns**:
+
+```bash
+uv run astgraf-families --start 1850 --end 2100 --out out/families
+```
+
+Both taught members reproduce under the engine's own arithmetic
+(1881-04-16 → Aswini, 2000-05-27 → Kritika), and the forward calendar
+sharpens the doctrine's "next ~2040": the 2040-10-30 conjunction falls in
+**Chitra** (not a member sector); the next **member-sector return is
+2060-04-07 in Kritika**. The 1941 triple in Bharani sits between the taught
+members as an unexamined candidate (records search open). The Uranus–Neptune
+flood family's 1993 conjunction was itself a triple, all three passes in
+Poorvashada pada 4 — the 1,000-year records list (awaited) populates its
+historical members. Timing only — no spots.
+
 ## Honesty notes
 
 - The ephemeris is the ASTROLOG.BAS/ASTGRAF.BAS canon verbatim, including its

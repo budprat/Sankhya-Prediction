@@ -190,7 +190,7 @@ Vyuham 1/126 yr — on the exact window NU named from memory).
 | Anchor library (recurrence principle) | `anchors.py`, `anchors.toml`, `astgraf-anchors` (dossiers: fired contacts with minute-refined trigger instants, site Asc timetable, band/vyuha state) | taught minutes reproduced: Hyderabad Asc-Rahu 04:50/Asc-Ketu 17:06 IST (taught ~04:49/~17:04), Ulsoor 06:12/08:21 (taught 06:12/08:20), Nepal real-Ura→Sun exact +18.1 h |
 | Similarity engine + recurrence calendar | `recurrence.py`, `astgraf-recur` (slow pattern = non-Moon doctrine contacts; episodes with minute-refined tightest instants; Moon triggers completed inside episodes; timing only) | self-recovery: Nepal scan Mar–Jul 2015 → one episode Apr 23–25, 9/9 with the four-giant patterns; vyuham does not re-form in 2017; 2026–28 forward under extended patterns: NO full and NO n−1 episodes (the pre-extension alaska-1964 3/4 row stays registered on the WATCHLIST, annotated) |
 | Forecast register | `WATCHLIST.md` | 19 windows (9 mined: instants+spots; 6 band: instants; 4 nodes: instants+Jupiter spots), outcome protocol |
-| Long-cycle families | conjunction rules in `doctrine-triggers.toml` | census: Ura-Nep ~171 y synodic (next ~2165); Jup-Sat 1881→Krakatoa, 2000→2004 |
+| Long-cycle families | `families.py`, `families.toml`, `astgraf-families` (conjunction series with canon sectors, member-return flags) + conjunction rules in `doctrine-triggers.toml` | taught members reproduce: 1881→Aswini, 2000→Kritika; forward: 2040 conj in Chitra (NOT a member sector), next member-sector return 2060 Kritika; 1941 Bharani triple = unexamined candidate; Ura-Nep 1993 triple all in Poorvashada (next ~2165) |
 
 ## 5. Open questions (NU's to close)
 
