@@ -295,9 +295,10 @@ def test_rules_cli_emits_exact_instant_and_spot(tmp_path):
     e = trine[0]
     assert e["exact_instant"].startswith("2026-10-16")
     assert e["acting"] == "Uranus"
-    # Rule v2 (distance-true light-time): Uranus at ~156 light-minutes in
-    # mid-October shifts the spot ~1.5 deg west of the fixed-150 value.
-    assert float(e["spot_lon_east"]) == pytest.approx(-140.33, abs=0.5)
+    # Rule v3 (NU ruling 2026-08-05, "Mathcad version is the one"): the
+    # rotation is Uranus's fixed 17.856 deg, not the ~39 deg the distance-true
+    # prose reading gave — so this registered spot moves 21.1 deg east.
+    assert float(e["spot_lon_east"]) == pytest.approx(-119.24, abs=0.5)
     assert float(e["spot_lat_north"]) == pytest.approx(21.0, abs=0.2)
 
 

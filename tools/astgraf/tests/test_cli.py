@@ -86,12 +86,13 @@ def test_locate_writes_event_spots(tmp_path):
         assert s["body"] in ("Uranus", "Neptune")   # Ketu has no light-time entry
         assert -180 < float(s["event_longitude_east"]) <= 180
         assert -90 <= float(s["event_latitude_north"]) <= 90
-        # Distance-true light-times: rotation = actual light-minutes x 0.25 deg,
-        # bounded by each planet's physical near/far range.
-        lo, hi = {"Uranus": (35.9, 44.0), "Neptune": (59.5, 65.5)}[s["body"]]
+        # NU ruling 2026-08-05: the rotation is the Mathcad offset, a FIXED
+        # constant of the orbit — no longer a distance-true range.
+        from astgraf.locator import ROTATION_DEGREES
         delta = (float(s["culmination_longitude_east"])
                  - float(s["event_longitude_east"])) % 360
-        assert lo <= delta <= hi
+        # 1e-3, not tighter: locations.csv rounds its longitudes to 4 decimals.
+        assert delta == pytest.approx(ROTATION_DEGREES[s["body"]], abs=1e-3)
 
 
 def test_precession_report_and_wheel(tmp_path, capsys):

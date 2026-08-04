@@ -6,32 +6,31 @@ import math
 
 from pydantic import BaseModel
 
+from .bands import REAL_POSITION_OFFSETS
 from .models import ChartResult
 
-# NU's doctrinal light-travel times (minutes), confirmed 2026-08-01 as the
-# planet-to-Earth light times: rotation west = minutes x 0.25 deg. Refined
-# 2026-08-02: the displacement follows the planet's ACTUAL distance ("these
-# figures are for the nearest position") — when the chart carries a distance,
-# the light-time is computed from it; these constants remain the fallback.
-# Anchor honesty (audit): at the engine's own NEAREST distances only Uranus
-# (153.2) and Neptune (240.4) reproduce their figures; Jupiter 40 and Saturn
-# 80 match the MEAN distances (engine 43.7 / 80.2 — nearest are 32.9 / 67.0).
-# Ground-scale notes: Jup ~1000 km, Sat ~2000, Ura ~4000; NU's Neptune 8000
-# exceeds the physical ~6700-7200 km — tension on record.
-LIGHT_MINUTES = {"Jupiter": 40.0, "Saturn": 80.0, "Uranus": 150.0, "Neptune": 240.0}
+# NU RULING 2026-08-05: "Mathcad version is the one" — the ground rotation
+# during light travel is the Mathcad quantity (a/2-1)*500/240, which is ALREADY
+# expressed in degrees (500 s per AU of travel, 240 s per degree of rotation).
+# So the offsets in bands.REAL_POSITION_OFFSETS ARE "rotate the long to suit",
+# and the light-time is simply offset x 4 minutes.
+#
+# THIS SUPERSEDES TWO EARLIER READINGS, both on record:
+#  * the prose figures 40/80/150/240 min (= nearest-approach (a-1) AU, giving
+#    10/20/37.5/60 deg) that this module used until now;
+#  * the 2026-08-02 distance-true refinement — the Mathcad is defined on the
+#    orbital radius, not the instantaneous distance, so the rotation is FIXED.
+# Ground scale at the equator: Jup ~371 km, Sat ~875, Ura ~1987, Nep ~3238.
 
-ENGINE_UNITS_PER_AU = 3.141592654 / 180   # the suite's AU-through-ANR quirk
-LIGHT_MINUTES_PER_AU = 8.3167464          # 499.004784 s per AU
+ROTATION_DEGREES = dict(REAL_POSITION_OFFSETS)
+MINUTES_PER_DEGREE = 4.0                  # Earth turns 1 deg in 4 minutes
+LIGHT_MINUTES = {b: d * MINUTES_PER_DEGREE for b, d in ROTATION_DEGREES.items()}
 
 
 def light_minutes_for(result: ChartResult, body: str) -> float | None:
-    fixed = LIGHT_MINUTES.get(body)
-    if fixed is None:
-        return None
-    distance = result.positions[body].distance
-    if distance > 0:
-        return (distance / ENGINE_UNITS_PER_AU) * LIGHT_MINUTES_PER_AU
-    return fixed
+    """Light time as the Mathcad defines it — a constant of the orbit, so the
+    chart's instantaneous distance is deliberately not consulted."""
+    return LIGHT_MINUTES.get(body)
 
 
 class EventLocation(BaseModel):

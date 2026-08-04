@@ -1304,6 +1304,43 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   His km series (1000/2000/4000/8000) is a clean doubling that matches the
   physics for Jup/Sat/Ura (1116/2232/4186) and BREAKS for Neptune (6697),
   another sign the spot figures were reasoned by pattern, not computed.
+- *** NU RULING 2026-08-05: "Mathcad version is the one", and "dont
+  underestimate his statements 'rotate the long to suit'" *** — a correction
+  of my dismissal of the rotation as a rule of thumb. APPLIED to the code:
+  * KEY DECODE: the Mathcad quantity (a/2-1)*500/240 is ALREADY degrees of
+    ground rotation (500 s per AU of light travel, 240 s per degree of Earth
+    rotation). So REAL_POSITION_OFFSETS *is* "rotate the long to suit", and
+    the light-time is offset x 4 minutes: Jup 13.35, Sat 31.47, Ura 71.42,
+    Nep 116.37 min.
+  * locator.py now rotates by ROTATION_DEGREES = the Mathcad offsets
+    (3.336/7.867/17.856/29.092 deg). SUPERSEDES BOTH the prose figures
+    40/80/150/240 min (= 10/20/37.5/60 deg) AND the 2026-08-02 distance-true
+    refinement — the Mathcad is defined on the orbital radius, so the
+    rotation is a FIXED constant; light_minutes_for no longer consults the
+    chart's distance. Both supersessions are stated in the module header and
+    pinned by tests so neither can be re-introduced silently.
+  * BLAST RADIUS, all reported not hidden: 232 tests green after updating 4
+    that pinned the old rotation (now asserting the RULE — delta ==
+    ROTATION_DEGREES[body] — rather than re-baselined magic numbers). EVERY
+    REGISTERED WATCHLIST SPOT MOVED EAST: Uranus rows +21 deg, Neptune rows
+    +31 deg, i.e. 2,000-3,500 km into different regions (2026-10-16 was
+    140.33W E of Hawaii, now 119.24W off Baja; 2027-11-12 was the mid-Indian
+    Ocean, now central SUMATRA). Band-window giant spots and the three
+    nodes-cluster Jupiter spots recomputed too. WATCHLIST carries a REVISED
+    banner with the supersession and a worked example; old values remain in
+    git history. Latitudes unchanged (declination), instants unchanged.
+  * MEASUREMENT, on record and NOT a veto of the ruling: tested all six
+    readings of the Mathcad rotation (observed/real position x west/east/none)
+    against the audited controls — every one tracks its null on the M7+
+    catalog (longitude within 10 deg: 0.221/0.207 best case). The ruling is
+    doctrinal and the corpus is quake-only; both statements stand.
+  * STILL OPEN, flagged for NU: signatures.py steps the chart light-time
+    EARLIER and then locate() rotates west, and these cancel EXACTLY (the
+    minutes and the degrees are now the same quantity). The author's scalar
+    pulse is IMMEDIATE, which argues the earlier-chart step should not exist
+    at all — but that is an audited behaviour (finding 11), so it is left in
+    place pending a ruling. Until then the ruling changes CLI/bands spots but
+    not signature-corpus spots.
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet

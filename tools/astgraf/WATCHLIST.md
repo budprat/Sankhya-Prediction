@@ -14,6 +14,18 @@ center of a watch region. Regenerate any row:
 `uv run astgraf-bands --start ... --rules mined-triggers.toml` (spots are in
 `rules_episodes.csv`).
 
+> **SPOTS REVISED 2026-08-05 — every longitude below has moved.** NU ruled
+> "Mathcad version is the one": the ground rotation is the Mathcad quantity
+> `(a/2−1)·500/240`, which is already in degrees, so it is Jupiter 3.336°,
+> Saturn 7.867°, Uranus 17.856°, Neptune 29.092° — not the prose reading's
+> 10/20/37.5/60°, and no longer distance-scaled. Registered spots therefore
+> shifted **east by 21° (Uranus) and 31° (Neptune)** — 2,000–3,500 km, into
+> different regions. The superseded values are preserved in git (see
+> `WATCHLIST.md` before commit `HEAD`) so nothing is quietly rewritten:
+> e.g. 2026-10-16 was 140.33W (E Pacific E of Hawaii), now 119.24W (off Baja).
+> Latitudes are unchanged — they come from declination, which the ruling
+> does not touch. Timing and instants are unchanged.
+
 Spatial prior (retrospective backtest, 2026-08-05, `scripts/loc_backtest.py`):
 over 1,435 M7+ events 1850–2020 the spot machinery grades AT CHANCE — nearest
 giant within 1,000 km for 3.3% of events vs 3.0% shuffled null; the Nepal
@@ -25,20 +37,20 @@ falsifiable test of the same math; read any spatial hit against that prior.
 
 | Exact instant (UT) | Spot | Region | Outcome |
 |---|---|---|---|
-| 2026-10-02 04:43 | 138.32W 0.05S | equatorial Pacific N of the Marquesas | *pending* |
-| 2027-10-04 20:15 | 11.61W 0.80N | equatorial Atlantic ~700 km S of Liberia | *pending* |
-| 2027-11-12 12:07 | 70.84E 0.44N | central Indian Ocean W of the Maldives | *pending* |
-| 2028-11-06 06:09 | 168.16E 1.35N | W Pacific ~120 km E of Nauru | *pending* |
+| 2026-10-02 04:43 | 107.30W 0.05S | equatorial E Pacific, ~1,900 km W of the Galápagos | *pending* |
+| 2027-10-04 20:15 | 19.41E 0.80N | Congo basin, Rep. of the Congo / DRC border | *pending* |
+| 2027-11-12 12:07 | 102.46E 0.44N | central Sumatra, Indonesia (Riau) | *pending* |
+| 2028-11-06 06:09 | 160.41W 1.35N | central Pacific, Line Islands (Kiribati) | *pending* |
 
 ## Mined: real-Uranus △ Sun (lift 1.52/1.31) — Uranus spots
 
 | Exact instant (UT) | Spot | Region | Outcome |
 |---|---|---|---|
-| 2026-10-16 09:19 | 140.33W 21.01N | NE Pacific ~1,900 km E of Hawaii | *pending* |
-| 2027-02-08 13:16 | 42.20E 20.37N | SW Saudi Arabia (Asir, toward the Red Sea) | *pending* |
-| 2027-10-20 21:47 | 33.07E 21.77N | Nubian Desert, Egypt–Sudan border (Lake Nasser E) | *pending* |
-| 2028-02-12 23:36 | 112.35W 21.22N | Pacific off Baja California Sur (Revillagigedo) | *pending* |
-| 2028-10-24 10:43 | 160.46W 22.41N | ~170 km SW of Kauai, Hawaii | *pending* |
+| 2026-10-16 09:19 | 119.24W 21.01N | E Pacific ~950 km WSW of the Baja tip | *pending* |
+| 2027-02-08 13:16 | 64.33E 20.37N | Arabian Sea off the Makran margin, S of Pakistan | *pending* |
+| 2027-10-20 21:47 | 54.03E 21.77N | Rub' al Khali, Saudi–Oman border | *pending* |
+| 2028-02-12 23:36 | 90.36W 21.22N | N Yucatán coast nr Progreso, Mexico | *pending* |
+| 2028-10-24 10:43 | 139.64W 22.41N | NE Pacific ~1,600 km E of Hawaii | *pending* |
 
 ## Mined: real-Uranus ☌ Saturn (strongest, lift 1.80/1.64)
 
@@ -51,12 +63,12 @@ derivable; giant spots at the tightest instant are secondary information only.
 
 | Tightest instant (UT) | Spread | Named giant spots | Outcome |
 |---|---|---|---|
-| 2026-11-03 01:00 | 6.3° | Jup: Andhra coast nr Nellore, India; Sat: upper Rio Negro, Colombia–Brazil | *pending* |
-| 2026-11-30 05:00 | 7.1° | Jup: central Mali (Ségou) | *pending* |
-| 2027-02-20 20:00 | 10.2° | Jup: western Yemen; Ura: NE of Punta Cana, Dom. Rep. | *pending* |
-| 2027-03-19 16:00 | 3.2° | Jup: Konkan coast nr Ratnagiri, India; Sat: Gran Sabana, Venezuela | *pending* |
-| 2027-04-15 15:00 | 4.8° | Jup: Arabian Sea off Dhofar, Oman; Sat: Colombian Llanos | *pending* |
-| 2028-08-17 23:00 | 2.7° | Ura: Chhattisgarh nr Korba, India; Nep: Gulf of Guinea S of Ghana | *pending* |
+| 2026-11-03 01:00 | 6.3° | Jup 86.5E 14.0N: Bay of Bengal off Andhra; Sat 55.6W 1.2N: lower Amazon, Brazil | *pending* |
+| 2026-11-30 05:00 | 7.1° | Jup 1.9E 13.3N: Burkina Faso / Benin border | *pending* |
+| 2027-02-20 20:00 | 10.2° | Jup 49.7E 15.6N: Gulf of Aden off Somaliland; Ura 48.7W 20.4N: open N Atlantic | *pending* |
+| 2027-03-19 16:00 | 3.2° | Jup 80.4E 16.5N: Telangana–Andhra interior, India; Sat 49.8W 4.0N: Amazon mouth, Brazil | *pending* |
+| 2027-04-15 15:00 | 4.8° | Jup 67.9E 16.7N: Arabian Sea W of India; Sat 58.2W 5.3N: Guyana–Suriname interior | *pending* |
+| 2028-08-17 23:00 | 2.7° | Ura 102.7E 22.4N: N Laos / Vietnam border; Nep 27.8E 2.1N: NE DRC nr the Uganda border | *pending* |
 
 ## Doctrine: Chatur Vyuham, Neptune-on-Ketu, Nepal-double
 
@@ -83,9 +95,9 @@ Jupiter's 15–16.5°N declination band:
 
 | Instant (UT) | Trigger | Jupiter spot | Region | Outcome |
 |---|---|---|---|---|
-| 2027-02-06 22:28 | **Moon on Rahu, Sun 3° away — the annular solar eclipse at the held node** | 22.44E 14.96N | eastern Chad (Ouaddaï, toward Sudan border) | *pending* |
-| 2027-02-09 17:31 | Sun exact on Rahu | 93.58E 15.08N | Andaman Sea off Myanmar's Irrawaddy delta | *pending* |
-| 2027-02-20 04:03 | Moon on the Ketu–Jupiter end | 76.08W 15.54N | Caribbean S of Haiti / N of Guajira | *pending* |
+| 2027-02-06 22:28 | **Moon on Rahu, Sun 3° away — the annular solar eclipse at the held node** | 28.17E 14.96N | Darfur, western Sudan | *pending* |
+| 2027-02-09 17:31 | Sun exact on Rahu | 99.31E 15.08N | Thailand, upper central plain nr Tak | *pending* |
+| 2027-02-20 04:03 | Moon on the Ketu–Jupiter end | 70.32W 15.54N | Caribbean Sea ~400 km N of the Guajira | *pending* |
 | 2027-03-02 07:31 | **Jupiter exactly on Ketu — constraint peak** | 139.39W 15.94N | NE Pacific ~1,700 km ESE of Hawaii | *pending* |
 | 2027-03-06 02:35 | Moon on the Rahu end | 69.60W 16.08N | Caribbean N of Curaçao (Beata Ridge) | *pending* |
 | 2027-03-19 10:54 | Moon on the Ketu–Jupiter end | 151.03E 16.45N | W Pacific NE of Guam (Marianas) | *pending* |

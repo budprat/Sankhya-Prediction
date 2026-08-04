@@ -45,9 +45,9 @@ uv run astgraf --year 2015 --month 1 --day 16 --unit hour --step 12 --count 60 \
 
 Bisection refinement makes the lenses agree to the minute (both give the
 2015-01-31 08:17 UT Uranus–Ketu conjunction) and `--locate` applies the
-light-time rotation — distance-true minutes (locator v2; the fixed
-40/80/150/240 anchors are the fallback), west from the culmination
-meridian — to give the spot (here 75.46E 4.67N, southern Laccadive Sea;
+light-time rotation — the Mathcad offsets (locator v3, NU ruling
+2026-08-05), west from the culmination meridian — to give the spot
+(here 100.17E 4.67N, the Malay peninsula near the Thai–Malaysian border;
 Uranus's actual distance gave 170.4 light-minutes at this instant). The lens contract is enforced: pairs whose
 relative motion exceeds ~one cycle per division are skipped with a printed
 note — at yearly steps use the slow bodies; descend the lens for the fast
@@ -122,16 +122,21 @@ the sweep: the perihelic oppositions of Dec 1914 / Dec 1973).
 NU's confirmed light-time rule: a crossing acts instantly in the substratum;
 the marker arrives at light speed. At each refined aspect-event instant, take
 the planet's culmination meridian (where its right ascension is on the local
-meridian) and rotate **west by light-time × 15°/hour**; latitude from the
-planet's declination. Rule v2 (2026-08-02): the light-time is computed from
-the planet's **actual distance at the instant** (engine geocentric distance,
-8.3167 min/AU) — NU's fixed minutes (Jup 40, Sat 80, Ura 150, Nep 240) remain
-the fallback. Anchor honesty (audit): at the engine's nearest distances only
-Uranus (153.2) and Neptune (240.4) reproduce their figures; Jupiter 40 and
-Saturn 80 match the **mean** distances (nearest are 32.9 / 67.0). At nearest
-position the surface displacement is ~1000 km (Jupiter), ~2000 (Saturn),
-~4000 (Uranus); NU's Neptune 8000 vs the physical ~6700–7200 km is a
-recorded tension.
+meridian) and rotate **west** by the light-time; latitude from the planet's
+declination.
+
+**Rule v3 (NU ruling, 2026-08-05: "Mathcad version is the one").** The
+Mathcad quantity `(a/2−1)·500/240` is *already* degrees of ground rotation —
+500 s per AU of light travel, 240 s per degree of Earth rotation — so the
+`REAL_POSITION_OFFSETS` **are** "rotate the long to suit": Jupiter 3.336°,
+Saturn 7.867°, Uranus 17.856°, Neptune 29.092° (equivalently 13.3 / 31.5 /
+71.4 / 116.4 light-minutes; ~371 / 875 / 1,987 / 3,238 km at the equator).
+This supersedes two earlier readings, both kept on record: the prose figures
+40/80/150/240 min (= nearest-approach `a−1`, giving 10/20/37.5/60°), and the
+2026-08-02 distance-true refinement — the Mathcad is defined on the orbital
+radius, so the rotation is a **fixed constant** and the chart's instantaneous
+distance is deliberately not consulted. Registered spots moved 21° (Uranus)
+to 31° (Neptune) east when this landed; see the WATCHLIST banner.
 `locations.csv` gives the spot for every event involving those four planets.
 
 **Status (NU-ratified 2026-08-04): experimental.** Every tested formulation

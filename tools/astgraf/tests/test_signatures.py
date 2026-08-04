@@ -161,7 +161,10 @@ def test_spot_features_match_the_forward_model():
     legacy = extract_signature(chart)
     delta = abs((fixed["spot_lon:Neptune"] - legacy["spot_lon:Neptune"] + 180)
                 % 360 - 180)
-    assert 50 <= delta <= 70      # ~60 deg for Neptune's ~4 h of rotation
+    # NU ruling 2026-08-05: the rotation is now the Mathcad offset, so the
+    # earlier-chart step moves Neptune's spot by 29.09 deg, not the prose 60.
+    from astgraf.locator import ROTATION_DEGREES
+    assert delta == pytest.approx(ROTATION_DEGREES["Neptune"], abs=0.5)
 
 
 def test_chart_for_time_accepts_timestamps_without_milliseconds():
