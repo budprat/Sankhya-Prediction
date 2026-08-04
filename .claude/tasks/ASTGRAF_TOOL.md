@@ -890,3 +890,30 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   window's spot has spatial_chance 0.0000 (equatorial Pacific, no corpus
   M7+ within radius) — a hit would be extraordinary, a clear is
   near-certain and carries almost no evidence either way.
+
+## 2026-08-04 — P3 done: Hyderabad interpretation cross-check PASSED
+- NU's own cast read from Hyderaba-floods.docx: 24-09-2016 10:00 IST,
+  78:00E/16:00N, AYANAMSA 0.000 (a TROPICAL cast — the doctrine chart for
+  Hyderabad is tropical, like QUAKE). Engine reproduces the printout
+  value-for-value: all 13 planet rows (positions, retro, dignities
+  Sun-WEAK/Mercury-EXALTED/Moon-RULER/Neptune-RULER, nakshatra/pada/navam),
+  cusps to the decimal, Pusyam 3. Two sub-arcminute artifacts, root-caused:
+  ST 9H56M46S vs docx 47S; Moon 11 Can 25 vs docx 26 -> dasa balance days
+  Sat 7-5-22 vs docx 7-5-11 (1 arcmin of Moon ~ 10 days of Saturn balance;
+  NU's 2016 print predates the ss2 corrections; the port stands on
+  PRATEEK/QUAKE oracles).
+- Taught numbers verified: Nep-on-Ketu 1.15 (taught 1.1), Merc-on-Rahu 3.47
+  at cast (docx 3.7 at its instant), Sun-conj-Jup 1.6 at cast; Moon squares
+  EXACT 15:29 IST (Sun) and 19:24 IST (Jupiter) Sep 23 — the taught
+  15:30-19:30 cloudburst window bracketed to the minute; Asc crossings
+  04:50/17:06 (oracle tests, taught ~04:49/~17:04).
+- ENGINE OBSERVATIONS (labeled, not doctrine): the nodal axis was held by
+  FOUR constraints, not two — beyond the taught Mercury-on-Rahu +
+  Neptune-on-Ketu also (a) real-Uranus TRINE Rahu 0.20 deg (doctrine-exact
+  Mathcad offset; the tightest contact in the chart; exactness +334 h) and
+  (b) Saturn SQUARE the nodal axis 0.38 deg (exact +77 h). Saturn-Neptune
+  sq 0.77 as era backdrop. Dasa context: Saturn dasa / Rahu bukti — the
+  period lords are the axis-square Saturn and the held Rahu. Band trigger
+  correctly silent (mkm spread 184 deg). Rule-status question for NU
+  raised: do real-Ura-trine-node and Saturn-square-nodes join
+  observed-triggers (TESTING)?
