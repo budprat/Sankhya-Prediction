@@ -1368,6 +1368,26 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
       LESSON: coordinates computed by the engine are trustworthy; prose
       geography written from them is not, and must be checked against
       landmarks before it enters a register.
+- NEPAL RE-TESTED UNDER THE MATHCAD RULING (NU: "did you test it using nepal
+  example") — I had adopted the ruling WITHOUT re-running the anchor. Done now,
+  and the honest result is that IT IS WORSE:
+  | convention | old rule | Mathcad ruling |
+  | Nepal best-of-four (event instant) | 2,846 km (Uranus) | 4,151 km (Uranus) |
+  | Nepal Uranus x Sun at exactness | 8,126 km | 8,120 km |
+  | catalog within 1,000 km | 3.34% vs 3.04% null | 3.83% vs 3.00% null |
+  So the catalog lift edges up (1.10 -> 1.28, still inside the 1.72 chance bar
+  this project's own mining null established) while the taught anchor gets
+  1,300 km worse. Neither is a pinpoint; the ruling is doctrinal and stands,
+  and this measurement sits beside it rather than overturning it.
+  HARD CEILING restated: Gorkha is at 28.23 N and no sub-planet point exceeds
+  23.71 N, so latitude alone costs >= 503 km before longitude is considered.
+- STALE-ARTIFACT BUG CAUGHT (the completion-claims lesson repeating):
+  loc_backtest.py sections A/B/C read the spot_lat/spot_lon/loc_km columns
+  STORED in signatures.csv, which were computed under the OLD rotation — so
+  after the ruling the script silently reported superseded numbers (it printed
+  the pre-ruling 3.34% while the live figure is 3.83%). All three sections now
+  recompute from locate() live; section D was already live. Anything that
+  caches a spot must be regenerated or recomputed when the rotation changes.
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet

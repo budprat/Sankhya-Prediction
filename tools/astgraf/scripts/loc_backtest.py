@@ -39,21 +39,37 @@ def say(msg: str) -> None:
 
 
 def main() -> None:
-    rows = [r for r in csv.DictReader(open(SIG, newline=""))
-            if r.get("lat") and r.get("lon")]
+    with open(SIG, newline="") as fh:
+        rows = [r for r in csv.DictReader(fh)
+                if r.get("lat") and r.get("lon")]
     say(f"location-layer backtest — {len(rows)} M7+ events with epicenters "
         "(out/signatures-m7-v2)")
 
     # A) nearest-of-four at the event instant, vs leave-one-out shuffled null.
-    mins = [min(float(r[f"loc_km:{g}"]) for g in GIANTS) for r in rows]
+    # Computed LIVE from locate(): the loc_km columns stored in signatures.csv
+    # predate the 2026-08-05 Mathcad-rotation ruling and would be stale here.
+    def live_km(lat, lon, jd):
+        c = chart_at(jd)
+        return min(_gc_km(lat, lon, (loc := locate(c, g)).event_latitude_north,
+                          loc.event_longitude_east) for g in GIANTS)
+
+    mins = [live_km(float(r["lat"]), float(r["lon"]), float(r["jd"]))
+            for r in rows]
+    def live_spots_at(jd):
+        c = chart_at(jd)
+        out = {}
+        for g in GIANTS:
+            loc = locate(c, g)
+            out[g] = (loc.event_latitude_north, loc.event_longitude_east)
+        return out
+
+    live_spots = [live_spots_at(float(r["jd"])) for r in rows]
     null = []
     for i, r in enumerate(rows):
         la, lo = float(r["lat"]), float(r["lon"])
-        for j, s in enumerate(rows):
+        for j, sp in enumerate(live_spots):
             if i != j:
-                null.append(min(_gc_km(la, lo, float(s[f"spot_lat:{g}"]),
-                                       float(s[f"spot_lon:{g}"]))
-                                for g in GIANTS))
+                null.append(min(_gc_km(la, lo, a, b) for a, b in sp.values()))
 
     def frac(xs, km):
         return sum(1 for x in xs if x <= km) / len(xs)
@@ -69,12 +85,13 @@ def main() -> None:
     # B) doctrine-conditional acting-giant spots.
     for orb in (1.0, 3.0):
         acting = []
-        for r in rows:
+        for r, sp in zip(rows, live_spots):
             for g in ("Uranus", "Neptune"):
                 for t in TARGETS:
                     s = float(r[f"rsep:{g}-{t}"])
                     if min(s % 360, 360 - s % 360) <= orb:
-                        acting.append(float(r[f"loc_km:{g}"]))
+                        acting.append(_gc_km(float(r["lat"]), float(r["lon"]),
+                                             *sp[g]))
         say(f"B) acting real-giant contact in force, orb <= {orb}: "
             f"{len(acting)} contacts; median {statistics.median(acting):.0f} km; "
             f"within 1000/2000/3000 km "
@@ -86,11 +103,11 @@ def main() -> None:
 
     # C) the Nepal taught anchor, all conventions.
     say("C) Nepal 2015-04-25 (Gorkha, taught anchor):")
-    for r in rows:
+    for r, sp in zip(rows, live_spots):
         if "Nepal" in r.get("place", "") and r["label"].startswith("2015-04-25"):
             for g in GIANTS:
-                say(f"   event-instant {g}: spot {r[f'spot_lat:{g}']}N "
-                    f"{r[f'spot_lon:{g}']}E -> {float(r[f'loc_km:{g}']):.0f} km")
+                say(f"   event-instant {g}: spot {sp[g][0]:.2f}N {sp[g][1]:.2f}E "
+                    f"-> {_gc_km(*NEPAL, *sp[g]):.0f} km")
     jd_q = iso_jd("2015-04-25T06:11:25.950Z")
     for a, b in (("Uranus", "Sun"), ("Neptune", "Ketu")):
         ex = refine_exactness(a, b, "rsep", 0.0, jd_q)
