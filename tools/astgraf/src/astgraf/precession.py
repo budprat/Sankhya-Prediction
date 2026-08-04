@@ -68,6 +68,39 @@ def sector_occupancy(nakshatra: str, cycles_back: int = 0,
     return entry_year - cycles_back * CYCLE_YEARS, exit_year - cycles_back * CYCLE_YEARS
 
 
+def marker_on_wheel(sidereal_longitude: float,
+                    zero_year: float = DEFAULT_ZERO_YEAR) -> float:
+    """A fixed sidereal direction expressed on the precession wheel.
+
+    The wheel's zero is the equinox at `zero_year`, while the suite's sidereal
+    zero sits an ayanamsa away — so a direction at sidereal S reads
+    S + ayanamsa(zero_year) on the wheel. Without this the equinox (wheel) and
+    the galactic markers (sidereal) would be compared across frames, an error
+    of the whole ayanamsa (~23.8 deg).
+    """
+    from .ephemeris import ayanamsa
+    return (sidereal_longitude + ayanamsa(zero_year)) % 360.0
+
+
+def equinox_offsets(year: float, zero_year: float = DEFAULT_ZERO_YEAR,
+                    zero_longitude: float = 0.0) -> tuple[float, float]:
+    """(crossover offset, Magha-axis offset) of the equinox, in degrees —
+    the author's "see HOW MUCH Magha... Punarvasu... even as of today".
+
+    Each marker is read in the frame it was actually defined in. The crossover
+    is a measured sky direction (sidereal), so it converts onto the wheel; the
+    Magha axis is 9.5 sectors of THIS wheel by construction, so it is already a
+    wheel value and is used as-is. Magha's frame is the open question NU has
+    not ruled on — see galactic.py.
+    """
+    from .galactic import MAGHA_AXIS_SIDEREAL, PUNARVASU_CROSSOVER_SIDEREAL
+    lon = equinox_longitude(year, zero_year, zero_longitude)
+    cross = marker_on_wheel(PUNARVASU_CROSSOVER_SIDEREAL, zero_year)
+    cross_sep = abs((lon - cross + 180) % 360 - 180)
+    d = abs((lon - MAGHA_AXIS_SIDEREAL) % 180)
+    return cross_sep, min(d, 180 - d)
+
+
 def report_lines(year: float, zero_year: float = DEFAULT_ZERO_YEAR,
                  zero_longitude: float = 0.0) -> list[str]:
     s = sector_of(year, zero_year, zero_longitude)
@@ -89,13 +122,12 @@ def report_lines(year: float, zero_year: float = DEFAULT_ZERO_YEAR,
     # drift-time equivalent (1 deg = ~71.1 years at 50.352"/yr).
     from .galactic import MAGHA_AXIS_SIDEREAL, PUNARVASU_CROSSOVER_SIDEREAL
     rate_deg_per_year = RATE_ARCSEC_PER_YEAR / 3600
-    cross_sep = abs((s.longitude - PUNARVASU_CROSSOVER_SIDEREAL + 180) % 360 - 180)
-    d = abs((s.longitude - MAGHA_AXIS_SIDEREAL) % 180)
-    magha_sep = min(d, 180 - d)
-    lines.append(f"  equinox vs Punarvasu crossover (sector-7 start, "
-                 f"{PUNARVASU_CROSSOVER_SIDEREAL:.3f} deg): {cross_sep:.3f} deg "
+    cross_sep, magha_sep = equinox_offsets(year, zero_year, zero_longitude)
+    cross_wheel = marker_on_wheel(PUNARVASU_CROSSOVER_SIDEREAL, zero_year)
+    lines.append(f"  equinox vs Punarvasu crossover (galactic-ecliptic node, "
+                 f"wheel {cross_wheel:.3f} deg): {cross_sep:.3f} deg "
                  f"= {cross_sep / rate_deg_per_year:.0f} years of drift")
-    lines.append(f"  equinox vs Magha axis (sector-10 center, "
+    lines.append(f"  equinox vs Magha axis (sector-10 center, wheel "
                  f"{MAGHA_AXIS_SIDEREAL:.3f} deg): {magha_sep:.3f} deg "
                  f"= {magha_sep / rate_deg_per_year:.0f} years of drift")
     return lines

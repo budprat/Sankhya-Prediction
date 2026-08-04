@@ -1106,11 +1106,30 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   sits at 90.00 deg — 0.02 deg apart. His crossover marker IS the real
   galactic-ecliptic node, landing on a sector boundary of his own wheel, and
   the previous cycle back is his "30,000 years zero ascension in Punarvasu".
-  OPEN QUESTION for NU (not changed unilaterally): galactic.py sets
-  PUNARVASU_CROSSOVER_SIDEREAL = 6*(360/28) = 77.143 (sector-7 START), but
-  the real node sits at the sector-7 END, 7*(360/28) = 90.0 — 0.02 deg from
-  the true value. If "crossover" means the galactic node, the constant should
-  be 90.0. Doctrine call, awaiting NU.
+  NU RULING 2026-08-05: "crossover" MEANS the galactic-ecliptic node. Applied
+  (TDD, 2 new tests, suite 229 -> 231 green):
+  * galactic.py PUNARVASU_CROSSOVER_SIDEREAL 77.142857 -> 66.170810, derived
+    from the measured ASCENDING node (tropical 90.02322 at J2000, minus the
+    suite ayanamsa). Verified stable to 0.002 deg over 1900-2100, i.e. it
+    behaves like the fixed inertial direction it is. CROSSOVER_TROPICAL_J2000
+    kept alongside so the derivation is visible.
+  * FRAME BUG FOUND AND FIXED while applying it: precession.report_lines was
+    comparing the equinox's WHEEL longitude against markers labelled SIDEREAL
+    — two frames an ayanamsa (~23.8 deg) apart. New precession.marker_on_wheel()
+    converts a sidereal direction onto the wheel (S + ayanamsa(zero_year)), and
+    equinox_offsets() returns both offsets. Oracle test: the equinox's offset
+    from the crossover is 0.050 deg at year -4440 and 90.387 deg today — i.e.
+    the machinery independently reproduces the crossing epoch.
+  * Structural result, model-free: the node lands at wheel 89.967 against the
+    Punarvasu sector boundary at 90.000 — 0.033 deg.
+  * MAGHA NOT TOUCHED (unruled): its 122.142857 is 9.5 sectors OF THIS WHEEL by
+    construction, so it is a wheel value despite the _SIDEREAL name, and it is
+    now used as-is rather than converted (behaviour unchanged, label honest).
+    OPEN QUESTION for NU: is the Magha axis meant to be the galactic CENTRE?
+    Sgr A* (RA 266.41684, Dec -29.00781) is ecliptic 266.852 -> suite-sidereal
+    243.00, folded 63.00 — 59 deg from the present constant. Until NU rules,
+    galactic.py still treats Magha as a sidereal direction in chart work,
+    which is the same frame mismatch the crossover just had.
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet

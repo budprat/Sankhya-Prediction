@@ -8,11 +8,24 @@ from astgraf.galactic import (MAGHA_AXIS_SIDEREAL, PUNARVASU_CROSSOVER_SIDEREAL,
                               galactic_separations, marker_longitudes)
 
 
-def test_frame_constants_come_from_the_28_sector_clock():
-    # ASTGRAF.BAS carries no Abhijit and no 28-division data (verified): the
-    # galactic markers belong to the book's 28-sector precession layer —
-    # Punarvasu crossover = sector-7 start, Magha axis = sector-10 center.
-    assert PUNARVASU_CROSSOVER_SIDEREAL == pytest.approx(6 * 360 / 28)
+def test_crossover_is_the_real_galactic_ecliptic_node():
+    # NU ruling 2026-08-05: "crossover" means the galactic-ecliptic node — the
+    # ASCENDING node of the galactic plane on the ecliptic, measured from the
+    # IAU J2000 galactic pole (RA 192.85948, Dec +27.12825): tropical 90.0232
+    # at J2000, which is suite-sidereal 66.1708.
+    from astgraf.ephemeris import ayanamsa
+    assert PUNARVASU_CROSSOVER_SIDEREAL == pytest.approx(66.1708, abs=0.001)
+    assert (PUNARVASU_CROSSOVER_SIDEREAL + ayanamsa(2000)) % 360 == pytest.approx(
+        90.0232, abs=0.002)
+    # A fixed inertial direction keeps a near-constant sidereal longitude, so
+    # its tropical longitude must track precession across epochs.
+    for year, tropical in ((1900, 88.6263), (2026, 90.3864), (2100, 91.4201)):
+        assert (PUNARVASU_CROSSOVER_SIDEREAL + ayanamsa(year)) % 360 == pytest.approx(
+            tropical, abs=0.01)
+
+
+def test_magha_axis_still_comes_from_the_28_sector_clock():
+    # Unruled: the Magha axis remains the book's sector-10 center pending NU.
     assert MAGHA_AXIS_SIDEREAL == pytest.approx(9.5 * 360 / 28)
 
 
@@ -53,3 +66,15 @@ def test_precession_report_prints_the_how_much_lines():
     assert "Punarvasu crossover" in lines
     assert "Magha axis" in lines
     assert "years of drift" in lines
+
+
+def test_equinox_offset_from_the_crossover_vanishes_at_the_crossing_epoch():
+    # The oracle: the equinox last stood ON the galactic node in the mid-5th
+    # millennium BC. The report's offset is a wheel-frame comparison, so the
+    # sidereal marker must be converted with the anchor year's ayanamsa — get
+    # that wrong and the offset is out by the ayanamsa (~23.8 deg).
+    from astgraf.precession import equinox_offsets
+    now_cross, _ = equinox_offsets(2026)
+    then_cross, _ = equinox_offsets(-4440)
+    assert then_cross < 0.6, f"equinox should sit on the node here, got {then_cross}"
+    assert now_cross > 80, "and be most of a quadrant away today"

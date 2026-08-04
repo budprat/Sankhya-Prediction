@@ -254,10 +254,18 @@ months match the printout.
 ## The galactic reference (`--galactic`)
 
 The author's reading of the ayanamsa's purpose: "locate the galactic pole and
-ecliptic in major events." Two fixed sidereal directions from the book's
-28-sector precession layer — the **Punarvasu crossover** (sector-7 start,
-77.143°, the 30,000-year zero-ascension anchor) and the **Magha axis**
-(sector-10 center, 122.143°, folded at 180°) — are exposed per chart:
+ecliptic in major events." Two fixed directions are exposed per chart — the
+**Punarvasu crossover** and the **Magha axis** (sector-10 center, 122.143°,
+folded at 180°).
+
+The crossover is the **galactic-ecliptic node** (NU ruling, 2026-08-05): the
+point where the galactic plane actually cuts the ecliptic, measured from the
+IAU J2000 galactic pole — tropical **90.023°** at J2000, **suite-sidereal
+66.171°**. Its name records where the *equinox* stood on the 28-sector wheel
+when it last crossed that node (mid-5th millennium BC — "zero ascension in
+Punarvasu"), not where the node sits on today's zodiac; on the wheel the node
+reads 89.967° against the Punarvasu sector boundary at 90.0°, 0.03° apart.
+These markers are exposed per chart:
 `galactic.csv` gives every body's separation from each, and with `--scope`
 both axes are drawn on the wheels (dashed). Sidereal charts use the markers
 directly; tropical charts shift them by the suite ayanamsa for the chart's
@@ -267,13 +275,17 @@ today"). Frame note: ASTGRAF.BAS carries no Abhijit/28 data (its 27-name
 list is read and never used), so these directions come from Secrets of
 Sankhya's own clock — recorded in the ledger.
 
-Independent check (2026-08-05): the galactic plane really does cross the
-ecliptic at 90.02°/270.02° (the solstice points; the planes stand 60.19°
-apart), so the equinox last stood on that node in **4444 BC** — and the
-book's own 28-sector clock puts the equinox entering Punarvasu in **4439 BC**,
-five years apart, with the previous cycle at 30,216 BC vs 30,178 BC (the
-author's "30,000 years zero ascension in Punarvasu"). The Sun itself crosses
-the galactic plane at the solstices: last on 2026-06-21 08:51 UT northward.
+Why this validates the frame: the galactic plane crosses the ecliptic at
+90.02°/270.02° — the solstice points, the planes standing 60.19° apart — and
+the equinox last stood on the ascending node in the **mid-5th millennium BC**
+(4445 BC on a linear 50.2879″/yr, 4539 BC on the IAU-2006 quadratic; the
+book's own constant 25,739-year cycle says 4439 BC, all within ~100 y of each
+other out of 6,500). One cycle earlier is the author's "30,000 years zero
+ascension in Punarvasu". The Sun itself crosses the galactic plane at the
+solstices — last on 2026-06-21 08:51 UT northward. Note the two frames in
+play: the precession wheel's zero is the 1996 equinox while the suite's
+sidereal zero is an ayanamsa away, so a sidereal direction is converted with
+`precession.marker_on_wheel()` before being compared with the equinox.
 
 ## The mirror crossing (`--mirror`)
 
