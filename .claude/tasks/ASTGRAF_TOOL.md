@@ -983,6 +983,9 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   only — the Moon ~0.6 deg / Asc ~13 deg gaps just reflect the sample's
   arbitrary, unrecorded site/time inputs (the GRF stores no site/GMT fields).
   No author follow-up; the fast-mover test stays as a loose regression guard.
+- RULING (NU, 2026-08-05): the GRF format is NOT a pipeline stage — no writer,
+  no --from-grf. It exists only as the learning/verification oracle proving the
+  fused pipeline (compute in memory -> one-by-one SVGs a la GRAPHDO) is correct.
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet
