@@ -788,3 +788,13 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   (pattern 4 -> 6); row STAYS registered with a WATCHLIST annotation
   (mined-windows precedent); future rows use extended patterns. README/
   FRAMEWORK claims regenerated.
+
+## 2026-08-04 — Candidate Jupiter/Saturn offsets: all sources on record
+- Per NU ("did you document the other potential values"): the full candidate
+  table is now in FRAMEWORK open question 1 — canon elements (ADOPTED
+  provisional) Jup 5.20290493 -> 3.3363593 / Sat 9.55251745 -> 7.8672057;
+  JPL approximate J2000 Jup 5.20288700 -> 3.3363406 / Sat 9.53667594 ->
+  7.8507041; textbook mean Jup 5.2026 -> 3.3360417 / Sat 9.5549 ->
+  7.8696875. Spread: Jupiter <= 0.0003 deg; Saturn <= 0.019 deg (JPL Saturn
+  axis is the outlier). Purpose: when NU's exact NR values arrive, matching
+  them to the nearest source diagnoses what NR physically is.

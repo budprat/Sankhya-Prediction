@@ -209,8 +209,18 @@ Vyuham 1/126 yr — on the exact window NU named from memory).
    PROVISIONAL (Jupiter 3.3363593021°, Saturn 7.8672056771°, in
    `REAL_POSITION_OFFSETS`), expected within ~0.02° of the Sankhya truth
    by the Ura/Nep deviation trend; NU's exact NR values replace them as
-   data when supplied. (Earlier note stands: offsets run AHEAD; Hyderabad
-   reads as Jupiter-on-Sun + Mercury-on-Rahu.)
+   data when supplied. All candidate values ON RECORD (offset =
+   (a/2 − 1)·500/240), so the arriving Sankhya NR values can be matched
+   against their nearest source:
+   | a source | Jupiter a → offset | Saturn a → offset |
+   |---|---|---|
+   | canon elements (ADOPTED provisional) | 5.20290493 → 3.3363593° | 9.55251745 → 7.8672057° |
+   | JPL approximate J2000 | 5.20288700 → 3.3363406° | 9.53667594 → 7.8507041° |
+   | textbook mean axes | 5.2026 → 3.3360417° | 9.5549 → 7.8696875° |
+   Spread: Jupiter ≤ 0.0003°; Saturn ≤ 0.019° (the JPL Saturn axis is the
+   outlier). Sankhya-trend expectation (Ura −0.26%, Nep −0.47%, shrinking
+   inward): corrections within ~0.02°. (Earlier note stands: offsets run
+   AHEAD; Hyderabad reads as Jupiter-on-Sun + Mercury-on-Rahu.)
 2. Is Moon+Ketu+Mars *the* band trigger or one of a taught family?
 3. Lords for the 7-fold instant level (the 9-lord cycle doesn't map onto 7).
 4. Exact definition of the "Moon–Sun–Asc cross" trigger (square/conjunction
