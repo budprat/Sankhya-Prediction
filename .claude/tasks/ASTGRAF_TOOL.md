@@ -1039,6 +1039,39 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   frame crossing is inherently site-specific, so that definition likely IS
   the location mechanism. Dwell layer NOT implemented — needs his formula,
   not our invention.
+- RETRACTION + canon/SankhyaStellarPrediction.html read (NU challenge, "you
+  sure interpreting the dwell time meaning correctly"). My "the crossing must
+  live in the rotation frame" was ONE hypothesis stated as a conclusion —
+  withdrawn as a conclusion, kept as a candidate. The author's 2016 JS
+  (81 KB, 6 script blocks, read in full) is his own port of the same engine:
+  * CONFIRMS: 27 stars ("Makha"), truncated PI, mxpr+1 pre-increment,
+    eqls="Koch" HARDCODED (no E/W branch at all — our Koch default is right),
+    ayanamsa only when zodtype=="E" (tropical = 0), same ss/ss1/ss2/aus
+    elements, same ANU/ADX/ANX/ANQ/ANR/ANS/ANW/ANP helpers, same 20-term Moon.
+  * GRAPH: y = cos(lon)*200+240, IDENTICAL to GRAPHDO.BAS line 54; axes
+    labelled 0/360 bottom, 180 top, 90/270 middle. Our svgplot cosine_y
+    reproduces this fold exactly (verified at 0/90/180/270/360).
+  * The 14 colours from the briefing are here (Peru/Orange/SaddleBrown/Blue/
+    Red/Cyan/Gold/RoyalBlue/Indigo/DarkGray/Green/LawnGreen/Magenta + black).
+  * DEFAULT-VISIBLE TRACES: Asc, Moon, Uranus, Neptune (s5 line 4) — the
+    author's own working set; everything else starts hidden.
+  * CONTAINS NO dwell, crossing-detection, aspect, or location code at all
+    ("RemoveRule" is a CSS call). The dwell doctrine exists in NO software he
+    has given us — it is post-software teaching, so it cannot be recovered by
+    reading code; only he can state it.
+  * REAL GAP FOUND: the cos fold means two traces also cross when
+    cos(l1)=cos(l2) with l1 = -l2 (MIRROR about the 0-180 equinox axis).
+    Our aspect engine detects only conj/opp/square/trine and never the mirror.
+    At Nepal three mirror pairs stood: Moon x Saturn 0.067 deg (very tight),
+    Venus x Pluto 1.686, Uranus x Neptune 2.971. NOT implemented pending NU.
+- Dwell candidate (arithmetic, NOT adopted): using the author's own two taught
+  separations, real-Nep x Ketu 0.342 + real-Ura x Sun 0.692 = 1.034 deg swept
+  at Earth's rotation 15.041 deg/h = 4.13 min — his stated "4 minutes", and it
+  explains "BOTH crossed one after another" as two dwells ADDING. 3 s then =
+  45 arcsec. Tested for generalisation over the 1,435-event catalog: corr
+  (dwell, magnitude) = +0.238 at orb 1 (n=43) but -0.082 at orb 3 (n=147) —
+  the sign flips with an arbitrary knob, so the Nepal fit does not replicate.
+  Recorded as a candidate to put to the author, not a rule.
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet
