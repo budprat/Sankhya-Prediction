@@ -1094,12 +1094,18 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   galactic plane at the solstices — last 2026-06-21 08:51 UT northward,
   2025-12-21 15:29 UT southward; (2) as planes they never stop crossing, so
   the datable event is the EQUINOX reaching a node, every 12,886 y.
-  *** VALIDATION OF THE AUTHOR'S FRAME ***: the equinox last stood on the
-  galactic node in 4444 BC; the book's own 28-sector clock puts the equinox
-  ENTERING Punarvasu at 4439 BC — 5 years apart out of 6,445 (0.08%). One
-  cycle earlier: 30,216 BC (real) vs 30,178 BC (book) — his "30,000 years
-  zero ascension in Punarvasu". His crossover marker IS the real galactic
-  node, and his wheel lands it on a sector boundary.
+  *** VALIDATION OF THE AUTHOR'S FRAME ***: the equinox last stood on that
+  galactic node in the MID-5th MILLENNIUM BC, and the book's own 28-sector
+  clock puts the equinox ENTERING Punarvasu at 4439 BC. Honest error bar
+  (self-corrected before reporting): the epoch depends on the precession
+  model — linear 50.2879"/yr gives 4445 BC, the IAU2006 quadratic gives
+  4539 BC, the book's constant 25,739-y cycle gives 4439 BC; spread 94 y.
+  So the claim is "all three land within ~100 y of each other out of 6,500",
+  NOT a 5-year match. The structural point is exact and model-free: the true
+  node sits at ecliptic 90.02 deg and the book's Punarvasu sector boundary
+  sits at 90.00 deg — 0.02 deg apart. His crossover marker IS the real
+  galactic-ecliptic node, landing on a sector boundary of his own wheel, and
+  the previous cycle back is his "30,000 years zero ascension in Punarvasu".
   OPEN QUESTION for NU (not changed unilaterally): galactic.py sets
   PUNARVASU_CROSSOVER_SIDEREAL = 6*(360/28) = 77.143 (sector-7 START), but
   the real node sits at the sector-7 END, 7*(360/28) = 90.0 — 0.02 deg from
