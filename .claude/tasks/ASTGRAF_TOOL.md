@@ -917,3 +917,21 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   correctly silent (mkm spread 184 deg). Rule-status question for NU
   raised: do real-Ura-trine-node and Saturn-square-nodes join
   observed-triggers (TESTING)?
+
+## 2026-08-05 — The 2016 print's lineage: SOLVED (interpreter precision)
+- NU asked for the docx dasa-delta lineage. Eliminated in order: inputs
+  (ST matches to 1 s), source (the Moon blocks of ASTGRAF.BAS and
+  ASTROLOG.BAS are substance-identical; the port carries that one series),
+  series terms (all 20 coefficients + arguments equal). Root cause CONFIRMED
+  by emulation: the canon declares no DEFDBL, so the family's interpreter
+  ran SINGLE precision; float32 emulation of the identical series at the
+  cast instant yields Moon 101.443 = 11 Can 26 (the docx), double yields
+  101.419 = 11 Can 25 (the port); delta 1.44 arcmin, and the higher
+  single-precision Moon sits deeper into Pusyam -> LESS dasa balance
+  (docx Sat 7-5-11 vs port 7-5-22) — direction and size both check.
+- Status: documented as an ENVIRONMENT difference (third documented class,
+  tool README divergences section), no code change — the port follows the
+  source in double precision; period prints can differ by ~1-2 arcmin of
+  Moon (~10 days of balance) when the value sits on a print-rounding
+  boundary. PRATEEK/QUAKE oracles were away from boundaries. NU may rule
+  single-precision fidelity if family-print parity is ever preferred.

@@ -388,7 +388,15 @@ historical members. Timing only — no spots.
 The computation core is the BAS verbatim (oracle-pinned to the PRATEEK and
 QUAKE.pdf printouts and bit-close to the corrected JS engine). Exactly **two**
 engine behaviors deliberately diverge from the canon, both bug fixes, both
-tested, both ledger-recorded:
+tested, both ledger-recorded — plus one documented **environment** difference
+(not a source divergence): the canon declares no `DEFDBL`, so the family's
+interpreter ran the series in *single precision*; the port computes the same
+series in double. Effect: the Moon can differ by ~1–2 arcminutes from a
+period print (the Hyderabad 2016 docx prints Moon 11°26′ where the port
+prints 25′ — float32 emulation of the canon series reproduces the docx value
+exactly), which the Vimshottari balance amplifies to ~10 days. Print oracles
+match when the Moon sits away from a rounding boundary; the port follows the
+SOURCE (the series as written), not the 1980s float hardware.
 
 1. **The Gregorian reform day** (`ephemeris.py`, `julian_day_number`). The
    BAS/JS canon's strict `IF J > 2299171` misses the first Gregorian day
