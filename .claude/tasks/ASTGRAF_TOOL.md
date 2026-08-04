@@ -1388,8 +1388,76 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   the pre-ruling 3.34% while the live figure is 3.83%). All three sections now
   recompute from locate() live; section D was already live. Anything that
   caches a spot must be regenerated or recomputed when the rotation changes.
+- EXHAUSTIVE NEPAL SEARCH (NU pressed hard for a pinpoint; this is the full
+  space actually tested, not a sketch):
+  1. SUB-POINT OF EVERY BODY, not just the four giants — I had only ever
+     located the giants because LIGHT_MINUTES holds only those, while the
+     author's own default plot is Asc+Moon+Ura+Nep. At the Gorkha instant the
+     ranking is Sun 1,694 km, Mars 1,950, Mercury 1,984, Uranus 2,852,
+     Ketu 3,627 ... Saturn 16,650. NOTHING is near.
+  2. ALL ROTATION CONVENTIONS (Mathcad/prose/distance-true x west/east/none,
+     observed and real positions): none brings any body onto Gorkha.
+  3. ASCENDANT CONDITIONS at Nepal's longitude and instant: the latitude that
+     puts the Asc exactly on Jupiter is 40.29 N (1,342 km off), on
+     real-Jupiter 47.66 N, on the Moon -5.6 N. None gives 28.23 N.
+  4. CULMINATION/MC: the MC at Gorkha is 32.74 with the Sun at 34.74 and
+     real-Uranus at 35.43 — the taught crossing pair IS nearly culminating,
+     and the Sun's culmination meridian is 86.66 E against Gorkha's 84.73 E,
+     only 193 km. THIS LOOKED LIKE THE MECHANISM AND IS NOT: tested on the
+     other taught anchors it fails outright — Hyderabad 7,405 km, Ulsoor
+     9,480 km. Caught as overfitting before it was proposed.
+  5. THREE-ANCHOR CONSISTENCY (the discipline that killed 4): for Nepal,
+     Hyderabad and Ulsoor together, NO body's sub-point is near all three.
+  6. CATALOG, longitude channel, ALL 11 bodies (not giants alone as before):
+     at chance — within 5 deg 0.2599 observed vs 0.2697 null. Sun-only shows
+     0.0369 vs 0.0251 (lift 1.47), but that is a LOCAL-TIME excess, a classic
+     catalog-artifact class, one of four tests, and Nepal-only per (4).
+  *** THE STRUCTURAL RESULT, stated once and for all ***: across all three
+  taught anchors and every body, the spot latitude minus the site latitude is
+  ALWAYS NEGATIVE. Every ecliptic body's sub-point is capped at |lat| 23.44
+  (the obliquity — that IS the definition of the tropics) while Gorkha is at
+  28.23 N, Tohoku 38.3, Kamchatka 52.6, Alaska 60.9. The sky, in this frame,
+  cannot express the latitude of 44% of M7+ events, Nepal included. No
+  rotation, constant, instant or body choice can lift that ceiling; only a
+  different latitude source can. That is why no pinpoint has been produced,
+  and it is a geometric fact rather than a failure of search effort.
+  WHAT WOULD CLOSE IT (in order of value): (a) the author's own answer to
+  "has your method ever placed an event beyond 23.5 deg latitude, and how" —
+  Nepal itself is beyond it, so he must have a latitude source we have not
+  been told; (b) his 1000-year multi-category record, which is the training
+  corpus for the 28x11 memory half he explicitly leaves unbuilt.
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet
   one-by-one. 221 tests passing (incl. NU's new anchors/families/recurrence
   suites).
+- *** THE SITE-ANGLE LAYER — a location mechanism that fits all three taught
+  anchors, built as src/astgraf/angles.py (6 tests, suite 232 -> 238) ***
+  Found by asking what the three taught sites have in common instead of what
+  formula moves a sub-planet point. Answer: at each one the CROSSING PAIR
+  stands on an ANGLE of the site's own chart —
+    Nepal      Sun 2.00 deg and real-Uranus 2.69 deg from the MC
+               (his taught pair IS "real-Uranus on the Sun" — it culminates)
+    Hyderabad  Neptune 0.56 and Ketu 0.59 from the Asc, Rahu 0.59 from Desc
+               (his "Jup and Nep are at the ket and Rahu nodes")
+    Ulsoor     Neptune 0.09 from the Asc, Saturn 1.51 from the MC
+               (his "the Asc swept Neptune -> Sun -> Ketu -> Uranus")
+  This is the author's own language, and it escapes the tropical ceiling that
+  kills the sub-planet spot: the MC fixes a MERIDIAN (longitude, sharply) and
+  the Ascendant fixes a CURVE that reaches every latitude.
+  SELECTIVITY CONTROL (run before believing it): "some body within 3 deg of
+  some angle" is nearly vacuous — 66% of random site/instant pairs satisfy it,
+  median tightest 1.11 deg. Nepal's 2.00 is unremarkable (53% of random sites
+  do better), Hyderabad's 0.56 is top-22%, Ulsoor's 0.09 top-3.7%. So the rule
+  has content ONLY in its specified form — the pair NAMED BY THE CROSSING on
+  the angle, a ~1.3% coincidence per body — which holds at Hyderabad and
+  Ulsoor. The unspecified version must never be quoted as evidence.
+  CONDITIONING, the real limit on pinpointing: dAsc/dlat is only ~0.35 deg per
+  degree, so latitude is the soft axis — a 1 deg Asc residual becomes ~3 deg
+  (~330 km) of latitude, and solving both angles at once for the anchors gives
+  938-3,820 km. Longitude is sharp, latitude is not. This is ALSO why the
+  author's 3-second quantum matters: 3 s is 0.0125 deg of Asc ~ 4 km of
+  latitude, so his claimed precision is reachable ONLY if the crossing instant
+  and the angle condition are both exact.
+  STATUS: mechanism implemented and pinned to the anchors; NOT yet a validated
+  predictor — it needs the same catalog grading the other channels got.
