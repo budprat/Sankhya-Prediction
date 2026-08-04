@@ -84,6 +84,20 @@ def report_lines(year: float, zero_year: float = DEFAULT_ZERO_YEAR,
     for name, note in MARKER_SECTORS.items():
         entry, exit_ = sector_occupancy(name, 0, zero_year, zero_longitude)
         lines.append(f"  {name}: last occupied {entry:.0f} to {exit_:.0f} — {note}")
+    # The author's "see HOW MUCH Magha... Punarvasu... even as of today":
+    # angular offsets of the equinox from the two galactic markers, with the
+    # drift-time equivalent (1 deg = ~71.1 years at 50.352"/yr).
+    from .galactic import MAGHA_AXIS_SIDEREAL, PUNARVASU_CROSSOVER_SIDEREAL
+    rate_deg_per_year = RATE_ARCSEC_PER_YEAR / 3600
+    cross_sep = abs((s.longitude - PUNARVASU_CROSSOVER_SIDEREAL + 180) % 360 - 180)
+    d = abs((s.longitude - MAGHA_AXIS_SIDEREAL) % 180)
+    magha_sep = min(d, 180 - d)
+    lines.append(f"  equinox vs Punarvasu crossover (sector-7 start, "
+                 f"{PUNARVASU_CROSSOVER_SIDEREAL:.3f} deg): {cross_sep:.3f} deg "
+                 f"= {cross_sep / rate_deg_per_year:.0f} years of drift")
+    lines.append(f"  equinox vs Magha axis (sector-10 center, "
+                 f"{MAGHA_AXIS_SIDEREAL:.3f} deg): {magha_sep:.3f} deg "
+                 f"= {magha_sep / rate_deg_per_year:.0f} years of drift")
     return lines
 
 

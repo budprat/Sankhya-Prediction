@@ -271,3 +271,22 @@ def test_cosine_style_and_no_aspects(tmp_path):
     assert rc == 0
     assert not (tmp_path / "aspects.csv").exists()
     assert (tmp_path / "svg" / "combined.svg").exists()
+
+
+def test_galactic_flag_writes_separations(tmp_path):
+    # The author's per-event galactic reference (briefing: "use the ayanamsa
+    # to locate the galactic pole and ecliptic in major events").
+    rc = main([
+        "--year", "2016", "--month", "3", "--day", "7", "--time", "07:00",
+        "--utc-offset", "+05:30", "--lon", "77:37E", "--lat", "12:59N",
+        "--unit", "hour", "--step", "6", "--count", "2",
+        "--galactic", "--no-aspects", "--out", str(tmp_path),
+    ])
+    assert rc == 0
+    with open(tmp_path / "galactic.csv", newline="") as fh:
+        rows = list(csv.DictReader(fh))
+    assert len(rows) == 2 * 13
+    moon = next(r for r in rows if r["index"] == "0" and r["body"] == "Moon")
+    assert 0 <= float(moon["magha_axis_sep"]) <= 90
+    assert float(moon["magha_axis_sep"]) == pytest.approx(6.842, abs=0.05)
+    assert 0 <= float(moon["crossover_sep"]) <= 180

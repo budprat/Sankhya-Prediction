@@ -38,7 +38,8 @@ def aspects_in_orb(positions: dict[str, float], orb: float) -> list[tuple[str, s
     return found
 
 
-def render_scope(positions: dict[str, float], title: str = "", orb: float = 3.0) -> str:
+def render_scope(positions: dict[str, float], title: str = "", orb: float = 3.0,
+                 galactic_axes: tuple[float, float] | None = None) -> str:
     parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{SIZE}" height="{SIZE}" '
              f'viewBox="0 0 {SIZE} {SIZE}">',
              f'<rect width="{SIZE}" height="{SIZE}" fill="white"/>',
@@ -46,6 +47,22 @@ def render_scope(positions: dict[str, float], title: str = "", orb: float = 3.0)
              f'{escape(title or "scope chart")}</text>',
              f'<circle cx="{CX}" cy="{CY}" r="{R_OUTER}" fill="none" stroke="#333"/>',
              f'<circle cx="{CX}" cy="{CY}" r="{R_SIGN_INNER}" fill="none" stroke="#999"/>']
+    if galactic_axes is not None:
+        # The author's galactic reference: Punarvasu crossover (a direction)
+        # and the Magha axis (both ends), dashed under everything else.
+        cross, magha = galactic_axes
+        for name, lon, both_ends in (("crossover", cross, False),
+                                     ("magha", magha, True)):
+            ends = (lon, lon + 180) if both_ends else (lon,)
+            for end in ends:
+                x, y = wheel_xy(end, R_OUTER)
+                parts.append(f'<line data-galactic="{name}" x1="{CX}" y1="{CY}" '
+                             f'x2="{x:.1f}" y2="{y:.1f}" stroke="#8855aa" '
+                             f'stroke-width="1.2" stroke-dasharray="6 4"/>')
+            lx, ly = wheel_xy(ends[0], R_OUTER + 14)
+            label = "Punarvasu X" if name == "crossover" else "Magha axis"
+            parts.append(f'<text x="{lx:.1f}" y="{ly:.1f}" font-size="10" '
+                         f'fill="#8855aa" text-anchor="middle">{label}</text>')
     for k in range(12):
         x1, y1 = wheel_xy(k * 30.0, R_SIGN_INNER)
         x2, y2 = wheel_xy(k * 30.0, R_OUTER)

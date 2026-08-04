@@ -69,6 +69,7 @@ wrap-safe and finds every crossing, including retrograde multi-passes (the
 | `rasi_navamsam.txt` | — | RASI + NAVAMSAM box charts, QUAKE.pdf layout, per period row and per aspect event (`--rasi`) |
 | `horoscope.txt` | — | the full ASTROLOG report page: header, Koch cusps, planet table, Dasa/Bukti, boxes (`--report`) |
 | `precession_wheel.svg` | — | 28-sector precession wheel with equinox needle (`--precession`) |
+| `galactic.csv` | — | per body: separation from the Punarvasu crossover and the Magha (galactic) axis (`--galactic`; with `--scope`, both axes drawn on the wheels) |
 
 The default plot is wrapped 0–360° with line breaks at the wrap — no more
 up/down dual-trace ambiguity. SVG is resolution-independent, so output is
@@ -247,6 +248,22 @@ Moon), Nakshatra at birth, and both box charts. The QUAKE.pdf cusp table
 reproduces value-for-value; Dasa/Bukti day fields are sensitive to the
 engine-vs-BAS sub-arcminute Moon difference (±few days) — lords, years, and
 months match the printout.
+
+## The galactic reference (`--galactic`)
+
+The author's reading of the ayanamsa's purpose: "locate the galactic pole and
+ecliptic in major events." Two fixed sidereal directions from the book's
+28-sector precession layer — the **Punarvasu crossover** (sector-7 start,
+77.143°, the 30,000-year zero-ascension anchor) and the **Magha axis**
+(sector-10 center, 122.143°, folded at 180°) — are exposed per chart:
+`galactic.csv` gives every body's separation from each, and with `--scope`
+both axes are drawn on the wheels (dashed). Sidereal charts use the markers
+directly; tropical charts shift them by the suite ayanamsa for the chart's
+year. `--precession YEAR` now also prints the equinox's offset from both
+markers with the drift-time equivalent ("how much Magha… Punarvasu… as of
+today"). Frame note: ASTGRAF.BAS carries no Abhijit/28 data (its 27-name
+list is read and never used), so these directions come from Secrets of
+Sankhya's own clock — recorded in the ledger.
 
 ## The matrix, the atlas, and the outcome logger
 

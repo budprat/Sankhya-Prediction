@@ -961,3 +961,29 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   four-giant 2026-08-05 p=0.65). The statistical channel is closed unless
   NU supplies a categorically different corpus; doctrine and recurrence
   channels unaffected.
+
+## 2026-08-05 — Author's briefing re-reconciled: galactic layer + GRF oracle
+- NU re-sent the author's original briefing for a missed-detail sweep: 13/15
+  instructions verified implemented; TWO gaps found in one sentence ("use the
+  ayanamsa to locate the galactic pole and ecliptic in major events... see how
+  much Magha... Punarvasu... as of today") and closed:
+  (1) galactic.py + --galactic: per-event separations from the Punarvasu
+  crossover (sector-7 start, 77.143 sidereal) and the Magha axis (sector-10
+  center, 122.143, folded at 180); tropical charts shift markers by the suite
+  ayanamsa; with --scope both axes draw on the wheels. Frame ruling: ASTGRAF.BAS
+  contains NO Abhijit/28 data (checked again — 27-name DATA only, never used),
+  so the frame is the book's 28-sector precession layer.
+  (2) --precession now prints the equinox's angular offset from both markers
+  with the drift-time equivalent.
+- NU supplied canon/ASTROC.GRF — the AUTHOR'S OWN program output (1 Jan 2015,
+  41 daily rows, tropical, blank site). grf.py parses the heritage format;
+  the oracle test reproduces 11 bodies x 41 rows within 0.12 deg (GRF's own
+  print resolution) and CONFIRMS the BAS pre-increment (first row = start+step,
+  exactly as audited). OPEN QUESTION for the author: Moon sits ~0.6 deg and the
+  Asc ~13 deg from the blank-site reproduction — the GRF stores no site/GMT
+  fields; the run's exact time/site inputs would close both residuals.
+- Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
+  ruling): spot = sub-planet point (culmination meridian + declination
+  latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet
+  one-by-one. 221 tests passing (incl. NU's new anchors/families/recurrence
+  suites).

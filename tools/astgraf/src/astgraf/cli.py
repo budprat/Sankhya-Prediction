@@ -84,6 +84,10 @@ def build_parser() -> argparse.ArgumentParser:
                         "Dasa/Bukti, RASI + NAVAMSAM) as in QUAKE.pdf")
     p.add_argument("--name", default="", help="Full name field for --report")
     p.add_argument("--place", default="", help="Place of birth field for --report")
+    p.add_argument("--galactic", action="store_true",
+                   help="write galactic.csv: each body's separation from the "
+                        "Punarvasu crossover and the Magha (galactic) axis per "
+                        "period; with --scope, draw both axes on the wheels")
     p.add_argument("--rasi", action="store_true",
                    help="write rasi_navamsam.txt: RASI + NAVAMSAM box charts "
                         "(QUAKE.pdf layout) for each period row and each "
@@ -222,6 +226,23 @@ def main(argv: list[str] | None = None) -> int:
             render_report(chart, start, name=args.name, place=args.place))
         print("  report: horoscope.txt")
 
+    if args.galactic:
+        from .galactic import galactic_separations, marker_longitudes
+        chart_fn = make_chart_at_jd(start)
+        with open(out / "galactic.csv", "w", newline="") as fh:
+            writer = csv.writer(fh)
+            writer.writerow(["index", "label", "jd", "body", "longitude",
+                             "crossover_sep", "magha_axis_sep"])
+            for r in rows:
+                seps = galactic_separations(chart_fn(r.jd))
+                for p_ in r.positions:
+                    g = seps[p_.name]
+                    writer.writerow([r.index, r.label, f"{r.jd:.6f}", p_.name,
+                                     f"{p_.longitude:.6f}",
+                                     f"{g['crossover_sep']:.3f}",
+                                     f"{g['magha_axis_sep']:.3f}"])
+        print(f"  galactic: {len(rows) * len(BODY_ORDER)} rows -> galactic.csv")
+
     if args.rasi:
         pos_at = make_pos_at_jd(start)
         blocks = [render_rasi_navamsam({p.name: p.longitude for p in r.positions},
@@ -271,13 +292,19 @@ def main(argv: list[str] | None = None) -> int:
             render_precession_wheel(args.precession, zero_year=args.precession_zero))
         print(f"  wrote {out / 'precession_wheel.svg'}")
 
+    scope_axes = None
+    if args.galactic:
+        from .galactic import marker_longitudes
+        scope_axes = marker_longitudes(make_chart_at_jd(start)(rows[0].jd))
+
     if args.scope:
         scope_dir = out / "scope"
         scope_dir.mkdir(parents=True, exist_ok=True)
         for r in rows:
             positions = {p.name: p.longitude for p in r.positions}
             (scope_dir / f"row_{r.index:02d}.svg").write_text(
-                render_scope(positions, title=r.label, orb=args.orb))
+                render_scope(positions, title=r.label, orb=args.orb,
+                             galactic_axes=scope_axes))
         event_cap = 100
         if events:
             pos_at = make_pos_at_jd(start)
@@ -285,7 +312,8 @@ def main(argv: list[str] | None = None) -> int:
                 title = f"{e.label} — {e.body_a} {e.kind} {e.body_b}"
                 stem = f"event_{i:03d}_{e.body_a}-{e.kind}-{e.body_b}"
                 (scope_dir / f"{stem}.svg").write_text(
-                    render_scope(pos_at(e.jd), title=title, orb=args.orb))
+                    render_scope(pos_at(e.jd), title=title, orb=args.orb,
+                                 galactic_axes=scope_axes))
             if len(events) > event_cap:
                 print(f"  scope: rendered first {event_cap} of {len(events)} event "
                       "wheels; narrow with --aspect-bodies for full coverage")
