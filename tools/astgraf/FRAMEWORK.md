@@ -26,7 +26,12 @@ real-time event-prediction method.**
 
 **The clock.** The equinox drifts 50.35″/yr — one cycle in 25,739 years
 (423.52/29845.4 × 1/365.25). The ayanamsa FIXES the moving zodiac so events
-can be compared across time. Zero at Punarvasu ("the return of the ray"),
+can be compared across time. NU (2026-08-04): the Earth's "wobble" is a
+myth — in the Sankhya derivation of C and c the EMW frequency varies as
+Rs/Ro, and the eccentricity caused by the solar/galactic velocity of
+250,000 m/s is misread as a wobble; the Earth rolls smoothly, the axial
+tilt balancing spin. The clock's measured drift RATE is unchanged by this —
+Sankhya reinterprets the cause, not the arithmetic. Zero at Punarvasu ("the return of the ray"),
 ~32,165 years back over two cycles; Aswini sets the zero in this epoch
 (~1996); one nakshatra passage = 919.25 years. Magha marks the flood epoch.
 
@@ -189,11 +194,19 @@ Vyuham 1/126 yr — on the exact window NU named from memory).
 
 ## 5. Open questions (NU's to close)
 
-1. **NR/Rs/Ro constants table** — needed for Jupiter/Saturn real-position
-   offsets. (Earlier note withdrawn: offsets run AHEAD, so no offset puts
-   Jupiter back onto Rahu at Hyderabad — the chart shows Rahu was held by
-   exalted Mercury instead; "Jup at the node" in the recollection reads as
-   Jupiter-on-Sun + Mercury-on-Rahu.)
+1. **NR/Rs/Ro constants table — PARTIALLY CLOSED (NU, 2026-08-04): Rs/Ro
+   = 213.3266821.** With it the Mathcad formula decodes completely:
+   offset = (a/2 − 1)·500/240 where a = NR_n/213.3266821 is the planet's
+   orbital radius in Earth-orbit units — NR₁₉ = 6384.463 (Neptune,
+   a 29.9281), NR₁₅ = 4083.496 (Uranus, a 19.1420), both round-tripping
+   the given offsets to all ten digits. STILL NEEDED: the Sankhya NR
+   values for Jupiter and Saturn — the canon's own elements do NOT match
+   the Sankhya radii (canon Uranus 19.2215 vs Sankhya 19.1420, a 0.08°
+   offset difference — significant at doctrine orbs), so astronomical or
+   canon axes cannot substitute. Candidates at standard axes, awaiting
+   NU's exact values: Jupiter ≈ 3.34°, Saturn ≈ 7.87°. (Earlier note
+   stands: offsets run AHEAD; Hyderabad reads as Jupiter-on-Sun +
+   Mercury-on-Rahu.)
 2. Is Moon+Ketu+Mars *the* band trigger or one of a taught family?
 3. Lords for the 7-fold instant level (the 9-lord cycle doesn't map onto 7).
 4. Exact definition of the "Moon–Sun–Asc cross" trigger (square/conjunction

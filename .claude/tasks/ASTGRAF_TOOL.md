@@ -732,3 +732,30 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   sep:Ketu-Uranus@tri, claim = M7+ worldwide in-window, base rate ~0.2
   stated (corpus 11.9 M7+/yr). Amendment v6 records the observed-rule
   channel. 200 tests passing.
+
+## 2026-08-04 — NU input: (Rs/Ro) = 213.3266821 — Mathcad offset formula DECODED
+- NU supplied Rs/Ro = 213.3266821 (Earth's orbital radius in solar radii,
+  Sankhya value; astronomical ~215.03) with the doctrine context: in the
+  Sankhya derivation of C and c, EMW frequency varies as Rs/Ro; the
+  eccentricity caused by the solar/galactic velocity 250,000 m/s is misread
+  as the Earth's "wobble" — the Earth rolls smoothly, axial tilt balancing
+  spin. Recorded in FRAMEWORK (clock paragraph); the precession clock's
+  measured rate is unchanged (cause reinterpreted, not arithmetic).
+- DECODE (verified, round-trips both given offsets to all 10 digits):
+  offset = (a/2 - 1) * 500/240, a = NR_n / 213.3266821 = orbital radius in
+  Earth-orbit units. NR_19 = 6384.463 -> Neptune a 29.9281 -> 29.0917753653;
+  NR_15 = 4083.496 -> Uranus a 19.1420 -> 17.8562342478.
+- Jupiter/Saturn offsets are now one constant away each: the Sankhya NR
+  values are NOT the canon's elements (canon Uranus 19.2215 vs Sankhya
+  19.1420 — would shift the offset 0.08 deg, material at 0.34/0.69 orbs)
+  and NOT astronomical axes. Candidates at standard axes: Jup ~3.34 deg,
+  Sat ~7.87 deg — NOT adopted; awaiting NU's NR values for Jupiter and
+  Saturn before real: offsets extend beyond Ura/Nep. No code changed.
+- Same day, the repeated "why did location fail" question was answered from
+  the SOURCES: Mathcad-QUAKE.pdf re-read — it is purely a timing/
+  configuration proof (real-position ecliptic crossings at the node and at
+  the Sun; "two simultaneous events"); it contains NO location
+  construction. Predict.pdf likewise (band table + validation doctrine).
+  The meridian/declination location rule exists only in the conversational
+  teaching — consistent with flaw 4 (zero worked instances) and the corpus
+  verdicts.
