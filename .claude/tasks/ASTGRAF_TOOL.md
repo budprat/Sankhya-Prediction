@@ -759,3 +759,32 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   The meridian/declination location rule exists only in the conversational
   teaching — consistent with flaw 4 (zero worked instances) and the corpus
   verdicts.
+
+## 2026-08-04 — Real-position layer extended to all four giants (PROVISIONAL Jup/Sat)
+- NU: "think and decide between [standard axes] and [canon elements], or
+  test both." Decision: CANON elements — the two differ by <= 0.0025 deg
+  (immaterial; testing both uninformative), and canon-derived keeps the
+  single-source-of-truth principle. Adopted as PROVISIONAL data in
+  bands.REAL_POSITION_OFFSETS: Jupiter 3.3363593021 (a 5.20290493),
+  Saturn 7.8672056771 (a 9.55251745), via offset = (a/2 - 1)*500/240;
+  Ura/Nep keep the Mathcad digits untouched. Expected Sankhya correction
+  ~0.02 deg (Ura/Nep deviation trend: -0.26%/-0.47% shrinking inward).
+  real:Jupiter/real:Saturn now legal in rules (guard test moved its
+  offset-less example to real:Mars); anchors REAL_BODIES + site timetable
+  extended (rJupiter/rSaturn). signatures.py mining space intentionally
+  UNCHANGED. 202 tests passing.
+- First four-giant re-reads (provisional, labeled): NEPAL gains five fired
+  contacts - rsep:Jupiter-Uranus@tri 1.24, rsep:Saturn-Jupiter@tri 1.58,
+  rsep:Jupiter-Mars@sq 1.63 (exact 58 h BEFORE the quake),
+  rsep:Saturn-Neptune@sq 1.98, rsep:Saturn-Ketu@tri 2.54. SUMATRA gains
+  rsep:Saturn-Mars@tri 2.89 (exact +91 h). HYDERABAD and KRAKATOA gain
+  nothing within doctrine orb (Hyderabad's Jupiter story stays the observed
+  Sun-Jup conj).
+- Regeneration (completion-claims rule): Nepal self-recovery STRENGTHENS —
+  still exactly one episode 2015-04-23..25, now 9/9 full match (real-Jup
+  sq Mars 0.07 at the tightest instant). Forward 2026-28 under extended
+  patterns: NO full and NO n-1 episodes anywhere — the registered
+  alaska-1964 3/4 row does NOT reproduce under the extended engine
+  (pattern 4 -> 6); row STAYS registered with a WATCHLIST annotation
+  (mined-windows precedent); future rows use extended patterns. README/
+  FRAMEWORK claims regenerated.

@@ -279,3 +279,31 @@ def test_score_events_hits_and_chance_baseline():
     assert summary["events"] == 2 and summary["hits"] == 1
     assert 0 <= summary["trigger_day_fraction"] <= 1
     assert summary["expected_hits_by_chance"] >= 0
+
+
+def test_real_offsets_extend_to_jupiter_saturn_provisionally():
+    # NU ruling 2026-08-04: with (Rs/Ro) = 213.3266821 the Mathcad formula
+    # decodes to offset = (a/2 - 1) * 500/240. Jupiter/Saturn adopt the
+    # CANON's own semi-major axes as PROVISIONAL a-values (options weighed:
+    # canon vs astronomical differ by <= 0.0025 deg; the Sankhya-vs-canon gap
+    # is the real unknown, ~0.02 deg by the Ura/Nep deviation trend) until
+    # NU's exact NR values arrive. Ura/Nep stay the Mathcad-given digits.
+    import pytest as _pytest
+    from astgraf.bands import REAL_POSITION_OFFSETS
+    assert REAL_POSITION_OFFSETS["Uranus"] == 17.8562342478      # unchanged
+    assert REAL_POSITION_OFFSETS["Neptune"] == 29.0917753653     # unchanged
+    assert REAL_POSITION_OFFSETS["Jupiter"] == _pytest.approx(
+        (5.20290493 / 2 - 1) * 500 / 240, abs=1e-9)
+    assert REAL_POSITION_OFFSETS["Saturn"] == _pytest.approx(
+        (9.55251745 / 2 - 1) * 500 / 240, abs=1e-9)
+
+
+def test_real_prefix_rules_accept_jupiter_and_saturn(tmp_path):
+    from astgraf.triggers import load_rules
+    f = tmp_path / "r.toml"
+    f.write_text('[[rule]]\nname = "rj"\nconditions = [\n'
+                 '  { type = "conjunction", bodies = ["real:Jupiter", "Sun"], orb = 3.0 },\n'
+                 '  { type = "conjunction", bodies = ["real:Saturn", "Sun"], orb = 3.0 },\n'
+                 ']\n')
+    rules = load_rules(str(f))
+    assert rules[0].name == "rj"

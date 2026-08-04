@@ -117,9 +117,11 @@ def test_toml_schema_guards_reject_silent_traps(tmp_path):
     with pytest.raises(ValueError, match="unknown body"):
         load('[[rule]]\nname="t"\nconditions=[{type="conjunction",'
              'bodies=["Moom","Mars"], orb=3.0}]\n')
+    # real:Jupiter/Saturn became legal with the 2026-08-04 Rs/Ro decode;
+    # the guard still fires for bodies with no doctrinal offset.
     with pytest.raises(ValueError, match="no doctrinal offset"):
         load('[[rule]]\nname="t"\nconditions=[{type="conjunction",'
-             'bodies=["real:Jupiter","Saturn"], orb=3.0}]\n')
+             'bodies=["real:Mars","Saturn"], orb=3.0}]\n')
     with pytest.raises(Exception, match="needs at least"):
         load('[[rule]]\nname="t"\nconditions=[{type="in_band", band="Rohini"}]\n')
     assert load_rules(DOCTRINE), "the doctrine file must still load clean"

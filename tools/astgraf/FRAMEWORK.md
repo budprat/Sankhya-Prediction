@@ -182,13 +182,13 @@ Vyuham 1/126 yr — on the exact window NU named from memory).
 | Report layer | `rasi.py`, `report.py`, `--rasi`, `--report` (boxes, Koch cusps, MC, sidereal time, Dasa/Bukti) | QUAKE.pdf page reproduced value-for-value |
 | Band table + triggers | `bands.py`, `astgraf-bands` (`--level`, `--proximity`) | 2013–15 + 30-yr censuses; catalog scoring |
 | Chatur Vyuham | `vyuha_state`, `--vyuha` | unique June 2016 detection, 126-yr census |
-| Real positions | `real_longitude` (Ura/Nep only) | Nepal chart: real-Nep→Ketu 0.34°, real-Ura→Sun 0.7° |
+| Real positions | `real_longitude` — all four giants since the 2026-08-04 Rs/Ro decode (Jupiter 3.3364°/Saturn 7.8672° PROVISIONAL from canon axes; Ura/Nep the Mathcad digits) | Nepal chart: real-Nep→Ketu 0.34°, real-Ura→Sun 0.7°; extended re-read adds real-Jup□Mars exact 58 h pre-quake |
 | Event location | `locator.py`, `--locate` | rule confirmed by NU; 12-spot archive check: 0 hits, 1 near-miss (honest negative) |
 | Aspect geometry / scope | `aspects.py`, `scope.py`, `--scope` (wrap-safe multi-crossing, lens contract) | 2010–11 Jup–Sat triple opposition at a yearly lens; every event exact at its instant |
 | Trigger rules as data | `triggers.py`, `doctrine-triggers.toml`, `mined-triggers.toml`, `observed-triggers.toml` (TESTING channel, NU 2026-08-04: asc-trine-real-neptune, tropical site charts), `--rules` | all doctrine rules fire on their ground-truth charts; observed rule fires on Nepal tropical, frame-guarded |
 | Inverse learning (signatures/mining) | `signatures.py`, `scripts/mine_usgs.py` (v2: declustered, climatology controls, permutation null) | NO survivors — max lift 1.79 vs null median 1.73, p = 0.35; mined rules RETIRED 2026-08-02 |
 | Anchor library (recurrence principle) | `anchors.py`, `anchors.toml`, `astgraf-anchors` (dossiers: fired contacts with minute-refined trigger instants, site Asc timetable, band/vyuha state) | taught minutes reproduced: Hyderabad Asc-Rahu 04:50/Asc-Ketu 17:06 IST (taught ~04:49/~17:04), Ulsoor 06:12/08:21 (taught 06:12/08:20), Nepal real-Ura→Sun exact +18.1 h |
-| Similarity engine + recurrence calendar | `recurrence.py`, `astgraf-recur` (slow pattern = non-Moon doctrine contacts; episodes with minute-refined tightest instants; Moon triggers completed inside episodes; timing only) | self-recovery: Nepal scan Mar–Jul 2015 → one episode Apr 23–25; vyuham does not re-form in 2017; 2026–28 forward: no full re-formations, one 3/4 near-episode (alaska-1964, Nov 2026 — REGISTERED on the WATCHLIST per NU ruling 2026-08-04) |
+| Similarity engine + recurrence calendar | `recurrence.py`, `astgraf-recur` (slow pattern = non-Moon doctrine contacts; episodes with minute-refined tightest instants; Moon triggers completed inside episodes; timing only) | self-recovery: Nepal scan Mar–Jul 2015 → one episode Apr 23–25, 9/9 with the four-giant patterns; vyuham does not re-form in 2017; 2026–28 forward under extended patterns: NO full and NO n−1 episodes (the pre-extension alaska-1964 3/4 row stays registered on the WATCHLIST, annotated) |
 | Forecast register | `WATCHLIST.md` | 19 windows (9 mined: instants+spots; 6 band: instants; 4 nodes: instants+Jupiter spots), outcome protocol |
 | Long-cycle families | conjunction rules in `doctrine-triggers.toml` | census: Ura-Nep ~171 y synodic (next ~2165); Jup-Sat 1881→Krakatoa, 2000→2004 |
 
@@ -203,10 +203,14 @@ Vyuham 1/126 yr — on the exact window NU named from memory).
    values for Jupiter and Saturn — the canon's own elements do NOT match
    the Sankhya radii (canon Uranus 19.2215 vs Sankhya 19.1420, a 0.08°
    offset difference — significant at doctrine orbs), so astronomical or
-   canon axes cannot substitute. Candidates at standard axes, awaiting
-   NU's exact values: Jupiter ≈ 3.34°, Saturn ≈ 7.87°. (Earlier note
-   stands: offsets run AHEAD; Hyderabad reads as Jupiter-on-Sun +
-   Mercury-on-Rahu.)
+   canon axes cannot substitute exactly. NU ruled (2026-08-04, "decide
+   between canon and standard, or test both"): the two differ by
+   ≤ 0.0025° — immaterial — so the CANON's own axes were adopted as
+   PROVISIONAL (Jupiter 3.3363593021°, Saturn 7.8672056771°, in
+   `REAL_POSITION_OFFSETS`), expected within ~0.02° of the Sankhya truth
+   by the Ura/Nep deviation trend; NU's exact NR values replace them as
+   data when supplied. (Earlier note stands: offsets run AHEAD; Hyderabad
+   reads as Jupiter-on-Sun + Mercury-on-Rahu.)
 2. Is Moon+Ketu+Mars *the* band trigger or one of a taught family?
 3. Lords for the 7-fold instant level (the 9-lord cycle doesn't map onto 7).
 4. Exact definition of the "Moon–Sun–Asc cross" trigger (square/conjunction

@@ -304,3 +304,12 @@ test pinned). It is a site-conditional fast hand — it sweeps any given
 site twice daily, so it carries no standalone forward windows; its testing
 record is its behavior inside loaded windows at candidate sites, graded
 with the site channel.
+
+**Note (2026-08-04, later the same day):** the alaska-1964 row above was
+registered under the pre-extension engine (real offsets Ura/Nep only). With
+the Rs/Ro decode the real-position layer extended to all four giants
+(Jupiter/Saturn PROVISIONAL, canon-axis-derived), anchor patterns grew
+(alaska 4 → 6 contacts), and under the extended patterns **no near (n−1)
+and no full episodes exist anywhere through 2028-08**. The row stays as the
+registered experiment it was; rows registered from here on use the extended
+patterns.

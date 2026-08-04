@@ -286,7 +286,8 @@ uv run astgraf-anchors --out out/anchors       # all dossiers as .json/.txt
 A dossier is the event's full configuration readout, **every fired rule with
 its trigger instant refined below one minute**:
 
-- **Contacts** — all pairs (11 bodies + real-Uranus/Neptune) within 5° of an
+- **Contacts** — all pairs (11 bodies + the four giants' real positions;
+  Jupiter/Saturn offsets provisional since the Rs/Ro decode) within 5° of an
   aspect angle, doctrine-orb (3°) hits starred; each starred contact carries
   the exact instant the aspect perfects (UTC minute), its offset from the
   event, and the residual if it never perfects (Nepal: real-Uranus reaches
@@ -324,9 +325,10 @@ uv run astgraf-recur --anchor nepal-2015 --start 2015-03-01 --end 2015-07-01
 
 # The forward calendar over every anchor:
 uv run astgraf-recur --start 2026-08-04 --years 2 --out out/recur
-# -> full re-formations 2026-28: none; at --min-match all-but-one, a single
-#    near-episode (alaska-1964, 3/4, Nov 15-20 2026) - the selectivity is
-#    the point.
+# -> with the four-giant real-position patterns: no full and no all-but-one
+#    re-formations anywhere through 2028-08 - the selectivity is the point.
+#    (Nepal's own 2015 window still recovers as exactly one episode, now at
+#    9/9 with the real-Jupiter/Saturn contacts included.)
 ```
 
 Outputs: `recurrence.csv` / `.txt` / `.json` — one chronological calendar

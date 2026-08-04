@@ -69,9 +69,15 @@ def band_table(result: ChartResult, level: int = 0) -> dict[int, list[str]]:
 
 # Mathcad-QUAKE.pdf (NU): a slow giant's REAL position runs ahead of the observed
 # one — (NR·Rs/(2·Ro) − 1)·500/240 — putting real-Neptune on Ketu's node and
-# real-Uranus on the Sun at the 2015 Nepal quake. Only these two results are given;
-# the NR/Rs/Ro table (and Jupiter/Saturn's offsets) awaits NU.
-REAL_POSITION_OFFSETS = {"Uranus": 17.8562342478, "Neptune": 29.0917753653}
+# real-Uranus on the Sun at the 2015 Nepal quake. With NU's (Rs/Ro) =
+# 213.3266821 (2026-08-04) the formula decodes to (a/2 − 1)·500/240, a = the
+# planet's orbital radius in Earth-orbit units (NR_15 -> 19.1420, NR_19 ->
+# 29.9281). Uranus/Neptune keep the Mathcad-given digits. Jupiter/Saturn are
+# PROVISIONAL (NU ruling 2026-08-04): a = the canon's own semi-major axes
+# (5.20290493 / 9.55251745) until NU's exact Sankhya NR values replace them —
+# expected correction ~0.02 deg by the Ura/Nep deviation trend.
+REAL_POSITION_OFFSETS = {"Uranus": 17.8562342478, "Neptune": 29.0917753653,
+                         "Jupiter": 3.3363593021, "Saturn": 7.8672056771}
 
 
 def real_longitude(result: ChartResult, body: str) -> float:

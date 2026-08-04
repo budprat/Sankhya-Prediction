@@ -17,7 +17,9 @@ from .signatures import ASPECT_ORB, ASPECTS
 
 ANCHORS_PATH = str(Path(__file__).resolve().parents[2] / "anchors.toml")
 LIST_ORB = 5.0            # contacts listed (the vyuha cross orb); doctrine firing stays 3.0
-REAL_BODIES = ("Uranus", "Neptune")
+# All four giants since the 2026-08-04 Rs/Ro decode (Jupiter/Saturn offsets
+# PROVISIONAL — see bands.REAL_POSITION_OFFSETS).
+REAL_BODIES = ("Jupiter", "Saturn", "Uranus", "Neptune")
 MINUTE = 1.0 / 1440.0
 
 
@@ -151,7 +153,7 @@ def asc_crossings(jd_center: float, lat: float, lon_east: float) -> list[dict]:
     """Every instant within +-12 h where the site Ascendant conjoins a body
     (observed 11 + real-Uranus/Neptune), refined below one minute — the site
     timetable of the taught Ascendant channel (Ulsoor, Hyderabad)."""
-    bodies = list(BAND_BODIES) + ["rUranus", "rNeptune"]
+    bodies = list(BAND_BODIES) + ["rJupiter", "rSaturn", "rUranus", "rNeptune"]
 
     def diffs(jd):
         chart = _site_chart(jd, lat, lon_east)
