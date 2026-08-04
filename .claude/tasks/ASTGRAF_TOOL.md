@@ -1130,6 +1130,31 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
     243.00, folded 63.00 — 59 deg from the present constant. Until NU rules,
     galactic.py still treats Magha as a sidereal direction in chart work,
     which is the same frame mismatch the crossover just had.
+- SELF-AUDIT of the three commits (NU: "check every change... useful and
+  intentional"). Reviewed hunk by hunk; 3 real defects found in MY OWN work
+  and fixed, suite 231 -> 232 green, no new lint:
+  (1) DEAD CODE: CROSSOVER_TROPICAL_J2000 was defined and never referenced,
+      while PUNARVASU_CROSSOVER_SIDEREAL carried a hand-computed 66.170810.
+      Now the sidereal value is DERIVED from it (node - ayanamsa(2000)), so
+      the two cannot drift apart; the redundant lazy ayanamsa import in
+      marker_longitudes went with it. No import cycle (ephemeris <- models).
+  (2) INCOMPLETE FEATURE: mirror rules refined to an instant but named no
+      acting body, so their episodes carried NO SPOT while every other pair
+      primitive published one. acting_body_at now handles mirror, measuring
+      the gap on the condition's OWN specs so a `real:` prefix is honoured.
+      Two wrong test premises were caught by the red phase on the way:
+      real-Nep x Ketu at Nepal is a CONJUNCTION not a mirror (17.43 deg off),
+      and Saturn IS a light-time body — the corrected test pins Uranus (the
+      genuine 2.971 mirror), Saturn (the tight 0.067 pair) and two negatives.
+  (3) CONTRADICTORY COMMENT: galactic.py claimed "Both markers are FIXED
+      SIDEREAL directions" and then documented Magha as a wheel value; the
+      wheel-vs-boundary figure also said 0.02 where the computed value is
+      0.033. Both corrected.
+  Cosmetic: mirror_offset had been defined above the _wrap180 it calls (moved
+  below). Accepted as-is: mirrors_in_orb evaluates mirror_offset twice per
+  pair (78 pairs, negligible) — not worth the churn.
+  Process note: commit 93b760c bundled NU's new canon files with an unrelated
+  epoch correction; disclosed in the message but they should have been split.
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet

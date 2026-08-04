@@ -222,6 +222,20 @@ def acting_body_at(rule: TriggerRule, result: ChartResult) -> str | None:
             def gap(b):
                 return min(_arc_distance(_lon(result, b), rahu),
                            _arc_distance(_lon(result, b), ketu))
+        elif c.type == "mirror":
+            # The cos-fold pair locates like any other pair: its light-time
+            # body acts, measured by how far the pair sits from the mirror.
+            # Measured on the condition's own specs, so a `real:` prefix is
+            # honoured — the doctrinal ahead-position is what stands there.
+            from .aspects import mirror_offset
+            specs = list(c.bodies)
+
+            def gap(b, specs=specs):
+                i = next(k for k, s in enumerate(specs)
+                         if s.removeprefix("real:") == b)
+                return min(abs(mirror_offset(_lon(result, specs[i]),
+                                             _lon(result, o)))
+                           for k, o in enumerate(specs) if k != i)
         else:
             continue
         best = min(cands, key=gap)

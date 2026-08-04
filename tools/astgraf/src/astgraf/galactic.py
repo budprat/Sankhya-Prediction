@@ -4,8 +4,9 @@
 # Frame ruling (2026-08-05): ASTGRAF.BAS carries no Abhijit and no 28-division
 # data (its 27-name STAR$ list is read and never used), so the galactic frame
 # cannot come from the BAS — it comes from Secrets of Sankhya's own 28-sector
-# precession layer. Both markers are FIXED SIDEREAL directions; in a tropical
-# chart they shift forward by the ayanamsa.
+# precession layer. Both markers are treated as FIXED directions that a
+# tropical chart shifts forward by the ayanamsa — but see the note on Magha
+# below: only the crossover has been verified to be a true sidereal value.
 #
 # CROSSOVER (NU ruling 2026-08-05): "crossover" means the galactic-ecliptic
 # NODE — where the galactic plane actually cuts the ecliptic — so the constant
@@ -20,19 +21,23 @@
 # where the EQUINOX stood on the 28-sector wheel when it crossed the node, not
 # where the node sits on today's zodiac. The wheel's zero is the 1996 equinox
 # while the suite's sidereal zero is ~23.8 deg away (ayanamsa), so the same
-# direction reads 89.97 on the wheel (= the Punarvasu sector boundary at 90.0,
-# 0.02 deg out) and 66.171 in suite-sidereal. Both are the same sky direction.
+# direction reads 89.967 on the wheel (= the Punarvasu sector boundary at
+# 90.0, 0.033 deg out) and 66.171 in suite-sidereal — one sky direction, two
+# frames. precession.marker_on_wheel() does that conversion.
 import math
 
+from .ephemeris import ayanamsa
 from .models import ChartResult
 
 SECTOR = 360.0 / 28
 CROSSOVER_TROPICAL_J2000 = 90.02322            # measured ascending node
-PUNARVASU_CROSSOVER_SIDEREAL = 66.170810       # = node - ayanamsa(2000)
+# Derived, not hand-copied, so the two can never drift apart: 66.170810 deg.
+PUNARVASU_CROSSOVER_SIDEREAL = (CROSSOVER_TROPICAL_J2000 - ayanamsa(2000)) % 360
 MAGHA_AXIS_SIDEREAL = 9.5 * SECTOR             # 122.142857 deg — sector-10 center
-# ^ Magha is NOT ruled: it remains the book's sector-10 center. Open question
-# in the ledger — the galactic CENTRE (Sgr A*) is suite-sidereal 243.00
-# (folded 63.00), 59 deg from this value.
+# ^ Magha is NOT ruled: it remains the book's sector-10 center, which makes it
+# a WHEEL value despite the _SIDEREAL name (precession.equinox_offsets uses it
+# as-is for that reason). Open question in the ledger — the galactic CENTRE
+# (Sgr A*) is suite-sidereal 243.00 (folded 63.00), 59 deg from this value.
 
 
 def marker_longitudes(result: ChartResult) -> tuple[float, float]:
@@ -40,7 +45,6 @@ def marker_longitudes(result: ChartResult) -> tuple[float, float]:
     if result.ayanamsa:                        # sidereal chart: markers as-is
         shift = 0.0
     else:                                      # tropical: sidereal + ayanamsa
-        from .ephemeris import ayanamsa
         from .grid import jd_to_calendar
         shift = ayanamsa(jd_to_calendar(math.floor(result.jd + 0.5))[0])
     return ((PUNARVASU_CROSSOVER_SIDEREAL + shift) % 360,

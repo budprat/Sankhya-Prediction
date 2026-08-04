@@ -50,6 +50,11 @@ def _targets(angle: float) -> tuple[float, ...]:
     return (angle, -angle)
 
 
+def _wrap180(x: float) -> float:
+    d = x % 360
+    return d - 360 if d > 180 else d
+
+
 def mirror_offset(lon_a: float, lon_b: float) -> float:
     """Miss from the cos-fold mirror: 0 when lon_a + lon_b is a multiple of 360.
 
@@ -59,11 +64,6 @@ def mirror_offset(lon_a: float, lon_b: float) -> float:
     That crossing is visible on his graph and invisible to ASPECT_ANGLES.
     """
     return _wrap180(lon_a + lon_b)
-
-
-def _wrap180(x: float) -> float:
-    d = x % 360
-    return d - 360 if d > 180 else d
 
 
 def pair_speed(body_a: str, body_b: str) -> float:

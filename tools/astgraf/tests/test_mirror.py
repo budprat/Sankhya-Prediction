@@ -97,6 +97,31 @@ def test_mirror_rule_primitive_fires_at_nepal(tmp_path):
     assert evaluate_rule(chart_at(NEPAL_JD + 1.0), rule).fired is False
 
 
+def test_mirror_rule_publishes_an_acting_body_like_every_other_pair_rule():
+    # Self-audit gap: a mirror rule refined to its instant but named no
+    # locatable body, so its episodes carried no spot — unlike every other
+    # pair primitive. The pair's light-time body acts when it is within orb.
+    from astgraf.triggers import Condition, TriggerRule, acting_body_at
+    chart = chart_at(NEPAL_JD)
+    # Uranus and Neptune genuinely stood on the mirror at Nepal (offset -2.971).
+    rule = TriggerRule(name="ura-nep-mirror", conditions=[
+        Condition(type="mirror", bodies=["Uranus", "Neptune"], orb=3.0)])
+    assert acting_body_at(rule, chart) == "Uranus"
+    # ...the tight Moon-Saturn mirror (0.067 deg) names Saturn, the only one
+    # of that pair carrying a light-time
+    tight = TriggerRule(name="moon-saturn-mirror", conditions=[
+        Condition(type="mirror", bodies=["Moon", "Saturn"], orb=1.0)])
+    assert acting_body_at(tight, chart) == "Saturn"
+    # ...a pair with no light-time body at all names none
+    plain = TriggerRule(name="moon-mars-mirror", conditions=[
+        Condition(type="mirror", bodies=["Moon", "Mars"], orb=180.0)])
+    assert acting_body_at(plain, chart) is None
+    # ...and a giant outside the orb must not publish a spot for that window
+    far = TriggerRule(name="far", conditions=[
+        Condition(type="mirror", bodies=["Uranus", "Neptune"], orb=1.0)])
+    assert acting_body_at(far, chart) is None
+
+
 def test_scope_chart_draws_mirror_crossings():
     from astgraf.scope import render_scope
     svg = render_scope({"Moon": 116.374, "Saturn": 243.559}, mirrors=True, orb=1.0)
