@@ -81,8 +81,8 @@ def in_force(row, orb):
 
 def main():
     random.seed(11)
-    rows = [r for r in csv.DictReader(open(SIG, newline=""))
-            if r.get("lat") and r.get("lon")]
+    with open(SIG, newline="") as fh:
+        rows = [r for r in csv.DictReader(fh) if r.get("lat") and r.get("lon")]
     times = [float(r["jd"]) for r in rows]
 
     def asc_set(selection, nulls_each):

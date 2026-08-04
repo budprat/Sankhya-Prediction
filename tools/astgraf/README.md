@@ -302,6 +302,17 @@ the Moon and Saturn stood 0.067° from the mirror while being 127° apart in the
 classical frame. `find_events` is untouched: the audited aspect stream still
 reports only conjunction/square/trine/opposition.
 
+**Graded, and it carries no mined signal** (`scripts/mirror_lifts.py`, same
+corpus and protocol as the v2 mining that retired the mined aspect rules —
+1,435 declustered post-1900 events vs 4,305 time-uniform controls). At orb 3°
+an event chart holds 1.577 mirror hits on average against 1.553 for controls,
+and the best of 95 predicates (`mir:Jupiter-Saturn`, lift 1.72) sits **exactly
+on the permutation null's median of 1.72** (95th pct 2.06, p = 0.505). At orb
+1° nothing clears the 2% event-rate floor. So the layer is a faithful redraw
+of what the author's graph shows — it lets a taught rule be *expressed* — but
+as a miner for M7+ timing it finds nothing, exactly like the aspect
+predicates before it.
+
 ## The matrix, the atlas, and the outcome logger
 
 - **`astgraf-matrix --signatures out/signatures-m7`** — the Predict.pdf 28×11

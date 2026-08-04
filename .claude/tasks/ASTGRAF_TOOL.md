@@ -1217,6 +1217,24 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   construction (4 variants, loc_backtest.py) and no Ascendant-based rule
   places these events. What remains is either a dwell/crossing definition
   unlike every reading tested, or a piece of the doctrine we do not have.
+- MIRROR CROSSING GRADED — NO MINED SIGNAL (NU: "go"). scripts/mirror_lifts.py
+  reuses the v2 corpus and protocol EXACTLY (the same 1,435 declustered
+  post-1900 events and 4,305 time-uniform controls whose jd columns the
+  audited mining used; add-one smoothed lifts; 200-permutation max-lift bar),
+  swapping only the predicate family: 95 mirror predicates (55 observed pairs
+  + real-giant pairs), hit = |lon_a + lon_b| within orb of 0.
+  orb 3 deg: an event chart carries 1.577 mirror hits on average vs 1.553 for
+  controls — no aggregate difference. Best predicate mir:Jupiter-Saturn lift
+  1.719, and the permutation null's MEDIAN is 1.720 (95th pct 2.057), so
+  p = 0.505 — the best of 95 lands precisely where chance puts it.
+  orb 1 deg: nothing clears the 2% event-rate floor (0.511 vs 0.512 hits).
+  Reads exactly like the retired aspect mining (max lift 1.79 vs null 1.73,
+  p = 0.35). VERDICT: the mirror layer faithfully reproduces what the
+  author's graph shows and lets a taught rule be EXPRESSED, but it is not a
+  miner — no mirror predicate predicts M7+ timing. Scope of the negative:
+  this is the quake corpus only, and single predicates only; it does not test
+  the mirror inside a compound taught rule, nor for floods/biological events.
+  Recorded in README (mirror section) and FRAMEWORK (implementation map).
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet
