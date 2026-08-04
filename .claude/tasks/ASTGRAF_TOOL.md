@@ -979,9 +979,10 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   41 daily rows, tropical, blank site). grf.py parses the heritage format;
   the oracle test reproduces 11 bodies x 41 rows within 0.12 deg (GRF's own
   print resolution) and CONFIRMS the BAS pre-increment (first row = start+step,
-  exactly as audited). OPEN QUESTION for the author: Moon sits ~0.6 deg and the
-  Asc ~13 deg from the blank-site reproduction — the GRF stores no site/GMT
-  fields; the run's exact time/site inputs would close both residuals.
+  exactly as audited). RULING (NU, 2026-08-05): ASTROC.GRF is a SAMPLE output
+  only — the Moon ~0.6 deg / Asc ~13 deg gaps just reflect the sample's
+  arbitrary, unrecorded site/time inputs (the GRF stores no site/GMT fields).
+  No author follow-up; the fast-mover test stays as a loose regression guard.
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet

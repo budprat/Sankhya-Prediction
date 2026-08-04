@@ -40,11 +40,11 @@ def test_engine_reproduces_the_authors_own_run():
     assert worst <= 0.12, worst
 
 
-def test_moon_and_ascendant_residuals_are_the_recorded_open_question():
-    # Moon sits ~0.6 deg and the Ascendant ~13 deg from the blank-site
-    # reproduction — consistent with run inputs (site/GMT/exact time) the GRF
-    # format does not store. Pinned loosely so a regression or a future
-    # answer from the author is caught either way.
+def test_moon_and_ascendant_stay_within_sample_tolerance():
+    # ASTROC.GRF is a SAMPLE output (NU, 2026-08-05), not a precision
+    # reference: its site/GMT inputs were arbitrary and unrecorded. The fast
+    # movers (Moon ~0.6 deg, Asc ~13 deg) simply reflect that; no follow-up
+    # needed. Pinned loosely as a regression guard only.
     grf = load_grf(CANON)
     row = grf.rows[0]
     chart = compute_raw(2015, 1, 2, 5.0, 0.0, 0.0, 0.0, False, False)
