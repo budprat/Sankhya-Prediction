@@ -945,3 +945,19 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   event is its own fingerprint, consistent with the 130-year sweep. Family
   grain (band sectors) remains the only place M9-class recurrence could
   live; awaiting the flood-records list and category records for that.
+
+## 2026-08-05 — P5 done: re-mine on the four-giant space — NO SURVIVORS (third verdict)
+- Feature space extended to all four giants' real positions (signatures.py
+  REAL_BODIES; 95 pair keys x 4 aspects = 380 predicates — the space the
+  mining had never seen). Same honest design: declustered post-1900 corpus
+  (1,435 events), golden-ratio climatology controls (4,305), add-one
+  smoothed lifts, 500-run label-permutation calibration.
+- VERDICT: observed max lift 1.705 (sep:Moon-Neptune@conj) vs null median
+  1.748, p = 0.650 — BELOW the shuffled-label typical maximum. The new
+  real-Jupiter/Saturn predicates top out at 1.37-1.41 (incl. the retired
+  rule's rsep:Uranus-Saturn theme at 1.362), all chance-level. The mined
+  channel stays empty on the richer space: third consecutive no-survivors
+  verdict (v2 2026-08-02 p=0.35; corrected-corpus 2026-08-04 p=0.595;
+  four-giant 2026-08-05 p=0.65). The statistical channel is closed unless
+  NU supplies a categorically different corpus; doctrine and recurrence
+  channels unaffected.
