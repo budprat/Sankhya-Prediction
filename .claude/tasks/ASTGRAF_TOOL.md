@@ -855,3 +855,24 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   between the taught members) is an unexamined candidate member - records
   search open (Java arc 1940-41?). (3) The 1993 flood conjunction was itself
   a TRIPLE, all passes Poorvashada pada 4.
+
+## 2026-08-04 — Recurrence-engine fixes surfaced by the sweep (commit 02b509b)
+- Two defects found by the Valdivia self-recovery failure, both fixed
+  test-first: (1) JOINT windows can be sub-day (Valdivia's five contacts
+  hold days each, ~10 h together) — find_episodes gains an explicit `step`
+  parameter; exhaustive scans use 0.25 d (regression test pins Valdivia at
+  that step). (2) The tightest-instant refiner minimized the raw
+  separation sum UNCONSTRAINED and could drift outside the episode's own
+  match level (Valdivia's 4/5 sum minimum beats every 5/5 instant) — now
+  penalized to stay at the episode's level; Nepal's tightest moved one
+  minute (22:51 -> 22:50). WATCHLIST carries the scan-step note.
+
+## 2026-08-04 — Documentation reconciliation pass (NU request)
+- Item-level audit of every doc surface against the day's changes. Gaps
+  found and closed: repo README tree lacked observed-triggers.toml and
+  families.toml; FRAMEWORK section-6 document map lacked families.toml;
+  the 02b509b engine fixes had no dedicated ledger entry (above);
+  WATCHLIST lacked the scan-step lesson. Verified already-current: tool
+  README sections for all six CLIs, FRAMEWORK implementation map rows,
+  test counts (211), WATCHLIST amendments v5/v6 + annotations, candidate
+  offset table, all ledger entries for verdicts and rulings.

@@ -239,5 +239,6 @@ Vyuham 1/126 yr — on the exact window NU named from memory).
 - `WATCHLIST.md` — registered forward windows, spots, outcome protocol.
 - `doctrine-triggers.toml` / `mined-triggers.toml` / `observed-triggers.toml` — rules as data by provenance: NU's taught rules; mined candidates (the three RETIRED 2026-08-02, windows stay graded); observed single-chart promotions in TESTING status (NU ruling 2026-08-04).
 - `anchors.toml` — the anchor library (recurrence principle); `astgraf-recur` episodes register on the WATCHLIST.
+- `families.toml` — the long-cycle families (nakshatra-sector recurrence); `astgraf-families` computes the conjunction calendars.
 - `data/usgs-m7-1850-2020.csv` — pinned training corpus.
 - `.claude/tasks/ASTGRAF_TOOL.md` (repo) — decision ledger, every ruling dated.

@@ -19,7 +19,9 @@ tools/astgraf/              The engine: CLI tools, tests, doctrine rules, docume
   ├── README.md             Tool-level docs: every CLI, flag, and output
   ├── doctrine-triggers.toml  Taught trigger patterns as declarative rules
   ├── mined-triggers.toml     Data-mined candidates (retired — see below)
+  ├── observed-triggers.toml  Observed candidate rules in TESTING status
   ├── anchors.toml            The anchor library: past major events as data
+  ├── families.toml           Long-cycle families (nakshatra-sector recurrence)
   └── data/                 Pinned USGS M7+ corpus 1850–2020
 .claude/tasks/ASTGRAF_TOOL.md   Dated decision ledger — every ruling, every change
 ```

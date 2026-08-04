@@ -313,3 +313,11 @@ the Rs/Ro decode the real-position layer extended to all four giants
 and no full episodes exist anywhere through 2028-08**. The row stays as the
 registered experiment it was; rows registered from here on use the extended
 patterns.
+
+**Scan-step note (2026-08-04):** the Valdivia self-recovery failure showed
+that a full pattern's JOINT window can be sub-day (its five contacts each
+hold for days; all five together held ~10 hours), so exhaustive
+anchor-recurrence scans use `step=0.25` days (the engine's `step`
+parameter); the daily default remains for quick looks. The episode
+refiner is also constrained to the episode's own match level — an
+unconstrained tightest-instant could drift outside the window it labels.
