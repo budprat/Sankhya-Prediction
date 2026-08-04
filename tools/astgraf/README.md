@@ -70,6 +70,7 @@ wrap-safe and finds every crossing, including retrograde multi-passes (the
 | `horoscope.txt` | — | the full ASTROLOG report page: header, Koch cusps, planet table, Dasa/Bukti, boxes (`--report`) |
 | `precession_wheel.svg` | — | 28-sector precession wheel with equinox needle (`--precession`) |
 | `galactic.csv` | — | per body: separation from the Punarvasu crossover and the Magha (galactic) axis (`--galactic`; with `--scope`, both axes drawn on the wheels) |
+| `mirror.csv` | — | the heritage cos-fold crossings: instants where `lon_a + lon_b = 360k` (`--mirror`; with `--scope`, drawn dashed) |
 
 The default plot is wrapped 0–360° with line breaks at the wrap — no more
 up/down dual-trace ambiguity. SVG is resolution-independent, so output is
@@ -168,13 +169,14 @@ with `--aspect-bodies` for full coverage.
 
 Every trigger pattern is DATA, not code: `doctrine-triggers.toml` holds the
 taught patterns (both Chatur Vyuham variants, the band trigger, Neptune-on-Ketu,
-the Nepal double, the node/site rules) as declarative rules built from ten
+the Nepal double, the node/site rules) as declarative rules built from eleven
 primitives — conjunction, opposition, square, trine, axis_cross (evaluated on
 the order-independent midline of both axis endpoints), cluster, same_band,
 in_band (single band or a band list, e.g. the Jupiter–Saturn Java-family
-sector), near_any (the scanner's giant-escalation geometry), and
+sector), near_any (the scanner's giant-escalation geometry),
 nodes_occupied (the Hyderabad both-node-ends pattern, Moon excluded as the
-fast hand) — with `real:` prefixes for doctrinal ahead-positions and
+fast hand), and mirror (the heritage cos-fold crossing, below) — with
+`real:` prefixes for doctrinal ahead-positions and
 `escalate` blocks for severity. Loading is guarded: unknown keys, unknown
 body names, structurally incomplete conditions, offset-less `real:` prefixes,
 and empty rulesets all fail the load instead of no-oping silently.
@@ -264,6 +266,29 @@ markers with the drift-time equivalent ("how much Magha… Punarvasu… as of
 today"). Frame note: ASTGRAF.BAS carries no Abhijit/28 data (its 27-name
 list is read and never used), so these directions come from Secrets of
 Sankhya's own clock — recorded in the ledger.
+
+Independent check (2026-08-05): the galactic plane really does cross the
+ecliptic at 90.02°/270.02° (the solstice points; the planes stand 60.19°
+apart), so the equinox last stood on that node in **4444 BC** — and the
+book's own 28-sector clock puts the equinox entering Punarvasu in **4439 BC**,
+five years apart, with the previous cycle at 30,216 BC vs 30,178 BC (the
+author's "30,000 years zero ascension in Punarvasu"). The Sun itself crosses
+the galactic plane at the solstices: last on 2026-06-21 08:51 UT northward.
+
+## The mirror crossing (`--mirror`)
+
+GRAPHDO.BAS (line 54) and the author's own 2016 JS both plot
+`y = cos(longitude)`, folding the circle so 0/360 sits at the bottom, 180 at
+the top and 90/270 in the middle. On that graph two traces meet not only at a
+conjunction but whenever `cos(lon_a) == cos(lon_b)` — the pair mirrored about
+the 0–180 equinox axis, i.e. `lon_a + lon_b = 360k`. Those crossings are
+visible on his screen and invisible to the four aspect angles, so they are
+detected separately: `--mirror` writes `mirror.csv` (each crossing refined to
+the instant, with the signed offset), `--scope` draws them dashed, and rules
+can use the `mirror` primitive with an `orb`. Example — at the Gorkha quake
+the Moon and Saturn stood 0.067° from the mirror while being 127° apart in the
+classical frame. `find_events` is untouched: the audited aspect stream still
+reports only conjunction/square/trine/opposition.
 
 ## The matrix, the atlas, and the outcome logger
 

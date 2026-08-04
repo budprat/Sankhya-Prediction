@@ -88,6 +88,10 @@ def build_parser() -> argparse.ArgumentParser:
                    help="write galactic.csv: each body's separation from the "
                         "Punarvasu crossover and the Magha (galactic) axis per "
                         "period; with --scope, draw both axes on the wheels")
+    p.add_argument("--mirror", action="store_true",
+                   help="write mirror.csv: the heritage cos-fold crossings "
+                        "(GRAPHDO plots y=cos(lon), so traces also meet when "
+                        "lon_a + lon_b = 360k); with --scope, draw them dashed")
     p.add_argument("--rasi", action="store_true",
                    help="write rasi_navamsam.txt: RASI + NAVAMSAM box charts "
                         "(QUAKE.pdf layout) for each period row and each "
@@ -243,6 +247,28 @@ def main(argv: list[str] | None = None) -> int:
                                      f"{g['magha_axis_sep']:.3f}"])
         print(f"  galactic: {len(rows) * len(BODY_ORDER)} rows -> galactic.csv")
 
+    if args.mirror:
+        from .aspects import find_mirror_events, mirror_offset
+        pos_at_m = make_pos_at_jd(start)
+        skipped_m: list[str] = []
+        mirror_events = find_mirror_events(rows, pos_at_jd=pos_at_m,
+                                           bodies=aspect_bodies,
+                                           skipped=skipped_m)
+        if skipped_m:
+            print(f"  mirror: pairs too fast for this step, skipped "
+                  f"(descend the lens): {', '.join(skipped_m)}")
+        with open(out / "mirror.csv", "w", newline="") as fh:
+            writer = csv.writer(fh)
+            writer.writerow(["label", "jd", "body_a", "body_b",
+                             "lon_a", "lon_b", "offset"])
+            for e in mirror_events:
+                lons = pos_at_m(e.jd)
+                writer.writerow([label_for_jd(e.jd), f"{e.jd:.6f}",
+                                 e.body_a, e.body_b,
+                                 f"{lons[e.body_a]:.6f}", f"{lons[e.body_b]:.6f}",
+                                 f"{mirror_offset(lons[e.body_a], lons[e.body_b]):.6f}"])
+        print(f"  mirror: {len(mirror_events)} cos-fold crossings -> mirror.csv")
+
     if args.rasi:
         pos_at = make_pos_at_jd(start)
         blocks = [render_rasi_navamsam({p.name: p.longitude for p in r.positions},
@@ -304,7 +330,7 @@ def main(argv: list[str] | None = None) -> int:
             positions = {p.name: p.longitude for p in r.positions}
             (scope_dir / f"row_{r.index:02d}.svg").write_text(
                 render_scope(positions, title=r.label, orb=args.orb,
-                             galactic_axes=scope_axes))
+                             galactic_axes=scope_axes, mirrors=args.mirror))
         event_cap = 100
         if events:
             pos_at = make_pos_at_jd(start)
@@ -313,7 +339,7 @@ def main(argv: list[str] | None = None) -> int:
                 stem = f"event_{i:03d}_{e.body_a}-{e.kind}-{e.body_b}"
                 (scope_dir / f"{stem}.svg").write_text(
                     render_scope(pos_at(e.jd), title=title, orb=args.orb,
-                                 galactic_axes=scope_axes))
+                                 galactic_axes=scope_axes, mirrors=args.mirror))
             if len(events) > event_cap:
                 print(f"  scope: rendered first {event_cap} of {len(events)} event "
                       "wheels; narrow with --aspect-bodies for full coverage")

@@ -19,7 +19,8 @@ class Condition(BaseModel):
     # load, not silently produce a vacuous condition.
     model_config = ConfigDict(extra="forbid")
     type: Literal["conjunction", "opposition", "square", "trine", "axis_cross",
-                  "cluster", "same_band", "in_band", "nodes_occupied", "near_any"]
+                  "cluster", "same_band", "in_band", "nodes_occupied", "near_any",
+                  "mirror"]
     bodies: list[str] = []
     targets: list[str] = []             # near_any: bodies measured against these
     axes: list[list[str]] = []          # axis_cross: [[A,B],[C,D]]
@@ -36,7 +37,7 @@ class Condition(BaseModel):
         evaluate vacuously true (audit finding 12)."""
         needs = {"conjunction": 2, "opposition": 2, "square": 2, "trine": 2,
                  "cluster": 2, "same_band": 2, "nodes_occupied": 1, "in_band": 1,
-                 "near_any": 1}
+                 "near_any": 1, "mirror": 2}
         n = needs.get(self.type)
         if n is not None and len(self.bodies) < n:
             raise ValueError(f"{self.type} needs at least {n} bodies")
@@ -88,6 +89,12 @@ def _holds(result: ChartResult, c: Condition) -> bool:
         target = {"conjunction": 0.0, "opposition": 180.0,
                   "square": 90.0, "trine": 120.0}[c.type]
         return abs(sep - target) <= c.orb
+    if c.type == "mirror":
+        # The heritage cos-fold crossing (GRAPHDO plots y = cos(lon)): the pair
+        # meets on the graph when lon_a + lon_b is a multiple of 360.
+        from .aspects import mirror_offset
+        a, b = (_lon(result, n) for n in c.bodies)
+        return abs(mirror_offset(a, b)) <= c.orb
     if c.type == "axis_cross":
         cross = axis_angle(_axis_dir(result, c.axes[0]),
                            _axis_dir(result, c.axes[1]))
@@ -168,6 +175,10 @@ def _metric_for(rule: TriggerRule):
         return lambda r: abs(
             _arc_distance(_lon(r, name_a), _lon(r, name_b)) - angle)
     for c in rule.conditions:
+        if c.type == "mirror":
+            from .aspects import mirror_offset
+            name_a, name_b = c.bodies[0], c.bodies[1]
+            return lambda r: abs(mirror_offset(_lon(r, name_a), _lon(r, name_b)))
         if c.type == "cluster":
             bodies = list(c.bodies)
             return lambda r: circular_spread([_lon(r, n) for n in bodies])

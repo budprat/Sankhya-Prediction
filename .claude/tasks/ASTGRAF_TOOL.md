@@ -1072,6 +1072,39 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   (dwell, magnitude) = +0.238 at orb 1 (n=43) but -0.082 at orb 3 (n=147) —
   the sign flips with an arbitrary knob, so the Nepal fit does not replicate.
   Recorded as a candidate to put to the author, not a rule.
+  NU ruling 2026-08-05: "yes i think this is what he meant" — the dwell
+  candidate stands as the working reading (still unimplemented pending his
+  exact formula; the non-replication above stays on record).
+- MIRROR CROSSING IMPLEMENTED (NU: "do checkable gap you said in #1"), TDD,
+  8 new tests, suite 221 -> 229 green. The cos-fold means traces also meet
+  when lon_a + lon_b = 360k. aspects.py: mirror_offset() (signed miss) and
+  find_mirror_events() (kind="mirror"); the audited scan loop was generalised
+  over a metric so BOTH relations share one wrap-safe/sub-sampled/bisecting
+  path — find_events behaviour is unchanged (test pins it). triggers.py: new
+  "mirror" primitive (orb-gated, 2 bodies) with its own _metric_for exactness
+  scalar so mirror rules refine to the instant like any other. scope.py:
+  mirrors_in_orb() + dashed lines with data-mirror + legend. cli.py: --mirror
+  writes mirror.csv (label, jd, bodies, lons, signed offset) and feeds the
+  scope wheels. Nepal oracle: Moon x Saturn 0.067 deg from the mirror while
+  127 deg apart classically — a crossing the author sees and we could not.
+- GALACTIC-ECLIPTIC GEOMETRY COMPUTED (NU question). The two planes stand
+  60.1886 deg apart and cross the ecliptic at 90.0232 / 270.0232 deg — the
+  SOLSTICE points (0.02 deg off), from the IAU J2000 galactic pole
+  (RA 192.85948, Dec +27.12825). Consequences: (1) the Sun crosses the
+  galactic plane at the solstices — last 2026-06-21 08:51 UT northward,
+  2025-12-21 15:29 UT southward; (2) as planes they never stop crossing, so
+  the datable event is the EQUINOX reaching a node, every 12,886 y.
+  *** VALIDATION OF THE AUTHOR'S FRAME ***: the equinox last stood on the
+  galactic node in 4444 BC; the book's own 28-sector clock puts the equinox
+  ENTERING Punarvasu at 4439 BC — 5 years apart out of 6,445 (0.08%). One
+  cycle earlier: 30,216 BC (real) vs 30,178 BC (book) — his "30,000 years
+  zero ascension in Punarvasu". His crossover marker IS the real galactic
+  node, and his wheel lands it on a sector boundary.
+  OPEN QUESTION for NU (not changed unilaterally): galactic.py sets
+  PUNARVASU_CROSSOVER_SIDEREAL = 6*(360/28) = 77.143 (sector-7 START), but
+  the real node sits at the sector-7 END, 7*(360/28) = 90.0 — 0.02 deg from
+  the true value. If "crossover" means the galactic node, the constant should
+  be 90.0. Doctrine call, awaiting NU.
 - Location-layer interpretation re-confirmed for NU (see FRAMEWORK two-channel
   ruling): spot = sub-planet point (culmination meridian + declination
   latitude) rotated WEST by light-time x 15 deg/h; v2 distance-true; per-planet

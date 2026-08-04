@@ -38,8 +38,19 @@ def aspects_in_orb(positions: dict[str, float], orb: float) -> list[tuple[str, s
     return found
 
 
+def mirrors_in_orb(positions: dict[str, float], orb: float) -> list[tuple[str, str, float]]:
+    """(body_a, body_b, offset) for every pair sitting on the cos-fold mirror —
+    the heritage graph's other crossing (lon_a + lon_b = 360k)."""
+    from .aspects import mirror_offset
+    names = list(positions)
+    return [(a, b, mirror_offset(positions[a], positions[b]))
+            for i, a in enumerate(names) for b in names[i + 1:]
+            if abs(mirror_offset(positions[a], positions[b])) <= orb]
+
+
 def render_scope(positions: dict[str, float], title: str = "", orb: float = 3.0,
-                 galactic_axes: tuple[float, float] | None = None) -> str:
+                 galactic_axes: tuple[float, float] | None = None,
+                 mirrors: bool = False) -> str:
     parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{SIZE}" height="{SIZE}" '
              f'viewBox="0 0 {SIZE} {SIZE}">',
              f'<rect width="{SIZE}" height="{SIZE}" fill="white"/>',
@@ -71,6 +82,14 @@ def render_scope(positions: dict[str, float], title: str = "", orb: float = 3.0,
         lx, ly = wheel_xy(k * 30.0 + 15.0, R_SIGN_LABEL)
         parts.append(f'<text x="{lx:.1f}" y="{ly:.1f}" font-size="13" fill="#555" '
                      f'text-anchor="middle" dominant-baseline="middle">{SIGNS[k]}</text>')
+
+    mirror_pairs = mirrors_in_orb(positions, orb) if mirrors else []
+    for a, b, _off in mirror_pairs:
+        x1, y1 = wheel_xy(positions[a], R_ASPECT)
+        x2, y2 = wheel_xy(positions[b], R_ASPECT)
+        parts.append(f'<line data-mirror="{escape(a)}-{escape(b)}" '
+                     f'x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" '
+                     'stroke="#8855aa" stroke-width="1.4" stroke-dasharray="3 3"/>')
 
     aspects = aspects_in_orb(positions, orb)
     for a, b, kind, _sep in aspects:
@@ -114,12 +133,17 @@ def render_scope(positions: dict[str, float], title: str = "", orb: float = 3.0,
                      f'text-anchor="middle" dominant-baseline="middle">'
                      f'{escape(name[:3])}</text>')
 
-    # Exact-aspect legend, bottom-left.
-    y = SIZE - 16 - 15 * (len(aspects) - 1) if aspects else SIZE - 16
+    # Exact-aspect legend, bottom-left (mirror crossings listed with them).
+    n_lines = len(aspects) + len(mirror_pairs)
+    y = SIZE - 16 - 15 * (n_lines - 1) if n_lines else SIZE - 16
     for a, b, kind, sep in aspects:
         parts.append(f'<text x="14" y="{y}" font-size="12" '
                      f'fill="{ASPECT_COLORS[kind]}">'
                      f'{escape(f"{a} {kind} {b}")} ({sep:.2f}°)</text>')
+        y += 15
+    for a, b, off in mirror_pairs:
+        parts.append(f'<text x="14" y="{y}" font-size="12" fill="#8855aa">'
+                     f'{escape(f"{a} mirror {b}")} ({off:+.2f}°)</text>')
         y += 15
     parts.append("</svg>")
     return "\n".join(parts)

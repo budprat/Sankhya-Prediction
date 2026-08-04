@@ -50,6 +50,17 @@ def _targets(angle: float) -> tuple[float, ...]:
     return (angle, -angle)
 
 
+def mirror_offset(lon_a: float, lon_b: float) -> float:
+    """Miss from the cos-fold mirror: 0 when lon_a + lon_b is a multiple of 360.
+
+    GRAPHDO.BAS (line 54) and the author's own JS both plot y = cos(longitude),
+    so two traces meet not only at a conjunction but whenever
+    cos(lon_a) == cos(lon_b) — the pair mirrored about the 0-180 equinox axis.
+    That crossing is visible on his graph and invisible to ASPECT_ANGLES.
+    """
+    return _wrap180(lon_a + lon_b)
+
+
 def _wrap180(x: float) -> float:
     d = x % 360
     return d - 360 if d > 180 else d
@@ -72,11 +83,27 @@ def unwrap(values: list[float]) -> list[float]:
     return out
 
 
-def _refine(pos: PosFn, body_a: str, body_b: str, target: float,
+Metric = Callable[[dict[str, float]], float]
+
+
+def _metric(mode: str, body_a: str, body_b: str) -> Metric:
+    """The scalar whose target crossings are the events of this relation."""
+    if mode == "mirror":
+        return lambda lons: lons[body_a] + lons[body_b]
+    return lambda lons: signed_separation(lons[body_b], lons[body_a])
+
+
+def _kind_targets(mode: str) -> tuple[tuple[str, float], ...]:
+    if mode == "mirror":
+        return (("mirror", 0.0),)
+    return tuple((kind, t) for kind, angle in ASPECT_ANGLES.items()
+                 for t in _targets(angle))
+
+
+def _refine(pos: PosFn, metric: Metric, target: float,
             jd_lo: float, jd_hi: float, jd_guess: float) -> float:
     def g(jd: float) -> float:
-        lons = pos(jd)
-        return _wrap180(signed_separation(lons[body_b], lons[body_a]) - target)
+        return _wrap180(metric(pos(jd)) - target)
 
     lo, hi = jd_lo, jd_hi
     g_lo, g_hi = g(lo), g(hi)
@@ -111,9 +138,9 @@ def _sample_interval(r1: PeriodRow, r2: PeriodRow, n: int, pos_at_jd: PosFn,
     return jds, lons
 
 
-def find_events(rows: list[PeriodRow], pos_at_jd: PosFn | None = None,
-                bodies: list[str] | None = None,
-                skipped: list[str] | None = None) -> list[AspectEvent]:
+def _scan(rows: list[PeriodRow], pos_at_jd: PosFn | None,
+          bodies: list[str] | None, skipped: list[str] | None,
+          mode: str) -> list[AspectEvent]:
     if bodies is None:
         bodies = [p.name for p in rows[0].positions]
     events: list[AspectEvent] = []
@@ -144,28 +171,44 @@ def find_events(rows: list[PeriodRow], pos_at_jd: PosFn | None = None,
             jds, lons = _sample_interval(r1, r2, n_grid, pos_at_jd, bodies)
 
         for body_a, body_b in live_pairs:
-            seps = unwrap([signed_separation(s[body_b], s[body_a]) for s in lons])
-            for kind, angle in ASPECT_ANGLES.items():
-                for target in _targets(angle):
-                    for j in range(len(jds) - 1):
-                        u0, u1 = seps[j], seps[j + 1]
-                        if u0 == u1:
-                            continue
-                        lo_v, hi_v = min(u0, u1), max(u0, u1)
-                        k0 = math.ceil((lo_v - target) / 360)
-                        k1 = math.floor((hi_v - target) / 360)
-                        for k in range(k0, k1 + 1):
-                            tgt = target + 360 * k
-                            if tgt == u0 or not lo_v <= tgt <= hi_v:
-                                continue   # crossings are (u0, u1]-exclusive at u0
-                            u = (tgt - u0) / (u1 - u0)
-                            jd_guess = jds[j] + u * (jds[j + 1] - jds[j])
-                            jd = jd_guess if pos_at_jd is None else _refine(
-                                pos_at_jd, body_a, body_b, target,
-                                jds[j], jds[j + 1], jd_guess)
-                            events.append(AspectEvent(
-                                body_a=body_a, body_b=body_b, kind=kind, jd=jd))
+            metric = _metric(mode, body_a, body_b)
+            seps = unwrap([metric(s) for s in lons])
+            for kind, target in _kind_targets(mode):
+                for j in range(len(jds) - 1):
+                    u0, u1 = seps[j], seps[j + 1]
+                    if u0 == u1:
+                        continue
+                    lo_v, hi_v = min(u0, u1), max(u0, u1)
+                    k0 = math.ceil((lo_v - target) / 360)
+                    k1 = math.floor((hi_v - target) / 360)
+                    for k in range(k0, k1 + 1):
+                        tgt = target + 360 * k
+                        if tgt == u0 or not lo_v <= tgt <= hi_v:
+                            continue   # crossings are (u0, u1]-exclusive at u0
+                        u = (tgt - u0) / (u1 - u0)
+                        jd_guess = jds[j] + u * (jds[j + 1] - jds[j])
+                        jd = jd_guess if pos_at_jd is None else _refine(
+                            pos_at_jd, metric, target,
+                            jds[j], jds[j + 1], jd_guess)
+                        events.append(AspectEvent(
+                            body_a=body_a, body_b=body_b, kind=kind, jd=jd))
     if skipped is not None:
         skipped.extend(sorted(skip_set))
     events.sort(key=lambda e: e.jd)
     return events
+
+
+def find_events(rows: list[PeriodRow], pos_at_jd: PosFn | None = None,
+                bodies: list[str] | None = None,
+                skipped: list[str] | None = None) -> list[AspectEvent]:
+    """Classical aspect crossings: conjunction, square, trine, opposition."""
+    return _scan(rows, pos_at_jd, bodies, skipped, "aspect")
+
+
+def find_mirror_events(rows: list[PeriodRow], pos_at_jd: PosFn | None = None,
+                       bodies: list[str] | None = None,
+                       skipped: list[str] | None = None) -> list[AspectEvent]:
+    """Cos-fold crossings (kind="mirror"): the instants where the pair's traces
+    meet on the heritage graph because cos(lon_a) == cos(lon_b). Kept separate
+    from find_events so the audited aspect stream is unchanged."""
+    return _scan(rows, pos_at_jd, bodies, skipped, "mirror")
