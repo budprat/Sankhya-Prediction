@@ -1,0 +1,18 @@
+# Observed candidate rules — status: TESTING (NU ruling 2026-08-04).
+# Provenance: single-chart observations promoted for testing. NOT taught
+# doctrine (doctrine-triggers.toml) and NOT mined (mined-triggers.toml —
+# retired). A rule leaves this file when NU rules it doctrine, or when its
+# pre-registered testing record refutes it.
+#
+# FRAME NOTE for site rules (Ascendant/MC): evaluate on TROPICAL site charts —
+# the physical rising/culmination frame. The canon's sidereal mode shifts the
+# ANGLES by ayanamsa in RA space (not ecliptic), so body-angle geometry is
+# frame-dependent (Nepal: Asc-trine-real-Neptune 0.26 deg tropical vs 3.2
+# sidereal). The frame-guard test pins this.
+
+[[rule]]
+name = "asc-trine-real-neptune"
+description = "TESTING — site Ascendant trine real-Neptune at the event minute (Nepal 2015: 0.26 deg at the catalog minute/epicenter, 0.43 on the QUAKE chart). Site-conditional fast hand: sweeps a given site twice daily; meaningful inside loaded windows, not as a standalone claim. Tropical site charts only."
+conditions = [
+  { type = "trine", bodies = ["Ascendant", "real:Neptune"], orb = 1.0 },
+]

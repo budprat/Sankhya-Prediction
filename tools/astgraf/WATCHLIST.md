@@ -269,3 +269,38 @@ Consequences for this register:
 - The awaited NR/Rs/Ro table cannot rescue the quake-spot channel (a
   constant longitude offset leaves a uniform gap distribution uniform); its
   bearing is on TIMING — which alignments are exact and when.
+
+## Anchor recurrence (added 2026-08-04, NU ruling) — registered windows
+
+NU ruled that recurrence-calendar episodes join this register. Channel
+pre-registration: anchors = the 10 in `anchors.toml`; engine =
+`astgraf-recur` (pattern = the anchor's non-Moon doctrine-orb contacts,
+daily scan, tightest instant refined below one minute); scan span
+2026-08-04 + 2 years at full match (n/n) and near match (n−1/n). All claims
+are TIME-ONLY per amendment v5 — no spots. Regenerate:
+`uv run astgraf-recur --start 2026-08-04 --years 2 --out out/recur`
+(near level: add `--min-match <n-1>` per anchor).
+
+**Full re-formations through 2028-08: NONE across all 10 anchors** — an
+honest empty registration; the channel's first full window enters here when
+a scan produces one.
+
+| Anchor | Level | Window (UT) | Tightest (UT) | Missing contact | Registered claim | Base rate | Outcome |
+|---|---|---|---|---|---|---|---|
+| alaska-1964 (M9.2) | near 3/4 | 2026-11-15 → 2026-11-20 | 2026-11-17 13:02 | sep:Ketu-Uranus@tri | M7+ earthquake worldwide inside the window (time-only) | ~0.2 expected M7+ in the window (corpus 11.9/yr) | *pending* |
+
+Grading note: with a ~0.2 base expectation, a single in-window M7+ is weak
+evidence by itself; the channel accumulates standing across windows, hits
+AND clears logged alike.
+
+## Amendment 2026-08-04 (v6) — observed-rule channel opened, status TESTING
+
+Per NU's same-day ruling, the Nepal observation **site Ascendant trine
+real-Neptune** (0.26° at the catalog minute and true epicenter; 0.43° on
+the QUAKE chart's rounded site) is promoted to a rule in **TESTING**
+status: `observed-triggers.toml`, orb 1.0°, tropical site charts only (the
+canon's sidereal mode shifts angles by ayanamsa in RA space — frame-guard
+test pinned). It is a site-conditional fast hand — it sweeps any given
+site twice daily, so it carries no standalone forward windows; its testing
+record is its behavior inside loaded windows at candidate sites, graded
+with the site channel.

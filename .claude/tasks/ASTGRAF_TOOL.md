@@ -710,3 +710,25 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   sep:Ketu-Uranus@tri. Selectivity is the point. NOT registered on the
   WATCHLIST — whether anchor-recurrence windows join the forecast register
   is NU's call, pending.
+
+## 2026-08-04 — NU RULINGS: observed-rule channel (TESTING) + recurrence windows registered
+- NU: "Asc-trine-real-Neptune observation deserves rule status marked as in
+  Testing, also anchor-recurrence episodes join the WATCHLIST as registered
+  windows."
+- (1) New rules file observed-triggers.toml — the third provenance channel
+  (taught / mined / observed-TESTING). First rule asc-trine-real-neptune:
+  trine Ascendant x real:Neptune, orb 1.0, TROPICAL site charts only.
+  Ground truth measured: 0.264 deg at the Nepal catalog minute + true
+  epicenter (0.428 on the QUAKE chart's rounded 86E site); sidereal frame
+  shows 3.2 deg (RA-space ayanamsa shift on angles) — frame-guard test pins
+  fires-tropical/not-sidereal. Site-conditional fast hand (sweeps any site
+  twice daily): no standalone forward windows; graded inside loaded windows
+  at candidate sites. Exit from TESTING: NU doctrine ruling or refutation.
+- (2) WATCHLIST anchor-recurrence section added: channel pre-registration
+  (10 anchors, 2026-08-04 + 2 y, full and n-1 levels, time-only claims,
+  regeneration command); honest empty registration of zero full
+  re-formations through 2028-08; first registered window ALASKA-1964 near
+  3/4, 2026-11-15..20, tightest 2026-11-17 13:02 UT, missing
+  sep:Ketu-Uranus@tri, claim = M7+ worldwide in-window, base rate ~0.2
+  stated (corpus 11.9 M7+/yr). Amendment v6 records the observed-rule
+  channel. 200 tests passing.

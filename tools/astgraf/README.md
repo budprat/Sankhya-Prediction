@@ -178,6 +178,14 @@ fast hand) — with `real:` prefixes for doctrinal ahead-positions and
 body names, structurally incomplete conditions, offset-less `real:` prefixes,
 and empty rulesets all fail the load instead of no-oping silently.
 
+Rules carry their provenance in their file: `doctrine-triggers.toml` (NU's
+taught patterns), `mined-triggers.toml` (data-mined candidates — retired),
+and `observed-triggers.toml` (**TESTING** status, NU ruling 2026-08-04:
+single-chart observations promoted for testing — currently
+`asc-trine-real-neptune`, Nepal 0.26°, orb 1.0, tropical site charts only;
+the frame matters because the canon's sidereal mode shifts angles by
+ayanamsa in RA space).
+
 `astgraf-bands --rules FILE` sweeps every rule uniformly, with fast-body
 rules on their own fine steps automatically (Ascendant 0.25 h, Moon 1 h);
 each episode gets its tightest instant (refined per the rule's own exactness

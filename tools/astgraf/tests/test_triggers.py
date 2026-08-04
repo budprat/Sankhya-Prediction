@@ -383,3 +383,17 @@ def test_real_prefix_resolves_offsets():
     rule = TriggerRule(name="rn", conditions=[
         Condition(type="conjunction", bodies=["real:Neptune", "Ketu"], orb=0.5)])
     assert evaluate_rule(r, rule).fired  # 339.5 + 29.09 = 8.59
+
+
+def test_observed_rule_asc_trine_real_neptune_fires_on_nepal_tropical_only():
+    # NU ruling 2026-08-04: the Nepal observation (site Asc trine real-Neptune,
+    # 0.26 deg at the catalog minute/epicenter) is a rule in TESTING status.
+    # Frame guard: it holds on the TROPICAL site chart (physical rising frame);
+    # the canon's sidereal mode shifts the angles by ayanamsa in RA space
+    # (sidereal delta 3.2 deg), so the rule must not fire there at orb 1.
+    from astgraf.ephemeris import compute_raw
+    rules = load_rules("observed-triggers.toml")
+    rule = next(r for r in rules if r.name == "asc-trine-real-neptune")
+    args = (2015, 4, 25, 6 + 11 / 60 + 25.95 / 3600, 0.0, -84.7314, 28.2305)
+    assert evaluate_rule(compute_raw(*args, False, False), rule).fired
+    assert not evaluate_rule(compute_raw(*args, True, False), rule).fired
