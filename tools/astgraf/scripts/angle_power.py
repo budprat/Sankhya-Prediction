@@ -44,15 +44,38 @@ def _wrap(x: float) -> float:
     return (x + 180.0) % 360.0 - 180.0
 
 
-def lon_for_mc(jd: float, target: float, iters: int = 12) -> float:
-    """Observer longitude that puts `target` on the MC. The MC tracks observer
-    longitude near 1:1, so plain fixed-point iteration converges geometrically;
-    the residual is returned to the caller's assertion rather than assumed."""
-    lon = 0.0
-    for _ in range(iters):
-        mc = site_chart(jd, 0.0, lon).cusps[0]
-        lon = _wrap(lon + _wrap(target - mc))
-    return lon
+def _solve_lon(f, target: float, step: float = 2.0) -> float | None:
+    """Longitude where f(lon) == target, by scan then bisection on the wrapped
+    difference. Used for both angles: the Ascendant's response to longitude
+    varies far too much with latitude for fixed-point iteration to be safe."""
+    def d(lon):
+        return _wrap(f(lon) - target)
+
+    lon = -180.0
+    while lon < 180.0:
+        hi_lon = min(lon + step, 180.0)
+        a, b = d(lon), d(hi_lon)
+        if a * b <= 0 and abs(b - a) < 90:
+            lo, hi = lon, hi_lon
+            for _ in range(50):
+                mid = (lo + hi) / 2
+                if d(lo) * d(mid) <= 0:
+                    hi = mid
+                else:
+                    lo = mid
+            return (lo + hi) / 2
+        lon += step
+    return None
+
+
+def lon_for_angle(jd: float, lat: float, target: float, angle: str):
+    """Observer longitude putting `target` on `angle` at latitude `lat`.
+    MC is latitude-free; Asc is not, which is the whole point of testing both."""
+    if angle == "MC":
+        return _solve_lon(lambda lo: site_chart(jd, 0.0, lo).cusps[0], target)
+    return _solve_lon(
+        lambda lo: site_chart(jd, lat, lo).positions["Ascendant"].longitude,
+        target)
 
 
 def main() -> None:
@@ -68,45 +91,57 @@ def main() -> None:
 
     say(f"power check for the site-angle rank test — {len(sample)} synthetic "
         f"events, control places drawn from the same {len(pool)} real epicenters")
-    say(f"construction: epicenter longitude set so {BODY} culminates there, "
-        "then displaced by the stated jitter; latitude left as the real one")
+    say(f"construction: epicenter longitude set so {BODY} sits exactly on the "
+        "stated angle there, then displaced by the jitter; latitude left real")
 
-    # verify the planting actually plants: residual of the solved meridian
-    resid = []
-    solved = []
-    for jd in jds:
-        c = site_chart(jd, 0.0, 0.0)
-        target = body_longitudes(c)[BODY]
-        lon = lon_for_mc(jd, target)
-        mc = site_chart(jd, 0.0, lon).cusps[0]
-        resid.append(abs(_wrap(mc - target)))
-        solved.append(lon)
-    say(f"meridian solver residual: max {max(resid):.2e} deg over "
-        f"{len(resid)} events")
-    if max(resid) > 0.01:
-        say("SOLVER DID NOT CONVERGE — power result below is not trustworthy")
-
-    say("")
-    say(f"{'jitter':>8s} {'mean rank':>10s} {'P(tightest)':>12s} {'z':>9s}  verdict")
-    for jit in JITTERS:
-        jrng = random.Random(int(jit * 100) + 3)
-        ranks = []
+    # BOTH angles are planted. An earlier version tested only the MC and then
+    # generalised the verdict to "any angle rule" — but the taught Hyderabad
+    # and Ulsoor anchors are ASCENDANT readings, and the Ascendant is the
+    # weakly-conditioned axis. The Asc arm is the one that actually covers them.
+    for angle in ("MC", "Asc"):
+        resid, solved, keep = [], [], []
         for n, jd in enumerate(jds):
-            lon = _wrap(solved[n] + jrng.uniform(-jit, jit))
-            lat = lats[n]
-            true = angle_seps(jd, lat, lon)[BODY]
-            ctrl = [angle_seps(jd, *pool[j])[BODY]
-                    for j in jrng.sample(range(len(pool)), K_CONTROLS)]
-            ranks.append(1 + sum(1 for c in ctrl if c < true))
-        rep = rank_report(BODY, ranks, K_CONTROLS)
-        verdict = "DETECTED" if rep["z"] < -3.0 else "not detected"
-        say(f"{jit:8.1f} {rep['mean_rank']:10.4f} {rep['tightest']:12.4f} "
-            f"{rep['z']:9.2f}  {verdict}")
+            target = body_longitudes(site_chart(jd, 0.0, 0.0))[BODY]
+            lon = lon_for_angle(jd, lats[n], target, angle)
+            if lon is None:
+                continue
+            got = (site_chart(jd, 0.0, lon).cusps[0] if angle == "MC"
+                   else site_chart(jd, lats[n], lon).positions["Ascendant"].longitude)
+            resid.append(abs(_wrap(got - target)))
+            solved.append(lon)
+            keep.append(n)
+        if max(resid) > 0.01:
+            raise SystemExit(
+                f"{angle} solver residual {max(resid):.3g} deg — a power result "
+                "from an unconverged planting would be worthless, refusing to "
+                "print one")
+        say("")
+        say(f"--- planted on the {angle} ({len(keep)}/{len(jds)} events solved, "
+            f"max residual {max(resid):.1e} deg) ---")
+        say(f"{'jitter':>8s} {'mean rank':>10s} {'P(tightest)':>12s} {'z':>9s}"
+            "  verdict")
+        for jit in JITTERS:
+            jrng = random.Random(int(jit * 100) + 3)
+            ranks = []
+            for slot, n in enumerate(keep):
+                jd = jds[n]
+                lon = _wrap(solved[slot] + jrng.uniform(-jit, jit))
+                true = angle_seps(jd, lats[n], lon)[BODY]
+                ctrl = [angle_seps(jd, *pool[j])[BODY]
+                        for j in jrng.sample(range(len(pool)), K_CONTROLS)]
+                ranks.append(1 + sum(1 for c in ctrl if c < true))
+            rep = rank_report(BODY, ranks, K_CONTROLS)
+            verdict = "DETECTED" if rep["z"] < -3.0 else "not detected"
+            say(f"{jit:8.1f} {rep['mean_rank']:10.4f} {rep['tightest']:12.4f} "
+                f"{rep['z']:9.2f}  {verdict}")
 
     say("")
     say("Read this against angle_grade.py's observed best z of -2.27 (Mars, "
-        "15 bodies): any rule that places events on a body's angle to within "
-        "the largest DETECTED jitter above would have been found. It was not.")
+        "15 bodies). Both angles are covered, so a rule placing events on "
+        "either a culmination meridian or a rising line, to within the largest "
+        "DETECTED jitter, would have been found. It was not.")
+    say(f"Power here is measured on {N_EVENTS} events; the real grading uses "
+        "1434, and z grows with sqrt(n), so this understates the true bar.")
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text("\n".join(lines) + "\n")

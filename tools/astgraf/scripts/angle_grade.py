@@ -64,12 +64,18 @@ def _sep(a: float, b: float) -> float:
     return min(d, 360.0 - d)
 
 
+SCORED = list(BAND_BODIES) + [f"real-{g}" for g in REAL_GIANTS]
+
+
 def angle_seps(jd: float, lat: float, lon: float) -> dict[str, float]:
-    """Separation from each body to the NEAREST of the four angles."""
+    """Separation from each SCORED body to the NEAREST of the four angles.
+    body_longitudes() also returns Pluto, which is outside BAND_BODIES and
+    outside the doctrine; it is filtered here so that every test in this file
+    — including the min-over-bodies ones — scores the same body set."""
     c = site_chart(jd, lat, lon)
     ax = angles_from_chart(c).values()
     pos = body_longitudes(c)
-    return {b: min(_sep(v, p) for v in ax) for b, p in pos.items()}
+    return {b: min(_sep(v, pos[b]) for v in ax) for b in SCORED}
 
 
 def acting_contacts(jd: float) -> list[tuple[str, str]]:
@@ -110,7 +116,7 @@ def main() -> None:
     say(f"controls: {K_CONTROLS} leave-one-out epicenters per event at the SAME "
         "instant (seismicity geography matched by construction)")
 
-    bodies = [b for b in BAND_BODIES] + [f"real-{g}" for g in REAL_GIANTS]
+    bodies = SCORED
     say(f"bodies scored: {len(bodies)} ({', '.join(bodies)})")
 
     rng = random.Random(11)

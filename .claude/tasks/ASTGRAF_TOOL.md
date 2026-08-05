@@ -1477,15 +1477,18 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
     T3 specified     acting taught contact only, 314 instances: z = -0.35.
     T6 doctrinal     same 314 at the CROSSING EXACTNESS instant — the instant
                      a forward run actually has — z = +1.20. Nothing.
-    T4 unspecified   lift 1.03 at orb 3 deg, exactly as vacuous as warned.
+    T4 unspecified   lift 1.050 at orb 3 deg, exactly as vacuous as warned.
     T5 Nepal         specified bodies rank 5/50 (top-10%, ~1 event in 10 does
-                     this); unspecified tightest body ranks 28/50, i.e. WORSE
-                     than half the control places.
+                     this); unspecified tightest body ranks 25/50, dead median.
   POWER FIRST, then the null: a null from a blind instrument is worthless, so
-  angle_power.py plants epicenters on a body's culmination meridian and re-runs
-  the identical statistic. It detects at z = -41.6 exact, and still z = -17.9
-  after +-25 deg of jitter. A rule of this shape, that loose, would have been
-  found. Enforced in tests/test_angles.py so the power claim cannot rot.
+  angle_power.py plants epicenters where the body sits exactly on an angle and
+  re-runs the identical statistic. Detection at z = -41.6 exact, and still
+  z = -17.9 after +-25 deg of jitter. BOTH angles are planted — the first pass
+  only tested the MC and then generalised to "any angle rule", which was an
+  overclaim, because the taught Hyderabad and Ulsoor readings are ASCENDANT
+  ones and the Asc is the weakly-conditioned axis. Adding the Asc arm confirms
+  the same power (z = -17.1 at +-25 deg), so the verdict now covers the axis
+  the anchors actually used. Enforced in tests/test_angles.py so it cannot rot.
   SCOPE LIMIT discovered while running it: the BAS cusp chain takes
   sqrt(1 - xx*xx) with xx = sin(RA)*tan(ob)*tan(lat), so it is undefined once
   tan(lat) >= 1/tan(23.44) — i.e. beyond the polar circle at 66.56 deg. The

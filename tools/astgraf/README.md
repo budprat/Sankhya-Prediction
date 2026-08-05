@@ -449,11 +449,14 @@ against a z = −3.0 multiplicity bar; the specified form (acting taught contact
 only, 314 instances) gives z = −0.35, and **z = +1.20 at the crossing exactness
 instant**, which is the only instant a forward run actually has.
 
-**The null is not blindness** (`scripts/angle_power.py`). Planting epicenters on
-a body's culmination meridian, the identical statistic recovers the signal at
-z = −41.6 exact and still z = −17.9 after ±25° of jitter. A rule of this shape,
-that loose, would have been found. The power claim is enforced in the suite, not
-just written down.
+**The null is not blindness** (`scripts/angle_power.py`). Planting epicenters
+where the body sits exactly on an angle, the identical statistic recovers the
+signal at z = −41.6 exact and still ≈ z = −17.5 after ±25° of jitter. Both
+angles are planted — **MC and Ascendant** — because the taught Hyderabad and
+Ulsoor readings are Ascendant ones, and the Ascendant is the weakly-conditioned
+axis; testing only the MC would have left the anchors' own axis unchecked. A
+rule of this shape, that loose, on either angle, would have been found. The
+power claim is enforced in the suite, not just written down.
 
 Scope limit found while running it: the BAS cusp chain evaluates
 `sqrt(1 − xx²)` with `xx = sin(RA)·tan(ε)·tan(lat)`, so it is **undefined beyond
