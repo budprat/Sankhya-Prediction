@@ -2455,3 +2455,58 @@ Closes the audit's Finding 1 and TESTING.md's "known debt" section.
   design after the fact does not make it a pre-registration, and the
   preregistered flag exists so that survives in the code rather than in a
   footnote someone has to remember.
+
+## 2026-08-05 — Polar domain limit named; two doc claims corrected by measurement
+
+- angles.py died with a bare ValueError("math domain error") from deep inside
+  the cusp chain. Now raises PolarChartError naming the condition, the place
+  and the instant; angles_at returns None and bodies_on_angles returns [], so
+  a sweep over real epicentres degrades instead of crashing — and never
+  silently substitutes a site-free chart, which would score a chart for a
+  place it does not describe.
+- CORRECTION 1: the limit is NOT a fixed 66.56 deg. xx = sin(RA)*tan(ob)*
+  tan(lat), so the threshold moves with SIDEREAL TIME. Measured: at RA 120
+  the chain is fine at 67 N and fails at 70; a test now pins that 70 N is
+  computable at some instants and not others. POLAR_SAFE_LIMIT is documented
+  as the worst case (sin RA = 1), and angles_defined_at() asks the arithmetic
+  rather than a constant. quake_atlas.py's fixed 66.0 guard was wrong in both
+  directions and now attempts the chart instead.
+- CORRECTION 2 (for a future ruling): the ASCENDANT AND MC ARE DEFINED past
+  the limit — measured at 85 N, both compute. Only the twelve cusps are not.
+  compute_raw fails as a unit because it builds cusps unconditionally, and
+  ephemeris.py is frozen, so angles.py guards rather than degrades. If NU
+  rules a cusp-less chart admissible, the SITE channel becomes available at
+  polar latitudes — and the Asc-based rules (the Ulsoor/Hyderabad shape) are
+  exactly the ones that matter there.
+
+## 2026-08-05 — PRE-REGISTRATION + RESULT: the flood clock (PLAN 3.1) is not answerable
+
+Design committed with no results (c11c021, 12:39:07Z), then run once.
+Working it out honestly split PLAN 3.1 into two questions:
+
+- PART 1, WHICH CLOCK — arithmetic, not inference, so nothing to
+  pre-register. Over HANZE 1871-2025 (154 y) the accumulated phase separation
+  between candidates is 2.1 deg (163.5 vs 164.5), 14.9 deg (163.5 vs 171.0)
+  and 12.8 deg (164.5 vs 171.0), against a record covering 0.90-0.94 of ONE
+  cycle and a reporting density that rises ~12x across the same span.
+  **NOT ANSWERABLE** — a limit of the data, not a verdict on the doctrine.
+- PART 2, IS INCIDENCE ELEVATED NEAR THE CONJUNCTION — pre-registered:
+  HANZE alone (the curated 88-event file is hand-picked, and mixing it into
+  an incidence test imports the selection the test controls for), incidence
+  detrended against a centred 51-year moving average, +-8 y on the 1993
+  triple, circular-shift null over every non-overlapping window.
+  RESULT: mean detrended incidence 0.9815, **p = 0.393, rank 49 of 123** —
+  dead median. Null best 1.287 (centre 1958), median 0.922.
+- THE BINDING LIMIT, registered in advance: the systematic record holds
+  EXACTLY ONE conjunction epoch. 1821 and 1650 carry ZERO usable events
+  within +-10 y in either corpus. n = 1 independent epoch — the 670 HANZE
+  events near 1993 are 670 observations of one epoch, not of a clock. So the
+  doctrine verdict is UNTESTED, neither supported nor refuted, and the honest
+  output of the script is the power statement rather than the p-value.
+- UNBLOCKER, named so it is actionable: a systematic flood catalogue reaching
+  ~1780-1860 at day precision with a completeness model — the 1,000-year
+  records list of FRAMEWORK open question 7. Two epochs would still not fix
+  the period, but they would make the question inferential.
+- PLAN 3.1 closed. With 3.2 and 3.2c already closed, the runnable-now list is
+  down to 3.3 (category-tagged recurrence) and 3.4 (site channel, n = 13 and
+  underpowered by construction).

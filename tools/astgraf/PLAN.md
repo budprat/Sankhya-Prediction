@@ -48,28 +48,46 @@ source, declination, capped at 23.71° for the located set against Nepal's
 The flood corpora (2,812 events: 88 curated global + 2,724 HANZE Europe)
 unblocked four tests that were previously impossible. **All four are
 pre-registration candidates** — write the design, commit it, then run.
+(§3.1 and §3.2 are now closed; §3.3 and §3.4 remain.)
 
-### 3.1 The long-cycle clock test — highest value
+### 3.1 The long-cycle clock test — **CLOSED 2026-08-05, not answerable**
 
-**Question.** NU's flood family recurs at a Uranus–Neptune period. Three
-candidate clocks are on record: Neptune tropical **163.5 y**, Neptune
-sidereal **164.5 y**, Uranus–Neptune synodic **171.0 y**. Which one do the
-records support?
+Pre-registered (`scripts/flood_clock.py`, committed with no results) and run.
+Designing it honestly split it into two questions, only one of which is
+inferential:
 
-**Data available.** 2,757 dated flood events since 1871; 326 of them in the
-1988–1998 window around the 1993 triple conjunction (Feb 2 / Aug 19 / Oct 25,
-all in Poorvashada pada 4).
+**Part 1 — which clock?** Arithmetic, not inference. Over the systematic
+record (HANZE 1871–2025, 154 y) the accumulated phase separation is:
 
-**Design sketch.** Phase-fold flood incidence against each candidate period,
-measure concentration, compare to the incidence baseline. **The hard part is
-the null, and it must be built first:** flood reporting density rises steeply
-with time and toward Europe, so a raw fold will find structure that is
-archival, not astronomical. Detrend on reporting rate before folding, and
-use the same catalogue as its own null.
+| pair | separation |
+|---|---:|
+| Neptune tropical vs sidereal (163.5 / 164.5) | 2.1° |
+| Neptune tropical vs synodic (163.5 / 171.0) | **14.9°** |
+| Neptune sidereal vs synodic (164.5 / 171.0) | 12.8° |
 
-⚠️ **Honest limit.** A 155-year record covers **less than one cycle** of any
-candidate. This test can rule a clock *out* by phase mismatch; it cannot
-confirm one. Say so in the pre-registration.
+The record covers **0.90–0.94 of ONE cycle**. Periods cannot be separated from
+less than a cycle unless their phase difference exceeds the precision with
+which the incidence maximum can be located — and reporting density rises
+**~12×** across the same span. **NOT ANSWERABLE**, structurally. This is a
+limit of the data, not a verdict on the doctrine.
+
+**Part 2 — is incidence elevated near the conjunction at all?** Detrended
+against a centred 51-year moving average, ±8 y window on the 1993 triple,
+circular-shift null over 122 non-overlapping windows:
+
+**mean detrended incidence 0.9815, p = 0.393, rank 49 of 123** — dead median.
+
+⚠️ **The binding limit, registered in advance.** The systematic record holds
+**exactly one** conjunction epoch. The 1821 and 1650 conjunctions have **zero**
+usable events within ±10 y in either corpus. So this rests on **n = 1
+independent epoch**: the 670 HANZE events near 1993 are 670 observations of
+one epoch, not of a clock. The doctrine verdict is **UNTESTED** — neither
+supported nor refuted.
+
+**Unblocker:** a systematically collected flood catalogue reaching ~1780–1860
+at day precision with a completeness model — the 1,000-year records list in
+FRAMEWORK open question 7. Two epochs still would not fix the period, but they
+would make the question inferential rather than arithmetic.
 
 ### 3.2 The taught flood signature — DONE 2026-08-05, null
 

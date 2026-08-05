@@ -43,7 +43,7 @@ than demonstrated.
 
 ## Part 2 — What has been graded and failed
 
-**Thirteen channels.** Every one carries a power check proving the instrument
+**Fourteen channels.** Every one carries a power check proving the instrument
 could detect the effect it did not find; a null without demonstrated power is
 silence, not evidence.
 
@@ -61,6 +61,7 @@ silence, not evidence.
 | 10 | **Predict.pdf's band trigger** (its headline claim) | 1,435 quakes at exact instants + 1,886 floods, era-matched controls | **lift 1.804, p = 0.069** — fails the pre-registered bar. Floods point the other way (0.937) | 2% plant → lift 5.69, p = 0.000 |
 | 11 | **Band trigger on held-out M6.0–6.99** (the settling test) | 10,324 declustered events, era-matched controls, pre-registered and committed before running | **lift 0.915, p = 0.76 — wrong direction.** P2 grid 0.759, P3 escalated 1.091; family-wise p = 1.00 | 2% plant → lift 5.75, p = 0.000 |
 | 12 | **Full-vocabulary screen, epicenter charts** | 1,435 M7+, 4,305 era-matched controls, 524 predicates incl. band occupancy | best lift 1.665 vs permutation-max null median 1.609, **family-wise p = 0.302** | 2% plant → lift 3.22, p = 0.000 |
+| 14 | **Flood long-cycle clock** (`PLAN` §3.1) | HANZE 2,724 day-precision floods 1871–2025, detrended vs a 51-y moving average, circular-shift null | Part 1 **not answerable**: 3 candidate clocks separate by ≤ 14.9° of phase over 0.9 of one cycle. Part 2 **p = 0.393**, rank 49/123 | **n = 1 conjunction epoch** — the binding limit, registered in advance |
 | 13 | **Co-occurrence mine** (pairs + triples — the doctrine's actual shape) | 1,506 unified M7+ across 3 catalogs, 805 patterns | family-wise p = 0.010 but the winner has **3 epochs** and split-half **1.00/3.39**; best replicating pattern 1.960 vs null-max median 1.957 | 3 artifacts found and fixed: era-locked predicates, pseudo-replication, non-replication |
 
 ### Notes that matter more than the numbers
