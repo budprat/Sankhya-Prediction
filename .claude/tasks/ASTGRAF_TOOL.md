@@ -1706,3 +1706,19 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   set them equal. The 0-360 rotation sweep shows the choice has no
   predictive consequence, so the ruling stands untouched — but the two
   should be recorded as distinct, not identified.
+
+## 2026-08-05 — FRAMEWORK section 1b added: the clocks (merged cross-session model)
+- The synthesized mental model both sessions converged on is now doctrine
+  documentation rather than chat: every motion expressed as time-to-cross the
+  author's 1/81-degree cell, using the ENGINE's own mean geocentric apparent
+  motion 2015-20 (Neptune 14.2 h ... Moon 1.35 min ... Earth rotation 2.95 s).
+  Note recorded: geocentric apparent motion INCLUDES retrograde looping, so it
+  exceeds net orbital drift (Neptune 0.021 vs 0.006 deg/day) — the apparent
+  motion is what the chart plots and what a crossing test sees.
+- Section carries: the dwell decode with the Nepal 4.14-min match AND the
+  attribution mismatch (his prose says both giants crossed Ketu; the chart
+  puts real-Ura on the Sun, 26.5 deg away); dwell as a SEVERITY quantity;
+  the 3-second threshold shown vacuous as literally stated; the ~11%
+  optimistic ground distances (111.319 km/deg, 465.1 m/s, 1,374 m cell); and
+  the three-longitude-mechanisms / one-latitude-mechanism asymmetry with the
+  23.71 vs 28.23 gap as the standing question for the author.

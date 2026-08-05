@@ -62,6 +62,53 @@ in the ancients' 120-year observation window Saturn completed 4 cycles,
 Uranus and Neptune not even two, so no empirical calibration was possible
 for them.
 
+## 1b. The clocks — why every number in the doctrine is an Earth-rotation number
+
+Put every motion in one unit: how long it takes to cross the author's smallest
+cell, 1/81 of a degree (0.0123°). Rates are the ENGINE's own mean geocentric
+apparent motion 2015–20 (which includes retrograde looping, so it exceeds the
+net orbital drift — the apparent motion is what the chart plots):
+
+| what moves | °/day | time to cross 1/81° |
+|---|---|---|
+| Neptune | 0.021 | 14.2 hours |
+| Uranus | 0.032 | 9.3 hours |
+| Saturn | 0.069 | 4.3 hours |
+| Rahu / Ketu | 0.053 | 5.6 hours |
+| Jupiter | 0.131 | 2.3 hours |
+| Mars | 0.575 | 30.9 min |
+| Sun | 0.986 | 18.0 min |
+| Moon | 13.174 | 1.35 min |
+| **Earth's rotation (Asc / MC)** | **360.99** | **2.95 s** |
+
+**Nothing in the sky moves at the 3-second scale; only the ground does.** So
+the author's "dwell time more than 3 seconds" cannot be a planet lingering —
+it is Earth turning through a crossing zone. Every quantity in his briefing is
+therefore an Earth-rotation quantity: 1° = 4 min, and 1/81° = 2.96 s.
+
+**Dwell decoded (2026-08-05, both sessions independently).** Dwell = the
+angular span of the crossing complex read at 4 min/°. Nepal: real-Uranus↔Sun
+0.692° (2.77 min) + real-Neptune↔Ketu 0.342° (1.37 min) = 1.034° = **4.14
+min**, against the author's stated "dwell time has been 4 minutes … because
+both Uranus and Neptune crossed Ketu position one after another". The number
+matches; the attribution does not (our chart puts real-Neptune on Ketu and
+real-Uranus on the SUN, 26.5° from Ketu). Consequences: dwell is a SEVERITY
+quantity (wider crossing → longer dwell → bigger event, the falsifiable and
+counterintuitive half of his model), and the 3-second threshold is vacuous as
+literally stated — every crossing inside any usable orb clears 1/81°.
+
+**His ground distances run ~11% optimistic.** 1° at the equator is 111.319 km,
+not 100; the equator moves 465.1 m/s, not 400; the 1/81° cell is 1,374 m, not
+1,234. His arithmetic is otherwise exact (240 s ÷ 81 = 2.963 s).
+
+**The asymmetry that blocks location.** All three corrections he names —
+rotation, ecliptic tilt, light travel — move LONGITUDE. Earth's spin cannot
+move latitude at all. So the construction has three longitude mechanisms and
+exactly one latitude mechanism, declination, which for the located set (the
+four giants) caps at 23.71°N (measured achieved extreme) against Gorkha's
+28.23°N. The 1/81 subdivision is a RESOLUTION, not an origin. Standing
+question for the author: **what supplies the latitude?**
+
 ## 2. The two-layer mechanics of an event
 
 Every worked instance NU has given shares one structure:
