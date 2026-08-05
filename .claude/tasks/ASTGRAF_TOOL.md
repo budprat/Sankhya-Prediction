@@ -1549,3 +1549,29 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   angles/site-angle layer (with its retirement), the galactic reference,
   the ASTROC.GRF oracle, and the single-precision environment note.
 - No code behavior changed (comment-only in locator.py); 239 tests green.
+
+## 2026-08-05 — Tropical-ceiling figures corrected (second pass, independent re-measurement)
+- The 01ea85e per-body table quoted ANALYTIC BOUNDS (obliquity + max|beta|),
+  which are only spent when a body's peak latitude falls at a solstitial
+  longitude — usually it does not. Achieved extremes, engine-measured
+  1900-2030 at 2-day steps: Jupiter +23.52/-23.53 (quoted 24.37), Saturn
+  +22.84/-22.82 (quoted 25.62 — Saturn actually stays BELOW the flat
+  obliquity this era: near lon 90 it sits short of its ~113 node with
+  negative latitude), Uranus +23.71/-23.71 (quoted 24.06), Neptune
+  +22.39/-22.36 (quoted 24.20).
+- Operative ceiling is the LOCATED SET (four giants, the only bodies with
+  light-times): 23.71 deg, beyond which lies 44.4% of the declustered
+  post-1900 corpus (637/1435). The "41.8% beyond Saturn's bound" used a
+  bound no giant reaches; the original "44%" was right for the right reason.
+- MY OWN ERROR, retracted in the same pass: I first reported that Mars
+  (28.90) clears Gorkha and that the no-body claim was false. That used
+  |dec| — Mars's 28.90 extreme is SOUTHERN. Signed northern maxima: Venus
+  +27.82, Mars +27.23, Mercury +25.66. NO body reaches +28.23. The author's
+  no-sub-point-at-Gorkha conclusion HOLDS — on a 0.4 deg margin, not the
+  4.8 deg a flat-23.44 story implies, and only because Mars's deep extreme
+  falls south. Recorded in angles.py so the argument is made on the giants'
+  23.71 ceiling rather than on a claim that nothing gets near 28.
+- Independently re-verified and CONFIRMED: the canon has no lunar latitude
+  series (ASTGRAF.BAS ends the 20-term block at PX = LL + ML, line 311; no
+  sin(F) latitude accumulation), and the port is faithful
+  (ecliptic_latitude assigned only in the planet loop, Moon defaults 0.0).

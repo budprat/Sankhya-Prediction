@@ -3,18 +3,42 @@
 
 # Why this and not the sub-planet spot (NU, 2026-08-05): a body's sub-point has
 # latitude equal to its declination, which is bounded by the obliquity plus the
-# body's own ecliptic latitude. Measured per body: Sun/Moon 23.44 (the tropics
-# proper), Uranus 24.06, Neptune 24.20, Jupiter 24.37, Saturn 25.62 — the most
-# generous body in the located set. Gorkha is 28.23 N, Tohoku 38.3, Alaska
-# 60.9, and 41.8% of the M7+ catalog lies beyond even Saturn's bound.
+# body's own ecliptic latitude. That BOUND is only spent if the body's maximum
+# latitude falls at a solstitial longitude, and it usually does not — so the
+# figures that matter are the ACHIEVED extremes, measured over 1900-2030 at
+# 2-day steps (corrected 2026-08-05, second pass; the first pass quoted the
+# unachieved bounds Ura 24.06 / Nep 24.20 / Jup 24.37 / Sat 25.62):
+#
+#     body       max NORTH    max SOUTH        (degrees of declination)
+#     Sun/Moon      +23.45       -23.45
+#     Jupiter       +23.52       -23.53
+#     Saturn        +22.84       -22.82   <- stays BELOW the flat obliquity:
+#     Uranus        +23.71       -23.71      near lon 90 it sits short of its
+#     Neptune       +22.39       -22.36      node, carrying negative latitude
+#     Mercury       +25.66       -25.87
+#     Venus         +27.82       -27.85
+#     Mars          +27.23       -28.90   <- asymmetric: the deep extreme is
+#                                            SOUTHERN, so it does not help a
+#                                            northern epicenter
+#
+# The located set is the four giants (they alone carry light-times), so the
+# operative ceiling is 23.71 (Uranus) and 44.4% of the declustered post-1900
+# M7+ catalog lies beyond it — the earlier "41.8% beyond Saturn's bound" used
+# a bound no giant reaches.
 # The Moon deserves its own line, because it is the one body that escapes the
 # tropics in the real sky (+-28.6 deg at a major standstill, past Gorkha) — but
 # NOT in this canon: ASTGRAF.BAS's 20-term Brown series builds only ML, a
 # LONGITUDE correction (PX = LL + ML). There is no lunar latitude series in it
 # at all, so the port's Moon sits exactly on the ecliptic and is capped at
 # 23.44 like the Sun. Faithful to the canon, and it means the author's OWN
-# program cannot produce a sub-point at Gorkha's latitude by any body. Whatever
-# his latitude source is, it is not a sub-planet point computed by ASTGRAF.
+# program cannot produce a sub-point at Gorkha's latitude by any body — the
+# conclusion HOLDS, but on a thin margin worth stating honestly: the highest
+# northern sub-point any body reaches is Venus at +27.82, then Mars at +27.23,
+# against Gorkha's 28.23 N. The gap is 0.4 deg, not the 4.8 a flat-23.44 story
+# implies, and it survives only because Mars's deep extreme (-28.90) is
+# SOUTHERN. Whatever his latitude source is, it is not a sub-planet point
+# computed by ASTGRAF — but the argument must be made on the giants' 23.71
+# ceiling (the located set), not on a claim that nothing gets near 28.
 # The taught anchors instead all show the CROSSING PAIR on an angle of
 # the site's own chart, which is the author's own language:
 #   Nepal      Sun 2.00 deg and real-Uranus 2.69 deg from the MC
