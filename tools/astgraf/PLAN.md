@@ -3,15 +3,17 @@
 Status 2026-08-05, end of session. Companion to `FRAMEWORK.md` (the theory),
 `WATCHLIST.md` (registered forward windows), `data/README-floods.md` (the
 flood corpora), and `.claude/tasks/ASTGRAF_TOOL.md` (every ruling, dated).
-247 tests passing.
+248 tests passing, from any working directory.
 
 ## 1. The one-line state
 
 **The engine predicts *when* with tested precision and cannot predict *where*
 at all.** Both halves are measured, not impressions: every taught instant
-reproduces to 1–2 minutes, and six independent location families have been
-built and graded null, each with a power check proving the instrument could
-see the effect it failed to find.
+reproduces to 1–2 minutes, and **eight independent channels have been built
+and graded null** — six location families, the mining channel, the dwell
+doctrine, and now the taught flood signature tested in its own category —
+each with a power check proving the instrument could see the effect it
+failed to find.
 
 ## 2. Closed — do not reopen without new input
 
@@ -93,9 +95,9 @@ and state n = 13 in the pre-registration.
 
 | # | Debt | Impact | Fix |
 |---|---|---|---|
-| 1 | **21 tests fail from the repo root** — trigger/CLI tests open `doctrine-triggers.toml` and friends relative to cwd | Suite only green from `tools/astgraf`; a CI runner at repo root reports false failures | Resolve rule paths relative to the package, not cwd |
+| 1 | ~~21 tests fail from the repo root~~ | — | **CLOSED 2026-08-05**: `triggers._resolve_rules_path` falls back to the package root for bare filenames (explicit paths still raise); the GRF test resolves from `__file__`. 248 pass from both directories |
 | 2 | **HANZE has country-centroid locations only** | No site/point tests on 2,724 of 2,812 flood events | Geocode NUTS-3 → centroid, or find a DFO mirror (its own URLs are HTTP 410 Gone as of 2026-08-05) |
-| 3 | **Flood corpora are not declustered and have no completeness model** | Any test on them is biased toward recent Europe | Port the 7 d / 500 km declustering; build a reporting-rate model before §3.1 |
+| 3 | **Flood corpora ship undeclustered with no completeness model** | Any test on them is biased toward recent Europe (reporting density rises ~12× across the span) | Partially handled: §3.2 declustered in-script (3-day temporal) and used era-matched controls. A reusable declusterer + reporting-rate model is still needed before §3.1 |
 | 4 | **Canon has no lunar latitude** (`PX = LL + ML`, no `sin(F)` series) | Moon declination is identically 0 ecliptic latitude; caps Moon sub-points at 23.44° instead of 28.58° | Not a bug — canon fidelity. Any Moon-declination work needs a clearly-labelled modern addition and an NU ruling |
 | 5 | **Jupiter/Saturn offsets are provisional** (3.3363593021° / 7.8672056771°) | Under rule v3 they set spot longitudes too | **NU ruled 2026-08-05: not needed for now, current values stand.** Parked, not blocking |
 | 6 | **Pre-1582 flood dates are Julian, unconverted** | Medieval rows carry a ~10-day offset | Irrelevant while engine drift already disqualifies pre-1700 events; fix if that ever changes |
