@@ -22,6 +22,7 @@ import random
 import statistics
 from pathlib import Path
 
+from astgraf.validation import Claim
 from astgraf.anchors import chart_at
 from astgraf.locator import _wrap180, equatorial
 
@@ -66,7 +67,38 @@ def nearest(la, lo, jd):
     return min(angsep(la, lo, *subs(jd)[g]) for g in GIANTS)
 
 
+
+# --- Design of record (ported onto the validation framework) ---
+CLAIM = Claim(
+    name="spot-shape-diagnostics",
+    hypothesis="Four structural questions about what SHAPE a location rule "
+               "could have: (1) can a declination->latitude rule reach the "
+               "epicentres at all, (2) do pulse LOCI (antipode, 90 deg great "
+               "circle, 45/135 small circles) escape the latitude ceiling, "
+               "(3) does the best locus survive a stratified permutation, "
+               "(4) does it replicate across split halves.",
+    direction="lower",
+    statistic="fraction of epicentres reachable (1-2); stratified "
+              "permutation p and split-half agreement (3-4)",
+    control="stratified permutation over the AUDITED time-uniform controls — "
+            "each site holds 1 real + 3 control instants and the 'event' "
+            "label is exchangeable among them under no-coupling",
+    corpus="declustered post-1900 M7+ events with epicentres",
+    verdict="p < 0.05 on the best locus AND agreement across 2-year-block "
+            "split halves",
+    power="the loci are circles reaching every latitude, so they are not "
+          "capped the way the sub-point is — a real effect of this shape "
+          "would be visible",
+    preregistered=False,
+    notes="RETROSPECTIVE declaration (2026-08-05 port). Result on record: "
+          "the declination ceiling is structural — 44% of M7+ epicentres lie "
+          "beyond the located giants' reach (23.71 deg N). No locus survives "
+          "both the permutation and split-half replication.",
+)
+
 def main():
+    say(CLAIM.banner())
+    say("")
     random.seed(7)
     with open(DIR / "signatures.csv", newline="") as fh:
         ev = [r for r in csv.DictReader(fh) if r.get("lat")]

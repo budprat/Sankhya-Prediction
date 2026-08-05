@@ -6,8 +6,8 @@ import csv
 import datetime as dt
 from pathlib import Path
 
-from .bands import (BAND_BODIES, find_episodes, find_vyuha_episodes,
-                    parse_event_window, score_events, trigger_state, vyuha_state)
+from .bands import (find_episodes, find_vyuha_episodes, parse_event_window,
+                    score_events, trigger_state, vyuha_state)
 from .ephemeris import compute_raw
 from .grid import label_for_jd
 from .locator import locate

@@ -263,7 +263,7 @@ def test_parse_event_window_handles_catalog_formats(year, month, date, expected)
 
 def test_score_events_hits_and_chance_baseline():
     # One episode Jan 10-12 2014; event A overlaps, event B (March) does not.
-    episodes = find_episodes([], step_days=0.5)  # empty ok
+    assert find_episodes([], step_days=0.5) == []   # no samples -> no episodes
     from astgraf.bands import Episode
     ep = Episode(start_jd=2456667.5, end_jd=2456669.5, start_label="", end_label="",
                  band=4, nakshatra="Rohini", level="disruptive", giants=[])

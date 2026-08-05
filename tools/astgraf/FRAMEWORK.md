@@ -91,8 +91,29 @@ angular span of the crossing complex read at 4 min/°. Nepal: real-Uranus↔Sun
 0.692° (2.77 min) + real-Neptune↔Ketu 0.342° (1.37 min) = 1.034° = **4.14
 min**, against the author's stated "dwell time has been 4 minutes … because
 both Uranus and Neptune crossed Ketu position one after another". The number
-matches; the attribution does not (our chart puts real-Neptune on Ketu and
-real-Uranus on the SUN, 26.5° from Ketu).
+matches; the attribution does not.
+
+**And the contradiction is INTERNAL to the author's own materials — it is not
+our chart disagreeing with him** (verified 2026-08-05 by reading
+`Mathcad-QUAKE.pdf` directly). That document, titled *"A QUICK ANALYSIS TO
+SHOW THAT NEPAL QUAKE IS FROM TWO SIMULTANEOUS EVENTS"*, states both
+crossings explicitly:
+
+> "NEPTUNE in Pisces is behind KETU but is really at 29.09 deg ahead …
+> 339 + 29.09 = 368.7 or 368.7−360 = 8.09 ARIES and CROSSES ecliptic at
+> **8 deg Aries**" — Ketu's own degree.
+>
+> "URANUS in Aries 17.6 deg is really at 17.856 … 17.6 + 17.856 = 35.456 and
+> is crossing the Solar ecliptic at **TAURUS 4.7 deg**" — which is where the
+> **Sun** stands (34.74 = Taurus 4.74), not Ketu.
+
+So the Mathcad says Uranus crosses the SUN and the prose says it crosses
+KETU; they differ by 26.5°, and the engine reproduces the Mathcad
+(real-Neptune↔Ketu 0.3423°, real-Uranus↔Sun 0.6929°, both to three decimals).
+This matters beyond bookkeeping: the 4-minute dwell figure is the SUM of
+those two separations, so the arithmetic the author quotes **only works under
+the Mathcad reading**. The prose attribution is the error, and the dwell
+number is itself evidence against it.
 
 **Dwell GRADED AND CLOSED (2026-08-05) — both halves fail.** The construction
 reproduces; the doctrine built on it does not.
@@ -349,6 +370,9 @@ yet in the right place. It is a finishing step, not a fix.
 | Anchor library (recurrence principle) | `anchors.py`, `anchors.toml`, `astgraf-anchors` (dossiers: fired contacts with minute-refined trigger instants, site Asc timetable, band/vyuha state) | taught minutes reproduced: Hyderabad Asc-Rahu 04:50/Asc-Ketu 17:06 IST (taught ~04:49/~17:04), Ulsoor 06:12/08:21 (taught 06:12/08:20), Nepal real-Ura→Sun exact +18.1 h |
 | Similarity engine + recurrence calendar | `recurrence.py`, `astgraf-recur` (slow pattern = non-Moon doctrine contacts; episodes with minute-refined tightest instants; Moon triggers completed inside episodes; `--category` per Predict.pdf's per-category design; `--composite` also requires the anchor's band/vyuha layers; timing only) | self-recovery: Nepal scan Mar–Jul 2015 → one episode Apr 23–25, 9/9 with the four-giant patterns; vyuham does not re-form in 2017; 2026–28 forward under extended patterns: NO full and NO n−1 episodes (the pre-extension alaska-1964 3/4 row stays registered on the WATCHLIST, annotated) |
 | Forecast register | `WATCHLIST.md` | 19 windows (9 mined: instants+spots; 6 band: instants; 4 nodes: instants+Jupiter spots), outcome protocol |
+| Event-chart atlas (all quake catalogs) | `scripts/quake_atlas.py`, `data/quake-charts-*.csv`, `charts/` | 13,339 charts cast at their epicentres; 4 corpora screened, all null (family-wise p 0.30 / 0.08 / 0.16); deaths-selected and magnitude-selected populations indistinguishable |
+| Long-cycle flood clock | `scripts/flood_clock.py` (pre-registered) | Part 1 NOT ANSWERABLE — 3 clocks separate by ≤14.9° of phase over 0.9 of one cycle; Part 2 p = 0.393 on n = 1 conjunction epoch. Verdict: untested. Needs a systematic catalogue reaching ~1780–1860 (open question 7) |
+| Co-occurrence mining (pairs + triples) | `scripts/pattern_mine_m7.py`, `atlas-patterns.toml` | 1,506 unified M7+ across 3 catalogs, 805 patterns; winner fails independence + split-half, best replicating 1.960 vs null-max median 1.957 |
 | Cos-fold mirror crossing | `aspects.mirror_offset` / `find_mirror_events`, `mirror` rule primitive, `--mirror` | detection verified against GRAPHDO's own fold (Nepal Moon×Saturn 0.067° while 127° apart classically); MINED SIGNAL: none — best of 95 predicates lift 1.72 = the permutation null's median, p = 0.505 (`scripts/mirror_lifts.py`) |
 | Location layer, families ruled out | `scripts/loc_backtest.py`, `scripts/asc_fingerprint.py` | rotation-based spots (4 readings) at chance; Ascendant-based rules excluded, p = 0.12–0.99 conditional and not |
 | Long-cycle families | `families.py`, `families.toml`, `astgraf-families` (conjunction series with canon sectors, member-return flags) + conjunction rules in `doctrine-triggers.toml` | taught members reproduce: 1881→Aswini, 2000→Kritika; forward: 2040 conj in Chitra (NOT a member sector), next member-sector return 2060 Kritika; 1941 Bharani triple = unexamined candidate; Ura-Nep 1993 triple all in Poorvashada (next ~2165) |
@@ -448,6 +472,7 @@ yet in the right place. It is a finishing step, not a fix.
 - `PLAN.md` — current state, method rulings, next actions, what is blocked on NU.
 - `RESULTS.md` — the evidence ledger: every graded claim with its numbers.
 - `TESTING.md` — the two test layers: engine fidelity to the BAS canon, and the claim-grading framework (`validation.py`).
+- `QUAKE-ATLAS.md` — 13,339 event charts across every quake catalog, and every pattern they surface, graded.
 - `doctrine-triggers.toml` / `mined-triggers.toml` / `observed-triggers.toml` — rules as data by provenance: NU's taught rules; mined candidates (the three RETIRED 2026-08-02, windows stay graded); observed single-chart promotions in TESTING status (NU ruling 2026-08-04).
 - `anchors.toml` — the anchor library (recurrence principle); `astgraf-recur` episodes register on the WATCHLIST.
 - `families.toml` — the long-cycle families (nakshatra-sector recurrence); `astgraf-families` computes the conjunction calendars.

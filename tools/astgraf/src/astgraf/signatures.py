@@ -11,6 +11,7 @@ from .ephemeris import compute_raw
 from .grid import label_for_jd
 from .locator import LIGHT_MINUTES, locate
 from .models import ChartResult
+from .validation import smoothed_lift
 
 # Controls are a TIME-UNIFORM grid over the corpus span (audit batch 3): the
 # old -912/+456/+1368 offsets were aliased with the scanned pairs' alignment
@@ -201,9 +202,9 @@ def mine_lifts(events: list[dict], controls: list[dict],
             control_hits = sum(1 for s in controls if hit(s))
             control_rate = control_hits / len(controls) if controls else 0.0
             # Add-one smoothed lift (audit finding 53): zero control hits must
-            # not rank as infinite evidence.
-            lift = (((event_hits + 1) / (len(events) + 2))
-                    / ((control_hits + 1) / (len(controls) + 2)))
+            # not rank as infinite evidence. One implementation, in validation.
+            lift = smoothed_lift(event_hits, len(events),
+                                 control_hits, len(controls))
             results.append({"predicate": f"{key}@{aspect}", "event_hits": event_hits,
                             "event_rate": round(event_rate, 4),
                             "control_rate": round(control_rate, 4),

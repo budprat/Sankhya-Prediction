@@ -25,6 +25,7 @@ import random
 import statistics
 from pathlib import Path
 
+from astgraf.validation import Claim
 from astgraf.anchors import refine_exactness
 from astgraf.angles import angles_from_chart, body_longitudes, site_chart
 from astgraf.bands import BAND_BODIES
@@ -35,10 +36,22 @@ OUT = BASE / "out" / "angle-grade" / "summary.txt"
 
 K_CONTROLS = 49          # rank resolution 1/50 = 2%
 # The BAS cusp chain sets xx = sin(RA)*tan(obliquity)*tan(lat) and then takes
-# sqrt(1 - xx*xx), so it is undefined once tan(lat) >= 1/tan(23.44 deg) = 2.305
-# — i.e. beyond the polar circle, 66.56 deg. That is a property of the canon
-# routine, not of this script, so places past it are excluded from BOTH arms
-# and the exclusion is reported. The angles simply do not exist up there.
+# sqrt(1 - xx*xx), so it is undefined once |xx| >= 1. Places past that are
+# excluded from BOTH arms and the exclusion is reported — a property of the
+# canon routine, not of this script.
+#
+# TWO CORRECTIONS to the reasoning as first written (2026-08-05, measured):
+#   * The threshold is NOT the fixed 66.56 deg quoted here originally. That
+#     figure assumes sin(RA) = 1; because RA moves with sidereal time the real
+#     limit depends on the INSTANT as well as the place (at RA 120 the chain
+#     is fine at 67 N and fails at 70). 66.56 is the WORST CASE, i.e. the
+#     latitude below which the chain is defined at every RA.
+#   * "The angles simply do not exist up there" was wrong. The Ascendant and
+#     the MC remain defined past the limit — measured at 85 N, both compute.
+#     Only the twelve cusps do not. See angles.POLAR_SAFE_LIMIT.
+# POLAR_LIMIT stays at the conservative 66.0 deliberately: it is what the
+# recorded grading used, it excludes symmetrically from events and controls,
+# and loosening it would move a published result for one event in 1,548.
 POLAR_LIMIT = 66.0
 ORBS = (3.0, 1.0)
 REAL_GIANTS = ("Jupiter", "Saturn", "Uranus", "Neptune")
@@ -102,7 +115,35 @@ def rank_report(name: str, ranks: list[int], k: int) -> dict:
             "z": round(z, 2)}
 
 
+
+# --- Design of record (ported onto the validation framework) ---
+CLAIM = Claim(
+    name="site-angle-location",
+    hypothesis="An event stands where the crossing pair sits on an ANGLE "
+               "(Asc/Desc/MC/IC) of the site's own chart — so the true "
+               "epicentre should show a tighter body-to-angle separation than "
+               "other real epicentres do at the same instant.",
+    direction="lower",
+    statistic="mean rank of the true epicentre among 1 + K control places "
+              "(uniform under the null), reported as a z",
+    control="place — 49 leave-one-out epicentres per event at the SAME "
+            "instant, drawn from the corpus so the controls inherit the "
+            "geography of seismicity exactly",
+    corpus="1,434 declustered post-1900 M7+ events carrying epicentres",
+    verdict="z < -3.0 (the multiplicity bar for 15 bodies scored)",
+    power="scripts/angle_power.py plants epicentres on a chosen body's angle "
+          "and re-runs the identical rank machinery under jitter",
+    preregistered=False,
+    notes="RETROSPECTIVE declaration (2026-08-05 port). Result on record: "
+          "best body Mars z = -2.27; the SPECIFIED form z = -0.35 at the "
+          "catalog instant and +1.20 at the crossing exactness instant; "
+          "family p = 0.25. Power arm recovered a planted signal at "
+          "z = -17.9 (MC) / -17.1 (Asc), so the null is not blindness.",
+)
+
 def main() -> None:
+    say(CLAIM.banner())
+    say("")
     with open(SIG, newline="") as fh:
         located = [r for r in csv.DictReader(fh) if r.get("lat") and r.get("lon")]
     rows = [r for r in located if abs(float(r["lat"])) <= POLAR_LIMIT]
@@ -111,8 +152,9 @@ def main() -> None:
     say(f"site-angle location grading — {len(rows)} declustered post-1900 M7+ "
         f"events with epicenters (out/signatures-m7-v2)")
     say(f"excluded {len(located) - len(rows)} of {len(located)} for |lat| > "
-        f"{POLAR_LIMIT} deg: past the polar circle the BAS cusp chain is "
-        "undefined, so the angles do not exist there for events OR controls")
+        f"{POLAR_LIMIT} deg: the BAS cusp chain is undefined there, for "
+        "events AND controls alike (conservative fixed bound; the true limit "
+        "moves with sidereal time — see angles.POLAR_SAFE_LIMIT)")
     say(f"controls: {K_CONTROLS} leave-one-out epicenters per event at the SAME "
         "instant (seismicity geography matched by construction)")
 

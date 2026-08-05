@@ -119,3 +119,39 @@ def test_rank_statistic_can_detect_a_planted_location_signal():
     # and an unplanted place lands mid-pack, so the statistic is calibrated
     mean_chance = statistics.mean((r - 1) / len(pool) for r in chance_ranks)
     assert 0.25 < mean_chance < 0.75
+
+
+# --- the polar domain limit (2026-08-05) -----------------------------------
+
+def test_polar_limit_raises_a_named_error_not_a_bare_domain_error():
+    # Before this, a high-latitude site produced "ValueError: math domain
+    # error" from deep inside the cusp chain, which tells a caller nothing.
+    from astgraf.angles import PolarChartError, site_chart
+    import pytest as _pytest
+    with _pytest.raises(PolarChartError, match="cusp chain is undefined"):
+        site_chart(2457137.5, 85.0, 0.0)
+
+
+def test_polar_limit_is_ra_dependent_not_a_fixed_latitude():
+    # xx = sin(RA)*tan(obliquity)*tan(lat), so the failing latitude MOVES with
+    # sidereal time. A fixed-latitude guard is wrong in both directions: it
+    # passes failing charts at low RA and rejects computable ones above 66.56.
+    from astgraf.angles import POLAR_SAFE_LIMIT, angles_defined_at
+    # Guaranteed-safe band: defined at every instant across a whole day.
+    for hours in range(0, 24, 3):
+        assert angles_defined_at(2457137.5 + hours / 24, POLAR_SAFE_LIMIT - 1.0, 0.0)
+    # Above the safe limit the answer genuinely varies with the instant.
+    outcomes = {angles_defined_at(2457137.5 + h / 24, 70.0, 0.0)
+                for h in range(0, 24)}
+    assert outcomes == {True, False}, (
+        "70N should be computable at some sidereal times and not others; "
+        f"got {outcomes}")
+
+
+def test_angle_helpers_degrade_instead_of_crashing_at_the_pole():
+    # A sweep over real epicentres must survive the corpus's Arctic events.
+    from astgraf.angles import angles_at, bodies_on_angles
+    assert angles_at(2457137.5, 85.0, 0.0) is None
+    assert bodies_on_angles(2457137.5, 85.0, 0.0) == []
+    # ...and still work normally below the limit.
+    assert angles_at(2457137.5, 28.23, 84.73) is not None

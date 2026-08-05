@@ -50,7 +50,8 @@
 import csv
 import random
 
-from astgraf.anchors import contacts_at, iso_jd
+from astgraf.validation import Claim
+from astgraf.anchors import contacts_at
 from astgraf.ephemeris import julian_day_number
 from astgraf.signatures import decluster
 
@@ -86,7 +87,29 @@ def mean_pairwise_jaccard(sets):
     return tot / n if n else 0.0
 
 
+
+# --- Design of record (ported onto the validation framework) ---
+CLAIM = Claim(
+    name="deadliest-shared-structure",
+    hypothesis="The deadliest earthquakes share fired-contact structure with "
+               "one another more than magnitude-selected events do — the "
+               "doctrine speaks about catastrophe, not seismic moment.",
+    direction="higher",
+    statistic="mean pairwise Jaccard similarity of fired-contact sets",
+    control="same-size samples drawn from the magnitude-selected corpus",
+    corpus="deaths-selected tier of data/quakes-historical.csv, "
+           "date_precision in (minute, day), year >= 1700 (n = 12)",
+    verdict="observed mean similarity above the null's 95th percentile",
+    power="UNDERPOWERED BY CONSTRUCTION at n = 12; stated in advance",
+    notes="Result on record: null. Superseded by the 1,553-event "
+          "deaths-selected atlas run (QUAKE-ATLAS.md Result 2), which found "
+          "deaths- and magnitude-selected populations indistinguishable.",
+    preregistered=True,
+)
+
 def main():
+    print(CLAIM.banner())
+    print()
     rows = list(csv.DictReader(open(HIST)))
     deadliest = [r for r in rows
                  if r["tier"] == "deadliest"

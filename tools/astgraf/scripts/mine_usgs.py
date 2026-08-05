@@ -2,10 +2,39 @@
 # ABOUTME: 2-year-block split, smoothed lifts, and a permutation-calibrated verdict.
 import csv
 
+from astgraf.validation import Claim
 from astgraf.signatures import (mine_lifts, pair_keys, permutation_max_lift,
                                 run_corpus)
 
 BLOCK_DAYS = 730.5      # split blocks: 2 years >= slow-aspect episode length
+
+
+# --- Design of record (ported onto the validation framework) ---
+CLAIM = Claim(
+    name="inverse-mining-v2",
+    hypothesis="Some aspect predicate over the doctrine's body set (including "
+               "the four giants' real positions) fires at M7+ instants more "
+               "often than at ordinary instants.",
+    direction="higher",
+    statistic="add-one smoothed lift; family-wise MAXIMUM lift over the "
+              "screened predicate space",
+    control="time-uniform grid over the corpus span, 3 per event — a "
+            "golden-ratio low-discrepancy sequence, NOT a uniform stride "
+            "(a strict stride aliased with the lunar cycle and faked p = 0)",
+    corpus="USGS M7+ 1850-2020, post-1900, declustered 7d/500km (n = 1,435) "
+           "vs 4,305 controls; 380 predicates",
+    verdict="observed max lift above the permutation null's 95th percentile",
+    power="a planted predicate is recovered at p < 0.05",
+    preregistered=False,
+    notes="RETROSPECTIVE declaration (2026-08-05 port). Result on record: "
+          "observed max lift 1.705 vs null median 1.753 (95th pct 2.215), "
+          "p = 0.665. NO survivors; the three mined rules were RETIRED "
+          "2026-08-02 and their windows remain graded as a falsifiable "
+          "experiment. Also reports 2-year-block split-half replication.",
+)
+
+print(CLAIM.banner())
+print()
 
 ne, nc = run_corpus("data/usgs-m7-1850-2020.csv", "out/signatures-m7-v2",
                     decluster_events=True, min_year=1900)

@@ -13,22 +13,53 @@ def test_claim_requires_its_full_design_up_front():
     ok = Claim(name="x", hypothesis="events carry P more than controls",
                direction="higher", statistic="smoothed lift",
                control="era-matched", verdict="p < 0.05 and lift > 1",
-               power="plant P into 2/5/10% of events", corpus="n=100 declustered")
+               power="plant P into 2/5/10% of events", corpus="n=100 declustered",
+               preregistered=True)
     assert ok.registered_at is None      # stamped only when it is run
     for missing in ("hypothesis", "direction", "statistic", "control",
                     "verdict", "power", "corpus"):
         kwargs = dict(name="x", hypothesis="h", direction="higher",
                       statistic="s", control="c", verdict="v", power="p",
-                      corpus="n")
+                      corpus="n", preregistered=True)
         kwargs[missing] = ""
         with pytest.raises(ValueError, match=missing):
             Claim(**kwargs)
 
 
+def test_claim_must_state_whether_it_was_preregistered():
+    # A retrospective design is a legitimate record but NOT evidence of the
+    # same weight. The distinction has to be impossible to omit, otherwise a
+    # design written after its result reads exactly like one written before.
+    base = dict(name="x", hypothesis="h", direction="higher", statistic="s",
+                control="c", verdict="v", power="p", corpus="n")
+    with pytest.raises(ValueError, match="preregistered"):
+        Claim(**base)                     # omitted entirely
+    with pytest.raises(ValueError, match="preregistered"):
+        Claim(**base, preregistered="yes")   # a truthy string is not a bool
+    assert "PRE-REGISTERED" in Claim(**base, preregistered=True).banner()
+    assert "RETROSPECTIVE" in Claim(**base, preregistered=False).banner()
+
+
+def test_report_flags_an_unregistered_positive_as_a_lead():
+    # The failure mode this guards: an exploratory screen returns p < 0.05 and
+    # gets quoted as a finding. RESULTS.md #13 is exactly that situation.
+    c = Claim(name="x", hypothesis="h", direction="higher", statistic="lift",
+              control="c", verdict="p < 0.05", power="p", corpus="n",
+              preregistered=False)
+    from astgraf.validation import report
+    text = report(c, observed=2.5, p=0.001, power=[])
+    assert "SUPPORTED" in text and "LEAD, not a finding" in text
+    c2 = Claim(name="x", hypothesis="h", direction="higher", statistic="lift",
+               control="c", verdict="p < 0.05", power="p", corpus="n",
+               preregistered=True)
+    assert "LEAD, not a finding" not in report(c2, 2.5, 0.001, [])
+
+
 def test_claim_rejects_an_unknown_direction():
     with pytest.raises(ValueError, match="direction"):
         Claim(name="x", hypothesis="h", direction="sideways", statistic="s",
-              control="c", verdict="v", power="p", corpus="n")
+              control="c", verdict="v", power="p", corpus="n",
+              preregistered=True)
 
 
 def test_era_matched_controls_hold_the_epoch_and_exclude_the_event():

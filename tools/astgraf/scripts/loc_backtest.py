@@ -18,6 +18,7 @@ import random
 import statistics
 from pathlib import Path
 
+from astgraf.validation import Claim
 from astgraf.anchors import chart_at, iso_jd, jd_iso_minute, refine_exactness
 from astgraf.bands import REAL_POSITION_OFFSETS
 from astgraf.locator import _wrap180, equatorial, light_minutes_for, locate
@@ -38,7 +39,35 @@ def say(msg: str) -> None:
     lines.append(msg)
 
 
+
+# --- Design of record (ported onto the validation framework) ---
+CLAIM = Claim(
+    name="rotation-spot-location",
+    hypothesis="The light-time rotation rule puts the event's marker at the "
+               "epicentre: the acting giant's rotated sub-planet point should "
+               "land closer to the true epicentre than chance allows.",
+    direction="lower",
+    statistic="median great-circle distance from the located spot to the "
+              "true epicentre, and the fraction within 1,000 km",
+    control="shuffled null — spots re-paired at random with epicentres, "
+            "preserving both marginal distributions",
+    corpus="declustered post-1900 M7+ events from out/signatures-m7-v2; four "
+           "spot conventions tested (event-instant, doctrine-conditional, "
+           "Nepal anchor at exactness, and the scalar-pulse no-rotation form)",
+    verdict="observed median materially below the shuffled null",
+    power="the same statistic recovers a planted rotation in "
+          "scripts/rotation_spectrum.py at z = -64, so the machinery can see "
+          "a real propagation effect",
+    preregistered=False,
+    notes="RETROSPECTIVE declaration (2026-08-05 port). Result on record: "
+          "4,876 km observed vs 4,982 km shuffled; 3.3% within 1,000 km vs "
+          "3.0% null. At chance on every convention. This is the honest "
+          "prior behind every registered spot on the WATCHLIST.",
+)
+
 def main() -> None:
+    say(CLAIM.banner())
+    say("")
     with open(SIG, newline="") as fh:
         rows = [r for r in csv.DictReader(fh)
                 if r.get("lat") and r.get("lon")]

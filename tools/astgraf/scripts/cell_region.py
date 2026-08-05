@@ -52,6 +52,7 @@ import csv
 import math
 import random
 
+from astgraf.validation import Claim
 from astgraf.anchors import chart_at
 from astgraf.bands import BAND_BODIES, division_of
 from astgraf.ephemeris import julian_day_number
@@ -82,7 +83,29 @@ def resultant(vecs):
     return math.sqrt(sx * sx + sy * sy + sz * sz) / n
 
 
+
+# --- Design of record (ported onto the validation framework) ---
+CLAIM = Claim(
+    name="cell-region-table",
+    hypothesis="Each of the 28x11 matrix cells accumulates confirmed event "
+               "synchronisation from particular AREAS — the author's own "
+               "learned-table design, which escapes the declination ceiling "
+               "structurally because it is not a geometric construction.",
+    direction="higher",
+    statistic="spherical resultant R of the epicentres of a cell's firings",
+    control="place — 500 epicentre shuffles across cells",
+    corpus="1,435 declustered post-1900 M7+ mainshocks; 302 cells with n >= 15",
+    verdict="max R above the null's 95th percentile",
+    power="plant a 30% region preference into a real cell and confirm recovery",
+    notes="Result on record: max R 0.699 vs null 0.662, p = 0.166. Power: a "
+          "30% plant lifts the cell to R 0.777, above the null's 95th of "
+          "0.742, p = 0.000.",
+    preregistered=True,
+)
+
 def main():
+    print(CLAIM.banner())
+    print()
     with open(CATALOG, newline="") as fh:
         rows = [r for r in csv.DictReader(fh)
                 if r.get("time") and r.get("latitude") and r.get("longitude")
@@ -114,7 +137,7 @@ def main():
     scored = sorted(((resultant(v), k, len(v)) for k, v in qualifying.items()),
                     reverse=True)
     obs = scored[0][0]
-    print(f"\ntop 8 cells by concentration R:")
+    print("\ntop 8 cells by concentration R:")
     for R, k, n in scored[:8]:
         print(f"  {k[0]:<9} band {k[1]:>2}   n {n:>4}   R {R:.4f}")
 

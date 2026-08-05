@@ -35,6 +35,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 # Must follow the sys.path insert.
 from angle_grade import acting_contacts  # noqa: I001,F401
+from astgraf.validation import Claim
 from astgraf.angles import body_longitudes, site_chart
 
 BASE = Path(__file__).resolve().parent.parent
@@ -123,7 +124,37 @@ def perm_p_means(a, b, rng, n_perm=N_PERM):
     return obs, hits / n_perm
 
 
+
+# --- Design of record (ported onto the validation framework) ---
+CLAIM = Claim(
+    name="dwell-doctrine",
+    hypothesis="The author's dwell reading (sum of active crossing "
+               "separations x 4 min/deg) has two separable halves: events "
+               "carry MORE dwell than ordinary instants (trigger half), and "
+               "wider crossings drive BIGGER events (magnitude half).",
+    direction="higher",
+    statistic="trigger half: mean dwell difference, events vs controls. "
+              "magnitude half: Spearman rho of dwell against magnitude",
+    control="time-uniform controls over the corpus span (the climatology), "
+            "3 per event, from out/signatures-m7-v2",
+    corpus="declustered post-1900 M7+ events; the magnitude arm inspects "
+           "four taught-giant / orb cells",
+    verdict="p < 0.05 with the predicted sign, family-wise across the four "
+            "correlation cells",
+    power="inject a known rank correlation into the same cell and confirm "
+          "recovery; 12 draws per target",
+    preregistered=False,
+    notes="RETROSPECTIVE declaration (2026-08-05 port). Result on record: "
+          "trigger half VACUOUS (3 s IS 1/81 deg, so every in-orb crossing "
+          "clears it) and null (+0.054 min at orb 3, p = 0.42, sign reverses "
+          "at orb 1). Magnitude half rho = +0.322 (n = 44), family-wise "
+          "p = 0.042 — then DIED on pre-registered held-out M6.0-6.99 "
+          "(rho = -0.040, p = 0.77). See scripts/dwell_holdout.py.",
+)
+
 def main() -> None:
+    say(CLAIM.banner())
+    say("")
     with open(DIR / "signatures.csv", newline="") as fh:
         rows = list(csv.DictReader(fh))
     with open(DIR / "controls.csv", newline="") as fh:

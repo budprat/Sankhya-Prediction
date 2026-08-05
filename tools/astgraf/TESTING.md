@@ -84,8 +84,19 @@ Claim(name="flood-neptune-ketu",
       control="era-matched, 5 per event, ±365 d excluding ±7 d",
       corpus="1,886 declustered day-precision flood events ≥1700",
       verdict="p < 0.05 and lift > 1",
-      power="plant the predicate into 10/5/2% of events")
+      power="plant the predicate into 10/5/2% of events",
+      preregistered=True)
 ```
+
+**`preregistered` has no default and must be stated.** A design written down
+after its result is known is a legitimate record, but it is not evidence of
+the same weight — and a retrospective declaration that silently reads like a
+pre-registration is the precise failure this framework exists to prevent.
+`True` is honest only when the design was committed to version control
+*before* the run, where the git timestamp can be checked. `banner()` prints
+the status on every run, and `report()` appends an explicit
+**"this is a LEAD, not a finding"** caution to any *positive* result carrying
+`preregistered=False`.
 
 The design is then committed to git **before the script is run**, so the
 timestamps are auditable. (Verifiable example: the cell-region design was
@@ -141,13 +152,45 @@ The band trigger's lift of 1.804 rests on 12 firings against 7.0 expected —
 - **Every ruling and its date** — `.claude/tasks/ASTGRAF_TOOL.md`.
 - **Forward windows** — `WATCHLIST.md`, graded by `astgraf-outcomes`.
 
-## Known debt in the test estate
+## The test estate — all twelve graded claims now run through the framework
 
-The seven claims graded before this framework existed (`angle_grade.py`,
-`asc_fingerprint.py`, `dwell_grade.py`, `loc_backtest.py`, `mine_usgs.py`,
-`mirror_lifts.py`, `rotation_spectrum.py`, `spot_hypotheses.py`) carry their
-designs in prose headers rather than `Claim` objects, and were not
-pre-registered before running. Their results stand — each was
-adversarially audited and power-checked — but they are **weaker evidence than
-the four that followed the protocol**, and `RESULTS.md` should be read with
-that distinction in mind. Porting them to `Claim` is open work.
+**Closed 2026-08-05.** Every grading script in the project constructs a
+`Claim` and prints its banner when it runs. There is no longer a script whose
+design lives only in prose. Sixteen scripts, six of them pre-registered.
+
+| Script | Claim | Pre-registered |
+|---|---|---|
+| `band_trigger_grade.py` | `band-trigger-m7` | ✅ |
+| `band_trigger_m6.py` | `band-trigger-m6` | ✅ |
+| `cell_region.py` | `cell-region-table` | ✅ |
+| `flood_signature.py` | `flood-neptune-ketu` | ✅ |
+| `deadliest_structure.py` | `deadliest-shared-structure` | ✅ |
+| `flood_clock.py` | `flood-uranus-neptune-clock` | ✅ |
+| `angle_grade.py` | `site-angle-location` | ❌ retrospective |
+| `asc_fingerprint.py` | `ascendant-location-family` | ❌ retrospective |
+| `dwell_grade.py` | `dwell-doctrine` | ❌ retrospective |
+| `loc_backtest.py` | `rotation-spot-location` | ❌ retrospective |
+| `mine_usgs.py` | `inverse-mining-v2` | ❌ retrospective |
+| `mirror_lifts.py` | `cos-fold-mirror-mining` | ❌ retrospective |
+| `rotation_spectrum.py` | `rotation-spectrum` | ❌ retrospective |
+| `spot_hypotheses.py` | `spot-shape-diagnostics` | ❌ retrospective |
+| `quake_atlas.py` | `quake-atlas-screen` | ❌ exploratory |
+| `pattern_mine_m7.py` | `m7-pattern-mine` | ❌ exploratory |
+
+**The port changed no result.** Every one of the eight retrospective scripts
+was run before and after and its output diffed line by line: all eight are
+byte-identical apart from the added banner. Their `Claim` transcribes the
+design from the script's own prose header — it does not idealise it — and each
+carries its result in `notes` so the record is self-describing.
+
+**One implementation of the statistic.** The add-one smoothed lift had been
+copy-pasted into six places with identical arithmetic. All now call
+`validation.smoothed_lift`, including `signatures.mine_lifts`. Identical
+formula, so no number moved; the point is that there is now one place to
+audit.
+
+The honest residue: the eight retrospective claims are still **weaker evidence
+than the pre-registered five**, exactly as before. Declaring a design after
+the fact does not make it a pre-registration, and the `preregistered` flag
+exists so that distinction survives in the code rather than in a footnote
+someone has to remember.

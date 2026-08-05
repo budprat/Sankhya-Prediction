@@ -51,6 +51,7 @@
 import csv
 import random
 
+from astgraf.validation import Claim, smoothed_lift
 from astgraf.anchors import chart_at
 from astgraf.bands import GIANTS, circular_spread, division_of
 from astgraf.ephemeris import julian_day_number
@@ -121,8 +122,8 @@ def predicates(jd):
     return p1, p2, (p1 and esc)
 
 
-def lift(e, n_e, c, n_c):
-    return ((e + 1) / (n_e + 2)) / ((c + 1) / (n_c + 2))
+def lift(e, n_e, c, n_c):                  # one implementation, in validation
+    return smoothed_lift(e, n_e, c, n_c)
 
 
 def grade(name, events, note=""):
@@ -186,7 +187,28 @@ def grade(name, events, note=""):
               f"p = {sum(1 for v in pn if v >= L)/500:.4f}")
 
 
+
+# --- Design of record (ported onto the validation framework) ---
+CLAIM = Claim(
+    name="band-trigger-m7",
+    hypothesis="Events carry the Moon-Ketu-Mars band coincidence more often "
+               "than era-matched instants do.",
+    direction="higher",
+    statistic="add-one smoothed lift on P1 (trio spread <= one band span)",
+    control="era-matched, 5 per event, +-365 d excluding +-7 d, seed 42",
+    corpus="1,435 declustered M7+ at exact instants (primary) + 1,886 "
+           "declustered day-precision floods (secondary, indicative only)",
+    verdict="p < 0.05 and lift > 1",
+    power="plant the predicate into 10/5/2% of events",
+    notes="Result on record: lift 1.804, p = 0.069 — fails the bar, resting "
+          "on 12 firings vs 7.0 expected (1.4 sigma). Floods point the other "
+          "way (0.937). Settled by scripts/band_trigger_m6.py: null.",
+    preregistered=True,
+)
+
 def main():
+    print(CLAIM.banner())
+    print()
     grade("QUAKES M7+ (PRIMARY — exact instants)", quake_jds())
     grade("FLOODS (SECONDARY — nominal 12:00 UTC)", flood_jds(),
           note="[Moon +-6.6 deg uncertain: indicative only]")

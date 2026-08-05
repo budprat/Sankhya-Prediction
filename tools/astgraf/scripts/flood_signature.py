@@ -55,9 +55,9 @@
 # ==========================================================================
 
 import csv
-import math
 import random
 
+from astgraf.validation import Claim, smoothed_lift
 from astgraf.anchors import chart_at
 from astgraf.bands import real_longitude
 from astgraf.ephemeris import julian_day_number
@@ -114,11 +114,34 @@ def load_events():
     return [jd(r) for r in kept], len(use)
 
 
-def lift(e_hits, n_e, c_hits, n_c):
-    return ((e_hits + 1) / (n_e + 2)) / ((c_hits + 1) / (n_c + 2))
+def lift(e_hits, n_e, c_hits, n_c):        # one implementation, in validation
+    return smoothed_lift(e_hits, n_e, c_hits, n_c)
 
+
+
+# --- Design of record (ported onto the validation framework) ---
+CLAIM = Claim(
+    name="flood-neptune-ketu",
+    hypothesis="Flood dates carry the taught Neptune-on-Ketu contact more "
+               "often than instants drawn from the same era do — the first "
+               "test of a taught rule in the category it was TAUGHT in.",
+    direction="higher",
+    statistic="add-one smoothed lift",
+    control="era-matched, 5 per event, +-365 d excluding +-7 d",
+    corpus="1,886 declustered day-precision flood events >= 1700, vs 9,430 "
+           "era-matched controls",
+    verdict="p < 0.05 and lift > 1",
+    power="plant the predicate into 10/5/2% of events",
+    notes="Result on record: lift 1.012, p = 0.57 — exactly on the null "
+          "median. No secondary variant survives multiplicity (family max "
+          "1.353, p = 0.38). Power: a 2% plant gives lift 2.22 at p = 0.0000. "
+          "This spent the 'wrong category' excuse.",
+    preregistered=True,
+)
 
 def main():
+    print(CLAIM.banner())
+    print()
     events, raw = load_events()
     rng = random.Random(SEED)
     controls = []          # controls[i] = list of jds era-matched to events[i]

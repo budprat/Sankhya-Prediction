@@ -5,7 +5,7 @@ work, `.claude/tasks/ASTGRAF_TOOL.md` the dated chronology. **This file is the
 scoreboard**: what has been tested, how, and what it found — positive and
 negative in one place, so neither can be quoted without the other.
 
-Last updated 2026-08-05. 248 tests passing from any working directory.
+Last updated 2026-08-05. 263 tests passing from any working directory.
 
 ---
 
@@ -43,7 +43,7 @@ than demonstrated.
 
 ## Part 2 — What has been graded and failed
 
-Nine channels. **Every one carries a power check** proving the instrument
+**Fourteen channels.** Every one carries a power check proving the instrument
 could detect the effect it did not find; a null without demonstrated power is
 silence, not evidence.
 
@@ -59,20 +59,45 @@ silence, not evidence.
 | 8 | **Dwell doctrine** | trigger half + magnitude half | trigger **vacuous** (3 s *is* 1/81°, so every in-orb crossing clears it); magnitude ρ = +0.32 on M7+ then **ρ = −0.040, p = 0.77** on pre-registered held-out M6.0–6.99 | injected ρ = 0.32 recovered 12/12 |
 | 9 | **Taught flood signature** (Neptune on Ketu, in its *own* category) | 1,886 declustered flood events, 9,430 era-matched controls | **lift 1.012, p = 0.57** — on the null median | 2% plant → lift 2.22, p = 0.000 |
 | 10 | **Predict.pdf's band trigger** (its headline claim) | 1,435 quakes at exact instants + 1,886 floods, era-matched controls | **lift 1.804, p = 0.069** — fails the pre-registered bar. Floods point the other way (0.937) | 2% plant → lift 5.69, p = 0.000 |
+| 11 | **Band trigger on held-out M6.0–6.99** (the settling test) | 10,324 declustered events, era-matched controls, pre-registered and committed before running | **lift 0.915, p = 0.76 — wrong direction.** P2 grid 0.759, P3 escalated 1.091; family-wise p = 1.00 | 2% plant → lift 5.75, p = 0.000 |
+| 12 | **Full-vocabulary screen, epicenter charts** | 1,435 M7+, 4,305 era-matched controls, 524 predicates incl. band occupancy | best lift 1.665 vs permutation-max null median 1.609, **family-wise p = 0.302** | 2% plant → lift 3.22, p = 0.000 |
+| 14 | **Flood long-cycle clock** (`PLAN` §3.1) | HANZE 2,724 day-precision floods 1871–2025, detrended vs a 51-y moving average, circular-shift null | Part 1 **not answerable**: 3 candidate clocks separate by ≤ 14.9° of phase over 0.9 of one cycle. Part 2 **p = 0.393**, rank 49/123 | **n = 1 conjunction epoch** — the binding limit, registered in advance |
+| 13 | **Co-occurrence mine** (pairs + triples — the doctrine's actual shape) | 1,506 unified M7+ across 3 catalogs, 805 patterns | family-wise p = 0.010 but the winner has **3 epochs** and split-half **1.00/3.39**; best replicating pattern 1.960 vs null-max median 1.957 | 3 artifacts found and fixed: era-locked predicates, pseudo-replication, non-replication |
 
 ### Notes that matter more than the numbers
 
-**#8, #9 and #10 each closed an excuse.** Before them it could fairly be said
-that (a) the doctrine had never been tested on held-out data, (b) flood rules
-had only ever been graded against an earthquake catalogue, and (c) the
-author's headline rule had been scored against just 31 episodes. All three
-are now spent.
+**Five excuses have now been closed, in order.** Before them it could fairly
+be said that (a) the doctrine had never been tested on held-out data, (b)
+flood rules had only ever been graded against an earthquake catalogue, (c)
+the author's headline rule had been scored against just 31 episodes, (d) the
+corpus was magnitude-selected while the doctrine speaks about *catastrophe*,
+and (e) every screen had tested single predicates while the taught patterns
+are conjunctions of conditions. #8–#13 spend all five.
 
-**#10 is the only one that is merely underpowered rather than refuted.** Its
-whole result rests on **12 firings against 7.0 expected — a 1.4 σ excess**.
-The predicate is rare (0.84% of events), so a 1,435-event corpus still yields
-single digits. If the 1.80 lift were real: n ≈ 3,000 → 2.3 σ, n ≈ 6,000 →
-3.2 σ, n ≈ 12,000 → 4.6 σ. **This one is decidable with data alone.**
+**#13 is the one that nearly got away.** It returned family-wise p = 0.0067 —
+the first result in this project to clear a bar — and was wrong three times
+over: an era-locked predicate the controls could not decorrelate, 17 events
+in three epochs, and a winner living entirely in one split-half. Each failure
+is now a permanent guard (method rulings 7–9 below). The episode is the
+strongest argument in this file for why the machinery exists.
+
+**#10 was the only one merely underpowered rather than refuted — and #11
+settled it.** Its result rested on 12 firings against 7.0 expected, a 1.4 σ
+excess on a predicate firing at 0.84% of events. Re-run on 10,324 held-out
+M6.0–6.99 events it gives lift 0.915 in the **wrong direction**, and the
+atlas shows why: the trigger fires at **0.41% of ordinary instants**, so the
+M7+ figure was a 2× fluctuation on twelve events. Per its own registration
+the verdict is *unsupported at every magnitude tested*, not *refuted* — a
+mechanism switching on only above M7 would not appear at M6. But nothing now
+supports it either.
+
+**What no screen in this file can do.** The taught patterns fire at ~0.1% of
+events (`nepal-double` at 1 in 1,506; Chatur Vyuham at 0 of 1,435). Every
+mining pass here has a support floor of 1–2%, below which a lift is noise
+with a ratio printed beside it. **These screens do not refute the taught
+rules; they cannot see them.** Settling a rule that rare needs ~10⁵ M7+
+events, which do not exist. That is a structural limit on the evidence, and
+it applies to #1, #12 and #13 alike.
 
 **Superseded scoring.** The band trigger's earlier figures — grid 0/31 vs
 0.63 expected, proximity 1/31 vs 1.79, against `NATURAL DISASTERS.xlsx` — are
@@ -154,3 +179,27 @@ mistake this project actually made:
    catalogue's completeness gradient; a uniform time grid once faked p = 0.000
    through a 3:8 lunar commensurability.
 6. **Honest negatives stay on the record, with their numbers.**
+7. **A predicate the controls cannot decorrelate is untestable, not
+   significant.** If a predicate's value never varies across a control
+   block's slots, those blocks contribute zero variance to the permutation
+   null while still driving the observed lift — the null max collapses and
+   an ordinary fluctuation reads as significant. Earned when
+   `band:Neptune=24 + mkm≤60` returned family-wise p = 0.0067 on 18 events
+   that all fell in 1996–2002, one Neptune band-dwell. Measured
+   discrimination now filters these out.
+8. **For a slow-body predicate the unit of independence is the epoch, not
+   the event.** `band:Jupiter=8 + band:Saturn=23` reached lift 2.698 at
+   2.59 σ on 17 events — in three distinct years. A permutation that treats
+   each event as independent overstates significance accordingly.
+9. **Split-half replication is mandatory, not a diagnostic.** That same
+   winner splits 0.998 / 3.394 across 2-year blocks: it lives entirely in
+   one half. Both halves must agree before a pattern is reported.
+10. **A retrospective design is not a pre-registration**, and the difference
+    is now enforced by a required `Claim.preregistered` field rather than by
+    a footnote. `report()` labels any positive result from an unregistered
+    design a LEAD, not a finding.
+11. **Power bounds what a screen can even see.** The support floor of 1%
+    (15 events) is not arbitrary — below it a lift is noise with a ratio
+    printed beside it. The taught patterns fire at ~0.1%, so no screen over
+    any existing M7+ catalog can validate or refute them. Stating that limit
+    is more useful than reporting a number computed beneath it.
