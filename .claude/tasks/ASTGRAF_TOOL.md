@@ -1604,3 +1604,35 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   series (ASTGRAF.BAS ends the 20-term block at PX = LL + ML, line 311; no
   sin(F) latitude accumulation), and the port is faithful
   (ecliptic_latitude assigned only in the planet loop, Moon defaults 0.0).
+
+## 2026-08-05 — Author's briefing decoded: DWELL TIME solved; the ring reading refuted
+- DWELL TIME DECODED (the standing "what is dwell?" question). His numbers are
+  all EARTH-ROTATION quantities, not planetary motion: 1 deg = 4 min = 100 km;
+  1/81 deg = 1,234 m = 2.96 s (his "3 seconds"). Reading: dwell = the ANGULAR
+  SPAN OF THE CROSSING COMPLEX converted at 4 min/deg. Verified at Nepal:
+  real-Ura->Sun 0.692 deg (2.77 min) + real-Nep->Ketu 0.342 deg (1.37 min) =
+  1.034 deg = 4.14 MINUTES against his stated "dwell time has been 4 minutes -
+  because both Uranus and Neptune crossed Ketu position one after another".
+  Implication: dwell is a SEVERITY criterion ("above 3 seconds MAJOR SHOCK
+  WAVES"), longer span = more crossings in sequence = bigger event — a
+  magnitude-correlated, timing-layer claim, testable on the corpus and
+  independent of the blocked location layer. NOT yet implemented; proposed as
+  the next test (dwell vs magnitude, declustered corpus).
+- RING HYPOTHESIS TESTED AND REFUTED. His "scalar pulse, IMMEDIATE, straight
+  line to the surface" suggested the affected locus might be the TANGENT RING
+  (edge-on incidence = maximum shear) rather than the sub-point (normal
+  incidence = compression) — which would also escape the declination cage,
+  since a ring at 90 deg from a sub-point reaches +-83 deg latitude. Measured:
+  angular distance sub-point -> epicenter, four giants, 1,435 declustered
+  events, 18 x 10-deg bins vs 20 shuffled-epicenter nulls. FLAT — every bin
+  within ~10% of null; the 90-100 deg tangent bin is 0.997 of null; the only
+  bin above 1.05 is 0-10 deg (1.104), the sub-point excess already known at
+  ~1.8 sigma. No preferred radius exists. Fourth location family refuted.
+- ANALYTICAL POINT ON RECORD: all three corrections the author names
+  (rotation, ecliptic tilt, light travel) are LONGITUDE mechanisms; Earth's
+  rotation cannot move latitude at all. His construction therefore has three
+  longitude sources and exactly one latitude source — declination — which for
+  the located set (four giants) caps at 23.71 deg against Nepal's 28.23 N.
+  The 1/81 subdivision is a RESOLUTION, not an ORIGIN: it presupposes a zero
+  to subdivide from. Both gaps (latitude source, zero-longitude convention)
+  remain the blocking inputs.
