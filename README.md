@@ -8,7 +8,7 @@ Built as a faithful modern port of a family BASIC astrology suite
 (ASTGRAF/ASTROLOG/GRAPHDO/HORARY, preserved in [`canon/`](canon/)), extended
 into a full prediction pipeline from the Sankhyan doctrine of
 *Secrets of Sankhya* and its worked instances. Python 3.12 · zero heavy
-dependencies · 248 tests · MIT.
+dependencies · 258 tests · MIT.
 
 ```
 canon/                      The original BASIC suite (the computation canon, in-tree)
@@ -17,6 +17,7 @@ tools/astgraf/              The engine: CLI tools, tests, doctrine rules, docume
   ├── WATCHLIST.md          Registered forward windows + outcome protocol
   ├── AUDIT.md              Full adversarial audit: 127 findings, all resolved
   ├── RESULTS.md            The evidence ledger: every graded claim, with numbers
+  ├── TESTING.md            The two test layers: canon fidelity, and claim grading
   ├── PLAN.md               Current state, open work, what is blocked
   ├── README.md             Tool-level docs: every CLI, flag, and output
   ├── doctrine-triggers.toml  Taught trigger patterns as declarative rules
@@ -117,7 +118,7 @@ uv run astgraf --year 2015 --month 4 --day 25 --time 11:40 \
 uv run astgraf-bands --start 2016-05-25 --days 15 \
   --rules doctrine-triggers.toml --out out/vyuha-2016
 
-uv run pytest   # 248 tests
+uv run pytest   # 258 tests
 ```
 
 Full CLI documentation: [`tools/astgraf/README.md`](tools/astgraf/README.md).

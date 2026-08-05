@@ -2198,3 +2198,49 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
 - ELEVENTH graded channel; eleventh failure. Invariant test added (250
   passing): schema identical to the curated files, unique ids, precision and
   bracket formats, year range.
+
+## 2026-08-05 — NU CHALLENGE: "your testing framework must be authentic" — audited and fixed
+- NU: "i don't know what you been testing so far and how and what framework
+  you decided to choose ... make sure our engine is completely running as per
+  the BAS files ... your testing framework must be authentic for our usecase."
+- SELF-AUDIT, reported honestly: 14 test scripts; only 4 carried a formal
+  PRE-REGISTRATION block; FIVE different control designs (leave-one-out
+  places, golden-ratio climatology, era-matched, label permutation,
+  same-size), each re-implemented inside its own script with no shared
+  audited code. Part of the variation was principled (location claims need
+  place-controls, timing claims need time-controls) but the principle lived
+  in prose and seven of eleven graded claims were never pre-registered.
+  NU's concern was correct.
+- ENGINE FIDELITY VERIFIED (not asserted): 16 oracle tests pass, pinning the
+  engine against sources the implementer did not produce — PRATEEK.docx,
+  QUAKE.pdf (cusps/MC/sidereal time/planet table/star-pada-navam/Dasa-Bukti/
+  full page), NU's own Hyderabad docx (13/13 rows + retro flags + dignities),
+  canon/ASTROC.GRF (the AUTHOR'S OWN program output, 11 bodies x 41 rows
+  within its 0.12 deg print resolution), and bit-close JS parity. Canon is
+  in-tree so every fidelity claim is checkable.
+- BUILT src/astgraf/validation.py (test-first, 8 tests) making three things
+  STRUCTURAL rather than conventional:
+  (1) PRE-REGISTRATION IS A TYPE — a Claim cannot be constructed without
+      hypothesis/direction/statistic/control/corpus/verdict/power; a blank
+      field raises. You cannot run a test without stating what refutes it.
+  (2) CONTROLS ARE FORCED BY CLAIM KIND — era_matched_controls for timing,
+      place_controls (other REAL epicentres) for location, same-size for
+      structure; block_permutation_p re-labels WITHIN blocks so era,
+      geography and seasonality cannot leak into the null.
+  (3) A NULL WITHOUT POWER IS SILENCE — power_curve plants 10/5/2% and
+      report() prints a WARNING downgrading any result to UNDERPOWERED if a
+      planted effect was not recovered. poisson_sigma guards the opposite
+      error (the band trigger's 1.804 lift is 12 vs 7.0 = 1.4 sd).
+- A TEST OF MY OWN WAS WRONG AND WAS FIXED: the first null-behaviour test
+  asserted "one noise draw gives p > 0.05", which is itself a coin flip — it
+  failed on a seed whose draw reached lift 1.42. Replaced with a proper
+  CALIBRATION test: over 60 independent noise draws the false-positive rate
+  must stay near alpha. That is the property a validation framework must
+  actually guarantee.
+- TESTING.md written: the two layers (engine fidelity vs claim grading), the
+  oracle table, the frozen-canon boundary and three documented divergences,
+  the control-choice table with the reasons (uniform controls once produced
+  lift 55 from a reporting gradient; random sphere points are not a null for
+  belt-bound seismicity), the six-step per-test protocol, and an explicit
+  KNOWN DEBT section naming the seven pre-framework scripts as WEAKER
+  EVIDENCE than the four that followed the protocol.

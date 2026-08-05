@@ -447,6 +447,7 @@ yet in the right place. It is a finishing step, not a fix.
 - `WATCHLIST.md` — registered forward windows, spots, outcome protocol.
 - `PLAN.md` — current state, method rulings, next actions, what is blocked on NU.
 - `RESULTS.md` — the evidence ledger: every graded claim with its numbers.
+- `TESTING.md` — the two test layers: engine fidelity to the BAS canon, and the claim-grading framework (`validation.py`).
 - `doctrine-triggers.toml` / `mined-triggers.toml` / `observed-triggers.toml` — rules as data by provenance: NU's taught rules; mined candidates (the three RETIRED 2026-08-02, windows stay graded); observed single-chart promotions in TESTING status (NU ruling 2026-08-04).
 - `anchors.toml` — the anchor library (recurrence principle); `astgraf-recur` episodes register on the WATCHLIST.
 - `families.toml` — the long-cycle families (nakshatra-sector recurrence); `astgraf-families` computes the conjunction calendars.
