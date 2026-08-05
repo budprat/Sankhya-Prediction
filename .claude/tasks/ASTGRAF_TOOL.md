@@ -1913,3 +1913,29 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
 - UNBLOCKS: the Uranus-Neptune long-cycle clock test (163.5/164.5/171.0),
   the site channel's OWN category (never corpus-tested), and
   astgraf-recur --category flood.
+
+## 2026-08-05 — HANZE Europe imported: the flood corpus goes from 88 to 2,812
+- NU: "can you scrape more using the sources i gave". firecrawl is EXHAUSTED
+  (-1/1,000 credits), but the Zenodo REST API answers curl directly.
+- SOURCE: Zenodo record 20478847, "HANZE database of historical flood
+  impacts in Europe, 1870-2025", CC-BY-4.0, file HANZE_events_v3_0_1b.csv.
+  Downloaded and converted into the project schema as
+  data/floods-hanze-europe.csv — 2,724 events, 1871-2025, 40 countries,
+  **100% full YYYY-MM-DD start dates** (so every acting body except the Moon
+  sits inside a 3-deg orb), 2,699 rows carrying fatality counts, types flash
+  1,318 / river 1,259 / coastal 102 / compound 45.
+- LOCATION LIMIT RECORDED HONESTLY: HANZE stores NUTS-3 region codes and its
+  region file (S2) carries NO centroids — only Code,Name. So latitude/
+  longitude are COUNTRY CENTROIDS and loc_precision is "country": useless
+  for a point-location test, adequate for the tests this corpus actually
+  unblocks (long-cycle clocks, category recurrence, contact timing), which
+  need dates not places. The original NUTS-3 list is preserved in `place`
+  so finer geocoding can be added later.
+- DFO Global Active Archive NOT obtained: its archive URLs
+  (floodobservatory.colorado.edu/Archives/...) return HTTP 410 Gone as of
+  2026-08-05. Recorded in the README so nobody re-tries it blind. DFO is
+  the source that DOES publish centroids, so if a mirror is found the
+  location weakness above is fixable.
+- Schema interoperability enforced by test (247 passing): identical column
+  order to floods-historical.csv, unique ids, all-day precision, all-country
+  loc_precision, year range 1870-2026.

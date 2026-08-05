@@ -1,4 +1,34 @@
-# The flood corpus (`floods-historical.csv`)
+# The flood corpora
+
+Two files, same schema, different provenance:
+
+| file | n | span | scope |
+|---|---|---|---|
+| `floods-historical.csv` | 88 | ~5.3 Ma – 2021 | Global, hand-curated from NU's compilation; deep time |
+| `floods-hanze-europe.csv` | 2,724 | 1871 – 2025 | Europe, imported wholesale from HANZE v3.0.1b |
+
+## `floods-hanze-europe.csv` — the imported catalogue
+
+Downloaded from Zenodo record **20478847** ("HANZE database of historical
+flood impacts in Europe, 1870-2025", CC-BY-4.0) via the Zenodo API and
+converted into the schema below. **Every row carries a full YYYY-MM-DD start
+date** — 100% day precision, which per the drift table means every acting
+body except the Moon is inside a 3° orb. 40 countries; 2,699 of 2,724 rows
+carry a fatality count; types are flash (1,318), river (1,259), coastal
+(102) and compound (45).
+
+**Its one weakness is location.** HANZE records NUTS-3 region codes, not
+coordinates, and its region file carries no centroids — so `latitude` /
+`longitude` here are **country centroids** and `loc_precision` is `country`.
+That is useless for a point-location test and perfectly adequate for the
+tests this corpus actually unblocks (long-cycle clocks, category recurrence,
+contact timing), which need dates, not places. The `place` column preserves
+the original NUTS-3 list so finer geocoding can be added later.
+
+(The Dartmouth Flood Observatory archive, which *does* publish centroids, is
+no longer served — its archive URLs return HTTP 410 Gone as of 2026-08-05.)
+
+# The curated corpus (`floods-historical.csv`)
 
 88 flood events compiled by NU (2026-08-05) from historical documents,
 paleoflood studies, and modern catalogues (DFO Global Active Archive, HANZE
@@ -15,9 +45,9 @@ claim in the flood family was untestable for want of a catalogue.
 | `time` | ISO instant; **the sub-day part is padding, not data** — read `date_precision` |
 | `date_precision` | `day` \| `month` \| `year` \| `century` \| `millennium` |
 | `latitude`, `longitude` | degrees north / east |
-| `loc_precision` | `point` \| `city` \| `region` |
+| `loc_precision` | `point` \| `city` \| `region` \| `country` (HANZE) |
 | `place`, `cause`, `deaths` | as recorded; `deaths` blank where not distinctive |
-| `tier` | `paleo` \| `ancient` \| `medieval` \| `early-modern` \| `modern` \| `contemporary` |
+| `tier` | `paleo` \| `ancient` \| `medieval` \| `early-modern` \| `modern` \| `contemporary` \| `hanze` |
 | `notes` | provenance and caveats, including feast-day dating |
 
 ## Which events can actually be used, and why

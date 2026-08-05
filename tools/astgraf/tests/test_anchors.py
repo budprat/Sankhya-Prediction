@@ -167,3 +167,20 @@ def test_flood_corpus_is_well_formed():
     usable = [r for r in rows
               if r["date_precision"] in ("day", "month") and year(r) >= 1700]
     assert len(usable) >= 30, f"only {len(usable)} chart-usable flood events"
+
+
+def test_hanze_corpus_matches_the_shared_schema():
+    # The imported European catalogue (Zenodo 20478847, CC-BY-4.0) must be
+    # interoperable with the curated file and fully day-dated.
+    import csv as _csv
+    from pathlib import Path
+    base = Path(ANCHORS_PATH).parent / "data"
+    hanze = list(_csv.DictReader(open(base / "floods-hanze-europe.csv")))
+    curated = list(_csv.DictReader(open(base / "floods-historical.csv")))
+    assert len(hanze) > 2500
+    assert list(hanze[0].keys()) == list(curated[0].keys()), "schema drift"
+    assert len({r["id"] for r in hanze}) == len(hanze), "duplicate ids"
+    assert all(r["date_precision"] == "day" for r in hanze)
+    assert all(r["loc_precision"] == "country" for r in hanze)
+    years = [int(r["time"][:4]) for r in hanze]
+    assert min(years) >= 1870 and max(years) <= 2026
