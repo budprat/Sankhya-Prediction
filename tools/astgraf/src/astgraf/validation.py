@@ -41,8 +41,17 @@ DIRECTIONS = ("higher", "lower")
 
 @dataclass
 class Claim:
-    """A pre-registration. Every field is required; an empty one raises, so a
-    test cannot be run with its design left implicit."""
+    """A test design. Every field is required; an empty one raises, so a
+    test cannot be run with its design left implicit.
+
+    `preregistered` MUST be stated explicitly and is not defaulted. A design
+    written down after its result is already known is a legitimate record but
+    it is NOT evidence of the same weight, and the difference has to be
+    structural rather than a footnote — a retrospective declaration that
+    silently reads as a pre-registration is the exact failure this framework
+    exists to prevent. True is only honest when the design was committed to
+    version control BEFORE the run, where the timestamp can be checked.
+    """
     name: str
     hypothesis: str          # what the doctrine asserts, as a falsifiable claim
     direction: str           # "higher" | "lower" — fixed BEFORE seeing data
@@ -51,6 +60,7 @@ class Claim:
     verdict: str             # the rule, e.g. "p < 0.05 and lift > 1"
     corpus: str              # what it is measured on, with n
     power: str               # how a null will be distinguished from blindness
+    preregistered: bool | None = None     # REQUIRED: no silent default
     registered_at: str | None = None      # stamped by the runner, not the author
     notes: str = ""
     _required: tuple = field(default=(), repr=False, compare=False)
@@ -64,9 +74,21 @@ class Claim:
         if self.direction not in DIRECTIONS:
             raise ValueError(f"direction must be one of {DIRECTIONS}, "
                              f"got {self.direction!r}")
+        if not isinstance(self.preregistered, bool):
+            raise ValueError(
+                "Claim is missing 'preregistered': state True only if this "
+                "design was committed before the run (the git timestamp is "
+                "the evidence), False for a retrospective declaration")
+
+    @property
+    def status(self) -> str:
+        return ("PRE-REGISTERED (design committed before the run)"
+                if self.preregistered else
+                "RETROSPECTIVE (design declared after the run — weaker evidence)")
 
     def banner(self) -> str:
         return (f"CLAIM {self.name}\n"
+                f"  status     : {self.status}\n"
                 f"  hypothesis : {self.hypothesis}\n"
                 f"  direction  : {self.direction}\n"
                 f"  statistic  : {self.statistic}\n"
@@ -170,6 +192,10 @@ def report(claim: Claim, observed: float, p: float, power: list[dict],
     lines = [claim.banner(), "",
              f"  observed {claim.statistic}: {observed:.4f}",
              f"  p = {p:.4f}   ->  {verdict} (bar: {claim.verdict})"]
+    if verdict == "SUPPORTED" and not claim.preregistered:
+        lines.append("    CAUTION: this design was NOT pre-registered, so a "
+                     "positive result here is a LEAD, not a finding — it needs "
+                     "confirmation on data this run has not touched.")
     if extra:
         lines.append(f"  {extra}")
     lines.append("  power:")

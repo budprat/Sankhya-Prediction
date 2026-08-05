@@ -18,6 +18,7 @@ import random
 import statistics
 from pathlib import Path
 
+from astgraf.validation import Claim
 from astgraf.bands import real_longitude
 from astgraf.ephemeris import compute_raw
 from astgraf.grid import jd_to_calendar
@@ -79,7 +80,34 @@ def in_force(row, orb):
     return False
 
 
+
+# --- Design of record (ported onto the validation framework) ---
+CLAIM = Claim(
+    name="ascendant-location-family",
+    hypothesis="If ANY location rule keys on the Ascendant, the Asc computed "
+               "at the true epicentre at the true instant must differ from "
+               "one that keeps the same sites and instants but breaks their "
+               "pairing.",
+    direction="lower",
+    statistic="cell / lord / nakshatra / horary-sub concentration of the "
+              "true-pairing Ascendant vs the shuffled-pairing null",
+    control="shuffled pairing — the same set of sites and the same set of "
+            "instants, re-paired at random, so geography and epoch are held "
+            "fixed and only the site-instant coupling is destroyed",
+    corpus="declustered post-1900 M7+ events from out/signatures-m7-v2",
+    verdict="p < 0.05 on any of the four Ascendant encodings",
+    power="the shuffle preserves all marginals, so a real coupling of any "
+          "strength would survive it; excluded the family without needing "
+          "to guess the specific rule",
+    preregistered=False,
+    notes="RETROSPECTIVE declaration (2026-08-05 port). Result on record: "
+          "p = 0.12 - 0.99 across the four encodings, conditional and not. "
+          "The whole Ascendant location family is ruled out.",
+)
+
 def main():
+    say(CLAIM.banner())
+    say("")
     random.seed(11)
     with open(SIG, newline="") as fh:
         rows = [r for r in csv.DictReader(fh) if r.get("lat") and r.get("lon")]

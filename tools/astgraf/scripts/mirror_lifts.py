@@ -14,6 +14,7 @@ import random
 import statistics
 from pathlib import Path
 
+from astgraf.validation import Claim, smoothed_lift
 from astgraf.aspects import mirror_offset
 from astgraf.bands import real_longitude
 from astgraf.ephemeris import compute_raw
@@ -64,8 +65,7 @@ def lifts(events, controls, keys, orb, min_event_rate=0.02):
         if eh / len(events) < min_event_rate:
             continue
         ch = sum(1 for s in controls if s[key] <= orb)
-        lift = (((eh + 1) / (len(events) + 2))
-                / ((ch + 1) / (len(controls) + 2)))
+        lift = smoothed_lift(eh, len(events), ch, len(controls))
         res.append({"predicate": key, "event_hits": eh,
                     "event_rate": round(eh / len(events), 4),
                     "control_rate": round(ch / len(controls), 4),
@@ -100,7 +100,35 @@ def permutation_max_lift(events, controls, keys, orb, n_perm, seed=42):
     return out
 
 
+
+# --- Design of record (ported onto the validation framework) ---
+CLAIM = Claim(
+    name="cos-fold-mirror-mining",
+    hypothesis="The heritage cos-fold mirror crossing (lon_a + lon_b = 360k, "
+               "visible on GRAPHDO's own graph and invisible to the four "
+               "aspect angles) carries predictive content for M7+ timing.",
+    direction="higher",
+    statistic="add-one smoothed lift; family-wise maximum over 95 mirror "
+              "predicates",
+    control="the SAME time-uniform controls the audited v2 mining used, so "
+            "the mirror channel is directly comparable with the aspect one",
+    corpus="declustered post-1900 M7+ events from out/signatures-m7-v2; "
+           "orbs 3 deg and 1 deg",
+    verdict="observed max lift above the permutation null's 95th percentile",
+    power="identical protocol to the mining pass that recovered a planted "
+          "predicate at p < 0.05",
+    preregistered=False,
+    notes="RETROSPECTIVE declaration (2026-08-05 port). Result on record: "
+          "1.577 mirror hits per event chart vs 1.553 for controls; best of "
+          "95 predicates (mir:Jupiter-Saturn, lift 1.72) sits EXACTLY on the "
+          "permutation null median of 1.72, p = 0.505. At orb 1 nothing "
+          "clears the 2% event-rate floor. The layer is a faithful redraw of "
+          "the author's graph; as a miner it finds nothing.",
+)
+
 def main():
+    say(CLAIM.banner())
+    say("")
     with open(DIR / "signatures.csv", newline="") as fh:
         ev_jd = [float(r["jd"]) for r in csv.DictReader(fh)]
     with open(DIR / "controls.csv", newline="") as fh:

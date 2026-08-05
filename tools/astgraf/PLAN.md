@@ -3,18 +3,18 @@
 Status 2026-08-05, end of session. Companion to `FRAMEWORK.md` (the theory),
 `WATCHLIST.md` (registered forward windows), `RESULTS.md` (the evidence
 ledger), `data/README-floods.md` (the flood corpora), and `.claude/tasks/ASTGRAF_TOOL.md` (every ruling, dated).
-248 tests passing, from any working directory.
+260 tests passing, from any working directory.
 
 ## 1. The one-line state
 
 **The engine predicts *when* with tested precision and cannot predict *where*
 at all.** Both halves are measured, not impressions: every taught instant
-reproduces to 1–2 minutes, and **twelve independent channels have been built
+reproduces to 1–2 minutes, and **thirteen independent channels have been built
 and graded null** — six location families, the mining channel, the dwell
 doctrine, the taught flood signature in its own category, the band trigger at
-M7+ and again on held-out M6, and a full-vocabulary screen over epicenter
-charts — each with a power check proving the instrument could see the effect
-it failed to find.
+M7+ and again on held-out M6, a full-vocabulary screen over epicenter charts,
+and a co-occurrence mine over pairs and triples — each with a power check
+proving the instrument could see the effect it failed to find.
 
 As of 2026-08-05 the last question that data alone could settle (§3.2c) is
 closed, null. What remains open is **blocked on NU**, not on compute.
@@ -34,6 +34,7 @@ closed, null. What remains open is **blocked on NU**, not on compute.
 | **Predict.pdf's band trigger** (Moon+Ketu+Mars, its headline claim) | 1,435 quakes exact-instant + 1,886 floods, era-matched | **lift 1.804, p = 0.069** — fails the bar; rests on 12 firings vs 7 expected (1.4 σ). Floods point the other way (0.937) |
 | **Band trigger, held-out M6.0–6.99** | 10,324 declustered, pre-registered, one test | **lift 0.915, p = 0.76 — wrong direction** (38 vs 42.4 expected) |
 | **Full-vocabulary screen** (524 predicates, epicenter charts) | 1,435 M7+ vs 4,305 era-matched | best 1.665 vs null-max median 1.609, **family-wise p = 0.302** |
+| **Co-occurrence mine** (pairs + triples, the doctrine's actual shape) | 1,506 unified M7+, 805 patterns | winner fails independence + split-half; best replicating 1.960 vs null-max median 1.957 |
 
 The geometric location route is exhausted **by derivation**, not merely by
 testing: a slow–slow crossing cannot define a meridian (crossings last days;

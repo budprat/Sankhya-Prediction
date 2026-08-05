@@ -256,6 +256,7 @@ def main() -> None:
                "deduplicated 3 d / 300 km, post-1900, declustered",
         verdict="family-wise p < 0.05 against the permutation max-lift null",
         power="plant a synthetic pattern into 10/5/2% of events",
+        preregistered=False,
         notes="EXPLORATORY by request. Pair/triple space has never been "
               "searched on this corpus; multiplicity is 250x the single-"
               "predicate screens and the family-wise null accounts for it.",

@@ -5,7 +5,7 @@ work, `.claude/tasks/ASTGRAF_TOOL.md` the dated chronology. **This file is the
 scoreboard**: what has been tested, how, and what it found — positive and
 negative in one place, so neither can be quoted without the other.
 
-Last updated 2026-08-05. 248 tests passing from any working directory.
+Last updated 2026-08-05. 260 tests passing from any working directory.
 
 ---
 

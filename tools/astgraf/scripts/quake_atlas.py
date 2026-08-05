@@ -376,6 +376,7 @@ def grade(charts, jds, records, out) -> None:
         corpus=f"USGS M7+ 1850-2020, post-1900, declustered 7d/500km: n = {len(charts)}",
         verdict="family-wise p < 0.05 against the permutation max-lift null",
         power="plant the winning predicate into 10/5/2% of events and confirm recovery",
+        preregistered=False,
         notes="EXPLORATORY, not pre-registered — leads only, never results.",
     )
     say("=" * 74)

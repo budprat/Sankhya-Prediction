@@ -32,6 +32,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 # Must follow the sys.path insert; reuses angle_grade's EXACT rank statistic.
 from angle_grade import K_CONTROLS, rank_report  # noqa: I001
+from astgraf.validation import Claim
 from astgraf.anchors import chart_at
 from astgraf.locator import ROTATION_DEGREES, _wrap180, equatorial
 from astgraf.signatures import _gc_km
@@ -67,7 +68,36 @@ def subpoints(jd: float) -> dict[str, tuple[float, float]]:
     return out
 
 
+
+# --- Design of record (ported onto the validation framework) ---
+CLAIM = Claim(
+    name="rotation-spectrum",
+    hypothesis="If the light-time ground rotation is real, SOME rotation "
+               "angle must locate events — and the best one should sit near "
+               "the physical light-time value for each giant.",
+    direction="lower",
+    statistic="leave-one-out epicentre rank z, swept at 5 deg steps right "
+              "round the circle for each of the four giants (288 tests)",
+    control="place — the same 49 leave-one-out epicentres per event used by "
+            "the site-angle grading, at the same instant",
+    corpus="declustered post-1900 M7+ events from out/signatures-m7-v2",
+    verdict="a dip below z = -3.7 (the bar for 288 tests), clustered near "
+            "the physical light-time value",
+    power="plant synthetic epicentres at a known 100 deg rotation and confirm "
+          "the scan recovers it in the exact 5 deg bin",
+    preregistered=False,
+    notes="RETROSPECTIVE declaration (2026-08-05 port). Result on record: "
+          "the spectrum is FLAT — deepest dip anywhere is Neptune at 25 deg, "
+          "z = -2.32. Per-body minima (Jup 270, Sat 170, Ura 60, Nep 25) are "
+          "scattered, not clustered near light-time. Power: the planted "
+          "100 deg rotation is recovered in the exact bin at z = -64, and "
+          "still at z = -60 with +-30 deg jitter. This retires the rotation "
+          "idea across its ENTIRE parameter space, not at one point.",
+)
+
 def main() -> None:
+    say(CLAIM.banner())
+    say("")
     with open(SIG, newline="") as fh:
         rows = [r for r in csv.DictReader(fh) if r.get("lat") and r.get("lon")]
     places = [(float(r["lat"]), float(r["lon"])) for r in rows]

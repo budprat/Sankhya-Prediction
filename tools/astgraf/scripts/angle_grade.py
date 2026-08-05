@@ -25,6 +25,7 @@ import random
 import statistics
 from pathlib import Path
 
+from astgraf.validation import Claim
 from astgraf.anchors import refine_exactness
 from astgraf.angles import angles_from_chart, body_longitudes, site_chart
 from astgraf.bands import BAND_BODIES
@@ -102,7 +103,35 @@ def rank_report(name: str, ranks: list[int], k: int) -> dict:
             "z": round(z, 2)}
 
 
+
+# --- Design of record (ported onto the validation framework) ---
+CLAIM = Claim(
+    name="site-angle-location",
+    hypothesis="An event stands where the crossing pair sits on an ANGLE "
+               "(Asc/Desc/MC/IC) of the site's own chart — so the true "
+               "epicentre should show a tighter body-to-angle separation than "
+               "other real epicentres do at the same instant.",
+    direction="lower",
+    statistic="mean rank of the true epicentre among 1 + K control places "
+              "(uniform under the null), reported as a z",
+    control="place — 49 leave-one-out epicentres per event at the SAME "
+            "instant, drawn from the corpus so the controls inherit the "
+            "geography of seismicity exactly",
+    corpus="1,434 declustered post-1900 M7+ events carrying epicentres",
+    verdict="z < -3.0 (the multiplicity bar for 15 bodies scored)",
+    power="scripts/angle_power.py plants epicentres on a chosen body's angle "
+          "and re-runs the identical rank machinery under jitter",
+    preregistered=False,
+    notes="RETROSPECTIVE declaration (2026-08-05 port). Result on record: "
+          "best body Mars z = -2.27; the SPECIFIED form z = -0.35 at the "
+          "catalog instant and +1.20 at the crossing exactness instant; "
+          "family p = 0.25. Power arm recovered a planted signal at "
+          "z = -17.9 (MC) / -17.1 (Asc), so the null is not blindness.",
+)
+
 def main() -> None:
+    say(CLAIM.banner())
+    say("")
     with open(SIG, newline="") as fh:
         located = [r for r in csv.DictReader(fh) if r.get("lat") and r.get("lon")]
     rows = [r for r in located if abs(float(r["lat"])) <= POLAR_LIMIT]

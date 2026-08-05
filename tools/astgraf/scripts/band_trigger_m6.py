@@ -137,6 +137,7 @@ def main() -> None:
         corpus="USGS M6.0-6.99 1901-2020, declustered 7d/500km",
         verdict="p < 0.05 and lift > 1",
         power="plant P1 into 10/5/2% of events and confirm recovery",
+        preregistered=True,
         notes="Held-out band, disjoint from the M7+ corpus by construction. "
               "Only P1 carries the verdict.",
     )
