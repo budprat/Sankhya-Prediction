@@ -153,6 +153,10 @@ and state n = 13 in the pre-registration.
 | 5 | **Jupiter/Saturn offsets are provisional** (3.3363593021° / 7.8672056771°) | Under rule v3 they set spot longitudes too | **NU ruled 2026-08-05: not needed for now, current values stand.** Parked, not blocking |
 | 6 | **Pre-1582 flood dates are Julian, unconverted** | Medieval rows carry a ~10-day offset | Irrelevant while engine drift already disqualifies pre-1700 events; fix if that ever changes |
 | 7 | **firecrawl exhausted** (−1 / 1,000 credits) | The news/outcome channel for flood and biological categories cannot run | Credits, or a curl-able alternative |
+| 8 | **`astgraf-signatures` does not exist** | Referenced as the generator command in `loc_backtest.py`, `angle_grade.py` and `AUDIT.md`; it is not in `[project.scripts]`. Anyone following those headers stalls | Either add the entry point or correct the three references to `scripts/mine_usgs.py`, which is the real generator |
+| 9 | **`PRATEEK.docx` is not in-tree** | `TESTING.md` lists it among five oracles and asserts every fidelity claim is checkable. Its values exist only as constants transcribed into `test_ephemeris.py`, so that one oracle rests on the implementer's transcription (the BAS canon, QUAKE.pdf and the Hyderabad docx ARE in-tree) | Add the file, or mark that oracle as transcription-derived |
+| 10 | **`mine_usgs.py` has no `__main__` guard** | It executes on import, so it cannot be imported for its constants | One-line guard |
+| 11 | **`.claude/` carries 1.1 MB of agent state** | `memory/` and `analytics/` (596 KB of embeddings and rubric scores) are referenced by no code. Tracking was deliberate per the `.gitignore` note, but the decision ledger may have been the intended target rather than the whole tree | NU's call |
 
 ## 5. Blocked on NU — ranked by what each unlocks
 

@@ -8,7 +8,7 @@ Built as a faithful modern port of a family BASIC astrology suite
 (ASTGRAF/ASTROLOG/GRAPHDO/HORARY, preserved in [`canon/`](canon/)), extended
 into a full prediction pipeline from the Sankhyan doctrine of
 *Secrets of Sankhya* and its worked instances. Python 3.12 · zero heavy
-dependencies · 258 tests · MIT.
+dependencies · 260 tests · MIT.
 
 ```
 canon/                      The original BASIC suite (the computation canon, in-tree)
@@ -17,12 +17,16 @@ tools/astgraf/              The engine: CLI tools, tests, doctrine rules, docume
   ├── WATCHLIST.md          Registered forward windows + outcome protocol
   ├── AUDIT.md              Full adversarial audit: 127 findings, all resolved
   ├── RESULTS.md            The evidence ledger: every graded claim, with numbers
+  ├── QUAKE-ATLAS.md        13,339 event charts across every quake catalog, graded
   ├── TESTING.md            The two test layers: canon fidelity, and claim grading
   ├── PLAN.md               Current state, open work, what is blocked
   ├── README.md             Tool-level docs: every CLI, flag, and output
   ├── doctrine-triggers.toml  Taught trigger patterns as declarative rules
   ├── mined-triggers.toml     Data-mined candidates (retired — see below)
   ├── observed-triggers.toml  Observed candidate rules in TESTING status
+  ├── atlas-patterns.toml     Co-occurrence patterns mined over every M7+ quake
+  │                           (loadable, labelled, and NOT SUPPORTED — see below)
+  ├── charts/                 Chart wheels: 16 M8.5+ quakes, 10 deadliest
   ├── anchors.toml            The anchor library: past major events as data
   ├── families.toml           Long-cycle families (nakshatra-sector recurrence)
   └── data/                 Pinned USGS M7+ corpus 1850–2020
@@ -96,6 +100,15 @@ against the original suite's printouts. On top of it:
   M7+ corpus, honest mining (declustered, climatology controls, permutation
   null), and `astgraf-outcomes`: automatic grading of every passed forecast
   window against the quake catalog, each spot with its spatial base rate.
+- **The event-chart atlas** (`scripts/quake_atlas.py`) — a full chart per
+  event **cast at its own epicenter**, for every quake catalog in the tree:
+  13,339 charts, plus 40,017 era-matched controls. Descriptive census and
+  inferential grading kept strictly apart, because merging them is how a
+  census becomes a false discovery. [`QUAKE-ATLAS.md`](tools/astgraf/QUAKE-ATLAS.md).
+- **Co-occurrence mining** (`scripts/pattern_mine_m7.py`) — pairs and triples
+  of predicates, the conjunction-of-conditions shape every taught pattern
+  actually has, over a unified M7+ corpus assembled across three catalogs
+  (1,635 unique events, larger than any single file).
 
 ## Quick start
 
@@ -145,13 +158,25 @@ assiduous search and only then it can be predictable"*:
   site channel is scoped to the taught local categories. The timing
   layers — which reproduce the taught instances to the minute — are the
   system's proven core.
-- **Ten channels have been graded and every one failed its bar**, each with a
-  power check proving the instrument could see the effect it did not find —
-  three mining passes, six location families, the dwell doctrine, the taught
-  flood signature in its own category, and Predict.pdf'''s headline band rule
-  (lift 1.804, p = 0.069, on 12 firings vs 7 expected). The full scoreboard,
-  positive and negative together, is
+- **Thirteen channels have been graded and every one failed its bar**, each
+  with a power check proving the instrument could see the effect it did not
+  find — three mining passes, six location families, the dwell doctrine, the
+  taught flood signature in its own category, Predict.pdf's headline band
+  rule at M7+ *and* on held-out M6, a full-vocabulary screen over epicenter
+  charts, and a co-occurrence mine over pairs and triples. The full
+  scoreboard, positive and negative together, is
   [`RESULTS.md`](tools/astgraf/RESULTS.md).
+- **The band trigger is settled.** Its M7+ near-miss (lift 1.804, p = 0.069)
+  rested on 12 firings against 7.0 expected. Pre-registered and re-run on
+  10,324 held-out M6.0–6.99 events it gives **lift 0.915, p = 0.76 — the
+  wrong direction**. The atlas shows why: the trigger fires at 0.41% of
+  ordinary instants, so the M7+ figure of 0.84% was a 2× fluctuation on
+  twelve events.
+- **A screen can only see what it is powered for.** The taught patterns fire
+  at ~0.1% of events — `nepal-double` at 1 event in 1,506, Chatur Vyuham at
+  0. No mining pass over any existing M7+ catalog can validate or refute
+  them; settling a rule that rare needs ~10⁵ events. That is a structural
+  limit, not a result.
 - **Negative results stay on the record.** The three data-mined candidate
   rules were *retired* when honest re-mining (declustered corpus, time-uniform
   climatology controls, 2-year-block split, 200-run permutation calibration)

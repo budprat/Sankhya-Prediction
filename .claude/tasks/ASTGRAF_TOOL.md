@@ -2244,3 +2244,214 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   belt-bound seismicity), the six-step per-test protocol, and an explicit
   KNOWN DEBT section naming the seven pre-framework scripts as WEAKER
   EVIDENCE than the four that followed the protocol.
+
+## 2026-08-05 — Codebase audit: 12 static defects, 7 documentation findings
+
+Full read of all 22 src modules, 14 scripts, 5 rule TOMLs and every project
+document, verified by execution (QUAKE.pdf page and the Nepal dossier both
+reproduce their documented values).
+
+- STATIC AUDIT (pyflakes) found 12 defects; 11 fixed. Each checked for
+  re-export risk BEFORE removal — nothing imports the flagged symbols
+  *through* the flagged module. Left alone: dwell_grade's `acting_contacts`,
+  which carries an explicit `# noqa`, so removing it is a maintainer call.
+- THE ONE THAT MATTERED: test_bands.py computed `find_episodes([])` and
+  discarded the result, asserting nothing — a test that could never fail. Now
+  asserts the empty result.
+- FINDING 1 (the significant one): **validation.py was ORPHANED** — imported
+  by nothing except its own test, while TESTING.md presented it as the
+  project's spine. The four scripts TESTING.md credited with following the
+  protocol each re-implemented `lift()` locally (byte-identical arithmetic,
+  so no result was wrong) and re-declared the control constants. Closed later
+  the same session.
+- FINDING 2: `astgraf-signatures` is referenced as a generator command in
+  loc_backtest.py, angle_grade.py and AUDIT.md. **It does not exist** — it is
+  not in [project.scripts]. The real generator is scripts/mine_usgs.py. OPEN.
+- FINDING 3: PLAN.md and RESULTS.md claimed 248 tests; actual was 258. Fixed.
+- FINDING 4: TESTING.md said "seven" pre-framework scripts and listed EIGHT.
+  Fixed.
+- FINDING 5: PRATEEK.docx is listed as an oracle but is **not in the repo**;
+  its values exist only as constants transcribed into test_ephemeris.py. The
+  BAS canon, QUAKE.pdf and the Hyderabad docx ARE in-tree and checkable.
+  OPEN — that one oracle's provenance rests on transcription.
+- FINDING 6: mine_usgs.py is the only script with no `__main__` guard — it
+  executes on import. OPEN.
+- FINDING 7: .claude/ holds 1.1 MB of agent memory/analytics referenced by no
+  code. Deliberate per the .gitignore comment, but memory/ and analytics/
+  (596 KB of embeddings and rubric scores) may not have been the intended
+  target of that ruling. OPEN — NU's call.
+- Everything else checked out: every module reachable, every TOML loaded,
+  every data file consumed, every binary asset referenced except
+  canon/EQINAFG.pdf, which FRAMEWORK.md itself labels "(unread)".
+
+## 2026-08-05 — THE QUAKE ATLAS: 13,339 event charts across every catalog
+
+scripts/quake_atlas.py. One chart per event cast AT ITS OWN EPICENTRE, then
+every regularity the census surfaces graded against era-matched controls.
+Deliberately two separated parts (atlas = descriptive, grading = inferential)
+because merging them is how a census becomes a false discovery.
+
+- CORPORA: usgs-m7 1,548 -> 1,435 | usgs-m6 12,212 -> 10,324 | ncei-deaths
+  1,981 -> 1,553 | curated 39 -> 27. Declustered 7 d / 500 km throughout; for
+  the two files with no magnitude column keep-largest degenerates to
+  keep-earliest, stated rather than hidden.
+- FOUR SCREENS, FOUR NULLS, every power check passing (a 2% planted effect
+  recovers at p < 0.0001 in all three real corpora):
+    m7    n=1,435  best 1.665 vs null median 1.609  family-wise p = 0.302
+    m6    n=10,324 best 1.233 vs 1.188              p = 0.080
+    ncei  n=1,553  best 1.686 vs 1.569              p = 0.162
+    hist  n=27     best 11.448 vs 11.448            UNINTERPRETABLE
+- hist is reported but carries NO weight either way: at n = 27 with zero
+  control hits the smoothed lift is dominated by the +1 smoothing, and its
+  observed max equals its own null median exactly.
+- THE CONTROLS EARNED THEIR KEEP TWICE. band:Uranus=22 holds 6.5% of events
+  and 6.6% of era-matched controls (lift 0.996) — that is Uranus's 84-year
+  period sampled over 120 years, not seismicity. sep:Sun-Mercury@conj is the
+  MOST FREQUENT contact in the entire census (7.2%) and scores lift 0.783,
+  i.e. rarer at quakes than at ordinary moments, because Mercury never
+  exceeds ~28 deg elongation. Across all 524 M7+ predicates the median lift
+  is 1.013 with 53% above 1.0 — a null centred on 1.
+- DEATHS-SELECTED MATCHES MAGNITUDE-SELECTED, closing the last live excuse.
+  deadliest_structure.py could only test the catastrophe-vs-moment objection
+  at n = 12. At n = 1,553 the doctrine rules fire at 3.0/1.4/1.6/0.8/0.6/0.1%
+  against the M7+ corpus's 2.9/1.5/1.1/0.8/0.6/0.1%, and structural states
+  match within a point. "Wrong category" (RESULTS #9) and "no held-out data"
+  (#11) were already spent; this spends "wrong selection variable".
+- RARITY CENSUS for the watchlist: Chatur Vyuham fires at 0/1,435 M7+ events,
+  nepal-double at 1/1,435. The fourfold array is genuinely once-in-a-century
+  rare as claimed — it simply does not coincide with earthquakes when it fires.
+- Artifacts: data/quake-charts-{m7,ncei,hist}.csv (3,015 charts x 87 cols),
+  charts/great-quakes/ (16 M8.5+ wheels), charts/deadliest/ (10). The m6
+  digest (7.7 MB) and all 13,339 wheels (117 MB) stay in gitignored out/
+  rather than tripling a 2.6 MB repo with regenerable data. QUAKE-ATLAS.md.
+
+## 2026-08-05 — PRE-REGISTRATION: the band trigger on held-out M6.0-6.99
+
+PLAN.md 3.2c, "the one open question data can settle". Design committed with
+NO results in it (commit a35d64c, 11:23:59Z); results at 11:26. Verifiable.
+
+- WHY NOW: the M7+ run gave lift 1.804 at p = 0.069 on 12 firings vs 7.0
+  expected — 1.4 sigma. The blocker was never corpus size but PREDICATE
+  RARITY (0.84% of events). At that point estimate n = 12,000 yields 4.6
+  sigma. We hold 12,212 M6.0-6.99 events.
+- REGISTERED: P1 (verdict-carrying) trio spread <= one band span, proximity
+  mode; P2 grid, P3 giant-escalated secondary. Controls era-matched 5 per
+  event, +-365 d excluding +-7 d, seed 42 — IDENTICAL to the M7+ run so the
+  numbers are directly comparable. Within-block permutation, 2,000 shuffles,
+  p < 0.05 AND lift > 1. Direction predicted: lift > 1, ~1.80 if real.
+  Mandatory power curve, plus a Poisson sigma check because a ratio on a
+  small count is how the M7+ run nearly fooled us.
+- TWO THINGS REGISTERED IN ADVANCE so neither could be argued afterwards:
+  (a) the POPULATION DECISION — M6 is not the "major events" the author
+      claims, so a null constrains rather than refutes; but the M7+ result is
+      itself 1.4 sigma, so a null leaves it resting on nothing.
+  (b) the HOLDOUT COST — M6.0-6.99 is the project's only strictly disjoint
+      band; after this run it is no longer clean for confirmatory use.
+
+## 2026-08-05 — BAND-TRIGGER M6 RESULT: null, wrong direction; 3.2c CLOSED
+
+- P1 lift 0.915, p = 0.7595, 38 firings vs 42.4 expected = -0.71 sigma.
+  P2 grid 0.759 (11 vs 15.6). P3 escalated 1.091 (11 vs 10.8). Family-wise
+  p over the three = 1.00. Power: a 2% plant gives lift 5.75 at p < 0.0001,
+  so the instrument is emphatically not blind.
+- AND THE ATLAS EXPLAINS THE ORIGINAL NEAR-MISS. Firing rates: M7+ events
+  0.84% (12/1,435), M6 events 0.37% (38/10,324), M6 era-matched controls
+  0.41% (212/51,620). The true base rate is ~0.41%, so the M7+ figure was a
+  2x upward fluctuation on twelve events — precisely what 1.4 sigma said.
+  The rule's most promising result dissolves into counting statistics.
+- VERDICT LANGUAGE, per the registration: **unsupported at every magnitude
+  tested**, not "refuted" — a mechanism switching on only above M7 would not
+  show at M6. But nothing now supports it either.
+- PLAN.md 3.2c closed. This was the last question answerable with data alone;
+  what remains open is blocked on NU, not on compute.
+
+## 2026-08-05 — CO-OCCURRENCE MINE: three artifacts caught, and two new guards
+
+scripts/pattern_mine_m7.py. M7+ only per NU instruction. Two genuinely new
+things, and a false positive that took three fixes to kill.
+
+- UNIFIED M7+ CORPUS: all three catalogs carrying M7+ events, deduplicated
+  3 d / 300 km with USGS minute-precision winning over day-precision death-
+  catalogue rows for the same event (the Moon moves 13.2 deg/day, so a
+  day-precision time cannot place it). 1,548 + 499 + 35 -> 447 duplicates
+  merged -> 1,635 unique -> 1,506 post-1900 declustered. LARGER than any
+  previous M7+ run: the deaths file holds M7+ events the USGS file misses.
+- WHAT WAS NEW: every prior screen tested SINGLE predicates, but no taught
+  pattern is single — Nepal is real-Nep-on-Ketu AND real-Ura-on-Sun. So pairs
+  and triples were searched: 609 + 181 + 15 = 805 patterns.
+- THE FIRST RUN RETURNED "SUPPORTED, family-wise p = 0.0067" — the first
+  thing in this project ever to clear a bar, and therefore the moment to
+  attack it. It was wrong three times:
+  (1) ERA-LOCKED PREDICATES. Winner band:Neptune=24 + mkm<=60 had all 18
+      events in 1996-2002 — one Neptune band-dwell. Neptune moves 7.7 deg/yr
+      against a 12.86 deg band, so a +-365 d control CANNOT leave the band:
+      96.8% of blocks had all four slots identical, contributing zero
+      variance to the permutation null while still driving the observed lift.
+      The null max collapses and any fluctuation reads as significant.
+      NEW GUARD: a testability filter on measured discrimination (fraction of
+      live blocks whose slots differ). Measured: band:Neptune 0.46,
+      band:Uranus 0.64, band:Saturn 0.95, everything else >= 0.99 — so it
+      drops exactly the two slow-giant band families and nothing else. This
+      is the same failure that once promoted "was it 1905-12" to lift 55;
+      era-matched controls fixed it for fast bodies and never for the giants.
+  (2) PSEUDO-REPLICATION. Next winner band:Jupiter=8 + band:Saturn=23, lift
+      2.698, 17 events, 2.59 sigma — in THREE distinct years (1931 x7, 1989
+      x1, 1990 x9). For a slow-body predicate the unit of independence is the
+      EPOCH, not the event. NEW GUARD: distinct-epoch count (>= 8).
+  (3) NON-REPLICATION. That same winner splits 0.998 / 3.394 across 2-year
+      blocks — entirely inside one half. band:Jupiter=13 + band:Saturn=2 is
+      its mirror (1909 and 1968 only, 2.818 / 0.998). NEW GUARD: mandatory
+      split-half, both halves > 1.
+- FINAL: family-wise p = 0.010 clears the bar, but the pattern achieving it
+  fails both new filters; the best pattern that IS independent and
+  replicating reaches lift 1.960 against a null-max median of 1.957 —
+  exactly at chance. VERDICT: NOT SUPPORTED.
+- THE STRUCTURAL LIMIT, which may matter more than the verdict. The support
+  floor is 1% (15 events), below which a lift is noise with a ratio printed
+  beside it. THE TAUGHT PATTERNS ARE RARER THAN THAT FLOOR — nepal-double
+  fires at 1/1,506, Chatur Vyuham at 0. This screen does not refute the
+  doctrine's own rules; IT CANNOT SEE THEM. Settling a 0.1% rule at these
+  lifts needs ~10^5 M7+ events, which do not exist. No amount of mining this
+  catalogue will ever validate the taught patterns — a structural fact, not
+  a result.
+- SAVED: atlas-patterns.toml, top 20 in the project's own rule schema,
+  verified to load with triggers.load_rules() and sweepable by astgraf-bands.
+  Each rule carries lift, support, epoch count, split-half lifts and a
+  SURVIVOR / FAILS REPLICATION tag; the header states the whole-file status.
+  Nothing dropped for looking bad — mined-triggers.toml was retired for
+  exactly that and its three rules still carry the scars.
+
+## 2026-08-05 — KNOWN DEBT CLOSED: every grading script now runs on validation.py
+
+Closes the audit's Finding 1 and TESTING.md's "known debt" section.
+
+- ALL 15 grading scripts now construct a Claim and print its banner: the
+  eight TESTING.md named, plus the four that had prose pre-registrations but
+  still bypassed the framework (band_trigger_grade, cell_region,
+  flood_signature, deadliest_structure), plus the three written this session.
+- BEHAVIOUR-PRESERVING AND VERIFIED SO. Baseline output was captured for all
+  eight BEFORE the port, then diffed line by line after: ALL EIGHT
+  BYTE-IDENTICAL apart from the banner. flood_signature re-derives RESULTS.md
+  #9 exactly (lift 1.012, p = 0.5685). Each Claim TRANSCRIBES the design from
+  the script's own prose header rather than idealising it, and carries its
+  recorded result in `notes` so the file is self-describing.
+  (One stumble, caught by that verification: the first pass inserted a bare
+  `say()` into seven scripts whose `say(msg: str)` has no default. Fixed and
+  re-verified.)
+- NEW REQUIRED FIELD Claim.preregistered, no default. Adding Claims to eight
+  scripts that were NEVER pre-registered risks making them LOOK
+  pre-registered, which would quietly corrupt the very record the framework
+  protects. So the distinction is now structural: banner() prints the status,
+  and report() appends "this is a LEAD, not a finding" to any POSITIVE result
+  carrying preregistered=False — the exact situation the co-occurrence mine
+  was in earlier the same day. Five declare True, eight retrospective, two
+  exploratory. Two new tests pin both behaviours.
+- ONE IMPLEMENTATION OF THE STATISTIC. The add-one smoothed lift had been
+  copy-pasted into SIX places with identical arithmetic; all now call
+  validation.smoothed_lift, including signatures.mine_lifts. Same formula, so
+  no number moved — the point is that there is now one place to audit.
+- HONEST RESIDUE, recorded rather than papered over: the eight retrospective
+  claims remain WEAKER EVIDENCE than the pre-registered five. Declaring a
+  design after the fact does not make it a pre-registration, and the
+  preregistered flag exists so that survives in the code rather than in a
+  footnote someone has to remember.

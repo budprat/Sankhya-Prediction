@@ -43,7 +43,7 @@ than demonstrated.
 
 ## Part 2 — What has been graded and failed
 
-Nine channels. **Every one carries a power check** proving the instrument
+**Thirteen channels.** Every one carries a power check proving the instrument
 could detect the effect it did not find; a null without demonstrated power is
 silence, not evidence.
 
@@ -65,17 +65,38 @@ silence, not evidence.
 
 ### Notes that matter more than the numbers
 
-**#8, #9 and #10 each closed an excuse.** Before them it could fairly be said
-that (a) the doctrine had never been tested on held-out data, (b) flood rules
-had only ever been graded against an earthquake catalogue, and (c) the
-author's headline rule had been scored against just 31 episodes. All three
-are now spent.
+**Five excuses have now been closed, in order.** Before them it could fairly
+be said that (a) the doctrine had never been tested on held-out data, (b)
+flood rules had only ever been graded against an earthquake catalogue, (c)
+the author's headline rule had been scored against just 31 episodes, (d) the
+corpus was magnitude-selected while the doctrine speaks about *catastrophe*,
+and (e) every screen had tested single predicates while the taught patterns
+are conjunctions of conditions. #8–#13 spend all five.
 
-**#10 is the only one that is merely underpowered rather than refuted.** Its
-whole result rests on **12 firings against 7.0 expected — a 1.4 σ excess**.
-The predicate is rare (0.84% of events), so a 1,435-event corpus still yields
-single digits. If the 1.80 lift were real: n ≈ 3,000 → 2.3 σ, n ≈ 6,000 →
-3.2 σ, n ≈ 12,000 → 4.6 σ. **This one is decidable with data alone.**
+**#13 is the one that nearly got away.** It returned family-wise p = 0.0067 —
+the first result in this project to clear a bar — and was wrong three times
+over: an era-locked predicate the controls could not decorrelate, 17 events
+in three epochs, and a winner living entirely in one split-half. Each failure
+is now a permanent guard (method rulings 7–9 below). The episode is the
+strongest argument in this file for why the machinery exists.
+
+**#10 was the only one merely underpowered rather than refuted — and #11
+settled it.** Its result rested on 12 firings against 7.0 expected, a 1.4 σ
+excess on a predicate firing at 0.84% of events. Re-run on 10,324 held-out
+M6.0–6.99 events it gives lift 0.915 in the **wrong direction**, and the
+atlas shows why: the trigger fires at **0.41% of ordinary instants**, so the
+M7+ figure was a 2× fluctuation on twelve events. Per its own registration
+the verdict is *unsupported at every magnitude tested*, not *refuted* — a
+mechanism switching on only above M7 would not appear at M6. But nothing now
+supports it either.
+
+**What no screen in this file can do.** The taught patterns fire at ~0.1% of
+events (`nepal-double` at 1 in 1,506; Chatur Vyuham at 0 of 1,435). Every
+mining pass here has a support floor of 1–2%, below which a lift is noise
+with a ratio printed beside it. **These screens do not refute the taught
+rules; they cannot see them.** Settling a rule that rare needs ~10⁵ M7+
+events, which do not exist. That is a structural limit on the evidence, and
+it applies to #1, #12 and #13 alike.
 
 **Superseded scoring.** The band trigger's earlier figures — grid 0/31 vs
 0.63 expected, proximity 1/31 vs 1.79, against `NATURAL DISASTERS.xlsx` — are
@@ -157,3 +178,27 @@ mistake this project actually made:
    catalogue's completeness gradient; a uniform time grid once faked p = 0.000
    through a 3:8 lunar commensurability.
 6. **Honest negatives stay on the record, with their numbers.**
+7. **A predicate the controls cannot decorrelate is untestable, not
+   significant.** If a predicate's value never varies across a control
+   block's slots, those blocks contribute zero variance to the permutation
+   null while still driving the observed lift — the null max collapses and
+   an ordinary fluctuation reads as significant. Earned when
+   `band:Neptune=24 + mkm≤60` returned family-wise p = 0.0067 on 18 events
+   that all fell in 1996–2002, one Neptune band-dwell. Measured
+   discrimination now filters these out.
+8. **For a slow-body predicate the unit of independence is the epoch, not
+   the event.** `band:Jupiter=8 + band:Saturn=23` reached lift 2.698 at
+   2.59 σ on 17 events — in three distinct years. A permutation that treats
+   each event as independent overstates significance accordingly.
+9. **Split-half replication is mandatory, not a diagnostic.** That same
+   winner splits 0.998 / 3.394 across 2-year blocks: it lives entirely in
+   one half. Both halves must agree before a pattern is reported.
+10. **A retrospective design is not a pre-registration**, and the difference
+    is now enforced by a required `Claim.preregistered` field rather than by
+    a footnote. `report()` labels any positive result from an unregistered
+    design a LEAD, not a finding.
+11. **Power bounds what a screen can even see.** The support floor of 1%
+    (15 events) is not arbitrary — below it a lift is noise with a ratio
+    printed beside it. The taught patterns fire at ~0.1%, so no screen over
+    any existing M7+ catalog can validate or refute them. Stating that limit
+    is more useful than reporting a number computed beneath it.

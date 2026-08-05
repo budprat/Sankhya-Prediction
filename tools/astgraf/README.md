@@ -8,7 +8,8 @@ clock. Built on the family BASIC suite's transit-graph pair, ported verbatim:
 reading stays in the SankhyaHoroscope app; this tool predicts.
 
 Documents: theory in `FRAMEWORK.md` · forward windows in `WATCHLIST.md` ·
-trigger rules in `doctrine-triggers.toml` / `mined-triggers.toml` ·
+evidence in `RESULTS.md` · the quake atlas in `QUAKE-ATLAS.md` · trigger rules
+in `doctrine-triggers.toml` / `mined-triggers.toml` / `atlas-patterns.toml` ·
 training corpus in `data/` · decision ledger in `.claude/tasks/ASTGRAF_TOOL.md`.
 
 ## Run
@@ -338,6 +339,53 @@ predicates before it.
   stay on the ledger as `unassessed (no spot)`. Future windows never touch
   the network. Only the quake channel is graded — the flood/volcanic
   families need the news search (firecrawl credits pending).
+
+## The event-chart atlas and the pattern miner
+
+Two grading pipelines that run over the event catalogs rather than over a
+date range. Both keep the DESCRIPTIVE census and the INFERENTIAL grading
+strictly apart — a census of thousands of charts always produces
+striking-looking regularities, and only an event-vs-control contrast can tell
+a sky base rate from an effect.
+
+```bash
+uv run python scripts/quake_atlas.py --corpus all      # 13,339 charts, ~11 min
+uv run python scripts/quake_atlas.py --corpus m7 --no-wheels
+uv run python scripts/pattern_mine_m7.py               # co-occurrence, ~10 s
+```
+
+**`quake_atlas.py`** casts a full chart per event **at its own epicenter** —
+13 body longitudes, retrograde flags, nakshatra/pada, 28-band occupancy, the
+four giants' real positions, band stack, Moon–Ketu–Mars spread, vyuha state,
+doctrine rules fired, every doctrine-orb contact — for all four quake
+catalogs, then screens the doctrine's full predicate vocabulary against
+era-matched controls with a family-wise maximum-lift null. Writes
+`charts.csv`, one SVG wheel per event, `census.txt`, `lifts.csv` and
+`patterns.txt` per corpus. Tracked digests: `data/quake-charts-*.csv`;
+tracked wheels: `charts/great-quakes/` (16 M8.5+) and `charts/deadliest/` (10).
+
+**`pattern_mine_m7.py`** searches **co-occurring** configurations — pairs and
+triples, the conjunction-of-conditions shape every taught pattern has — over
+a unified M7+ corpus assembled across all three catalogs that carry M7+
+events and deduplicated at 3 d / 300 km (1,635 unique, larger than any single
+file). It carries three guards earned by a false positive it actually
+produced:
+
+- a **testability filter** — a predicate whose value never varies across a
+  block's slots cannot be tested by permutation (it contributes zero null
+  variance while still driving the observed lift). Drops exactly
+  `band:Neptune` and `band:Uranus`, which a ±365 d control cannot decorrelate.
+- a **distinct-epoch count** — for a slow-body predicate the unit of
+  independence is the epoch, not the event.
+- a **mandatory split-half** — both 2-year-block halves must agree.
+
+Output goes to `atlas-patterns.toml` in the project's own rule schema, so the
+patterns load with `triggers.load_rules()` and sweep with
+`astgraf-bands --rules atlas-patterns.toml`. Every rule carries its lift,
+support, epoch count, split-half lifts and a `SURVIVOR` / `FAILS REPLICATION`
+tag, and the file header states the whole-file status. **The file is labelled
+NOT SUPPORTED** — nothing is dropped for looking bad, because
+`mined-triggers.toml` was retired for exactly that.
 
 ## The anchor library (`astgraf-anchors`)
 
