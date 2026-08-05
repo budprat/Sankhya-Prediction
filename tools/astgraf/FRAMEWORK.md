@@ -92,10 +92,27 @@ angular span of the crossing complex read at 4 min/°. Nepal: real-Uranus↔Sun
 min**, against the author's stated "dwell time has been 4 minutes … because
 both Uranus and Neptune crossed Ketu position one after another". The number
 matches; the attribution does not (our chart puts real-Neptune on Ketu and
-real-Uranus on the SUN, 26.5° from Ketu). Consequences: dwell is a SEVERITY
-quantity (wider crossing → longer dwell → bigger event, the falsifiable and
-counterintuitive half of his model), and the 3-second threshold is vacuous as
-literally stated — every crossing inside any usable orb clears 1/81°.
+real-Uranus on the SUN, 26.5° from Ketu).
+
+**Dwell GRADED AND CLOSED (2026-08-05) — both halves fail.** The construction
+reproduces; the doctrine built on it does not.
+- *Trigger half* ("dwell > 3 s ⇒ major shock waves"): vacuous as literally
+  stated — 3 s IS 1/81°, so every crossing inside any usable orb clears it,
+  at identical rates for events and controls. It selects nothing. Events also
+  carry no more dwell than ordinary moments (+0.054 min at orb 3°, p = 0.42;
+  sign reverses at orb 1°).
+- *Magnitude half* (wider crossing → bigger event — the falsifiable and
+  counterintuitive half): appeared at ρ = +0.32/+0.34 on M7+ (n = 44,
+  family-wise p ≈ 0.03–0.04, independently replicated across two sessions),
+  then **died on pre-registered held-out data**: 338 declustered M6.0–6.99
+  events (a band disjoint from the M7+ corpus by construction) give
+  **ρ = −0.040, p = 0.77**, wrong sign in every cut — pooled, single-crossing,
+  both time halves, 1970+. Injection recovers a true ρ = 0.32 in 12/12 draws,
+  so the instrument was not blind. Diagnosis: winner's curse — the max of
+  four correlated cells at n = 44, where sampling noise on ρ is ±0.15.
+- Caveat kept in the author's favour: a mechanism switching on only above M7
+  would not show in the M6 band — but the M7+ result then rests on nothing
+  but its own selection.
 
 **His ground distances run ~11% optimistic.** 1° at the equator is 111.319 km,
 not 100; the equator moves 465.1 m/s, not 400; the 1/81° cell is 1,374 m, not

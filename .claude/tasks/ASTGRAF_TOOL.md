@@ -1743,3 +1743,32 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   optimistic ground distances (111.319 km/deg, 465.1 m/s, 1,374 m cell); and
   the three-longitude-mechanisms / one-latitude-mechanism asymmetry with the
   23.71 vs 28.23 gap as the standing question for the author.
+
+## 2026-08-05 — DWELL CLOSED on held-out data; the location/doctrine board is now 5/5 null
+- The parallel session ran the decisive test with the disjointness fix this
+  session flagged (M6.0-6.99 STRICTLY, not M6+, so the M7+ discovery set
+  cannot leak): 12,212 USGS FDSN events -> 10,324 declustered by the same
+  7d/500km rule -> 338 with an active taught crossing at orb 1 (7.7x the
+  discovery sample). Cell, direction and statistic PRE-REGISTERED.
+  RESULT: rho -0.040, p 0.77 — wrong sign in EVERY cut (pooled 6.0-8.5
+  -0.053; single-crossing -0.019; halves -0.048/-0.045; 1970+ -0.041).
+  Power: injected rho 0.32 recovered 12/12, rho 0.20 in 11/12 — not blind.
+  Diagnosis: winner's curse (max of four correlated cells at n=44, sampling
+  noise +-0.15). The p=0.042 was real arithmetic on a fake effect — and the
+  caution this session filed when replicating it (smallest cell, sign
+  reverses at orb 3) is exactly what it turned out to be.
+- FRAMEWORK section 1b updated in place: dwell's construction still
+  reproduces (Nepal 4.14 min) but BOTH doctrine halves are recorded closed —
+  trigger half vacuous (3 s = 1/81 deg, selects nothing; events carry no
+  excess dwell, p 0.42), magnitude half dead on held-out data. Author's
+  caveat kept: an above-M7-only mechanism would not show in the M6 band, but
+  then the M7+ result rests on nothing but its own selection.
+- BOARD: five location/doctrine families built and graded — rotation spots,
+  Ascendant rules, site-angles, the full 0-360 rotation spectrum, dwell —
+  ALL NULL under honest testing, each with a power check proving the
+  instrument could see the effect it failed to find. The timing channels
+  (anchor dossiers, recurrence fingerprints, family calendars, taught-minute
+  reproduction) stand untouched; nothing in the location doctrine survives.
+- METHOD RULING (adopt as standing practice): pre-register cell, direction
+  and statistic BEFORE running any future lead. It converted this one from
+  an argument into a single clean kill.
