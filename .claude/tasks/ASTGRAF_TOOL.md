@@ -2150,3 +2150,26 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   "no effect large enough for 12 events to reveal", never "no effect", and a
   positive would need replication on NCEI's >5,700 deaths-selected events
   before meaning anything — the dwell finding died exactly this way at n=44.
+
+## 2026-08-05 — DEATHS-SELECTED STRUCTURE RESULT: null (p = 0.34), and honestly underpowered
+- Ran the pre-registered test (design committed first, untouched).
+  12 deaths-selected events, 66 pairs: mean pairwise Jaccard similarity of
+  fired-contact sets = 0.0159. Null (2,000 random 12-event samples from the
+  1,435 magnitude-selected declustered corpus): median 0.0139, 95th 0.0229.
+  p = 0.3435 — NULL. The deadliest earthquakes do not share configuration
+  structure more than magnitude-selected ones.
+- POWER, as registered: the statistic works — the tightest 12-event window in
+  the corpus (95 days, so the slow bodies are near-identical by construction)
+  scores 0.1514 at p = 0.0000, roughly TEN TIMES the observed value. So the
+  instrument sees structure when structure exists.
+- BUT THE REGISTERED POWER WARNING STANDS AND IS THE HEADLINE: n = 12. This
+  null means "no effect large enough for 12 events to reveal", NOT "no
+  effect". Recorded as UNDERPOWERED-NULL, not as a refutation — the honest
+  distinction the dwell episode taught. NCEI/WDS holds >5,700 deaths/damage
+  -selected events; importing it would make this a real test.
+- Corpus documented in data/README-floods.md (retitled "The event corpora",
+  now covering all four files and why a curated quake file exists alongside
+  the pinned magnitude-selected one). Invariant test added: schema identical
+  to the flood files, unique ids, tier enum, coordinate ranges, and agreement
+  with anchors.toml coordinates where the same event appears in both.
+  249 tests passing.

@@ -1,3 +1,31 @@
+# The event corpora
+
+Four files, one schema — so any analysis can read them together:
+
+| file | n | span | scope |
+|---|---|---|---|
+| `usgs-m7-1850-2020.csv` | 1,435 declustered | 1900–2020 | Global M7+, magnitude-selected, exact instants (the pinned corpus) |
+| `quakes-historical.csv` | 39 | 856 CE – 2023 | Curated majors in three tiers, incl. a **deaths-selected** tier |
+| `floods-historical.csv` | 88 | ~5.3 Ma – 2021 | Global, hand-curated, deep time |
+| `floods-hanze-europe.csv` | 2,724 | 1871 – 2025 | Europe, imported from HANZE v3.0.1b |
+
+## `quakes-historical.csv` — why a curated quake file when a corpus exists
+
+The pinned USGS corpus is **magnitude**-selected. The doctrine speaks about
+catastrophe, which is not the same variable: Tangshan (Mw 7.5, ~300,000 dead)
+and Haiti (Mw 7.0, ~200,000 dead) are minor by seismic moment and enormous by
+consequence. This file adds a **deaths-selected** tier (12 events), a
+**largest** tier (15 events, Mw ≥ 8.4), and a **pre-instrumental** tier (12
+events, 856 CE onward, macroseismic locations). It also reaches past the
+pinned corpus's 2020 cut-off (2023 Turkey–Syria) and back before it (1556
+Shaanxi, ~830,000 deaths, the deadliest on record).
+
+Usability: 20 rows carry minute precision, 18 day, 1 month; **32 are
+chart-usable** (minute/day and ≥ 1700), 7 pre-1700 rows are disqualified by
+engine drift, and 23 carry death tolls. Pre-instrumental coordinates are
+macroseismic estimates (±10–100+ km) — `loc_precision` says `region` for all
+of them.
+
 # The flood corpora
 
 Two files, same schema, different provenance:

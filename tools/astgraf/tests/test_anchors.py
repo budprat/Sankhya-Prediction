@@ -184,3 +184,28 @@ def test_hanze_corpus_matches_the_shared_schema():
     assert all(r["loc_precision"] == "country" for r in hanze)
     years = [int(r["time"][:4]) for r in hanze]
     assert min(years) >= 1870 and max(years) <= 2026
+
+
+def test_historical_quake_corpus_is_well_formed():
+    # The curated quake compilation (NU, 2026-08-05) adds a DEATHS-selected
+    # tier the pinned magnitude-selected corpus cannot express.
+    import csv as _csv
+    from pathlib import Path
+    base = Path(ANCHORS_PATH).parent / "data"
+    rows = list(_csv.DictReader(open(base / "quakes-historical.csv")))
+    floods = list(_csv.DictReader(open(base / "floods-historical.csv")))
+    assert list(rows[0].keys()) == list(floods[0].keys()), "schema drift"
+    assert len({r["id"] for r in rows}) == len(rows), "duplicate ids"
+    assert {r["tier"] for r in rows} == {"pre-instrumental", "largest", "deadliest"}
+    for r in rows:
+        assert r["date_precision"] in ("minute", "day", "month"), r["id"]
+        assert -90 <= float(r["latitude"]) <= 90, r["id"]
+        assert -180 <= float(r["longitude"]) <= 180, r["id"]
+    # the anchors that also live in anchors.toml must agree on coordinates
+    anchors = {a.id: a for a in load_anchors(ANCHORS_PATH)}
+    for r in rows:
+        a = anchors.get(r["id"])
+        if a and a.lat is not None:
+            assert float(r["latitude"]) == pytest.approx(a.lat, abs=0.6), r["id"]
+    deadliest = [r for r in rows if r["tier"] == "deadliest"]
+    assert len(deadliest) >= 10
