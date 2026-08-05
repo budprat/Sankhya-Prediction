@@ -1772,3 +1772,41 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
 - METHOD RULING (adopt as standing practice): pre-register cell, direction
   and statistic BEFORE running any future lead. It converted this one from
   an argument into a single clean kill.
+
+## 2026-08-05 — PRE-REGISTRATION: the cell-region test (author's own location design)
+- COMMITTED BEFORE RUNNING (per the standing method ruling). Script:
+  scripts/cell_region.py, whose header carries the full pre-registration.
+- WHY THIS FAMILY. Five geometric families are dead (rotation spots,
+  Ascendant rules, site-angles, the full 0-360 rotation spectrum, dwell).
+  Re-reading the author's briefing against the clocks model shows we were
+  building the wrong KIND of thing: Predict.pdf says each matrix point
+  "would contain confirmed event synchronisation factors from areas of our
+  interest" and calls for an "algorithm to pinpoint areas on Earth ... in
+  each category" — a LEARNED TABLE, not a geometric construction. A learned
+  region also escapes the declination ceiling structurally, which no
+  geometric family can: measured this session, sub-point constructions
+  cannot express 44.4% of M7+ latitudes with the four giants, and still
+  38.5% even if lunar latitude were restored (the Moon reaches +28.58,
+  enough for Gorkha in principle — but its declination at the Nepal instant
+  was only +15.94, so even that escape hatch fails on the flagship case).
+- Also derived from the clocks model and recorded: a slow-slow crossing
+  CANNOT define a meridian (the crossing lasts days; meridians sweep 360
+  deg/day), so geometric longitude can only come from a fast body — and
+  every fast-body channel is already tested and null. The geometric route
+  is exhausted; the empirical one is untouched.
+- DESIGN (fixed in advance): corpus = the same 1,435 declustered post-1900
+  M7+ mainshocks, M7+ ONLY per NU's ruling; cell = (body, band) at level 0
+  (Predict.pdf's own 28 divisions), 11 bodies x 28 bands, each event firing
+  11 cells; statistic = spherical resultant length R of a cell's epicenters
+  (higher = more concentrated); qualifying cells n >= 15 fixed in advance;
+  family statistic = max R over qualifying cells; null = shuffle EPICENTERS
+  across events holding band-vectors fixed (preserves the catalog's real
+  geography and all cell sizes, destroys only the sky-to-place pairing),
+  500 shuffles, seed 42; direction predicted = real R HIGHER than null;
+  verdict p < 0.05. A power check plants a known region preference so a
+  null cannot be mistaken for blindness.
+- PRIOR STATED IN ADVANCE: low. Same corpus that has refused five families
+  and three mining passes. What justifies one clean shot: it is the
+  author's own stated design, it escapes the latitude cage structurally,
+  and a hit would be operationally useful (a ranked region shortlist is
+  what his stated purpose — logistics planning — actually needs).
