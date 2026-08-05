@@ -14,6 +14,26 @@
 #   Ulsoor     Neptune 0.09 from the Asc, Saturn 1.51 from the MC
 #              (his "the Asc swept Neptune -> Sun -> Ketu -> Uranus")
 #
+# GRADED AND RETIRED AS A PREDICTOR (2026-08-05, scripts/angle_grade.py).
+# Over the 1434 declustered post-1900 M7+ events with epicenters, scored against
+# 49 leave-one-out epicenter control PLACES per event at the same instant:
+#   - no body's angle separation prefers the true epicenter. Best of 15 bodies
+#     was Mars at z = -2.27, short of the z = -3.0 multiplicity bar.
+#   - the SPECIFIED form (only the acting taught real-giant contact) over 314
+#     instances: z = -0.35 at the catalog origin time, and z = +1.20 at the
+#     crossing exactness instant — the instant a forward run would actually
+#     use. Neither direction shows anything.
+#   - the unspecified form is vacuous as warned below: lift 1.03 at orb 3 deg.
+# The null is not blindness: scripts/angle_power.py plants epicenters on a
+# body's culmination meridian and the SAME statistic recovers the signal at
+# z = -17.9 even after +-25 deg of jitter. A rule of this shape, that loose,
+# would have been found. It is not in the catalog.
+# The three-anchor fit below is therefore a fit, not evidence — Nepal's
+# specified bodies rank 5/50 among control places (top-10%, the sort of thing
+# ~1 event in 10 shows), while its unspecified tightest body ranks 28/50, worse
+# than half the control places. Keep this module for reading a chart's angles;
+# do not use it to claim a location.
+#
 # SELECTIVITY, measured before believing any of it: "SOME body within 3 deg of
 # SOME angle" is nearly vacuous — 66% of random site/instant pairs satisfy it,
 # median tightest 1.11 deg. Against that bar Nepal's 2.00 deg is unremarkable
@@ -56,13 +76,30 @@ def _wrap(x: float) -> float:
     return (x + 180.0) % 360.0 - 180.0
 
 
-def angles_at(jd: float, lat: float, lon_east: float) -> dict[str, float]:
-    """The four angles of the site chart, in tropical longitude."""
-    c = site_chart(jd, lat, lon_east)
-    asc = c.positions["Ascendant"].longitude
-    mc = c.cusps[0]
+def angles_from_chart(chart) -> dict[str, float]:
+    """The four angles of an already-computed site chart, in tropical longitude.
+    Grading sweeps re-solve one chart per (instant, place) pair, so callers that
+    already hold the chart must not pay for a second one."""
+    asc = chart.positions["Ascendant"].longitude
+    mc = chart.cusps[0]
     return {"Asc": asc, "Desc": (asc + 180) % 360,
             "MC": mc, "IC": (mc + 180) % 360}
+
+
+def angles_at(jd: float, lat: float, lon_east: float) -> dict[str, float]:
+    """The four angles of the site chart, in tropical longitude."""
+    return angles_from_chart(site_chart(jd, lat, lon_east))
+
+
+def body_longitudes(chart) -> dict[str, float]:
+    """Every plotted body plus its real (light-time-corrected) counterpart.
+    The Ascendant is dropped — it IS an angle, so it would score zero."""
+    from .bands import REAL_POSITION_OFFSETS, real_longitude
+    pos = {b: p.longitude for b, p in chart.positions.items()
+           if b != "Ascendant"}
+    for g in REAL_POSITION_OFFSETS:
+        pos[f"real-{g}"] = real_longitude(chart, g)
+    return pos
 
 
 def bodies_on_angles(jd: float, lat: float, lon_east: float,
@@ -70,11 +107,8 @@ def bodies_on_angles(jd: float, lat: float, lon_east: float,
     """(separation, angle, body) for every body within `orb` of an angle —
     the signature that identifies a site as the event's place."""
     c = site_chart(jd, lat, lon_east)
-    ax = angles_at(jd, lat, lon_east)
-    from .bands import REAL_POSITION_OFFSETS, real_longitude
-    pos = {b: p.longitude for b, p in c.positions.items() if b != "Ascendant"}
-    for g in REAL_POSITION_OFFSETS:
-        pos[f"real-{g}"] = real_longitude(c, g)
+    ax = angles_from_chart(c)
+    pos = body_longitudes(c)
     out = [(_sep(v, p), k, b) for k, v in ax.items() for b, p in pos.items()
            if _sep(v, p) <= orb]
     return sorted(out)

@@ -431,6 +431,37 @@ flood family's 1993 conjunction was itself a triple, all three passes in
 Poorvashada pada 4 — the 1,000-year records list (awaited) populates its
 historical members. Timing only — no spots.
 
+## The site-angle layer (`astgraf.angles`) — graded, and retired as a predictor
+
+The idea: an event stands where the crossing pair sits on an **angle** of the
+site's own chart. It fits all three of NU's taught anchors in the author's own
+language (Nepal's Sun/real-Uranus 2.00°/2.69° from the MC, Hyderabad's
+Neptune/Ketu 0.56°/0.59° on the Asc, Ulsoor's Neptune 0.09° on the Asc), and it
+escapes the tropical ceiling that kills the sub-planet spot — the MC fixes a
+meridian, the Ascendant fixes a curve reaching every latitude.
+
+**It does not survive the catalog** (`scripts/angle_grade.py`). Because this
+layer claims a *place* rather than an *instant*, the controls are places, not
+times: 49 leave-one-out epicenters per event at the same instant, which matches
+the geography of seismicity exactly. Over 1434 declustered post-1900 M7+ events
+the true epicenter is not preferred — best of 15 bodies is Mars at z = −2.27
+against a z = −3.0 multiplicity bar; the specified form (acting taught contact
+only, 314 instances) gives z = −0.35, and **z = +1.20 at the crossing exactness
+instant**, which is the only instant a forward run actually has.
+
+**The null is not blindness** (`scripts/angle_power.py`). Planting epicenters on
+a body's culmination meridian, the identical statistic recovers the signal at
+z = −41.6 exact and still z = −17.9 after ±25° of jitter. A rule of this shape,
+that loose, would have been found. The power claim is enforced in the suite, not
+just written down.
+
+Scope limit found while running it: the BAS cusp chain evaluates
+`sqrt(1 − xx²)` with `xx = sin(RA)·tan(ε)·tan(lat)`, so it is **undefined beyond
+the polar circle (66.56°)** — the angles do not exist there at all.
+
+`angles.py` remains a correct way to read a chart's angles. It must not be used
+to claim a location.
+
 ## Honesty notes
 
 - The ephemeris is the ASTROLOG.BAS/ASTGRAF.BAS canon verbatim, including its

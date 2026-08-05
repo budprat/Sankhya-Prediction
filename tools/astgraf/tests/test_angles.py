@@ -1,12 +1,17 @@
 # ABOUTME: The site-angle location layer against NU's three taught anchors — the
 # ABOUTME: crossing pair stands on a chart angle at Nepal, Hyderabad and Ulsoor.
 
+import random
+import statistics
+
 import pytest
 
 from astgraf.anchors import iso_jd
 from astgraf.angles import (
     angles_at,
+    angles_from_chart,
     bodies_on_angles,
+    body_longitudes,
     latitude_on_meridian,
     meridian_of,
     site_chart,
@@ -81,3 +86,36 @@ def test_latitude_axis_is_the_weakly_conditioned_one():
     # solving for a latitude still works, it is just soft
     got = latitude_on_meridian(jd, lon, a20)
     assert got == pytest.approx(20.0, abs=0.5)
+
+
+def _nearest_angle(jd, lat, lon, body):
+    c = site_chart(jd, lat, lon)
+    p = body_longitudes(c)[body]
+    return min(min(abs(a - p) % 360, 360 - abs(a - p) % 360)
+               for a in angles_from_chart(c).values())
+
+
+def test_rank_statistic_can_detect_a_planted_location_signal():
+    # scripts/angle_grade.py graded this layer over the M7+ catalog and found
+    # nothing. A null is only evidence if the statistic can see a signal, so
+    # plant epicenters on the meridian where Mars culminates and confirm the
+    # rank collapses to 1, while places drawn at random sit at chance.
+    rng = random.Random(3)
+    jds = [iso_jd("2015-04-25T06:11:25.950Z") + 37.0 * i for i in range(12)]
+    pool = [(rng.uniform(-55, 55), rng.uniform(-180, 180)) for _ in range(25)]
+    planted_ranks, chance_ranks = [], []
+    for jd in jds:
+        mars = body_longitudes(site_chart(jd, 0.0, 0.0))["Mars"]
+        lon = meridian_of(jd, mars)
+        assert lon is not None, "Mars must culminate on some meridian"
+        ctrl = [_nearest_angle(jd, la, lo, "Mars") for la, lo in pool]
+        planted = _nearest_angle(jd, 0.0, lon, "Mars")
+        planted_ranks.append(1 + sum(1 for s in ctrl if s < planted))
+        loose = _nearest_angle(jd, rng.uniform(-55, 55),
+                               rng.uniform(-180, 180), "Mars")
+        chance_ranks.append(1 + sum(1 for s in ctrl if s < loose))
+    # a planted place is always the tightest — the statistic is not blind
+    assert planted_ranks == [1] * len(jds)
+    # and an unplanted place lands mid-pack, so the statistic is calibrated
+    mean_chance = statistics.mean((r - 1) / len(pool) for r in chance_ranks)
+    assert 0.25 < mean_chance < 0.75

@@ -1461,3 +1461,44 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   and the angle condition are both exact.
   STATUS: mechanism implemented and pinned to the anchors; NOT yet a validated
   predictor — it needs the same catalog grading the other channels got.
+- *** SITE-ANGLE LAYER GRADED AND RETIRED AS A PREDICTOR (same day) ***
+  scripts/angle_grade.py + scripts/angle_power.py, suite 238 -> 239.
+  The grading had to change shape: every other channel claims an INSTANT and
+  was graded against time-uniform controls, but this one claims a PLACE, so
+  the instant is held fixed and the PLACE is varied. Control places are the
+  other events' own epicenters (leave-one-out), which matches the geography of
+  seismicity exactly, so the test asks the only question a location layer must
+  answer: given a quake happened in the belt, does the rule say WHICH place?
+  At a fixed instant the true epicenter and its 49 controls are exchangeable
+  under the null, so the RANK of the true place is exactly uniform — no
+  calibration needed, which is why rank is the primary statistic here.
+  RESULT over 1434 declustered post-1900 M7+ events:
+    T1 per-body      best of 15 is Mars z = -2.27 (bar is z = -3.0). Nothing.
+    T3 specified     acting taught contact only, 314 instances: z = -0.35.
+    T6 doctrinal     same 314 at the CROSSING EXACTNESS instant — the instant
+                     a forward run actually has — z = +1.20. Nothing.
+    T4 unspecified   lift 1.03 at orb 3 deg, exactly as vacuous as warned.
+    T5 Nepal         specified bodies rank 5/50 (top-10%, ~1 event in 10 does
+                     this); unspecified tightest body ranks 28/50, i.e. WORSE
+                     than half the control places.
+  POWER FIRST, then the null: a null from a blind instrument is worthless, so
+  angle_power.py plants epicenters on a body's culmination meridian and re-runs
+  the identical statistic. It detects at z = -41.6 exact, and still z = -17.9
+  after +-25 deg of jitter. A rule of this shape, that loose, would have been
+  found. Enforced in tests/test_angles.py so the power claim cannot rot.
+  SCOPE LIMIT discovered while running it: the BAS cusp chain takes
+  sqrt(1 - xx*xx) with xx = sin(RA)*tan(ob)*tan(lat), so it is undefined once
+  tan(lat) >= 1/tan(23.44) — i.e. beyond the polar circle at 66.56 deg. The
+  angles literally do not exist up there. 1 of 1435 events excluded, from both
+  arms. Any future location work inherits this ceiling.
+  WHAT THIS MEANS: the three-anchor fit was a fit. Three sites hand-picked
+  from the author's teaching is exactly the selection process that manufactures
+  such agreements, and the catalog says the pattern does not generalise.
+  angles.py stays as a way to READ a chart's angles; it must not be used to
+  claim a location. Third location family retired by test, after the
+  rotation-based spots and the Ascendant-based rules.
+  STILL OPEN, and the honest next lead: every location family tried so far
+  derives the place from the sky ALONE. The author's own claim couples a
+  crossing to a 1/81 horary subdivision, which needs a reference longitude to
+  subdivide FROM — and we have never been told what his zero is. Until that
+  arrives (or the 1000-year record), there is no location layer to grade.
