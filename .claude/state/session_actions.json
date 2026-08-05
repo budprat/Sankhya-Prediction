@@ -14,21 +14,6 @@
   ],
   "commands_run": [
     {
-      "command": "uv run python - <<'EOF'\nimport csv\nfrom astgraf.ephemeris import julian_day_number\nEP=[(\"1911-11-08\"",
-      "success": true,
-      "timestamp": "2026-08-05T19:49:48.622035"
-    },
-    {
-      "command": "uv run python - <<'EOF'\nfrom astgraf.anchors import chart_at, iso_jd, jd_iso_minute\nfrom astgraf.ban",
-      "success": true,
-      "timestamp": "2026-08-05T19:54:09.742707"
-    },
-    {
-      "command": "ls -la de440.bsp 2>/dev/null || echo \"de440.bsp absent\"; python3 -c \"\n# 1. Is the ~12.8-year beat ph",
-      "success": true,
-      "timestamp": "2026-08-05T19:55:08.749688"
-    },
-    {
       "command": "uv run python -c \"import jplephem; print('jplephem available')\" 2>&1 | tail -1; grep -rn \"de440\" scr",
       "success": true,
       "timestamp": "2026-08-05T19:55:18.060728"
@@ -262,6 +247,21 @@
       "command": "python3 - <<'PYEOF'\np=\"src/astgraf/bands.py\"; s=open(p).read()\nold = '''MAJOR_BODIES = (\"Jupiter\", \"",
       "success": true,
       "timestamp": "2026-08-05T20:55:58.502422"
+    },
+    {
+      "command": "python3 - <<'PYEOF'\np=\"FRAMEWORK.md\"; s=open(p).read()\nold = '''- **Body set**: *\"All nine planets a",
+      "success": true,
+      "timestamp": "2026-08-05T20:56:31.913447"
+    },
+    {
+      "command": "cd tools/astgraf && uv run python -c \"\nfrom astgraf.bands import GIANTS, MAJOR_BODIES, doctrine_orb\n",
+      "success": true,
+      "timestamp": "2026-08-05T20:57:01.303944"
+    },
+    {
+      "command": "cd /Users/macbookpro/Sankhya-Prediction && git fetch -q; echo \"=== staged ===\"; git diff --cached --",
+      "success": true,
+      "timestamp": "2026-08-05T20:59:32.210992"
     }
   ]
 }
