@@ -2124,3 +2124,29 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   FRAMEWORK document map, PLAN header, and the repo README tree all list it;
   repo README's epistemic contract gained the ten-channel summary; test
   counts trued to 248.
+
+## 2026-08-05 — Historical QUAKE corpus created + pre-registered deaths-selected test
+- NU supplied a curated earthquake compilation (NCEI/WDS, ISC-GEM, USGS,
+  GEM GHEA). Saved as data/quakes-historical.csv in the SAME schema as the
+  two flood corpora: 39 events, three tiers — pre-instrumental 12 (856 CE
+  Damghan through 1833 Sumatra), largest 15 (Mw >= 8.4, 1906-2012),
+  deadliest 12 (1908 Messina through 2023 Turkey-Syria).
+- USABILITY (measured): 20 minute-precision, 18 day, 1 month; 32 chart-usable
+  (minute/day AND >= 1700); 7 pre-1700 disqualified by engine drift; 23 carry
+  death tolls. Includes the 1556 Shaanxi event (~830,000 deaths, deadliest on
+  record) and 2023 Turkey-Syria, both outside the pinned USGS corpus which
+  ends 2020.
+- WHAT IT ADDS that the pinned corpus cannot: a DEATHS-SELECTED tier. USGS
+  M7+ is MAGNITUDE-selected, so Tangshan (Mw 7.5, ~300,000 dead) and Haiti
+  (Mw 7.0, ~200,000 dead) are minor by its criterion and enormous by
+  consequence. The M9 shared-structure test could not see them.
+- PRE-REGISTERED TEST (committed before running): scripts/deadliest_structure.py
+  — do deaths-selected events share fired-contact structure more than
+  same-size samples of magnitude-selected ones? Statistic: mean pairwise
+  Jaccard similarity of contact sets, Moon pairs EXCLUDED throughout (day
+  rows cannot place the Moon), registered in advance. Null: 2,000 random
+  12-event samples from the 1,435 declustered M7+ corpus, seed 42.
+  POWER WARNING REGISTERED IN ADVANCE: n = 12 gives 66 pairs; a null means
+  "no effect large enough for 12 events to reveal", never "no effect", and a
+  positive would need replication on NCEI's >5,700 deaths-selected events
+  before meaning anything — the dwell finding died exactly this way at n=44.
