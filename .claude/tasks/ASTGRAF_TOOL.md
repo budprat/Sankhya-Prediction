@@ -2587,3 +2587,58 @@ fix and the flood clock had made stale.
       be confirmed on DE440 before it is written down. Doctrine's 3 deg orbs
       are unaffected.
   Documented in FRAMEWORK section 2b, TESTING protocol step 5, and RESULTS.md.
+
+## 2026-08-05 — THE AUTHOR'S LOCATION METHOD DECODED: an underdetermined inverse search
+- NU pointed at canon/SankhyaStellarPrediction.html (his own 2016 JS program)
+  and his account of it. Reading his prose AGAINST his code changes the whole
+  location picture, and is the most consequential finding of the session.
+- HIS METHOD IS AN INVERSE SEARCH, not a forward construction: "select any
+  point in the curve and see that moment chart and get the time, lat long";
+  "vary any time, lat long GMT even a little and you will see ASC shift FAST
+  and MOON would also shift but slow"; "take any event and search for time
+  lat long GMT precisely"; "converts point in curve to ANY PLACE ON EARTH but
+  at a one time, long lat and GMT".
+- THE ARITHMETIC: Asc = f(time, lat, lon) is ONE EQUATION IN THREE UNKNOWNS,
+  so fixing a crossing degree leaves a TWO-PARAMETER FAMILY, not a place.
+  MEASURED: requiring Asc = 106.0 deg on 2016-10-01, EVERY latitude from -60
+  to +60 admits a solution, each with its own longitude and time. His own
+  phrase "ANY PLACE ON EARTH" states the property; he offers it as a feature.
+- WHY THIS MATTERS MORE THAN ANY SINGLE NULL: (a) a method that can place an
+  event anywhere places it nowhere; (b) it explains why every taught instance
+  locates perfectly in hindsight — the site was known first and the search was
+  run to confirm it; (c) it explains the fifteen graded nulls — we tested
+  FORWARD constructions, which he never claimed, while his method answers the
+  INVERSE question ("given this place, when does the crossing reach its
+  Ascendant"), which is a TIMING question, the layer that does work.
+- THE SHARPENED QUESTION FOR THE AUTHOR: not "what supplies the latitude?"
+  but "WHAT SECOND CONDITION COLLAPSES THE ASCENDANT SOLVE FROM ONE EQUATION
+  IN THREE UNKNOWNS TO A POINT?" He is aware of the gap and reaches for a
+  nodal correction: "It may not be exactly on that spot because Rahu has
+  shifted so there could be an angular shift in Latitude Northward."
+- HIS PROGRAM'S CONVENTIONS, read from the code: `l` = longitude,
+  EAST-NEGATIVE (l<0 prints "East") — same as the BAS and our port; `b4` =
+  latitude, north-positive. THE FORM LABELS ARE SWAPPED: the field captioned
+  "Lat" accepts -180to180 (a longitude range), the one captioned "Long"
+  accepts -90to90 (a latitude range). Read his examples by RANGE not CAPTION.
+- HIS "1 OCT 18" CLAIM VERIFIED WITH THE YEAR CORRECTED TO 2016 (his file is
+  dated 29 Sep 2016, two days before): at his stated parameters (06:00 local,
+  long 117, lat 22, GMT -10) Sun 188.91 / Jupiter 184.85 / Moon 196.20 span
+  11.35 deg, and Neptune 340.15 / Ketu 341.06 are 0.92 deg apart — effectively
+  one body, exactly as he wrote "Nep plus Ketu". Two of three elements
+  reproduce; "exactly opposite" is ~29 deg loose. In 2018 the configuration
+  does not exist (Sun-Jupiter 43.8 deg apart). The date sits 8 days after the
+  Hyderabad flood, inside the taught Neptune-on-Ketu window.
+- PUNARVASU 30,000-YEAR ZERO CONFIRMED: engine reports the two-cycle-back
+  Punarvasu zero at 30,178 BC (32,174 y before the 1996 anchor), marker
+  "zero azimuth & ecliptic" — his recollection is accurate.
+- 60-DIVISION DRILL: PRECISION IS NOT ACCURACY. His "60 divisions hourly gives
+  a minute" is correct as arithmetic — Uranus-Ketu returns 2015-01-31 08:17 UT,
+  a true minimum (0.000000 deg there, 0.000060 one minute either side). But the
+  pair closes at only 0.0863 deg/day, so the engine's 0.353 deg offset from
+  DE440 is +-4.1 DAYS of real-world spread. Minute precision within the model;
+  days of accuracy against the sky.
+- DE440 RULE RESCOPED after NU's correction ("we rely on our program"): the
+  PROGRAM is the authority for doctrine geometry and DE440 is not a higher
+  court for what the doctrine asserts. DE440 applies in ONE case only — when a
+  claim ties the program's clock to a REAL-WORLD event clock. Corrected in
+  FRAMEWORK section 2b and TESTING protocol step 5.

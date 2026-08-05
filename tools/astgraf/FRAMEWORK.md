@@ -234,6 +234,55 @@ win, or a new NU ruling on the spot channel's role. The timing layers —
 which reproduce every taught number to the minute — are the doctrine's
 proven core.
 
+**THE AUTHOR'S OWN LOCATION METHOD IS AN INVERSE SEARCH — and it is
+underdetermined (established 2026-08-05, from his SankhyaStellarPrediction.html
+note).** This reframes every location result in this file, so it is stated
+before them.
+
+He does not compute a spot from a planet. He describes selecting a point on
+the plotted curve and then SEARCHING the (time, latitude, longitude, GMT)
+space until the crossing lands, using the Ascendant as the handle:
+
+> "we can **select any point in the curve** and see that moment chart and get
+> the time, lat long"
+> "If you vary any time, lat long GMT even a little you will see **ASC shift
+> FAST** and MOON would also shift but slow"
+> "we can take any event … and **search for time lat long GMT precisely**"
+> "converts point in curve to **ANY PLACE ON EARTH** but at a one time, long
+> lat and GMT"
+
+**The arithmetic that follows.** `Asc = f(time, latitude, longitude)` is ONE
+equation in THREE unknowns. Fixing a crossing degree therefore leaves a
+two-parameter family of solutions, not a place. Measured directly: requiring
+`Asc = 106.0°` on 2016-10-01, **every latitude from −60° to +60° admits a
+solution**, each with its own longitude and time. The author's own phrase —
+"ANY PLACE ON EARTH" — states the property exactly; he offers it as a feature.
+
+**Consequences, which are large:**
+- A method that can place an event anywhere places it nowhere. This is why
+  every taught instance "locates" perfectly in hindsight: the site was known
+  first and the search was run to confirm it.
+- It explains the fifteen graded nulls. We tested FORWARD constructions —
+  "does the sky point at the epicentre?" — which he never claimed. His method
+  answers the INVERSE question, "given this place, when does the crossing
+  reach its Ascendant?", and that is a TIMING question, which is precisely
+  the layer that does work here.
+- To become predictive the method needs a second independent constraint to
+  collapse the two free parameters. He is aware of this and reaches for a
+  nodal correction: *"It may not be exactly on that spot because Rahu has
+  shifted so there could be an angular shift in Latitude Northward."*
+- **The standing question for the author is therefore sharper than "what
+  supplies the latitude?": it is "what second condition collapses the
+  Ascendant solve from one equation in three unknowns to a point?"**
+
+**His program's conventions, read from the code (canon/SankhyaStellarPrediction.html,
+dated 29 Sep 2016).** Variable `l` is longitude, EAST-NEGATIVE (`l < 0` prints
+"East") — the same convention as the BAS and our port. Variable `b4` is
+latitude, north-positive. **The form LABELS are swapped**: the field captioned
+`Lat` accepts −180…180 (a longitude range) and the one captioned `Long`
+accepts −90…90 (a latitude range). Anyone reading his worked examples must
+check ranges, not captions.
+
 **The location board, complete (2026-08-05).** Six families built and
 graded on the same 1,435 declustered M7+ mainshocks, M7+ only per NU's
 ruling. Every one carries a power check proving the instrument could see
@@ -302,8 +351,15 @@ port's tropical longitudes. This is the CANON's accuracy — a 1900-epoch
 Keplerian model reproduced faithfully — not a porting error. But it is the
 same order as a 1° orb.
 
-**Standing rule: any claim resting on separations below ~1° must be confirmed
-on DE440 before it is written down.** The doctrine's own 3° orbs are
+**Standing rule, correctly scoped (NU, 2026-08-05: "we rely on our program").**
+The program IS the authority for doctrine geometry — the offsets, crossings,
+bands and sectors are defined in its own frame, and disagreement with JPL does
+not make a doctrine claim wrong. DE440 matters in ONE case only: when a claim
+ties the program's clock to a REAL-WORLD event clock (a quake at a recorded
+instant, a flood on a recorded day). There the sky is the arbiter, and the
+0.3–0.7° offset becomes a real matching constraint — e.g. ~4.1 days of timing
+spread on a Uranus–Ketu crossing, whose relative motion is only 0.0863°/day.
+For anything internal to the doctrine, the program stands alone.** The doctrine's own 3° orbs are
 unaffected, and aggregate statistics are robust (the Jupiter–Neptune episode
 scan gives 18 episodes and ratio 1.03 on both ephemerides). What is *not*
 robust is a quoted sub-degree separation, or an episode boundary: the 2026

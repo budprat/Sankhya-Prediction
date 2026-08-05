@@ -171,6 +171,46 @@ replaces them.
 Facts about what the doctrine's own construction can and cannot express.
 These do not depend on any catalogue.
 
+- **THE AUTHOR'S LOCATION METHOD IS UNDERDETERMINED — the structural result
+  that reframes channels 2–7.** From his own account of
+  `SankhyaStellarPrediction.html`, locating is an *inverse search*: select a
+  point on the plotted curve, then vary time / latitude / longitude / GMT
+  until the crossing meets the Ascendant. But `Asc = f(time, lat, lon)` is
+  **one equation in three unknowns**. Measured: requiring `Asc = 106.0°` on
+  2016-10-01, **every latitude from −60° to +60° admits a solution**. His own
+  phrase states it — the program "converts point in curve to **ANY PLACE ON
+  EARTH**". A method that can place an event anywhere places it nowhere, and
+  every taught instance located in hindsight because its site was known
+  first. It also explains the nulls: we graded *forward* constructions, which
+  he never claimed; his method answers the *inverse*, "given this place, when
+  does the crossing reach its Ascendant" — a **timing** question, and timing
+  is the layer that works.
+- **His program's conventions** (code-read, file dated 29 Sep 2016): `l` is
+  longitude, EAST-NEGATIVE, same as the BAS; `b4` is latitude, north-positive.
+  The form **labels are swapped** — the `Lat` field takes −180…180, the `Long`
+  field takes −90…90. Read his worked examples by range, not by caption.
+- **His 1 Oct claim verified, with the year corrected.** He reported "1 oct 18
+  … Sun, Moon, Jupiter CONJUNCT exactly opposite Nep plus Ketu". The
+  configuration does not exist in 2018 (Sun–Jupiter 43.8° apart). It exists on
+  **1 October 2016** — two days after his file's date — where at his stated
+  parameters (06:00 local, long 117, lat 22, GMT −10) Sun 188.91°, Jupiter
+  184.85° and Moon 196.20° span **11.35°**, and Neptune 340.15° / Ketu 341.06°
+  are **0.92° apart**, effectively one body. Two of his three elements
+  reproduce exactly; "exactly opposite" is loose (~29° off a true opposition).
+  The date sits eight days after the Hyderabad flood, inside the same
+  Neptune-on-Ketu window he taught.
+- **Precision is not accuracy in the 60-division drill.** His claim that 60
+  divisions at hourly steps resolve a crossing to the minute is **correct as
+  arithmetic** — the Uranus–Ketu conjunction returns 2015-01-31 08:17 UT and
+  is a true minimum (0.000000° there, 0.000060° one minute either side). But
+  Uranus–Ketu close at only **0.0863°/day**, so the engine's 0.353° offset
+  from DE440 is **±4.1 days** of real-world timing spread. Minute precision
+  *within the model*; days of accuracy *against the sky*.
+- **The 30,000-year Punarvasu zero is confirmed.** The author recalled
+  "starting 30000 years zero ascension in Punarvasu"; the engine reports the
+  two-cycle-back Punarvasu zero at **30,178 BC** (32,174 years before the 1996
+  anchor), marker described as "zero azimuth & ecliptic". His memory of what
+  he built is accurate.
 - **The declination ceiling.** A sub-planet point's latitude is its body's
   declination. Measured achieved extremes 1900–2030: Jupiter +23.52°, Saturn
   +22.84°, Uranus +23.71°, Neptune +22.39°. The located set therefore caps at

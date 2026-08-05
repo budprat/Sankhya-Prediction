@@ -14,81 +14,6 @@
   ],
   "commands_run": [
     {
-      "command": "curl -s --max-time 40 \"https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/earthquakes?minYear=190",
-      "success": true,
-      "timestamp": "2026-08-05T15:34:40.329883"
-    },
-    {
-      "command": "curl -s --max-time 40 \"https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/earthquakes?minYear=190",
-      "success": true,
-      "timestamp": "2026-08-05T15:35:15.468261"
-    },
-    {
-      "command": "for n in 500 1000; do echo -n \"itemsPerPage=$n: \"; curl -s -o /dev/null -w \"%{http_code}\\n\" --max-ti",
-      "success": true,
-      "timestamp": "2026-08-05T15:35:51.518723"
-    },
-    {
-      "command": "cd /private/tmp/claude-501/-Users-macbookpro-Sankhya-Prediction/ae6041ab-6138-4e77-93f3-8089f0dfc95f",
-      "success": true,
-      "timestamp": "2026-08-05T15:37:00.260384"
-    },
-    {
-      "command": "cd /private/tmp/claude-501/-Users-macbookpro-Sankhya-Prediction/ae6041ab-6138-4e77-93f3-8089f0dfc95f",
-      "success": true,
-      "timestamp": "2026-08-05T15:37:17.386433"
-    },
-    {
-      "command": "cd tools/astgraf && cat >> scripts/deadliest_structure.py <<'EOF'\n\n\n# ------------------------------",
-      "success": true,
-      "timestamp": "2026-08-05T15:37:57.370056"
-    },
-    {
-      "command": "cat >> tests/test_anchors.py <<'EOF'\n\n\ndef test_ncei_deaths_corpus_matches_the_shared_schema():\n    ",
-      "success": true,
-      "timestamp": "2026-08-05T15:38:30.501417"
-    },
-    {
-      "command": "cd tools/astgraf && ls tests/ && echo \"=== oracle tests (canon fidelity) ===\" && uv run pytest tests",
-      "success": true,
-      "timestamp": "2026-08-05T15:41:50.278187"
-    },
-    {
-      "command": "uv run pytest tests/ -q -k \"oracle or prateek or quake or grf or docx\" 2>&1 | tail -3; echo \"=== whi",
-      "success": true,
-      "timestamp": "2026-08-05T15:42:03.191778"
-    },
-    {
-      "command": "ls scripts/*.py | while read f; do n=$(basename $f); ctrl=$(grep -o \"era-matched\\|golden-ratio\\|leav",
-      "success": true,
-      "timestamp": "2026-08-05T15:42:15.676755"
-    },
-    {
-      "command": "uv run pytest tests/test_validation.py -q 2>&1 | tail -5",
-      "success": true,
-      "timestamp": "2026-08-05T15:43:50.991533"
-    },
-    {
-      "command": "uv run python -c \"\nfrom astgraf.validation import block_permutation_p, smoothed_lift\nimport random\nr",
-      "success": true,
-      "timestamp": "2026-08-05T15:43:59.050126"
-    },
-    {
-      "command": "uv run pytest tests/test_validation.py -q 2>&1 | tail -4",
-      "success": true,
-      "timestamp": "2026-08-05T15:44:26.468052"
-    },
-    {
-      "command": "python3 - <<'PYEOF'\np=\"FRAMEWORK.md\"; s=open(p).read()\ns=s.replace(\"- `RESULTS.md` \u2014 the evidence le",
-      "success": true,
-      "timestamp": "2026-08-05T15:45:54.208105"
-    },
-    {
-      "command": "cd /Users/macbookpro/Sankhya-Prediction && sed -i '' 's/dependencies \u00b7 248 tests \u00b7 MIT/dependencies ",
-      "success": true,
-      "timestamp": "2026-08-05T15:46:09.372046"
-    },
-    {
       "command": "git fetch -q; echo \"=== tracked changes (unstaged/staged) ===\"; git status --porcelain --untracked-f",
       "success": true,
       "timestamp": "2026-08-05T15:48:35.282314"
@@ -262,6 +187,81 @@
       "command": "cat >> WATCHLIST.md <<'EOF'\n\n## Jupiter\u2013Neptune double lock \u2014 registered forward, REFUTED retrospect",
       "success": true,
       "timestamp": "2026-08-05T19:59:03.030101"
+    },
+    {
+      "command": "cd /Users/macbookpro/Sankhya-Prediction && sed -i '' 's/dependencies \u00b7 258 tests \u00b7 MIT/dependencies ",
+      "success": true,
+      "timestamp": "2026-08-05T19:59:18.010296"
+    },
+    {
+      "command": "cd tools/astgraf && grep -n \"PUNARVASU\\|Punarvasu\\|CYCLE\\|25739\\|50.35\\|919\" src/astgraf/precession.",
+      "success": true,
+      "timestamp": "2026-08-05T20:05:53.155771"
+    },
+    {
+      "command": "uv run astgraf --year 2015 --month 1 --day 29 --time 00:00 --unit hour --step 1 --count 60 --aspect-",
+      "success": true,
+      "timestamp": "2026-08-05T20:06:12.215697"
+    },
+    {
+      "command": "uv run python - <<'EOF'\nfrom astgraf.anchors import chart_at, iso_jd, jd_iso_minute\ndef sep(a,b):\n  ",
+      "success": true,
+      "timestamp": "2026-08-05T20:06:35.009937"
+    },
+    {
+      "command": "cd /Users/macbookpro/Sankhya-Prediction && ls -la canon/SankhyaStellarPrediction.html && grep -oE \"(",
+      "success": true,
+      "timestamp": "2026-08-05T20:13:46.478415"
+    },
+    {
+      "command": "cd tools/astgraf && uv run python - <<'EOF'\nfrom astgraf.ephemeris import compute_raw\ndef sep(a,b):\n",
+      "success": true,
+      "timestamp": "2026-08-05T20:14:01.215570"
+    },
+    {
+      "command": "uv run python - <<'EOF'\nfrom astgraf.anchors import chart_at, iso_jd, jd_iso_minute\ndef sep(a,b):\n  ",
+      "success": true,
+      "timestamp": "2026-08-05T20:14:31.442422"
+    },
+    {
+      "command": "uv run python - <<'EOF'\nfrom astgraf.ephemeris import compute_raw\ndef sep(a,b):\n    d=abs(a-b)%360; ",
+      "success": true,
+      "timestamp": "2026-08-05T20:14:55.564475"
+    },
+    {
+      "command": "cd /Users/macbookpro/Sankhya-Prediction && grep -oE \"(Long|Lat|GMT|lat|lon|asc|ASC)[^<>\\\"]{0,60}\" ca",
+      "success": true,
+      "timestamp": "2026-08-05T20:17:44.684435"
+    },
+    {
+      "command": "grep -nE \"latit *=|longit *=|latit\\b|longit\\b\" canon/SankhyaStellarPrediction.html | head -14; echo ",
+      "success": true,
+      "timestamp": "2026-08-05T20:18:07.634034"
+    },
+    {
+      "command": "sed -n '415,445p' canon/SankhyaStellarPrediction.html; echo \"=== where l and b4 are read from the fo",
+      "success": true,
+      "timestamp": "2026-08-05T20:18:14.578347"
+    },
+    {
+      "command": "cd tools/astgraf && uv run python - <<'EOF'\nfrom astgraf.ephemeris import compute_raw\n# HIS METHOD: ",
+      "success": true,
+      "timestamp": "2026-08-05T20:18:51.534176"
+    },
+    {
+      "command": "cd /Users/macbookpro/Sankhya-Prediction && git status --porcelain | grep -v \"^ M .claude\" | head; ec",
+      "success": true,
+      "timestamp": "2026-08-05T20:22:39.994882"
+    },
+    {
+      "command": "cd tools/astgraf && python3 - <<'PYEOF'\np=\"FRAMEWORK.md\"; s=open(p).read()\nanchor = \"**The location ",
+      "success": true,
+      "timestamp": "2026-08-05T20:23:18.790785"
+    },
+    {
+      "command": "python3 - <<'PYEOF'\np=\"RESULTS.md\"; s=open(p).read()\nanchor = \"- **The declination ceiling.**\"\nadd =",
+      "success": true,
+      "timestamp": "2026-08-05T20:24:06.841591"
     }
   ]
 }
