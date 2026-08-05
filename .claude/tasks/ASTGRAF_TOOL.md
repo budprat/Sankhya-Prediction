@@ -2040,3 +2040,29 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   reading remains exact as a retrodiction (Neptune on Ketu 1.15 deg), but
   the rule generalises to 1,886 flood events at exactly chance.
 - Running count: SEVEN graded channels, seven nulls, each power-checked.
+
+## 2026-08-05 — PRE-REGISTRATION: Predict.pdf's headline band rule, properly powered
+- COMMITTED BEFORE RUNNING. Script scripts/band_trigger_grade.py.
+- WHY: this is the AUTHOR'S OWN primary predictive claim ("if Moon, Knode and
+  Mars ... is in Aswin 0-12.8 deg band we can anticipate a disruptive event.
+  If Uranus and Neptune too is present there can be catastrophic events").
+  It has been scored exactly ONCE, against a 31-episode disaster spreadsheet
+  (grid 0/31 vs 0.63 expected; proximity 1/31 vs 1.79) — far too small to
+  detect anything short of an enormous effect. We now hold ~3,300 events.
+- PRIMARY CORPUS = QUAKES, and the reason is registered: the rule contains
+  the MOON, which moves 13.2 deg/day = ONE FULL BAND SPAN per day, so only
+  exact instants can test it. 1,435 declustered M7+ with catalog instants.
+- SECONDARY = FLOODS (1,886), reported but NOT the verdict: their times are
+  nominal 12:00 UTC, leaving the Moon +-6.6 deg uncertain (half a band).
+  That caveat is IN the registration, not added afterwards.
+- PREDICATES: P1 PRIMARY proximity (trio circular spread <= 12.857 deg,
+  grid-free per NU's ruling that fixed cells quantize away real
+  convergences); P2 grid (all three in one division); P3 escalated (P1 plus a
+  giant within one band span of any trio member — the "catastrophic" form).
+  Only P1 carries the verdict.
+- CONTROLS: era-matched, 5 per event, +-365 d excluding +-7 d — the design
+  validated on the flood-signature test. Holds catalogue completeness fixed
+  (quake detection improves sharply post-1960; flood reporting rises ~12x)
+  while the Moon sweeps the zodiac many times inside the window.
+- STATISTIC add-one smoothed lift; VERDICT within-block permutation, 2,000
+  shuffles, p < 0.05 AND lift > 1. Power check plants into 10/5/2%.
