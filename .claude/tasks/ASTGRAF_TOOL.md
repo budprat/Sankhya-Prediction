@@ -2676,3 +2676,50 @@ fix and the flood clock had made stale.
   light-time rotation — the same instruction the Mathcad offsets encode and
   consistent with the two-channel ruling. What he asks for is a TOOL: plot
   the alignment over time in the light-discarded frame.
+
+## 2026-08-05 — *** THE AUTHOR'S ORBS: 2 deg minor / 18 deg MAJOR — a scoping correction to fifteen graded channels ***
+- HIS WORDS: "Minor planet conjunctions lasts 2 degrees whereas major one
+  lasts for 18 degrees (fresnel angle of simultaneous states)."
+- IMPLEMENTED IN CODE (test-first): bands.MAJOR_BODIES / MAJOR_ORB 18.0 /
+  MINOR_ORB 2.0 / doctrine_orb(a,b) — orb by BODY CLASS, 18 if either body is
+  a giant (Jup/Sat/Ura/Nep/Pluto), else 2; tolerant of the 'real:' prefix.
+  Read directly from his own worked example, not guessed.
+- HIROSHIMA VERIFIED, ALL THREE OF HIS STATED CONJUNCTIONS. "6th aug 1945 at
+  exactly 8.16 am jap time ... Asc / Nep / Jup crosses, Sat con moon and
+  Uranus conjunct Mars." At 08:16 JST, 34.3853N 132.4553E, tropical:
+  Saturn 108.151 / Moon 108.017 = 0.13 deg; Uranus-Mars 7.30;
+  Jup-Nep 8.07, Jup-Asc 8.40, Nep-Asc 16.47 — the triple mutually inside 18.
+  Added to anchors.toml as hiroshima-1945 (category "explosion", taught).
+- *** THE CORRECTION: this project graded FIFTEEN CHANNELS AT A 3 DEG ORB.
+  FOUR of those five Hiroshima pairs are INVISIBLE at 3 deg. Those tests were
+  not measuring the author's rule. *** Recorded as a caveat block at the head
+  of the RESULTS scoreboard, not buried.
+- RE-RUN AT HIS ORBS (1,435 declustered M7+, 7,175 era-matched controls):
+  real-Nep-Ketu 1.002 p .583 | real-Ura-Sun 1.061 p .267 |
+  Jup-Nep 0.985 p .651 | Sat-Moon 0.986 p .583 | Ura-Mars 0.858 p .962.
+  STILL NULL — but at 18 deg a pair fires at ~9.6% of BOTH events and
+  controls, so a single-pair test is a 1-in-10 condition carrying almost no
+  information BY CONSTRUCTION. His readings are always COMBINATIONS (three
+  simultaneous at Hiroshima, two at Nepal). Conclusion recorded: single-pair
+  tests at his orbs are the WRONG INSTRUMENT; combination tests are open work.
+- *** HE ANSWERS THE LOCATION QUESTION HIMSELF, AND IT IS NOT ANGULAR ***
+  "when two ecliptic events occur in the same fortnight the angle between the
+  moon and suns path remains same for those 14 days ... earths surface
+  locations pass in the same time and location zone 14 TIMES ... major events
+  dont occur daily even though all the planetary transits occur at the same
+  daily cycle/locations. Only a select few out of them do and our need is to
+  learn why it happens at the instant and location in advance THROUGH GRAVITY
+  CHANGE CALCULATIONS AND NOT ANGULAR POSITION CHANGES WHICH ARE TOO WIDE TO
+  BE ACCURATE."
+  This is a concession that changes the target: he states that angular
+  geometry CANNOT locate, which is precisely what fifteen null channels
+  measured; the Earth passes the same configuration ~14 times per fortnight
+  and at most one produces an event, so NO purely angular quantity can pick
+  which. STANDING QUESTION RESTATED — not "what supplies the latitude?" but
+  "WHAT GRAVITY QUANTITY DISCRIMINATES THE ONE PASSAGE IN FOURTEEN?"
+- Other specifications from the same note, recorded in FRAMEWORK 1a: E/W =
+  "E is eastern with ayanamsa deduction, W is western = REALTIME" (tropical is
+  the realtime frame, confirming our angle-work rulings); "All nine planets
+  are a must" — PLUTO IS REQUIRED though Predict.pdf's BAND_BODIES omits it;
+  HDMY unit x 2-60 periods = our --unit/--step/--count; "rotate by changing
+  asc. time — spread by changing Lat long" = the inverse-search handle.

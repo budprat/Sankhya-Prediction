@@ -123,3 +123,15 @@ mag = 9.1
 place = "Tohoku, Japan"
 source = "USGS official20110311054624120_30"
 notes = "Corpus-imported M9 anchor."
+
+[[anchor]]
+id = "hiroshima-1945"
+category = "explosion"
+time = "1945-08-05T23:16:00Z"
+lat = 34.3853
+lon = 132.4553
+place = "Hiroshima, Japan"
+taught = true
+utc_offset = 9.0
+source = "THE AUTHOR, 2026-08-05: 'the first Atomic bomb on Hiroshima on 6th aug 1945 at exactly 8.16 am jap time. If you plot that on stellar prediction system you will find the exact spot where Asc / Nep / Jup crosses, Sat con moon and Uranus conjunct Mars. Truly unique in the history of disasters.'"
+notes = "ALL THREE VERIFIED at 08:16 JST: Saturn-Moon 0.13 deg; Uranus-Mars 7.30; the Asc/Neptune/Jupiter triple mutually within 18 deg (Jup-Nep 8.07, Jup-Asc 8.40, Nep-Asc 16.47). The reading REQUIRES his 2/18-degree orbs — at the 3-degree orb this project used for fifteen graded channels, FOUR of the five pairs are invisible. The Ascendant term makes it site-specific to Hiroshima's own coordinates and that minute."

@@ -80,6 +80,32 @@ REAL_POSITION_OFFSETS = {"Uranus": 17.8562342478, "Neptune": 29.0917753653,
                          "Jupiter": 3.3363593021, "Saturn": 7.8672056771}
 
 
+# THE AUTHOR'S ORBS (stated 2026-08-05, verified on his Hiroshima reading):
+#   "Minor planet conjunctions lasts 2 degrees whereas major one lasts for
+#    18 degrees (fresnel angle of simultaneous states)."
+# The orb is set by BODY CLASS, not aspect type. Read from his own worked
+# example — 6 Aug 1945 08:16 JST, "Asc / Nep / Jup crosses, Sat con moon and
+# Uranus conjunct Mars" — every pair needing the wide orb involves a giant:
+#   Jupiter-Neptune 8.07, Jupiter-Asc 8.40, Neptune-Asc 16.47,
+#   Saturn-Moon 0.13, Uranus-Mars 7.30.
+# *** CONSEQUENCE ON RECORD: this project graded fifteen channels at a 3-deg
+# orb. Four of those five pairs are INVISIBLE at 3 deg. Tests written against
+# ASPECT_ORB were not measuring the author's rule. ***
+MAJOR_BODIES = ("Jupiter", "Saturn", "Uranus", "Neptune", "Pluto")
+MAJOR_ORB = 18.0
+MINOR_ORB = 2.0
+
+
+def doctrine_orb(body_a: str, body_b: str) -> float:
+    """The author's orb for a pair: 18 deg if EITHER body is a giant, else 2.
+    Tolerates the 'real:' prefix used by the trigger rules."""
+    def bare(n: str) -> str:
+        return n.removeprefix("real:")
+    if bare(body_a) in MAJOR_BODIES or bare(body_b) in MAJOR_BODIES:
+        return MAJOR_ORB
+    return MINOR_ORB
+
+
 def real_longitude(result: ChartResult, body: str) -> float:
     """Doctrinal 'real' position: observed longitude plus the ahead-offset."""
     lon = result.positions[body].longitude

@@ -62,6 +62,46 @@ in the ancients' 120-year observation window Saturn completed 4 cycles,
 Uranus and Neptune not even two, so no empirical calibration was possible
 for them.
 
+## 1a. THE AUTHOR'S ORBS — 2° minor / 18° major (stated 2026-08-05)
+
+> *"Minor planet conjunctions lasts 2 degrees whereas major one lasts for 18
+> degrees (**fresnel angle of simultaneous states**). All nine planets are a
+> must for accuracy plus sun / moon and galactic ecliptic Aries and Asc (local
+> time)."*
+
+The orb is set by **body class**, not aspect type: **18° if either body is a
+giant (Jupiter, Saturn, Uranus, Neptune, Pluto), else 2°**. Implemented as
+`bands.doctrine_orb()`, read directly from his own worked example.
+
+**HIROSHIMA — his reading, verified.** *"the first Atomic bomb on Hiroshima on
+6th aug 1945 at exactly 8.16 am jap time … the exact spot where Asc / Nep / Jup
+crosses, Sat con moon and Uranus conjunct Mars. Truly unique in the history of
+disasters."* At 08:16 JST, 34.3853N 132.4553E, tropical (his "W = realtime"):
+
+| His claim | Engine |
+|---|---|
+| Sat con Moon | Saturn 108.151° · Moon 108.017° — **0.13°** |
+| Uranus conjunct Mars | 7.30° |
+| Asc / Nep / Jup crosses | Jup–Nep 8.07°, Jup–Asc 8.40°, Nep–Asc 16.47° — all mutually inside 18° |
+
+**⚠️ THE CORRECTION THIS FORCES.** This project graded **fifteen channels at a
+3° orb**. Four of those five Hiroshima pairs are **invisible at 3°**. Those
+tests were not measuring the author's rule — they were measuring a much
+narrower one we assumed. Every "null" in `RESULTS.md` carries that caveat, and
+re-runs at his orbs are recorded there.
+
+**Other specifications in the same note, now on record:**
+- **`E` / `W`**: *"E is eastern with ayanamsa deduction and W is western =
+  realtime."* Tropical is the **realtime** frame — confirming the tropical
+  rulings already used for angle work.
+- **Body set**: *"All nine planets are a must"* — so **Pluto is required**,
+  though `BAND_BODIES` (Predict.pdf's own columns) omits it. Plus Sun, Moon,
+  the galactic ecliptic, Aries, and the local-time Ascendant.
+- **Grid**: HDMY unit × 2–60 periods; *"Y and 60 … if unit is 2 it is 120 yrs"*
+  — exactly our `--unit/--step/--count`.
+- **Controls**: *"rotate by changing asc. time — spread by changing Lat long"*,
+  which is the inverse-search handle described in §2.
+
 ## 1b. The clocks — why every number in the doctrine is an Earth-rotation number
 
 Put every motion in one unit: how long it takes to cross the author's smallest
@@ -233,6 +273,34 @@ graded forward spot hit above spatial base rate, a flood-category corpus
 win, or a new NU ruling on the spot channel's role. The timing layers —
 which reproduce every taught number to the minute — are the doctrine's
 proven core.
+
+**THE AUTHOR ANSWERS THE LOCATION QUESTION HIMSELF: IT IS NOT ANGULAR
+(2026-08-05).** On the eclipse fortnight he wrote:
+
+> *"when two ecliptic events occur in the same fortnight the angle between the
+> moon and suns path on the ecliptic remains same for those 14 days. You can
+> imagine the earths surface locations pass in the same time and location zone
+> **14 times**. As seen earlier major events dont occur daily even though all
+> the planetary transits occur at the same daily cycle/locations. **Only a
+> select few out of them do** and our need is to learn why it happens at the
+> instant and location in advance **through gravity change calculations and not
+> angular position changes which are too wide to be accurate**."*
+
+This is the most important statement received about location, and it is a
+concession that changes the target:
+
+1. **He states that angular geometry cannot locate** — "too wide to be
+   accurate". Fifteen graded null channels measured exactly that.
+2. **The Earth passes the same configuration ~14 times per fortnight** and at
+   most one produces an event. No purely angular quantity can pick which
+   passage — the angles are identical across all fourteen.
+3. **The discriminator he proposes is a GRAVITY CHANGE**, with the
+   Ascendant/lat-long variation used as the *search tool*, not the mechanism.
+
+**The standing question is therefore restated.** Not "what supplies the
+latitude?" but: **"what gravity quantity discriminates the one passage in
+fourteen?"** Until that is specified, no angular test can settle location —
+which is a statement about the target, not about the engine.
 
 **THE AUTHOR'S OWN LOCATION METHOD IS AN INVERSE SEARCH — and it is
 underdetermined (established 2026-08-05, from his SankhyaStellarPrediction.html

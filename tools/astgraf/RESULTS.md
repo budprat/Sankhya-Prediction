@@ -124,6 +124,40 @@ order as the 1° orbs tight tests use.** Consequences, now standing:
 - **Rule: any claim resting on separations below ~1° must be confirmed on
   DE440 before it is written down.** Doctrine orbs of 3° are unaffected.
 
+### ⚠️ EVERY NULL ABOVE WAS GRADED AT THE WRONG ORB (2026-08-05)
+
+The author stated his orbs: **"Minor planet conjunctions lasts 2 degrees
+whereas major one lasts for 18 degrees (fresnel angle of simultaneous
+states)"** — set by body class, 18° if either body is a giant, else 2°.
+
+**All fifteen channels above used 3°.** On his own Hiroshima reading — Asc/Nep/
+Jup crossing, Saturn conjunct Moon, Uranus conjunct Mars, all verified — **four
+of the five pairs are invisible at 3°**. The tests were measuring a rule
+narrower than the one he teaches.
+
+**Re-run at his orbs** (1,435 declustered M7+, 7,175 era-matched controls,
+same machinery):
+
+| Predicate | Orb | Event rate | Control rate | Lift | p |
+|---|---|---|---|---|---|
+| real-Neptune – Ketu | 18° | 0.0962 | 0.0964 | 1.002 | 0.583 |
+| real-Uranus – Sun | 18° | 0.1066 | 0.1009 | 1.061 | 0.267 |
+| Jupiter – Neptune | 18° | 0.0955 | 0.0974 | 0.985 | 0.651 |
+| Saturn – Moon | 18° | 0.0948 | 0.0966 | 0.986 | 0.583 |
+| Uranus – Mars | 18° | 0.0836 | 0.0980 | 0.858 | 0.962 |
+
+**Still null — every one.** But note what the wider orb does to the base rate:
+a predicate now fires at **~9.6% of events and ~9.6% of ordinary instants**.
+At 18° a pairwise conjunction is a 1-in-10 condition, so a single pair carries
+almost no information by construction. This does not rescue the doctrine, and
+it does not condemn it either: it says **single-pair tests at his orbs are the
+wrong instrument**, because his readings are always *combinations* (three
+simultaneous conjunctions at Hiroshima, two at Nepal).
+
+**What this changes in how the nulls should be read**: they remain honest
+measurements of what was tested, and they now carry a named scope limit — the
+orb was ours, not his. Combination tests at his orbs are open work.
+
 ### Notes that matter more than the numbers
 
 **Five excuses have now been closed, in order.** Before them it could fairly

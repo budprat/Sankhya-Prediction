@@ -14,51 +14,6 @@
   ],
   "commands_run": [
     {
-      "command": "for d in ~/.claude/projects/-Users-macbookpro-Astro ~/.claude/projects/-Users-macbookpro-Astro-tools",
-      "success": true,
-      "timestamp": "2026-08-05T15:52:38.384840"
-    },
-    {
-      "command": "for d in .claude/knowledge .claude/cache; do echo \"=== $d\"; if [ -d \"$d\" ]; then du -sh \"$d\"; find \"",
-      "success": true,
-      "timestamp": "2026-08-05T15:53:14.489408"
-    },
-    {
-      "command": "grep -oEi \".{50}(api[_-]?key|secret|password).{50}\" .claude/cache/auto-learning-state.json | head -3",
-      "success": true,
-      "timestamp": "2026-08-05T15:53:35.299714"
-    },
-    {
-      "command": "python3 - <<'PYEOF'\np=\".gitignore\"; s=open(p).read()\ns = s.replace(\"# NU 2026-08-05: memory/, analyt",
-      "success": true,
-      "timestamp": "2026-08-05T15:53:48.905288"
-    },
-    {
-      "command": "git commit -q -m \"chore: track the hook cache and knowledge directories\" && git push -q && echo PUSH",
-      "success": true,
-      "timestamp": "2026-08-05T15:54:08.553953"
-    },
-    {
-      "command": "git status --porcelain | head; echo \"--- pull ---\"; git pull 2>&1 | tail -5; echo \"--- state ---\"; g",
-      "success": true,
-      "timestamp": "2026-08-05T19:23:06.760779"
-    },
-    {
-      "command": "cd tools/astgraf && uv run pytest -q > /tmp/pt_merge.log 2>&1; echo \"SUITE EXIT=$?\"; tail -1 /tmp/pt",
-      "success": true,
-      "timestamp": "2026-08-05T19:23:46.362315"
-    },
-    {
-      "command": "cd /Users/macbookpro/Sankhya-Prediction && git add -A .claude && git commit -q -m \"chore: capture ho",
-      "success": true,
-      "timestamp": "2026-08-05T19:23:59.920170"
-    },
-    {
-      "command": "for t in \"2026_Assam_floods\" \"2025_Assam_floods\" \"Assam_floods\"; do echo \"=== $t\"; curl -s --max-tim",
-      "success": true,
-      "timestamp": "2026-08-05T19:43:51.856732"
-    },
-    {
       "command": "curl -s --max-time 30 \"https://en.wikipedia.org/w/index.php?title=2026_Assam_floods&action=raw\" | se",
       "success": true,
       "timestamp": "2026-08-05T19:44:04.880891"
@@ -262,6 +217,51 @@
       "command": "python3 - <<'PYEOF'\n# TESTING.md: add EXPLODE to the oracle table\np=\"TESTING.md\"; s=open(p).read()\no",
       "success": true,
       "timestamp": "2026-08-05T20:35:45.589530"
+    },
+    {
+      "command": "python3 - <<'PYEOF'\n# PLAN: both open questions to the author, side by side, at the top of the block",
+      "success": true,
+      "timestamp": "2026-08-05T20:36:25.442482"
+    },
+    {
+      "command": "cd tools/astgraf && uv run python - <<'EOF'\nfrom astgraf.ephemeris import compute_raw\nfrom astgraf.b",
+      "success": true,
+      "timestamp": "2026-08-05T20:46:15.373303"
+    },
+    {
+      "command": "uv run python - <<'EOF'\nfrom astgraf.ephemeris import compute_raw\ndef sep(a,b):\n    d=abs(a-b)%360; ",
+      "success": true,
+      "timestamp": "2026-08-05T20:46:45.030148"
+    },
+    {
+      "command": "cat >> tests/test_bands.py <<'EOF'\n\n\ndef test_author_orbs_by_body_class():\n    # THE AUTHOR, 2026-08",
+      "success": true,
+      "timestamp": "2026-08-05T20:51:33.156421"
+    },
+    {
+      "command": "python3 - <<'PYEOF'\np=\"src/astgraf/bands.py\"; s=open(p).read()\nanchor = \"def real_longitude(result: ",
+      "success": true,
+      "timestamp": "2026-08-05T20:51:48.135617"
+    },
+    {
+      "command": "cat >> anchors.toml <<'EOF'\n\n[[anchor]]\nid = \"hiroshima-1945\"\ncategory = \"explosion\"\ntime = \"1945-08",
+      "success": true,
+      "timestamp": "2026-08-05T20:52:05.419356"
+    },
+    {
+      "command": "uv run python - <<'EOF' 2>&1 | tail -24\n# Re-run the taught flood signature + band trigger at THE AU",
+      "success": true,
+      "timestamp": "2026-08-05T20:52:25.681136"
+    },
+    {
+      "command": "python3 - <<'PYEOF'\n# FRAMEWORK: the orb correction + the gravity ruling \u2014 both are doctrine-level\np",
+      "success": true,
+      "timestamp": "2026-08-05T20:53:04.323305"
+    },
+    {
+      "command": "python3 - <<'PYEOF'\np=\"RESULTS.md\"; s=open(p).read()\nanchor=\"### Notes that matter more than the num",
+      "success": true,
+      "timestamp": "2026-08-05T20:53:41.573898"
     }
   ]
 }

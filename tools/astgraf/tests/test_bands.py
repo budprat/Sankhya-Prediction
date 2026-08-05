@@ -307,3 +307,43 @@ def test_real_prefix_rules_accept_jupiter_and_saturn(tmp_path):
                  ']\n')
     rules = load_rules(str(f))
     assert rules[0].name == "rj"
+
+
+def test_author_orbs_by_body_class():
+    # THE AUTHOR, 2026-08-05: "Minor planet conjunctions lasts 2 degrees
+    # whereas major one lasts for 18 degrees (fresnel angle of simultaneous
+    # states)." Every pair in his Hiroshima reading that needs the wide orb
+    # involves a GIANT, so the orb is set by body CLASS, not by aspect type.
+    from astgraf.bands import MAJOR_BODIES, MAJOR_ORB, MINOR_ORB, doctrine_orb
+    assert MINOR_ORB == 2.0 and MAJOR_ORB == 18.0
+    assert {"Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"} == set(MAJOR_BODIES)
+    assert doctrine_orb("Jupiter", "Neptune") == MAJOR_ORB      # both major
+    assert doctrine_orb("Uranus", "Mars") == MAJOR_ORB          # one major
+    assert doctrine_orb("Saturn", "Moon") == MAJOR_ORB
+    assert doctrine_orb("Neptune", "Ascendant") == MAJOR_ORB
+    assert doctrine_orb("Mercury", "Venus") == MINOR_ORB        # neither major
+    assert doctrine_orb("Sun", "Moon") == MINOR_ORB
+    assert doctrine_orb("real:Uranus", "Sun") == MAJOR_ORB      # prefix-tolerant
+
+
+def test_hiroshima_reading_needs_the_authors_orbs():
+    # His stated reading of 6 Aug 1945 08:16 JST: "Asc / Nep / Jup crosses,
+    # Sat con moon and Uranus conjunct Mars." At the 3-deg orb this project
+    # used for fifteen graded channels, FOUR of the five pairs are invisible.
+    from astgraf.bands import doctrine_orb
+    from astgraf.ephemeris import compute_raw
+
+    def sep(a, b):
+        d = abs(a - b) % 360
+        return min(d, 360 - d)
+    c = compute_raw(1945, 8, 6, 8 + 16 / 60, -9.0, -132.4553, 34.3853, False, False)
+    p = {b: c.positions[b].longitude for b in
+         ("Ascendant", "Moon", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune")}
+    pairs = [("Jupiter", "Neptune"), ("Jupiter", "Ascendant"),
+             ("Neptune", "Ascendant"), ("Saturn", "Moon"), ("Uranus", "Mars")]
+    for a, b in pairs:
+        s = sep(p[a], p[b])
+        assert s <= doctrine_orb(a, b), f"{a}-{b} {s:.2f} outside the author's orb"
+    # and the mis-scoping this exposes: only ONE survives a 3-degree orb
+    assert sum(1 for a, b in pairs if sep(p[a], p[b]) <= 3.0) == 1
+    assert sep(p["Saturn"], p["Moon"]) == pytest.approx(0.13, abs=0.05)
