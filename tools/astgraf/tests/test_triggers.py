@@ -417,3 +417,16 @@ def test_observed_rules_from_the_hyderabad_reading_fire_on_their_ground_truth():
     assert evaluate_rule(hyd, rules["saturn-square-nodes"]).fired
     assert not evaluate_rule(nepal, rules["real-uranus-trine-rahu"]).fired
     assert not evaluate_rule(nepal, rules["saturn-square-nodes"]).fired
+
+
+def test_rule_files_resolve_from_any_working_directory(tmp_path, monkeypatch):
+    # The shipped rule files were opened by bare name, so the suite (and the
+    # CLI) only worked from tools/astgraf — 21 tests failed from the repo
+    # root. Loading must not depend on where the process happens to stand.
+    monkeypatch.chdir(tmp_path)
+    for name in ("doctrine-triggers.toml", "mined-triggers.toml",
+                 "observed-triggers.toml"):
+        assert load_rules(name), name
+    # an explicit path that really is missing must still fail loudly
+    with pytest.raises(FileNotFoundError):
+        load_rules("no-such-rules.toml")

@@ -6,7 +6,9 @@ import pytest
 from astgraf.ephemeris import BODY_ORDER, compute_raw
 from astgraf.grf import load_grf
 
-CANON = "../../canon/ASTROC.GRF"
+from pathlib import Path as _P
+# Repo-relative, not cwd-relative: the suite must pass from any directory.
+CANON = str(_P(__file__).resolve().parents[3] / "canon" / "ASTROC.GRF")
 
 
 def _delta(a, b):

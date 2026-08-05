@@ -1971,3 +1971,16 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
     values are resolved — THE LATITUDE QUESTION TO THE AUTHOR IS NOW #1.
   * Sections 6-7: the autumn season table with its base-rate warning, and
     the six standing method rulings.
+
+## 2026-08-05 — Engineering debt 1 CLOSED: rule files resolve from any cwd
+- 21 tests failed when the suite ran from the repo root: 18 from rule TOMLs
+  opened by BARE NAME (doctrine/mined/observed-triggers.toml) and 3 from a
+  cwd-relative "../../canon/ASTROC.GRF" in test_grf.py.
+- FIX (test-first): triggers._resolve_rules_path falls back to the package
+  root for a bare filename, leaving explicit and absolute paths untouched so
+  typos still raise FileNotFoundError loudly (asserted). test_grf.py now
+  resolves the canon path from __file__ instead of cwd. Bonus: astgraf-bands
+  --rules doctrine-triggers.toml now works from any directory too, which is
+  what a user would expect.
+- VERIFIED BOTH WAYS: 248 passed from tools/astgraf AND 248 passed from the
+  repo root (exit 0 each). The debt is closed, not merely mitigated.

@@ -290,7 +290,20 @@ def mentions_ascendant(rule: TriggerRule) -> bool:
     return False
 
 
+def _resolve_rules_path(path: str) -> str:
+    """A shipped rule file may be named bare ("doctrine-triggers.toml") from
+    any directory: fall back to the package root, where the TOMLs live. An
+    explicit path that does not exist still raises, so typos stay loud."""
+    from pathlib import Path
+    p = Path(path)
+    if p.exists() or p.is_absolute() or len(p.parts) > 1:
+        return path
+    shipped = Path(__file__).resolve().parents[2] / p.name
+    return str(shipped) if shipped.exists() else path
+
+
 def load_rules(path: str) -> list[TriggerRule]:
+    path = _resolve_rules_path(path)
     with open(path, "rb") as fh:
         data = tomllib.load(fh)
     rules = [TriggerRule(**raw) for raw in data.get("rule", [])]
