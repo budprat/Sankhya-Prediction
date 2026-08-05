@@ -91,8 +91,29 @@ angular span of the crossing complex read at 4 min/°. Nepal: real-Uranus↔Sun
 0.692° (2.77 min) + real-Neptune↔Ketu 0.342° (1.37 min) = 1.034° = **4.14
 min**, against the author's stated "dwell time has been 4 minutes … because
 both Uranus and Neptune crossed Ketu position one after another". The number
-matches; the attribution does not (our chart puts real-Neptune on Ketu and
-real-Uranus on the SUN, 26.5° from Ketu).
+matches; the attribution does not.
+
+**And the contradiction is INTERNAL to the author's own materials — it is not
+our chart disagreeing with him** (verified 2026-08-05 by reading
+`Mathcad-QUAKE.pdf` directly). That document, titled *"A QUICK ANALYSIS TO
+SHOW THAT NEPAL QUAKE IS FROM TWO SIMULTANEOUS EVENTS"*, states both
+crossings explicitly:
+
+> "NEPTUNE in Pisces is behind KETU but is really at 29.09 deg ahead …
+> 339 + 29.09 = 368.7 or 368.7−360 = 8.09 ARIES and CROSSES ecliptic at
+> **8 deg Aries**" — Ketu's own degree.
+>
+> "URANUS in Aries 17.6 deg is really at 17.856 … 17.6 + 17.856 = 35.456 and
+> is crossing the Solar ecliptic at **TAURUS 4.7 deg**" — which is where the
+> **Sun** stands (34.74 = Taurus 4.74), not Ketu.
+
+So the Mathcad says Uranus crosses the SUN and the prose says it crosses
+KETU; they differ by 26.5°, and the engine reproduces the Mathcad
+(real-Neptune↔Ketu 0.3423°, real-Uranus↔Sun 0.6929°, both to three decimals).
+This matters beyond bookkeeping: the 4-minute dwell figure is the SUM of
+those two separations, so the arithmetic the author quotes **only works under
+the Mathcad reading**. The prose attribution is the error, and the dwell
+number is itself evidence against it.
 
 **Dwell GRADED AND CLOSED (2026-08-05) — both halves fail.** The construction
 reproduces; the doctrine built on it does not.
