@@ -1852,3 +1852,28 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   negatives stay on record), the three next actions buildable without new
   input, the ranked list of what is blocked on NU, and the standing
   latitude question.
+
+## 2026-08-05 — Recurrence gaps CLOSED: category tagging + composite matching
+- NU directed both remaining recurrence gaps. Built test-first in the modern
+  layer (no canon touched); 245 tests passing.
+- CATEGORY (Predict.pdf's design is explicitly per category): astgraf-recur
+  gains --category (earthquake | flood | biological | volcanic |
+  configuration) with a guarded unknown-category exit listing the known set;
+  every calendar row (csv/json) now carries the anchor's category.
+- COMPOSITE (the last unbuilt recurrence gap): composite_conditions() reads
+  the anchor's OTHER layers at its instant — Moon/Ketu/Mars spread, band
+  stack_max, vyuha level — and composite_match_at() requires them to stand
+  again: vyuha level EXACT (categorical), spread at least as tight, stack at
+  least as high. find_episodes(anchor=...) applies it, so a composite episode
+  set is always a subset of the contact-only set. Demonstrated: the June 2016
+  vyuham window narrows from June 3-4 to June 3 alone.
+- BUG FOUND AND FIXED BY THE SELF-MATCH TEST: composite_conditions stored a
+  ROUNDED mkm_spread, so every anchor failed its OWN composite test by
+  ~0.00025 deg (rounded threshold below the live value). Now stored
+  unrounded, rounded at display only; regression test asserts self-match for
+  four anchors. A second failure was the TEST's fault, not the code's — the
+  subset assertion did not allow the tightest instant to sit one scan step
+  outside the sampled bounds (the documented sub-day-window tolerance).
+- The recurrence principle is now fully built: anchor dossiers -> similarity
+  engine -> recurrence calendars -> family calendars -> category tagging ->
+  composite matching. All of it timing-only, on the proven core.

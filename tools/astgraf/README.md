@@ -401,9 +401,21 @@ uv run astgraf-recur --start 2026-08-04 --years 2 --out out/recur
 #    9/9 with the real-Jupiter/Saturn contacts included.)
 ```
 
+**Per category** (`--category earthquake | flood | biological | volcanic |
+configuration`) — Predict.pdf's design is explicitly per category, so the
+scan is too; every calendar row carries its anchor's category.
+
+**Composite matching** (`--composite`) — a contact pattern says which pairs
+are locked; it cannot say what the band table and the fourfold array were
+doing meanwhile. With `--composite` an episode must ALSO reproduce the
+anchor's other layers: the same vyuha level (categorical, exact), a
+Moon–Ketu–Mars spread at least as tight, and a band stack at least as high.
+A composite episode set is therefore always a subset of the contact-only
+one — the June 2016 vyuham window narrows from June 3–4 to June 3.
+
 Outputs: `recurrence.csv` / `.txt` / `.json` — one chronological calendar
-across anchors, each row with the episode span, match level, tightest
-instant, per-contact separations, and fast-hand trigger minutes.
+across anchors, each row with its category, the episode span, match level,
+tightest instant, per-contact separations, and fast-hand trigger minutes.
 
 ## The family calendars (`astgraf-families`)
 

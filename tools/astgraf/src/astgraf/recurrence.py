@@ -18,7 +18,8 @@ from pathlib import Path
 
 from .anchors import (ANCHORS_PATH, Anchor, chart_at, contacts_at, iso_jd,
                       jd_iso_minute, load_anchors)
-from .bands import real_longitude
+from .bands import (BAND_BODIES, circular_spread, division_of,
+                    real_longitude, vyuha_state)
 from .signatures import ASPECT_ORB, ASPECTS
 
 MINUTE = 1.0 / 1440.0
@@ -47,6 +48,37 @@ def anchor_pattern(anchor: Anchor) -> list[dict]:
             if c["within_doctrine_orb"] and "Moon" not in (c["a"], c["b"])]
 
 
+def composite_conditions(anchor: Anchor) -> dict:
+    """The anchor's OTHER layers at its instant — the state a contact pattern
+    alone cannot express (recurrence gap 'composite multi-condition matching').
+    Contacts say which pairs are locked; these say what the band table and the
+    fourfold array were doing while they were."""
+    chart = chart_at(iso_jd(anchor.time))
+    p = {n: chart.positions[n].longitude for n in BAND_BODIES}
+    bands = [division_of(lon, 0) for lon in p.values()]
+    # NOT rounded: a rounded-down threshold makes the anchor fail its own
+    # test (Nepal/vyuham self-match by 0.00025 deg). Round at display only.
+    return {
+        "mkm_spread": circular_spread([p["Moon"], p["Ketu"], p["Mars"]]),
+        "stack_max": max(bands.count(b) for b in set(bands)),
+        "vyuha_level": vyuha_state(chart).level,
+    }
+
+
+def composite_match_at(conditions: dict, jd: float) -> bool:
+    """Do the other layers stand as they did at the anchor? The vyuha level
+    must match exactly (it is categorical); the band quantities must be at
+    least as tight as the anchor's (a tighter stack is a stronger instance,
+    never a mismatch)."""
+    chart = chart_at(jd)
+    p = {n: chart.positions[n].longitude for n in BAND_BODIES}
+    bands = [division_of(lon, 0) for lon in p.values()]
+    spread = circular_spread([p["Moon"], p["Ketu"], p["Mars"]])
+    return (vyuha_state(chart).level == conditions["vyuha_level"]
+            and spread <= conditions["mkm_spread"]
+            and max(bands.count(b) for b in set(bands)) >= conditions["stack_max"])
+
+
 def match_at(pattern: list[dict], jd: float) -> dict:
     chart = chart_at(jd)
     deltas = [_delta(chart, c) for c in pattern]
@@ -73,16 +105,22 @@ def _refine_tightest(pattern, jd_lo, jd_hi, jd_start, need):
 
 def find_episodes(pattern: list[dict], jd_start: float, jd_end: float,
                   min_match: int | None = None,
-                  step: float | None = None) -> list[dict]:
+                  step: float | None = None,
+                  anchor: Anchor | None = None) -> list[dict]:
     """Spans inside [jd_start, jd_end] where at least min_match (default: all)
     of the pattern's contacts stand within orb simultaneously; each with its
     tightest instant refined below one minute. The JOINT window of several
     contacts can be far narrower than any single contact's — windows shorter
     than the scan step are missed (Valdivia 1960's full window is < 1 day),
-    so exhaustive scans should pass a finer `step` (0.25 d recovers it)."""
+    so exhaustive scans should pass a finer `step` (0.25 d recovers it).
+
+    Pass `anchor` for COMPOSITE matching: the other layers (band spread,
+    stack, vyuha level) must also stand as they did at the anchor, so a
+    composite episode set is always a subset of the contact-only one."""
     if not pattern:
         return []
     need = len(pattern) if min_match is None else min_match
+    conditions = composite_conditions(anchor) if anchor is not None else None
     bodies = {c["a"] for c in pattern} | {c["b"] for c in pattern}
     if step is None:
         step = 1.0 if bodies & FAST_SCAN_BODIES else 5.0
@@ -96,6 +134,9 @@ def find_episodes(pattern: list[dict], jd_start: float, jd_end: float,
     episodes = []
     run = []
     for jd, m in samples + [(None, {"count": -1})]:
+        if (m["count"] >= need and conditions is not None
+                and not composite_match_at(conditions, jd)):
+            m = {**m, "count": -1}          # contacts hold, other layers do not
         if m["count"] >= need:
             run.append((jd, m))
             continue
@@ -170,6 +211,14 @@ def main(argv=None) -> None:
                     "triggers to the minute. Timing only — no spots.")
     parser.add_argument("--data", default=ANCHORS_PATH)
     parser.add_argument("--anchor", help="anchor id (default: every anchor)")
+    parser.add_argument("--category",
+                        help="restrict to one anchor category "
+                             "(earthquake | flood | biological | volcanic | "
+                             "configuration) — Predict.pdf's design is "
+                             "explicitly per category")
+    parser.add_argument("--composite", action="store_true",
+                        help="require the anchor's OTHER layers (band "
+                             "spread, stack, vyuha level) to stand too")
     parser.add_argument("--start", required=True, help="YYYY-MM-DD")
     parser.add_argument("--end", help="YYYY-MM-DD (or use --years)")
     parser.add_argument("--years", type=float, help="span from --start")
@@ -187,6 +236,12 @@ def main(argv=None) -> None:
         raise SystemExit("need --end or --years")
 
     anchors = load_anchors(args.data)
+    if args.category:
+        known = sorted({a.category for a in anchors})
+        if args.category not in known:
+            raise SystemExit(f"unknown category: {args.category} (have: "
+                             + ", ".join(known) + ")")
+        anchors = [a for a in anchors if a.category == args.category]
     if args.anchor:
         anchors = [a for a in anchors if a.id == args.anchor]
         if not anchors:
@@ -196,12 +251,14 @@ def main(argv=None) -> None:
     texts = []
     for a in anchors:
         pattern = anchor_pattern(a)
-        episodes = find_episodes(pattern, jd_start, jd_end, args.min_match)
+        episodes = find_episodes(pattern, jd_start, jd_end, args.min_match,
+                                 anchor=a if args.composite else None)
         triggers = {i: moon_triggers(a, e) for i, e in enumerate(episodes)}
         texts.append(render_text(a.id, episodes, triggers))
         for i, e in enumerate(episodes):
             calendar.append({
-                "anchor": a.id, "start": e["start_utc"], "end": e["end_utc"],
+                "anchor": a.id, "category": a.category,
+                "start": e["start_utc"], "end": e["end_utc"],
                 "best_utc": e["best_utc"], "match": e["count"],
                 "total": e["total"], "tightness": e["tightness"],
                 "contacts": "; ".join(f"{c['key']}={c['delta']:.2f}"
@@ -216,7 +273,7 @@ def main(argv=None) -> None:
         out.mkdir(parents=True, exist_ok=True)
         with open(out / "recurrence.csv", "w", newline="") as fh:
             writer = csv.DictWriter(fh, fieldnames=[
-                "anchor", "start", "end", "best_utc", "match", "total",
+                "anchor", "category", "start", "end", "best_utc", "match", "total",
                 "tightness", "contacts", "fast_triggers"])
             writer.writeheader()
             writer.writerows(calendar)

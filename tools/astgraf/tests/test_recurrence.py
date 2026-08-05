@@ -93,3 +93,64 @@ def test_fine_step_catches_sub_day_full_windows():
     hit = [e for e in fine if e["start_jd"] - 0.5 <= jd0 <= e["end_jd"] + 0.5]
     assert hit, f"valdivia self-recovery failed at 0.25 d: {fine}"
     assert hit[0]["count"] == hit[0]["total"] == len(pattern)
+
+
+def test_composite_conditions_capture_the_other_layers():
+    from astgraf.recurrence import composite_conditions
+    nepal = composite_conditions(anchor("nepal-2015"))
+    vy = composite_conditions(anchor("vyuham-2016"))
+    assert nepal["vyuha_level"] == "none"          # Nepal: vyuha silent
+    assert vy["vyuha_level"] == "vyuha+nodes"      # June 2016: the one firing
+    assert nepal["mkm_spread"] > 100               # band trigger correctly wide
+    assert nepal["stack_max"] >= 1
+
+
+def test_composite_matching_requires_the_other_layers_too():
+    from astgraf.recurrence import composite_match_at, composite_conditions
+    a = anchor("vyuham-2016")
+    cond = composite_conditions(a)
+    # holds at its own instant, fails a year later (Jupiter left the opposition)
+    assert composite_match_at(cond, iso_jd(a.time))
+    assert not composite_match_at(cond, iso_jd("2017-06-03T12:00:00Z"))
+
+
+def test_composite_episodes_are_a_subset_of_contact_episodes():
+    a = anchor("nepal-2015")
+    pattern = anchor_pattern(a)
+    lo, hi = iso_jd("2015-03-01T00:00:00Z"), iso_jd("2015-07-01T00:00:00Z")
+    plain = find_episodes(pattern, lo, hi)
+    comp = find_episodes(pattern, lo, hi, anchor=a)
+    assert plain, "the contact-only scan must find Nepal's window"
+    assert len(comp) <= len(plain)
+    for e in comp:
+        # bounds are scan samples, so the tightest instant may sit one step
+        # outside them (same tolerance as the sub-day-window test above)
+        assert any(p["start_jd"] - 1.0 <= e["best_jd"] <= p["end_jd"] + 1.0
+                   for p in plain)
+
+
+def test_cli_filters_by_category_and_tags_output(tmp_path):
+    main(["--category", "earthquake", "--start", "2015-03-01", "--end",
+          "2015-07-01", "--out", str(tmp_path)])
+    with open(tmp_path / "recurrence.csv", newline="") as fh:
+        rows = list(csv.DictReader(fh))
+    assert rows, "the earthquake category must yield Nepal's episode"
+    assert all(r["category"] == "earthquake" for r in rows)
+    assert any(r["anchor"] == "nepal-2015" for r in rows)
+
+
+def test_cli_rejects_an_unknown_category():
+    import pytest as _p
+    with _p.raises(SystemExit):
+        main(["--category", "no-such-category", "--start", "2015-01-01",
+              "--end", "2015-02-01"])
+
+
+def test_composite_conditions_match_at_their_own_anchor_instant():
+    # Regression: storing a ROUNDED mkm_spread made every anchor fail its own
+    # composite test by ~0.00025 deg (the rounded threshold sits below the
+    # live value). Self-match is the minimum an anchor's conditions must do.
+    from astgraf.recurrence import composite_conditions, composite_match_at
+    for aid in ("nepal-2015", "vyuham-2016", "hyderabad-2016", "tohoku-2011"):
+        a = anchor(aid)
+        assert composite_match_at(composite_conditions(a), iso_jd(a.time)), aid
