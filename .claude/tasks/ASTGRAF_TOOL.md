@@ -2017,3 +2017,26 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   primary at orb 1.0.
 - POWER CHECK in the same script: plant the predicate into 10/5/2% of events
   and confirm recovery, so a null cannot be mistaken for blindness.
+
+## 2026-08-05 — FLOOD SIGNATURE RESULT: null (lift 1.012, p = 0.57)
+- Ran the pre-registered test (design committed first at 997484d, untouched).
+  1,886 declustered day-precision flood events >= 1700, 9,430 era-matched
+  controls (+-1 y, excluding +-7 d).
+- PRIMARY real-Neptune conj Ketu @ 3 deg: events 30/1886 = 0.0159, controls
+  152/9430 = 0.0161, LIFT 1.012 — null median 1.012, 95th 1.344, p = 0.5685.
+  Dead on the null median. The taught flood constraint does not distinguish
+  flood dates from ordinary instants in the same era.
+- SECONDARY (reported, not the verdict): observed Neptune-Ketu 1.186;
+  real-Nep-Rahu 0.859; real-Ura-Ketu 0.915; real-Ura-Rahu 1.353;
+  real-Nep-Ketu @ orb 1 = 1.303. Family max 1.353, family-wise p = 0.382 —
+  nothing survives multiplicity.
+- POWER: planting the predicate into just 2% of events yields lift 2.220 at
+  p = 0.0000 (5% -> 4.08, 10% -> 7.15). The instrument would detect an
+  effect a fraction of the claimed size; it is not blind. Verdict is a
+  refutation, not an inconclusive.
+- SIGNIFICANCE: this was the FIRST test of a taught doctrine rule in the
+  category it was TAUGHT IN — every prior grading used the quake corpus, so
+  "wrong catalogue" was a live excuse. It is now spent. The Hyderabad
+  reading remains exact as a retrodiction (Neptune on Ketu 1.15 deg), but
+  the rule generalises to 1,886 flood events at exactly chance.
+- Running count: SEVEN graded channels, seven nulls, each power-checked.

@@ -24,6 +24,7 @@ see the effect it failed to find.
 | Location — cell→region table | pre-registered, his own design | p = 0.166 |
 | Statistical mining | 3 passes, richest space 380 predicates | max lift 1.705 vs null 1.748, p = 0.65 |
 | Dwell doctrine | trigger + magnitude halves | vacuous; and dead on held-out M6.0–6.99 |
+| **Taught flood signature** (Neptune on Ketu, tested in its OWN category) | 1,886 declustered flood events, era-matched controls | **lift 1.012, p = 0.57** |
 
 The geometric location route is exhausted **by derivation**, not merely by
 testing: a slow–slow crossing cannot define a meridian (crossings last days;
@@ -60,16 +61,19 @@ use the same catalogue as its own null.
 candidate. This test can rule a clock *out* by phase mismatch; it cannot
 confirm one. Say so in the pre-registration.
 
-### 3.2 The taught flood signature, tested in its own category
+### 3.2 The taught flood signature — DONE 2026-08-05, null
 
-**Question.** "Neptune on Ketu" is the taught flood constraint (Hyderabad
-1.15°). Does it fire at flood dates more than at matched controls?
+Ran and closed the same day it became possible. 1,886 declustered
+day-precision flood events against 9,430 era-matched controls:
+**real-Neptune on Ketu fires at 0.0159 of flood dates and 0.0161 of control
+instants — lift 1.012, p = 0.57**, sitting exactly on the null median. No
+secondary variant survives multiplicity (family max 1.353, p = 0.38).
+Power: planting the predicate into just 2% of events gives lift 2.22 at
+p = 0.0000, so the instrument is not blind.
 
-**Data.** 2,750 day-precision modern flood dates — enough for real power,
-and day precision puts every body but the Moon inside a 3° orb.
-
-**Note.** This is the first time any doctrine rule gets tested in the
-category it was *taught in*. Every previous grading used the quake corpus.
+**This mattered because it was the first test of a taught rule in the
+category it was taught in** — every prior grading used the quake corpus, so
+"wrong catalogue" was a live excuse. It is now spent.
 
 ### 3.3 Category-tagged recurrence, graded
 
