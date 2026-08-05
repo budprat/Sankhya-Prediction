@@ -387,6 +387,31 @@ tag, and the file header states the whole-file status. **The file is labelled
 NOT SUPPORTED** — nothing is dropped for looking bad, because
 `mined-triggers.toml` was retired for exactly that.
 
+## The long-cycle flood clock (`scripts/flood_clock.py`)
+
+`PLAN.md` §3.1, pre-registered and closed 2026-08-05. Asks which
+Uranus–Neptune clock (163.5 / 164.5 / 171.0 y) the flood records support, and
+finds the question splits in two:
+
+**Part 1 — which clock? Not answerable, and that is arithmetic rather than a
+null.** Across the systematic record (HANZE 1871–2025, 154 y) the candidates
+separate by at most **14.9° of phase**, over a span covering **0.90–0.94 of
+one cycle**, while reporting density rises **~12×**. Periods that close cannot
+be told apart from less than a cycle.
+
+**Part 2 — is incidence elevated near the conjunction at all?** Detrended
+against a centred 51-year moving average, ±8 y on the 1993 triple,
+circular-shift null over 122 non-overlapping windows: **0.9815, p = 0.393,
+rank 49 of 123.**
+
+**The binding limit is n = 1.** The systematic record holds exactly one
+conjunction epoch; 1821 and 1650 carry zero usable events within ±10 y in
+either corpus. The 670 HANZE events near 1993 are 670 observations of *one
+epoch*, not of a clock — so the doctrine verdict is **UNTESTED**, and the
+script's honest output is that power statement rather than its p-value.
+Unblocking it needs a systematic flood catalogue reaching ~1780–1860 at day
+precision (FRAMEWORK open question 7).
+
 ## The anchor library (`astgraf-anchors`)
 
 The recurrence principle (NU, 2026-08-04) as machinery: past major events are
@@ -623,9 +648,22 @@ axis; testing only the MC would have left the anchors' own axis unchecked. A
 rule of this shape, that loose, on either angle, would have been found. The
 power claim is enforced in the suite, not just written down.
 
-Scope limit found while running it: the BAS cusp chain evaluates
-`sqrt(1 − xx²)` with `xx = sin(RA)·tan(ε)·tan(lat)`, so it is **undefined beyond
-the polar circle (66.56°)** — the angles do not exist there at all.
+Scope limit found while running it, and corrected on 2026-08-05 after being
+measured rather than assumed: the BAS cusp chain evaluates `sqrt(1 − xx²)`
+with `xx = sin(RA)·tan(ε)·tan(lat)`, so it is undefined once `|xx| ≥ 1`.
+
+Two things the original note got wrong. **The limit is not a fixed latitude** —
+66.56° assumes `sin(RA) = 1`, but RA moves with sidereal time, so the real
+threshold depends on the instant as well as the place (at RA 120° the chain
+computes at 67°N and fails at 70°). 66.56° is the *worst case*: the latitude
+below which the chain is defined at every RA, exposed as
+`angles.POLAR_SAFE_LIMIT`, with `angles.angles_defined_at()` asking the
+arithmetic rather than a constant. And **the angles do exist up there** — the
+Ascendant and MC both compute at 85°N; only the twelve cusps do not.
+`compute_raw` fails as a unit because it builds cusps unconditionally, so
+`angles.py` raises `PolarChartError` and its helpers degrade to `None`/`[]`.
+*Open for a ruling:* a cusp-less chart would make the site channel available
+at polar latitudes, and the Asc-based rules are the ones that matter there.
 
 `angles.py` remains a correct way to read a chart's angles. It must not be used
 to claim a location.

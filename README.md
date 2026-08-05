@@ -8,7 +8,7 @@ Built as a faithful modern port of a family BASIC astrology suite
 (ASTGRAF/ASTROLOG/GRAPHDO/HORARY, preserved in [`canon/`](canon/)), extended
 into a full prediction pipeline from the Sankhyan doctrine of
 *Secrets of Sankhya* and its worked instances. Python 3.12 · zero heavy
-dependencies · 260 tests · MIT.
+dependencies · 263 tests · MIT.
 
 ```
 canon/                      The original BASIC suite (the computation canon, in-tree)
@@ -131,7 +131,7 @@ uv run astgraf --year 2015 --month 4 --day 25 --time 11:40 \
 uv run astgraf-bands --start 2016-05-25 --days 15 \
   --rules doctrine-triggers.toml --out out/vyuha-2016
 
-uv run pytest   # 258 tests
+uv run pytest   # 263 tests
 ```
 
 Full CLI documentation: [`tools/astgraf/README.md`](tools/astgraf/README.md).
@@ -158,7 +158,7 @@ assiduous search and only then it can be predictable"*:
   site channel is scoped to the taught local categories. The timing
   layers — which reproduce the taught instances to the minute — are the
   system's proven core.
-- **Thirteen channels have been graded and every one failed its bar**, each
+- **Fourteen channels have been graded and every one failed its bar**, each
   with a power check proving the instrument could see the effect it did not
   find — three mining passes, six location families, the dwell doctrine, the
   taught flood signature in its own category, Predict.pdf's headline band
@@ -177,6 +177,13 @@ assiduous search and only then it can be predictable"*:
   0. No mining pass over any existing M7+ catalog can validate or refute
   them; settling a rule that rare needs ~10⁵ events. That is a structural
   limit, not a result.
+- **Some questions are not answerable at all, and saying so beats answering
+  them badly.** The flood long-cycle clock (163.5 / 164.5 / 171.0 y) is one:
+  its three candidates separate by at most **14.9° of phase** over a record
+  covering 0.9 of a single cycle, and the systematic corpus contains
+  **exactly one** conjunction epoch. Its verdict is *untested* — neither
+  supported nor refuted — and the useful output is the power statement, not
+  the p-value.
 - **Negative results stay on the record.** The three data-mined candidate
   rules were *retired* when honest re-mining (declustered corpus, time-uniform
   climatology controls, 2-year-block split, 200-run permutation calibration)

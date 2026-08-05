@@ -156,7 +156,7 @@ The band trigger's lift of 1.804 rests on 12 firings against 7.0 expected —
 
 **Closed 2026-08-05.** Every grading script in the project constructs a
 `Claim` and prints its banner when it runs. There is no longer a script whose
-design lives only in prose.
+design lives only in prose. Sixteen scripts, six of them pre-registered.
 
 | Script | Claim | Pre-registered |
 |---|---|---|
@@ -165,6 +165,7 @@ design lives only in prose.
 | `cell_region.py` | `cell-region-table` | ✅ |
 | `flood_signature.py` | `flood-neptune-ketu` | ✅ |
 | `deadliest_structure.py` | `deadliest-shared-structure` | ✅ |
+| `flood_clock.py` | `flood-uranus-neptune-clock` | ✅ |
 | `angle_grade.py` | `site-angle-location` | ❌ retrospective |
 | `asc_fingerprint.py` | `ascendant-location-family` | ❌ retrospective |
 | `dwell_grade.py` | `dwell-doctrine` | ❌ retrospective |

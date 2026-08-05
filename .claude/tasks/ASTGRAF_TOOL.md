@@ -2510,3 +2510,33 @@ Working it out honestly split PLAN 3.1 into two questions:
 - PLAN 3.1 closed. With 3.2 and 3.2c already closed, the runnable-now list is
   down to 3.3 (category-tagged recurrence) and 3.4 (site channel, n = 13 and
   underpowered by construction).
+
+## 2026-08-05 — Documentation pass: two substantive corrections, counts resynchronised
+
+Sweep rather than patch-from-memory: grepped every doc for claims the polar
+fix and the flood clock had made stale.
+
+- SUBSTANTIVE CORRECTION 1, in tools/astgraf/README.md and
+  scripts/angle_grade.py: both stated the cusp chain is undefined "beyond the
+  polar circle (66.56 deg)" and that "the angles simply do not exist up
+  there". Both halves were wrong and are now corrected against measurement:
+  the threshold is RA-dependent (66.56 is the worst case, sin RA = 1), and
+  the Ascendant and MC DO exist past it — only the twelve cusps do not.
+- BEHAVIOUR DELIBERATELY UNCHANGED in angle_grade.py. Its POLAR_LIMIT stays
+  at the conservative 66.0: that is what the recorded grading used, it
+  excludes symmetrically from events and controls, and loosening it would
+  move a published result over one event in 1,548. The COMMENT was wrong, not
+  the number — so only the comment changed. Recorded here so the asymmetry is
+  not mistaken for an oversight later.
+- flood_clock.py added to TESTING.md's claim table (sixteen scripts, six
+  pre-registered) — it was the one grading script missing from the
+  authoritative list.
+- COUNTS RESYNCHRONISED: 258/260 -> 263 tests in README (x2), RESULTS.md and
+  PLAN.md; channels thirteen -> fourteen in README and PLAN. Left alone
+  deliberately: "288 tests" in the rotation-spectrum section (that is the
+  count of statistical tests in the sweep, not the suite) and the ledger's
+  own historical counts, which were true when written.
+- Root README gains the epistemic-contract entry that some questions are not
+  answerable at all; FRAMEWORK gains implementation-map rows for the atlas,
+  the co-occurrence miner and the flood clock; tools/astgraf/README gains a
+  section for the flood clock.

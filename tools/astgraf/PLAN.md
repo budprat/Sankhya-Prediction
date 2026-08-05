@@ -3,13 +3,13 @@
 Status 2026-08-05, end of session. Companion to `FRAMEWORK.md` (the theory),
 `WATCHLIST.md` (registered forward windows), `RESULTS.md` (the evidence
 ledger), `data/README-floods.md` (the flood corpora), and `.claude/tasks/ASTGRAF_TOOL.md` (every ruling, dated).
-260 tests passing, from any working directory.
+263 tests passing, from any working directory.
 
 ## 1. The one-line state
 
 **The engine predicts *when* with tested precision and cannot predict *where*
 at all.** Both halves are measured, not impressions: every taught instant
-reproduces to 1–2 minutes, and **thirteen independent channels have been built
+reproduces to 1–2 minutes, and **fourteen independent channels have been built
 and graded null** — six location families, the mining channel, the dwell
 doctrine, the taught flood signature in its own category, the band trigger at
 M7+ and again on held-out M6, a full-vocabulary screen over epicenter charts,
