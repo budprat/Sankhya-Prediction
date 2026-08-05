@@ -2066,3 +2066,29 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   while the Moon sweeps the zodiac many times inside the window.
 - STATISTIC add-one smoothed lift; VERDICT within-block permutation, 2,000
   shuffles, p < 0.05 AND lift > 1. Power check plants into 10/5/2%.
+
+## 2026-08-05 — BAND-TRIGGER RESULT: does NOT clear the pre-registered bar (p = 0.069)
+- Ran the pre-registered grading (design committed first, untouched).
+- PRIMARY, quakes, exact instants, 1,435 events / 7,175 era-matched controls:
+    P1 proximity  ev 12/1435 = 0.0084, ctl 0.0049, LIFT 1.804,
+                  null median 1.124, p = 0.0690  -> FAILS the p<0.05 rule
+    P2 grid       ev 3/1435, lift 2.220, p = 0.259
+    P3 escalated  ev 3/1435, lift 2.220, p = 0.264
+- SECONDARY, floods (indicative only, Moon +-6.6 deg): P1 lift 0.937,
+  p = 0.741 — pointing the OTHER way. P2 0.666. P3 2.997 at p = 0.262 on 2
+  events (noise).
+- POWER: planting 2% of events gives lift 5.69 at p = 0.0000, so the
+  instrument is not blind — but note that a 2% plant is ~29 events on top of
+  12, far larger than anything observed.
+- WHY THIS IS NOT A NEAR-MISS TO GET EXCITED ABOUT (measured, not asserted):
+  the whole result rests on TWELVE firings against ~7.0 expected. The excess
+  is 5 events = 1.4 Poisson sd. The predicate is simply RARE (fires on 0.84%
+  of events), which is why n=1,435 still yields single digits. Projected:
+  if the 1.80 lift were real, n=3,000 gives ~2.3 sd, n=6,000 ~3.2 sd,
+  n=12,000 ~4.6 sd. So this is decidable — but only with a corpus 4-8x
+  larger, e.g. M6+ quakes (which we already know how to fetch: 12,212 rows
+  came down from USGS FDSN for the dwell test).
+- VERDICT AS REGISTERED: null. Recorded honestly as the closest any primary
+  predicate has come in this project, and as the FIRST properly powered test
+  of Predict.pdf's own headline claim (previous scoring: 31 episodes).
+  Ninth graded channel; ninth failure to clear its bar.

@@ -27,6 +27,7 @@ failed to find.
 | Statistical mining | 3 passes, richest space 380 predicates | max lift 1.705 vs null 1.748, p = 0.65 |
 | Dwell doctrine | trigger + magnitude halves | vacuous; and dead on held-out M6.0–6.99 |
 | **Taught flood signature** (Neptune on Ketu, tested in its OWN category) | 1,886 declustered flood events, era-matched controls | **lift 1.012, p = 0.57** |
+| **Predict.pdf's band trigger** (Moon+Ketu+Mars, its headline claim) | 1,435 quakes exact-instant + 1,886 floods, era-matched | **lift 1.804, p = 0.069** — fails the bar; rests on 12 firings vs 7 expected (1.4 σ). Floods point the other way (0.937) |
 
 The geometric location route is exhausted **by derivation**, not merely by
 testing: a slow–slow crossing cannot define a meridian (crossings last days;
@@ -76,6 +77,21 @@ p = 0.0000, so the instrument is not blind.
 **This mattered because it was the first test of a taught rule in the
 category it was taught in** — every prior grading used the quake corpus, so
 "wrong catalogue" was a live excuse. It is now spent.
+
+### 3.2b The band trigger — DONE 2026-08-05, does not clear its bar
+
+Predict.pdf's headline rule, given its first properly powered test (it had
+been scored once, on 31 episodes). Quakes with exact instants are the primary
+corpus because the rule contains the Moon, which crosses a full band in a day.
+**Lift 1.804 at p = 0.069** — the closest any primary predicate has come in
+this project, and still short of the pre-registered p < 0.05.
+
+⚠️ Do not read it as a near miss. The result rests on **12 firings against 7.0
+expected — a 1.4 σ excess**. The predicate is rare (0.84% of events), so
+n = 1,435 still yields single digits. **It is decidable with more events**:
+n ≈ 3,000 → 2.3 σ, n ≈ 6,000 → 3.2 σ, n ≈ 12,000 → 4.6 σ if the effect is
+real. An M6+ quake corpus would settle it, and we already know how to fetch
+one (12,212 rows came from USGS FDSN for the dwell test).
 
 ### 3.3 Category-tagged recurrence, graded
 
