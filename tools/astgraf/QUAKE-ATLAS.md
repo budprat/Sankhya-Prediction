@@ -195,3 +195,121 @@ corpus.
 2. **The M6 holdout is now spent.** It was the project's only strictly
    disjoint band and has been used twice (dwell, RESULTS #8; band trigger,
    #11). Future confirmatory work needs a genuinely new corpus.
+
+---
+
+# Part II — Mining repeated patterns (M7+ only)
+
+`scripts/pattern_mine_m7.py`. M6 excluded by instruction: the doctrine speaks
+about major events.
+
+## The unified M7+ corpus
+
+Every M7+ quake in the tree, across all three catalogs that carry them,
+deduplicated at 3 d / 300 km (USGS minute-precision instants win over
+day-precision death-catalogue rows for the same event, because the Moon moves
+13.2°/day):
+
+| source | M7+ candidates | contributed |
+|---|---:|---:|
+| `usgs-m7-1850-2020` | 1,548 | 1,467 |
+| `quakes-ncei-deaths` (Mw ≥ 7 parsed from notes) | 499 | 161 |
+| `quakes-historical` | 35 | 7 |
+| **unique M7+ events** | | **1,635** |
+| post-1900, declustered | | **1,506** |
+
+447 cross-catalog duplicates merged. This is a **larger M7+ set than any
+previous run used** — the deaths-selected file contains M7+ events the USGS
+magnitude file misses.
+
+## What is new: pairs and triples
+
+Every previous screen tested **single** predicates. But no taught pattern is a
+single predicate — Nepal is *real-Neptune on Ketu AND real-Uranus on the Sun*;
+the vyuham is *two oppositions AND a 90° cross AND a nodal lock*. A
+single-predicate screen is structurally blind to that shape. So this miner
+searches **co-occurring** configurations: 609 singles, 181 pairs, 15 triples
+that hold at ≥ 1% of events — 805 patterns.
+
+## Three artifacts found and fixed, in order
+
+The first run returned **SUPPORTED, family-wise p = 0.0067**. It was wrong
+three times over, and each failure is now a guard in the script.
+
+**1. Era-locked predicates (fixed by a testability filter).** The winner was
+`band:Neptune=24 + mkm≤60`, and all 18 of its events fell in **1996–2002** —
+one Neptune band-dwell. Neptune moves 7.7°/yr against a 12.86° band, so a
+±365 d control *cannot leave the band*: 96.8% of its blocks had all four slots
+identical. Such blocks contribute zero variance to the permutation null while
+still contributing to the observed lift, so the null max collapses and any
+fluctuation reads as significant. Measured discrimination by family:
+
+| family | discrimination | testable? |
+|---|---:|---|
+| `band:Neptune` | 0.46 | **no** |
+| `band:Uranus` | 0.64 | **no** |
+| `band:Saturn` | 0.95 | yes |
+| everything else | ≥ 0.99 | yes |
+
+49 predicates dropped. This is the same failure that once promoted "was it
+1905–12" to lift 55 (`signatures.py`); era-matched controls fixed it for fast
+bodies and never fixed it for the slow giants.
+
+**2. Pseudo-replication (fixed by an epoch count).** With those gone the
+winner became `band:Jupiter=8 + band:Saturn=23`, lift 2.698, 17 events,
+2.59 σ. Its 17 events fall in **three distinct years**: 1931 (×7), 1989 (×1),
+1990 (×9). For a slow-body predicate the unit of independence is the *epoch*,
+not the event — 17 events are really 2 observations. The permutation treats
+each event as independent and overstates significance accordingly.
+
+**3. Non-replication (fixed by a mandatory split-half).** That same winner
+gives split-half lifts of **0.998 / 3.394** — it lives entirely in one half.
+`band:Jupiter=13 + band:Saturn=2` is the mirror image: 15 events in 1909 and
+1968 only, halves 2.818 / 0.998.
+
+## Final result
+
+```
+observed max lift : 2.698   [band:Jupiter=8 + band:Saturn=23]
+null median       : 1.957
+null 95th pct     : 2.421
+FAMILY-WISE p     : 0.0100          <- clears the bar
+  epochs 3, halves 1.00/3.39        <- but DOES NOT REPLICATE
+
+best pattern that is both independent and replicating:
+  band:Mercury=12 + band:Sun=13     lift 1.960, 15 epochs, halves 2.72/1.50
+```
+
+**VERDICT: NOT SUPPORTED.** The family-wise p clears 0.05, but the pattern
+that achieved it is concentrated in three years and fails split-half
+replication. And the best pattern that *does* replicate sits at lift **1.960**
+against a null-max median of **1.957** — precisely at chance for a screen this
+size.
+
+184 of 805 patterns pass independence + replication, and their top is
+occupied by `band:Mercury=X + band:Sun=Y` with |X−Y| ≤ 2 — Mercury never
+exceeds 28° elongation, so these are seasonal Sun-band predicates with a
+near-automatic Mercury constraint attached.
+
+## The floor that matters most
+
+The support floor is 1% (15 events), because a lift on fewer events is noise
+with a ratio printed beside it. **The taught patterns are rarer than that
+floor** — `nepal-double` fires at 1 event in 1,506 (0.07%), Chatur Vyuham at
+0. So this screen does not refute them; it cannot see them at all. Confirming
+or refuting a 0.1% rule at this lift needs a corpus of order 10⁵ events, which
+does not exist for M7+. That is a structural limit, not a result.
+
+## Saved alongside the rules
+
+`atlas-patterns.toml` — the top 20 patterns in the project's own rule schema,
+verified to load with `triggers.load_rules()` and sweepable by
+`astgraf-bands --rules atlas-patterns.toml`. Every rule carries its lift,
+support, epoch count, split-half lifts, and a `FAILS REPLICATION` or
+`SURVIVOR` tag, and the file header states the whole-file status. Nothing is
+dropped for looking bad — `mined-triggers.toml` was retired for exactly that,
+and its three rules still carry the scars.
+
+**These are not predictors.** They are a registered, auditable, falsifiable
+record of what the largest M7+ corpus assembled here does and does not
+contain.
