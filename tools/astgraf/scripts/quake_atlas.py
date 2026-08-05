@@ -90,7 +90,6 @@ OUT_ROOT = BASE / "out" / "quake-atlas"
 MIN_YEAR = 1900          # engine drift disqualifies earlier events
 CONTROLS_PER_EVENT = 3   # era-matched, +-365 d excluding +-7 d
 N_PERM = 2000
-POLAR_LIMIT = 66.0       # the BAS cusp chain is undefined past the polar circle
 
 
 # --------------------------------------------------------------------------
@@ -115,14 +114,21 @@ def jd_of(iso: str) -> float:
 
 def chart_at_site(jd: float, lat: float, lon_east: float):
     """Sidereal chart cast AT THE EPICENTER — bands and nakshatras are sidereal,
-    and the site fixes a real Ascendant/MC. Beyond the polar circle the canon's
-    cusp chain is undefined (sqrt(1-xx^2)), so those fall back to site-free."""
+    and the site fixes a real Ascendant/MC.
+
+    Where the canon's cusp chain is undefined (sqrt(1-xx^2) with
+    xx = sin(RA)*tan(obliquity)*tan(lat)) the chart falls back to site-free.
+    That condition is tested by ATTEMPTING it, not by a fixed latitude: the
+    threshold moves with sidereal time, so a constant guard both admits
+    failures at low RA and needlessly site-frees computable charts above
+    66.56 deg. See angles.POLAR_SAFE_LIMIT."""
     jdn = math.floor(jd + 0.5)
     y, m, d = jd_to_calendar(jdn)
     hours = (jd + 0.5 - jdn) * 24
-    if abs(lat) > POLAR_LIMIT:
+    try:
+        return compute_raw(y, m, d, hours, 0.0, -lon_east, lat, True, False), True
+    except ValueError:
         return compute_raw(y, m, d, hours, 0.0, 0.0, 0.0, True, True), False
-    return compute_raw(y, m, d, hours, 0.0, -lon_east, lat, True, False), True
 
 
 def chart_site_free(jd: float):

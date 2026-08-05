@@ -97,11 +97,64 @@ from .ephemeris import compute_raw
 from .grid import jd_to_calendar
 
 
+# --------------------------------------------------------------------------
+# The polar domain limit — measured, not assumed (2026-08-05).
+#
+# The BAS cusp chain evaluates sqrt(1 - xx^2) with
+#     xx = sin(RA) * tan(obliquity) * tan(latitude)
+# so it is undefined wherever |xx| >= 1. The often-quoted "beyond the polar
+# circle (66.56 deg)" is the WORST CASE only — that bound assumes sin(RA) = 1.
+# Because RA moves with sidereal time, the true limit is a function of the
+# INSTANT as well as the place: at RA 120 deg (sin = 0.866) the chain is fine
+# at 67 deg N and fails at 70; at RA 90 deg it fails just past 66.56.
+#
+# So a fixed-latitude guard is wrong in both directions: it lets some failing
+# charts through at low RA and needlessly rejects computable ones at high
+# latitude. The honest test is to attempt the chart and report the domain
+# error as such.
+#
+# NOTE FOR A FUTURE RULING: the Ascendant (AZ55, oblique ascension) and the MC
+# both remain DEFINED past this limit — measured at 85 deg N, both compute.
+# Only the twelve cusps are undefined. compute_raw fails as a unit because it
+# builds the cusps unconditionally, and ephemeris.py is frozen canon, so this
+# module guards rather than degrades. If NU rules that a cusp-less chart may
+# be returned, the site channel becomes available at polar latitudes for the
+# Asc-based rules (Ulsoor/Hyderabad shape), which are the ones that matter
+# there.
+POLAR_SAFE_LIMIT = 66.56       # below this the chain is defined at EVERY RA
+
+
+class PolarChartError(ValueError):
+    """The canon's cusp chain is undefined at this (instant, latitude)."""
+
+
+def angles_defined_at(jd: float, lat: float, lon_east: float) -> bool:
+    """Can the canon cast a house chart here, at this instant? Cheap enough to
+    call before a sweep, and exact — it asks the arithmetic, not a constant."""
+    try:
+        site_chart(jd, lat, lon_east)
+        return True
+    except PolarChartError:
+        return False
+
+
 def site_chart(jd: float, lat: float, lon_east: float):
     jdn = math.floor(jd + 0.5)
     y, m, d = jd_to_calendar(jdn)
-    return compute_raw(y, m, d, (jd + 0.5 - jdn) * 24, 0.0, -lon_east, lat,
-                       False, False)
+    try:
+        return compute_raw(y, m, d, (jd + 0.5 - jdn) * 24, 0.0, -lon_east, lat,
+                           False, False)
+    except ValueError as exc:
+        # A bare "math domain error" from deep inside the cusp chain tells the
+        # caller nothing. Name the actual condition instead.
+        raise PolarChartError(
+            f"the canon's cusp chain is undefined at latitude {lat:.3f} for "
+            f"jd {jd:.5f}: sin(RA)*tan(obliquity)*tan(lat) reaches 1, so "
+            f"sqrt(1-xx^2) has no real value. Guaranteed-safe below "
+            f"|lat| = {POLAR_SAFE_LIMIT} deg at every RA; above it the limit "
+            f"depends on sidereal time. The Ascendant and MC ARE defined here "
+            f"— only the twelve cusps are not."
+        ) from exc
 
 
 def _sep(a: float, b: float) -> float:
@@ -123,9 +176,18 @@ def angles_from_chart(chart) -> dict[str, float]:
             "MC": mc, "IC": (mc + 180) % 360}
 
 
-def angles_at(jd: float, lat: float, lon_east: float) -> dict[str, float]:
-    """The four angles of the site chart, in tropical longitude."""
-    return angles_from_chart(site_chart(jd, lat, lon_east))
+def angles_at(jd: float, lat: float, lon_east: float) -> dict[str, float] | None:
+    """The four angles of the site chart, in tropical longitude.
+
+    None where the canon cannot cast the chart (see PolarChartError). A sweep
+    over real epicentres must not die on the one Arctic event in the corpus,
+    and silently substituting a site-free chart would be worse — it would
+    score a chart for a place it does not describe.
+    """
+    try:
+        return angles_from_chart(site_chart(jd, lat, lon_east))
+    except PolarChartError:
+        return None
 
 
 def body_longitudes(chart) -> dict[str, float]:
@@ -144,8 +206,14 @@ def bodies_on_angles(jd: float, lat: float, lon_east: float,
                      orb: float = 3.0) -> list[tuple[float, str, str]]:
     """(separation, angle, body) for every body within `orb` of an angle.
     This DESCRIBES a chart; it does not identify a place — the location claim
-    built on it was graded against the catalog and failed (header)."""
-    c = site_chart(jd, lat, lon_east)
+    built on it was graded against the catalog and failed (header).
+
+    Empty where the canon cannot cast the chart, so a caller iterating over
+    real places degrades to "no contacts here" instead of crashing."""
+    try:
+        c = site_chart(jd, lat, lon_east)
+    except PolarChartError:
+        return []
     ax = angles_from_chart(c)
     pos = body_longitudes(c)
     out = [(_sep(v, p), k, b) for k, v in ax.items() for b, p in pos.items()
