@@ -2540,3 +2540,50 @@ fix and the flood clock had made stale.
   answerable at all; FRAMEWORK gains implementation-map rows for the atlas,
   the co-occurrence miner and the flood clock; tools/astgraf/README gains a
   section for the flood clock.
+
+## 2026-08-05 — 2026 ASSAM FLOOD checked: a clean unregistered MISS + an accuracy finding
+- NU: "check the recent assam floods using our engine". Date established from
+  the record first (post-cutoff): cloudburst in Mon district, Nagaland,
+  19 July 2026 -> Sivasagar/Charaideo/Jorhat/Golaghat; 85 dead, >700,000
+  displaced, easing from 28 July. Added to data/floods-historical.csv.
+- RESULT: ALL TEN taught doctrine rules SILENT, at every hour of the day,
+  swept at the affected site's coordinates. real-Nep to Ketu 117.8 deg;
+  observed Nep to Ketu 146.9; band trigger Moon-Ketu-Mars spread 109.3 vs a
+  12.86 threshold; Chatur Vyuham silent. Only asc-trine-real-neptune fired,
+  and it sweeps every site twice daily so it carries no information.
+  The system's first test against an event NOBODY CHOSE IN ADVANCE, and it
+  is a miss. Recorded in RESULTS.md beside the reproductions.
+- THE LEAD AND ITS DEATH: one configuration WAS standing — real-Nep square
+  Jupiter + Jupiter trine Neptune, both sub-degree. Scanned 1900-2026: 18
+  episodes / 127 days = 0.27% of all days, recurring on the Jupiter-Neptune
+  synodic beat (analytic 12.78 y; observed mean 12.78 y — an exact internal
+  consistency check). Base-rate test against a TIME-LOCAL flood rate (+-5 y,
+  so the reporting ramp cannot skew it): 7 flood events observed vs 6.8
+  expected, RATIO 1.03. Encoded as jupiter-neptune-double-lock in
+  observed-triggers.toml with status REFUTED-AT-BASE-RATE and the refuting
+  number inside the description (a test asserts both travel with the rule),
+  so it stays detectable and is never rediscovered as a finding. Forward
+  windows registered on the WATCHLIST with an explicitly NULL claim.
+- NU ASKED THE RIGHT QUESTION ("confirm this is not fabricated") AND THE
+  VERIFICATION CORRECTED ME TWICE. Cross-checked on JPL DE440 (in-tree):
+  (a) my quoted separations 0.42/0.49 deg were PORT values — DE440 gives
+  0.847/0.061; (b) I said the cloudburst sat "dead centre" of the 2026
+  window — DE440 puts the window at 15-19 July, so it fell on the LAST DAY.
+  What SURVIVED verification: the configuration genuinely stood (both <=1 deg
+  on DE440), the 12.78 y beat, 18 episodes, and the ratio 1.03 null —
+  identical on both ephemerides.
+- *** THE MORE CONSEQUENTIAL FINDING: ENGINE ACCURACY vs OUR ORBS ***
+  At 2026-07-19 the port differs from DE440 by Jupiter 0.273, Neptune 0.703,
+  Saturn 0.465, Uranus 0.353 deg. This is the CANON's own accuracy (1900-epoch
+  Keplerian, faithfully reproduced) — not a porting error — but it is the SAME
+  ORDER as a 1 deg orb. Consequences now standing as rules:
+    * sub-degree separations quoted from the engine are NOT reliable to the
+      decimal;
+    * episode boundaries shift 1-4 days (2026 window: 18-22 Jul port vs
+      15-19 Jul DE440);
+    * counts and verdicts ARE robust (18 episodes and ratio 1.03 on both) —
+      aggregate statistics survive, individual sub-degree readings do not;
+    * NEW STANDING RULE: any claim resting on separations below ~1 deg must
+      be confirmed on DE440 before it is written down. Doctrine's 3 deg orbs
+      are unaffected.
+  Documented in FRAMEWORK section 2b, TESTING protocol step 5, and RESULTS.md.

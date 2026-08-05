@@ -37,3 +37,16 @@ description = "TESTING (NU ruling 2026-08-05) — Saturn square the nodal AXIS (
 conditions = [
   { type = "square", bodies = ["Saturn", "Rahu"], orb = 1.0 },
 ]
+
+# ---------------------------------------------------------------------------
+# STATUS: REFUTED AT BASE RATE (2026-08-05). Kept encoded so the pattern stays
+# detectable and is not rediscovered as a "finding". See RESULTS.md channel 15.
+# ---------------------------------------------------------------------------
+
+[[rule]]
+name = "jupiter-neptune-double-lock"
+description = "REFUTED-AT-BASE-RATE (2026-08-05) — real-Neptune square Jupiter AND Jupiter trine Neptune, both within 1 deg. Noticed while reading the 2026 Assam flood (cloudburst 19 July, Mon district Nagaland; 85 dead, 700,000 displaced), the only configuration standing when all ten taught rules were silent. VERIFIED ON JPL DE440, not merely on the port: at the Assam instant the separations are 0.847 and 0.061 deg. Recurs on the Jupiter-Neptune synodic beat, analytic 12.78 y, observed mean 12.78 y — 18 episodes / 127 days in 1900-2026, i.e. 0.27% of all days. GRADED NULL: 7 flood events fell inside those windows against 6.8 expected from a time-local flood rate (+-5 y, so the reporting ramp cannot skew it) — ratio 1.03, identical on the port and on DE440. Do NOT read a firing as evidence."
+conditions = [
+  { type = "square", bodies = ["real:Neptune", "Jupiter"], orb = 1.0 },
+  { type = "trine", bodies = ["Jupiter", "Neptune"], orb = 1.0 },
+]

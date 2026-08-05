@@ -14,96 +14,6 @@
   ],
   "commands_run": [
     {
-      "command": "cd tools/astgraf && uv run python - <<'EOF'\n# Facts the pre-registration must state, measured before",
-      "success": true,
-      "timestamp": "2026-08-05T14:32:10.790480"
-    },
-    {
-      "command": "uv run python - <<'EOF'\nimport csv\nfrom astgraf.ephemeris import julian_day_number\nrows=[]\nfor f in ",
-      "success": true,
-      "timestamp": "2026-08-05T14:32:38.991956"
-    },
-    {
-      "command": "cat >> ../../.claude/tasks/ASTGRAF_TOOL.md <<'EOF'\n\n## 2026-08-05 \u2014 PRE-REGISTRATION: the taught flo",
-      "success": true,
-      "timestamp": "2026-08-05T14:34:07.333561"
-    },
-    {
-      "command": "cd tools/astgraf && uv run python scripts/flood_signature.py 2>&1 | tail -25; echo \"EXIT=${PIPESTATU",
-      "success": true,
-      "timestamp": "2026-08-05T14:35:16.728592"
-    },
-    {
-      "command": "cat >> ../../.claude/tasks/ASTGRAF_TOOL.md <<'EOF'\n\n## 2026-08-05 \u2014 FLOOD SIGNATURE RESULT: null (li",
-      "success": true,
-      "timestamp": "2026-08-05T14:35:48.498749"
-    },
-    {
-      "command": "python3 - <<'PYEOF'\np=\"tools/astgraf/PLAN.md\"; s=open(p).read()\ns=s.replace(\"`data/README-floods.md`",
-      "success": true,
-      "timestamp": "2026-08-05T14:36:23.531224"
-    },
-    {
-      "command": "cd tools/astgraf && grep -n \"Predict.pdf\" FRAMEWORK.md | head -8; echo \"=== band-trigger scoring on ",
-      "success": true,
-      "timestamp": "2026-08-05T14:48:51.251267"
-    },
-    {
-      "command": "grep -n \"BAND_SPAN\\|^def circular_spread\\|^def division_of\\|GIANTS\" src/astgraf/bands.py | head -8",
-      "success": true,
-      "timestamp": "2026-08-05T14:51:50.313371"
-    },
-    {
-      "command": "cat >> ../../.claude/tasks/ASTGRAF_TOOL.md <<'EOF'\n\n## 2026-08-05 \u2014 PRE-REGISTRATION: Predict.pdf's ",
-      "success": true,
-      "timestamp": "2026-08-05T14:55:18.972298"
-    },
-    {
-      "command": "uv run python - <<'EOF'\nimport random, math\n# How much would n need to grow for a TRUE lift of 1.80 ",
-      "success": true,
-      "timestamp": "2026-08-05T14:57:23.481534"
-    },
-    {
-      "command": "cat >> ../../.claude/tasks/ASTGRAF_TOOL.md <<'EOF'\n\n## 2026-08-05 \u2014 BAND-TRIGGER RESULT: does NOT cl",
-      "success": true,
-      "timestamp": "2026-08-05T14:58:39.591675"
-    },
-    {
-      "command": "cd tools/astgraf && sed -n '/^## 3. Validation is part of the method/,/^## 4/p' FRAMEWORK.md | head ",
-      "success": true,
-      "timestamp": "2026-08-05T15:03:17.032880"
-    },
-    {
-      "command": "python3 - <<'PYEOF'\nimport io\np=\"FRAMEWORK.md\"; s=open(p).read()\nold=\"\"\"Scores are reported against ",
-      "success": true,
-      "timestamp": "2026-08-05T15:06:42.406268"
-    },
-    {
-      "command": "cd /Users/macbookpro/Sankhya-Prediction && sed -i '' 's/dependencies \u00b7 239 tests \u00b7 MIT/dependencies ",
-      "success": true,
-      "timestamp": "2026-08-05T15:07:38.561633"
-    },
-    {
-      "command": "cd /Users/macbookpro/Sankhya-Prediction/tools/astgraf && uv run python - <<'EOF'\nimport csv\nfrom col",
-      "success": true,
-      "timestamp": "2026-08-05T15:30:06.925757"
-    },
-    {
-      "command": "cat >> ../../.claude/tasks/ASTGRAF_TOOL.md <<'EOF'\n\n## 2026-08-05 \u2014 Historical QUAKE corpus created ",
-      "success": true,
-      "timestamp": "2026-08-05T15:31:37.123094"
-    },
-    {
-      "command": "cat >> tests/test_anchors.py <<'EOF'\n\n\ndef test_historical_quake_corpus_is_well_formed():\n    # The ",
-      "success": true,
-      "timestamp": "2026-08-05T15:32:00.105236"
-    },
-    {
-      "command": "python3 - <<'PYEOF'\np=\"data/README-floods.md\"; s=open(p).read()\ns=s.replace(\"# The flood corpora\\n\\n",
-      "success": true,
-      "timestamp": "2026-08-05T15:32:34.524305"
-    },
-    {
       "command": "curl -s --max-time 40 \"https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/earthquakes?minYear=190",
       "success": true,
       "timestamp": "2026-08-05T15:34:40.329883"
@@ -262,6 +172,96 @@
       "command": "cd tools/astgraf && uv run pytest -q > /tmp/pt_merge.log 2>&1; echo \"SUITE EXIT=$?\"; tail -1 /tmp/pt",
       "success": true,
       "timestamp": "2026-08-05T19:23:46.362315"
+    },
+    {
+      "command": "cd /Users/macbookpro/Sankhya-Prediction && git add -A .claude && git commit -q -m \"chore: capture ho",
+      "success": true,
+      "timestamp": "2026-08-05T19:23:59.920170"
+    },
+    {
+      "command": "for t in \"2026_Assam_floods\" \"2025_Assam_floods\" \"Assam_floods\"; do echo \"=== $t\"; curl -s --max-tim",
+      "success": true,
+      "timestamp": "2026-08-05T19:43:51.856732"
+    },
+    {
+      "command": "curl -s --max-time 30 \"https://en.wikipedia.org/w/index.php?title=2026_Assam_floods&action=raw\" | se",
+      "success": true,
+      "timestamp": "2026-08-05T19:44:04.880891"
+    },
+    {
+      "command": "cd tools/astgraf && uv run python - <<'EOF'\nfrom astgraf.anchors import chart_at, contacts_at, iso_j",
+      "success": true,
+      "timestamp": "2026-08-05T19:44:38.750532"
+    },
+    {
+      "command": "uv run python - <<'EOF'\nfrom astgraf.anchors import asc_crossings, iso_jd\nfrom astgraf.triggers impo",
+      "success": true,
+      "timestamp": "2026-08-05T19:44:52.695629"
+    },
+    {
+      "command": "uv run python - <<'EOF'\nfrom astgraf.anchors import chart_at, iso_jd, jd_iso_minute\nfrom astgraf.ban",
+      "success": true,
+      "timestamp": "2026-08-05T19:49:23.103561"
+    },
+    {
+      "command": "uv run python - <<'EOF'\nimport csv\nfrom astgraf.ephemeris import julian_day_number\nEP=[(\"1911-11-08\"",
+      "success": true,
+      "timestamp": "2026-08-05T19:49:48.622035"
+    },
+    {
+      "command": "uv run python - <<'EOF'\nfrom astgraf.anchors import chart_at, iso_jd, jd_iso_minute\nfrom astgraf.ban",
+      "success": true,
+      "timestamp": "2026-08-05T19:54:09.742707"
+    },
+    {
+      "command": "ls -la de440.bsp 2>/dev/null || echo \"de440.bsp absent\"; python3 -c \"\n# 1. Is the ~12.8-year beat ph",
+      "success": true,
+      "timestamp": "2026-08-05T19:55:08.749688"
+    },
+    {
+      "command": "uv run python -c \"import jplephem; print('jplephem available')\" 2>&1 | tail -1; grep -rn \"de440\" scr",
+      "success": true,
+      "timestamp": "2026-08-05T19:55:18.060728"
+    },
+    {
+      "command": "uv run --with jplephem python - <<'EOF' 2>&1 | tail -20\nimport math\nfrom jplephem.spk import SPK\nfro",
+      "success": true,
+      "timestamp": "2026-08-05T19:55:35.503756"
+    },
+    {
+      "command": "uv run --with jplephem python - <<'EOF' 2>&1 | tail -32\nimport math\nfrom jplephem.spk import SPK\nfro",
+      "success": true,
+      "timestamp": "2026-08-05T19:56:15.827938"
+    },
+    {
+      "command": "uv run --with jplephem python - <<'EOF' 2>&1 | tail -18\nimport csv, math\nfrom jplephem.spk import SP",
+      "success": true,
+      "timestamp": "2026-08-05T19:56:45.948394"
+    },
+    {
+      "command": "cat >> observed-triggers.toml <<'EOF'\n\n# -----------------------------------------------------------",
+      "success": true,
+      "timestamp": "2026-08-05T19:57:15.425053"
+    },
+    {
+      "command": "cat >> tests/test_triggers.py <<'EOF'\n\n\ndef test_jupiter_neptune_double_lock_is_encoded_with_its_ref",
+      "success": true,
+      "timestamp": "2026-08-05T19:57:29.036771"
+    },
+    {
+      "command": "python3 - <<'PYEOF'\np=\"RESULTS.md\"; s=open(p).read()\nanchor = \"### Notes that matter more than the n",
+      "success": true,
+      "timestamp": "2026-08-05T19:57:56.139249"
+    },
+    {
+      "command": "python3 - <<'PYEOF'\n# 1. FRAMEWORK: the accuracy rule belongs with the divergences/accuracy note\np=\"",
+      "success": true,
+      "timestamp": "2026-08-05T19:58:18.029168"
+    },
+    {
+      "command": "cat >> WATCHLIST.md <<'EOF'\n\n## Jupiter\u2013Neptune double lock \u2014 registered forward, REFUTED retrospect",
+      "success": true,
+      "timestamp": "2026-08-05T19:59:03.030101"
     }
   ]
 }

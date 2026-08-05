@@ -294,6 +294,21 @@ rules and charts (Nepal, Hyderabad, Ulsoor, the 2016 vyuham, Krakatoa→2004)
 are instances of this principle; the per-cell matrix library and the
 long-cycle families are its aggregate form.
 
+## 2b. Engine accuracy vs the orbs we test at (measured 2026-08-05)
+
+Cross-checked against JPL **DE440** (in-tree, `de440.bsp`) at 2026-07-19:
+Jupiter **0.273°**, Neptune **0.703°**, Saturn 0.465°, Uranus 0.353° from the
+port's tropical longitudes. This is the CANON's accuracy — a 1900-epoch
+Keplerian model reproduced faithfully — not a porting error. But it is the
+same order as a 1° orb.
+
+**Standing rule: any claim resting on separations below ~1° must be confirmed
+on DE440 before it is written down.** The doctrine's own 3° orbs are
+unaffected, and aggregate statistics are robust (the Jupiter–Neptune episode
+scan gives 18 episodes and ratio 1.03 on both ephemerides). What is *not*
+robust is a quoted sub-degree separation, or an episode boundary: the 2026
+Assam window is 18–22 July on the port and 15–19 July on DE440.
+
 ## 3. Validation is part of the method
 
 Predict.pdf: "the predicting researchers should confirm such events from

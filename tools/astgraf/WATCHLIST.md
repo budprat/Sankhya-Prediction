@@ -371,3 +371,38 @@ historical M7+ within the grading radius in the whole corpus. Read both
 ways, honestly: a hit there would be extraordinary; a "clear" there is the
 near-certain outcome and carries almost no information against the spot
 channel's experimental status.
+
+## Jupiter–Neptune double lock — registered forward, REFUTED retrospectively
+
+Added 2026-08-05. Noticed while reading the **2026 Assam flood** (cloudburst
+19 July, Mon district Nagaland; 85 dead, >700,000 displaced), where all ten
+taught doctrine rules were silent and this was the only configuration
+standing: real-Neptune square Jupiter **and** Jupiter trine Neptune, both
+within 1°.
+
+**It is already refuted retrospectively** — 18 episodes / 127 days across
+1900–2026 (0.27% of all days) hold 7 flood events against 6.8 expected from a
+time-local rate: **ratio 1.03**, identical on the port and on JPL DE440. The
+windows below are registered anyway, because a pattern that has been measured
+null retrospectively is exactly the kind that should be watched prospectively
+rather than quietly dropped.
+
+Windows are **DE440-computed**, not port-computed (the port shifts boundaries
+1–4 days at this orb — see RESULTS.md "Engine accuracy"):
+
+| Window (UT) | Days | Claim |
+|---|---|---|
+| 2038-11-04 → 2038-11-10 | 7 | none — the prior is 1.03× chance |
+| 2039-01-28 → 2039-02-04 | 8 | none |
+| 2039-07-21 → 2039-07-26 | 6 | none |
+| 2051-11-07 → 2051-11-11 | 5 | none |
+| 2052-04-08 → 2052-04-15 | 8 | none |
+| 2052-07-23 → 2052-07-30 | 8 | none |
+| 2064-11-17 → 2064-11-21 | 5 | none |
+
+**The registered claim is explicitly NULL**: these windows should contain
+floods at the ordinary rate, ~0.27% of the world's flood events apiece. If
+they systematically over-deliver, the base-rate refutation was wrong and the
+pattern deserves re-opening. That is the falsifiable form.
+
+Regenerate: `scripts/` — the DE440 scan in the 2026-08-05 ledger entry.

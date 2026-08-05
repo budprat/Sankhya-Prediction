@@ -138,8 +138,13 @@ The band trigger's lift of 1.804 rests on 12 firings against 7.0 expected —
 2. **Commit it before running.** Push it. The timestamp is the evidence.
 3. **Run once.** No re-tuning, no second look at a different orb.
 4. **Report through `report()`** so results cannot be shaped to flatter.
-5. **Record the verdict in `RESULTS.md`** with its numbers, whatever it says.
-6. **If it survives, hold it out.** Replication is not confirmation — the
+5. **If the claim rests on separations below ~1°, confirm it on JPL DE440**
+   (`de440.bsp`, in-tree) before writing it down. The engine sits 0.3–0.7°
+   from DE440 in the modern era — the canon's own accuracy, faithfully
+   reproduced, but the same order as a tight orb. Aggregate counts survive;
+   individual sub-degree readings do not.
+6. **Record the verdict in `RESULTS.md`** with its numbers, whatever it says.
+7. **If it survives, hold it out.** Replication is not confirmation — the
    dwell finding survived three kill attempts and two independent
    replications and was still false. Only strictly disjoint held-out data
    settled it (M6+ contains M7+; the test used M6.0–6.99).

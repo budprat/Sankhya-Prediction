@@ -430,3 +430,19 @@ def test_rule_files_resolve_from_any_working_directory(tmp_path, monkeypatch):
     # an explicit path that really is missing must still fail loudly
     with pytest.raises(FileNotFoundError):
         load_rules("no-such-rules.toml")
+
+
+def test_jupiter_neptune_double_lock_is_encoded_with_its_refutation():
+    # Channel 15: noticed at the 2026 Assam flood, graded NULL at base rate
+    # (7 floods in its windows vs 6.8 expected, ratio 1.03). Encoded so it
+    # stays detectable and is not rediscovered as a finding.
+    from astgraf.ephemeris import compute_raw
+    rules = {r.name: r for r in load_rules("observed-triggers.toml")}
+    rule = rules["jupiter-neptune-double-lock"]
+    assert "REFUTED-AT-BASE-RATE" in rule.description
+    assert "1.03" in rule.description, "the refuting number must travel with the rule"
+    # fires at the Assam cloudburst, silent at a date outside every episode
+    assert evaluate_rule(compute_raw(2026, 7, 19, 12.0, 0.0, 0.0, 0.0,
+                                     False, False), rule).fired
+    assert not evaluate_rule(compute_raw(2020, 7, 19, 12.0, 0.0, 0.0, 0.0,
+                                         False, False), rule).fired

@@ -43,7 +43,7 @@ than demonstrated.
 
 ## Part 2 — What has been graded and failed
 
-**Fourteen channels.** Every one carries a power check proving the instrument
+**Fifteen channels.** Every one carries a power check proving the instrument
 could detect the effect it did not find; a null without demonstrated power is
 silence, not evidence.
 
@@ -63,6 +63,66 @@ silence, not evidence.
 | 12 | **Full-vocabulary screen, epicenter charts** | 1,435 M7+, 4,305 era-matched controls, 524 predicates incl. band occupancy | best lift 1.665 vs permutation-max null median 1.609, **family-wise p = 0.302** | 2% plant → lift 3.22, p = 0.000 |
 | 14 | **Flood long-cycle clock** (`PLAN` §3.1) | HANZE 2,724 day-precision floods 1871–2025, detrended vs a 51-y moving average, circular-shift null | Part 1 **not answerable**: 3 candidate clocks separate by ≤ 14.9° of phase over 0.9 of one cycle. Part 2 **p = 0.393**, rank 49/123 | **n = 1 conjunction epoch** — the binding limit, registered in advance |
 | 13 | **Co-occurrence mine** (pairs + triples — the doctrine's actual shape) | 1,506 unified M7+ across 3 catalogs, 805 patterns | family-wise p = 0.010 but the winner has **3 epochs** and split-half **1.00/3.39**; best replicating pattern 1.960 vs null-max median 1.957 | 3 artifacts found and fixed: era-locked predicates, pseudo-replication, non-replication |
+
+| 15 | **Jupiter–Neptune double lock** (noticed at the 2026 Assam flood) | real-Nep □ Jupiter AND Jupiter △ Neptune both ≤1°; 18 episodes / 127 days in 1900–2026 = 0.27% of days; flood coincidence vs a time-local rate | **7 observed vs 6.8 expected — ratio 1.03.** Identical on the port and on JPL DE440 | base rate is the check; the windows are 0.27% of days and contain floods at exactly that share |
+
+### The 2026 Assam flood — a clean unregistered miss
+
+Checked on 2026-08-05, two weeks after the event, at NU's request. The
+initiating event was a **cloudburst in Mon district, Nagaland, 19 July 2026**,
+flooding Sivasagar, Charaideo, Jorhat and Golaghat (85 dead, >700,000
+displaced).
+
+**All ten taught doctrine rules were silent, at every hour of the day, swept
+at the affected site's own coordinates.** The taught flood constraint misses
+by a wide margin: real-Neptune → Ketu **117.8°**, observed Neptune → Ketu
+146.9°. The band trigger's Moon–Ketu–Mars spread was **109.3°** against a
+12.86° threshold. Chatur Vyuham silent. The only rule that fired was
+`asc-trine-real-neptune`, which sweeps every site twice daily and therefore
+carries no information.
+
+This is the system's first test against an event **nobody chose in advance**,
+and it is a miss. It belongs beside the reproductions in Part 1: the taught
+instances replay to the minute, and the one fresh event does not.
+
+**The lead it produced, and how it died.** One configuration *was* standing —
+Jupiter and Neptune locked in a double contact. Scanned across 1900–2026 it
+recurs on the Jupiter–Neptune synodic beat (analytic 12.78 y, observed mean
+12.78 y) in 18 episodes covering 127 days, 0.27% of all days. Against a
+time-local flood rate it holds 7 events where 6.8 are expected: **ratio
+1.03**. It had every feature that makes a lead seductive — a sub-degree
+double contact, a clean 12.8-year rhythm, and the target event inside its
+window — and one base-rate calculation dissolved it. It is encoded as
+`jupiter-neptune-double-lock` in `observed-triggers.toml` with status
+**REFUTED-AT-BASE-RATE**, so it stays detectable and is not rediscovered.
+
+### ⚠️ Engine accuracy is comparable to the orbs we test at
+
+Cross-checking that lead against **JPL DE440** (in-tree, `de440.bsp`) produced
+the more consequential result:
+
+| Body, 2026-07-19 | Engine (tropical) | DE440 | Difference |
+|---|---|---|---|
+| Jupiter | 124.213° | 123.940° | **0.273°** |
+| Neptune | 4.705° | 4.001° | **0.703°** |
+| Saturn | 14.802° | 14.337° | 0.465° |
+| Uranus | 64.556° | 64.203° | 0.353° |
+
+The port is a faithful 1900-epoch Keplerian reproduction of the BAS — this is
+the canon's own accuracy, not a porting error — but **0.3–0.7° is the same
+order as the 1° orbs tight tests use.** Consequences, now standing:
+
+- Sub-degree separations quoted from the engine are **not** reliable to the
+  decimal. The Assam contacts read 0.42°/0.49° on the port and 0.847°/0.061°
+  on DE440.
+- Episode *boundaries* shift by 1–4 days. The 2026 window is 18–22 July on
+  the port and **15–19 July** on DE440 — so the cloudburst fell on its final
+  day, not "dead centre" as first reported here.
+- **Counts and verdicts are robust**: both ephemerides give 18 episodes and
+  ratio 1.03. Aggregate statistics survive; individual sub-degree readings do
+  not.
+- **Rule: any claim resting on separations below ~1° must be confirmed on
+  DE440 before it is written down.** Doctrine orbs of 3° are unaffected.
 
 ### Notes that matter more than the numbers
 
