@@ -1,0 +1,14 @@
+{
+  "episodes": [
+    {
+      "id": "fdf2f201db55",
+      "session_id": "ae6041ab-6138-4e77-93f3-8089f0dfc95f",
+      "timestamp": "2026-08-03T00:53:46.834212",
+      "goal": "Session tasks",
+      "outcome": "success",
+      "tools": []
+    }
+  ],
+  "total_count": 1,
+  "last_updated": "2026-08-03T00:53:46.834332"
+}

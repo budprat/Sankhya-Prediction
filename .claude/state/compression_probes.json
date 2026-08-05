@@ -1,0 +1,10 @@
+{
+  "7a309f12": {
+    "id": "7a309f12",
+    "category": "task",
+    "question": "What is the current task being worked on?",
+    "expected_answer": "set git remote origin to git@github",
+    "priority": "critical",
+    "created_at": "2026-08-03T00:27:30.125908"
+  }
+}
