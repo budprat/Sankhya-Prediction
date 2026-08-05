@@ -5,8 +5,6 @@ __pycache__/
 tools/astgraf/out/
 tools/astgraf/de440.bsp
 .DS_Store
-# NU 2026-08-05: memory/, analytics/ and state/ are now TRACKED
-# (reversing dd9a658/005666a). cache/ and knowledge/ stay ignored.
-.claude/cache/
-.claude/knowledge/
+# NU 2026-08-05: the hook directories (memory, analytics, state, cache,
+# knowledge) are all TRACKED now, reversing dd9a658/005666a.
 .claude/test-quality-flags.log
