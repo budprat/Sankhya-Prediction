@@ -231,7 +231,7 @@ def main(argv: list[str] | None = None) -> int:
         print("  report: horoscope.txt")
 
     if args.galactic:
-        from .galactic import galactic_separations, marker_longitudes
+        from .galactic import galactic_separations
         chart_fn = make_chart_at_jd(start)
         with open(out / "galactic.csv", "w", newline="") as fh:
             writer = csv.writer(fh)

@@ -13,7 +13,6 @@
 import argparse
 import csv
 import json
-import math
 from pathlib import Path
 
 from .anchors import (ANCHORS_PATH, Anchor, chart_at, contacts_at, iso_jd,

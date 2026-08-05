@@ -50,7 +50,7 @@
 import csv
 import random
 
-from astgraf.anchors import contacts_at, iso_jd
+from astgraf.anchors import contacts_at
 from astgraf.ephemeris import julian_day_number
 from astgraf.signatures import decluster
 

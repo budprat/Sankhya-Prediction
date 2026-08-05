@@ -3,7 +3,7 @@
 
 import math
 
-from .ephemeris import BODY_ORDER, compute_raw, julian_day_number
+from .ephemeris import BODY_ORDER, compute_raw
 from .models import ChartMoment, GridSpec, PeriodRow, PeriodUnit
 
 

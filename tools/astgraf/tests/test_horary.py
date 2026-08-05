@@ -166,7 +166,6 @@ def test_sub_crossings_exact_on_yearly_grid():
     # must now sit ON its boundary at the refined instant, and Mars's direct
     # year must cross ~173 boundaries (engine motion ~247 deg).
     from astgraf.grid import build_rows, make_pos_at_jd
-    from astgraf.horary import SUB_SPAN
     from astgraf.models import ChartMoment, GridSpec, PeriodUnit
     start = ChartMoment(year=2000, month=1, day=1, hour=12, minute=0,
                         utc_offset_hours=0.0, longitude_east=0.0,

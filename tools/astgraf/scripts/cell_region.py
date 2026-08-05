@@ -114,7 +114,7 @@ def main():
     scored = sorted(((resultant(v), k, len(v)) for k, v in qualifying.items()),
                     reverse=True)
     obs = scored[0][0]
-    print(f"\ntop 8 cells by concentration R:")
+    print("\ntop 8 cells by concentration R:")
     for R, k, n in scored[:8]:
         print(f"  {k[0]:<9} band {k[1]:>2}   n {n:>4}   R {R:.4f}")
 

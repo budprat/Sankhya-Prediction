@@ -124,7 +124,7 @@ def family_calendar(family: Family, jd_lo: float, jd_hi: float) -> list[dict]:
 def render_text(family: Family, rows: list[dict]) -> str:
     lines = [f"FAMILY {family.name}  [{family.category}]  "
              f"{family.pair[0]}-{family.pair[1]} conjunctions",
-             f"  members: " + ", ".join(
+             "  members: " + ", ".join(
                  f"{m.year} {m.sector or '?'}"
                  + (f" -> {m.anchor}" if m.anchor else "")
                  for m in family.members)]

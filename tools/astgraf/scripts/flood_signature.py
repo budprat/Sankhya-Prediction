@@ -55,7 +55,6 @@
 # ==========================================================================
 
 import csv
-import math
 import random
 
 from astgraf.anchors import chart_at

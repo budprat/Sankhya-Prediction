@@ -2,7 +2,6 @@
 # ABOUTME: opposition lines drawn between bodies within orb — significance at a glance.
 
 import defusedxml.ElementTree as ET
-import pytest
 
 from astgraf.scope import aspects_in_orb, render_scope, wheel_xy
 
