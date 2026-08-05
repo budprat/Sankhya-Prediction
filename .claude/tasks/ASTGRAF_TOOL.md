@@ -1877,3 +1877,39 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
 - The recurrence principle is now fully built: anchor dossiers -> similarity
   engine -> recurrence calendars -> family calendars -> category tagging ->
   composite matching. All of it timing-only, on the proven core.
+
+## 2026-08-05 — FLOOD CORPUS created (NU input) + NR ruling
+- NU RULING: exact Sankhya NR for Jupiter/Saturn is NOT needed for now — the
+  current provisional canon-axis values (3.3363593021 / 7.8672056771) are
+  good enough and stand. Open question 1 is parked, not blocking.
+- NU supplied the compiled flood record. Built data/floods-historical.csv:
+  88 events, columns id/time/date_precision/latitude/longitude/loc_precision/
+  place/cause/deaths/tier/notes, spanning paleo (Zanclean, Missoula, Altai,
+  Agassiz) through ancient/medieval/early-modern/modern/contemporary.
+  data/README-floods.md documents it.
+- THE USABILITY ANALYSIS IS THE POINT (measured, not assumed): an event is
+  usable for a 3-deg contact test only if its date pins the acting body
+  inside the orb. Body drift: Neptune 0.63 deg/month, Uranus 0.96, nodes
+  1.59, Saturn 2.07, Jupiter 3.93, Sun 29.6, Moon 395. So DAY precision =
+  every body but the Moon; MONTH precision = Uranus/Neptune/nodes only
+  (which IS the taught flood signature); YEAR or coarser = nothing at 3 deg.
+  Second cut: the engine drifts to degrees-level by the 1600s, so
+  well-dated pre-1700 events are NOT rescued by their dates.
+  COUNTS: 88 total; 40 day, 13 month, 35 year-or-coarser; CHART-USABLE
+  (day/month AND >= 1700) = 39, of which 26 full-contact and 13
+  slow-layer-only; 14 well-dated but pre-1700.
+- HONESTY RECORDED IN THE README: feast-day dating is inference (Grote
+  Mandrenke, St Lucia's, St Elizabeth's, All Saints', St Felix's,
+  Magdalenen, Christmas flood are dated from the saint's day they are NAMED
+  for — standard historical method, but derived); pre-1582 rows are Julian
+  as recorded with no conversion applied; loc_precision region = basin
+  centroid, NOT an epicenter; paleo rows carry nominal instants only; the
+  corpus is NOT declustered and has NO completeness model (reporting density
+  rises steeply with time and toward Europe/China) — any test must control
+  for that as the quake corpus needed declustering + climatology controls.
+- Invariant test added (246 passing): ids unique, precision/loc enums valid,
+  coordinates in range, the taught Hyderabad row agrees with anchors.toml,
+  and the chart-usable subset stays >= 30.
+- UNBLOCKS: the Uranus-Neptune long-cycle clock test (163.5/164.5/171.0),
+  the site channel's OWN category (never corpus-tested), and
+  astgraf-recur --category flood.

@@ -138,3 +138,32 @@ def test_cli_writes_dossiers(tmp_path):
     payload = json.loads((tmp_path / "nepal-2015.json").read_text())
     assert payload["anchor"]["id"] == "nepal-2015"
     assert (tmp_path / "nepal-2015.txt").exists()
+
+
+def test_flood_corpus_is_well_formed():
+    # The flood catalogue (NU, 2026-08-05) unblocks the flood/site channel.
+    # Guard the invariants any test built on it will assume.
+    import csv as _csv
+    from pathlib import Path
+    path = Path(ANCHORS_PATH).parent / "data" / "floods-historical.csv"
+    rows = list(_csv.DictReader(open(path)))
+    assert len(rows) >= 80
+    ids = [r["id"] for r in rows]
+    assert len(ids) == len(set(ids)), "duplicate ids"
+    for r in rows:
+        assert r["date_precision"] in ("day", "month", "year", "century",
+                                       "millennium"), r["id"]
+        assert r["loc_precision"] in ("point", "city", "region"), r["id"]
+        assert -90 <= float(r["latitude"]) <= 90, r["id"]
+        assert -180 <= float(r["longitude"]) <= 180, r["id"]
+    # the taught instance must be present and agree with anchors.toml
+    hyd = next(r for r in rows if r["id"] == "hyderabad-2016")
+    anchor = next(a for a in load_anchors(ANCHORS_PATH) if a.id == "hyderabad-2016")
+    assert float(hyd["latitude"]) == pytest.approx(anchor.lat)
+    assert float(hyd["longitude"]) == pytest.approx(anchor.lon)
+    # the chart-usable subset must be non-trivial
+    def year(r):
+        return int(r["time"].split("-")[0]) if not r["time"].startswith("-") else -1
+    usable = [r for r in rows
+              if r["date_precision"] in ("day", "month") and year(r) >= 1700]
+    assert len(usable) >= 30, f"only {len(usable)} chart-usable flood events"

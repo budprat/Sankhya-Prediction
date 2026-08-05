@@ -1,0 +1,89 @@
+id,time,date_precision,latitude,longitude,loc_precision,place,cause,deaths,tier,notes
+missoula-pleistocene,-016000-01-01T00:00:00Z,millennium,47.0,-117.0,region,"Channeled Scablands, WA/ID/MT, USA",ice-dam outburst,,paleo,"Multiple events ~15-18 ka; peak ~17e6 m3/s (Glacial Lake Missoula)"
+kuray-altai,-016000-01-01T00:00:00Z,millennium,50.0,88.0,region,"Altai Mountains, Russia",ice-dam outburst,,paleo,"Peak ~18e6 m3/s — largest known freshwater flood"
+darkhat-altai,-016000-01-01T00:00:00Z,millennium,51.0,99.0,region,"Darkhat/Jassater/Yaloman/Ulymon, Mongolia-Altai",ice-dam outburst,,paleo,"Peaks 1.9-4e6 m3/s"
+bonneville,-016000-01-01T00:00:00Z,millennium,42.0,-112.0,region,"Lake Bonneville, NW USA",lake-basin overflow,,paleo,"Peak ~1e6 m3/s"
+lake-regina,-016000-01-01T00:00:00Z,millennium,50.5,-104.6,region,"Laurentide margin, Canada/USA",ice-dam outburst,,paleo,"Lake Regina and related margin floods"
+agassiz,-007900-01-01T00:00:00Z,millennium,54.0,-97.0,region,"Lake Agassiz, Alberta/Canada",glacial lake overflow,,paleo,"~9,900 BP; peaks to ~1.2e6 m3/s"
+jokulsa-fjollum,-007000-01-01T00:00:00Z,millennium,65.7,-16.4,region,"Jokulsa a Fjollum, Iceland",subglacial volcanic,,paleo,"Peak ~0.7e6 m3/s"
+atna,-015000-01-01T00:00:00Z,millennium,61.5,-149.0,region,"Glacial Lake Atna, Alaska",ice-dam outburst,,paleo,"~17 ka; Matanuska/Susitna"
+zanclean,-05300000-01-01T00:00:00Z,millennium,36.0,-5.6,region,"Strait of Gibraltar",Mediterranean refill,,paleo,"~5.3 Ma; the largest modelled flood on Earth"
+black-sea-deluge,-006200-01-01T00:00:00Z,millennium,42.0,29.0,region,"Black Sea / Bosphorus",marine inflow (debated),,paleo,"~7.6-8.8 ka; hypothesis, contested"
+jishi-gorge,-001920-01-01T00:00:00Z,century,35.8,102.9,point,"Jishi Gorge, Yellow River, Qinghai, China",landslide-dam outburst,,ancient,"Linked by some to the legendary Great Flood / Xia origin"
+yellow-river-602bce,-000602-01-01T00:00:00Z,year,35.0,114.0,region,"Lower Yellow River, China",avulsion/breach,,ancient,"First major recorded course change; 1,593+ breaches counted 602 BCE-1940s"
+rhone-175bce,-000175-01-01T00:00:00Z,century,43.7,4.6,city,"Arles, Rhone, France",river flood,,ancient,"Destroyed the southern quarters"
+yellow-river-11ce,0011-01-01T00:00:00Z,year,35.0,114.0,region,"Lower Yellow River, China",course change,,ancient,
+yellow-river-70ce,0070-01-01T00:00:00Z,year,35.0,114.0,region,"Lower Yellow River, China",course change,,ancient,
+north-sea-1099,1099-11-11T00:00:00Z,day,52.0,4.0,region,"North Sea coasts, Netherlands & England",storm surge,100000,medieval,"St Martin's flood — date from the feast day it is named for"
+all-saints-1170,1170-11-01T00:00:00Z,day,52.5,5.0,region,"Netherlands",storm surge,,medieval,"All Saints' flood — feast-day dating"
+arno-1177,1177-01-01T00:00:00Z,year,43.77,11.25,city,"Florence, Arno, Italy",river flood,,medieval,"First in the Arno documentary series"
+north-sea-1212,1212-01-01T00:00:00Z,year,54.0,8.5,region,"North Sea coasts",storm surge,,medieval,
+st-marcellus-1219,1219-01-16T00:00:00Z,day,55.5,8.5,region,"Denmark / North Frisia",storm surge,36000,medieval,"St Marcellus flood — feast-day dating"
+danube-1235,1235-01-01T00:00:00Z,year,48.4,15.6,region,"Krems-Vienna, Danube, Austria",river flood,10000,medieval,
+st-lucia-1287,1287-12-14T00:00:00Z,day,53.2,5.4,region,"Netherlands / Holy Roman Empire",storm surge,65000,medieval,"St Lucia's flood — feast-day dating; 50,000-80,000 deaths"
+china-1332,1332-01-01T00:00:00Z,year,34.0,114.0,region,"Central China / Yellow River",river flood,,medieval,
+magdalenen-1342,1342-07-22T00:00:00Z,day,50.0,9.0,region,"Rhine, Main, Danube, Elbe — Central Europe",river flood,,medieval,"Magdalenenhochwasser — St Mary Magdalene's day; largest documented Central European river flood"
+yellow-river-1344,1344-01-01T00:00:00Z,year,34.8,114.5,region,"Yellow River, China",breach,,medieval,"Yuan dynasty; high death toll"
+grote-mandrenke-1362,1362-01-16T00:00:00Z,day,54.5,8.5,region,"North Sea: Germany, Denmark, Netherlands",storm surge,32000,medieval,"St Marcellus flood II; 25,000-40,000+ deaths"
+high-rhine-1374,1374-01-01T00:00:00Z,year,47.56,7.59,city,"Basel, High Rhine",river flood,,medieval,"Wetter et al. 2011 CE-class event"
+st-elizabeth-1404,1404-11-19T00:00:00Z,day,51.7,4.6,region,"Netherlands",storm surge,,medieval,"St Elizabeth's flood I — feast-day dating"
+st-elizabeth-1421,1421-11-19T00:00:00Z,day,51.7,4.8,region,"Netherlands (Biesbosch)",storm surge,10000,medieval,"St Elizabeth's flood II; formed the Biesbosch"
+arno-1269,1269-01-01T00:00:00Z,year,43.77,11.25,city,"Florence, Arno, Italy",river flood,,medieval,
+arno-1333,1333-11-04T00:00:00Z,day,43.77,11.25,city,"Florence, Arno, Italy",river flood,,medieval,"Major Arno flood; destroyed the Ponte Vecchio"
+high-rhine-1480,1480-08-01T00:00:00Z,day,47.56,7.59,city,"Basel, High Rhine",river flood,,medieval,"Largest documented in the Wetter et al. reconstruction"
+st-felix-1530,1530-11-05T00:00:00Z,day,51.5,3.9,region,"Zeeland, Netherlands",storm surge,100000,early-modern,"St Felix's flood — feast-day dating"
+arno-1547,1547-01-01T00:00:00Z,year,43.77,11.25,city,"Florence, Arno, Italy",river flood,,early-modern,
+rhone-1548,1548-11-13T00:00:00Z,day,43.95,4.81,city,"Avignon, Rhone, France",river flood,,early-modern,"Among the highest historical stages"
+arno-1557,1557-01-01T00:00:00Z,year,43.77,11.25,city,"Florence, Arno, Italy",river flood,,early-modern,
+all-saints-1570,1570-11-01T00:00:00Z,day,53.2,5.8,region,"Netherlands / North Sea",storm surge,22500,early-modern,"All Saints' flood — feast-day dating; 20,000-25,000 deaths"
+burchardi-1634,1634-10-11T00:00:00Z,day,54.5,8.8,region,"North Frisia / Dithmarschen",storm surge,11500,early-modern,"11-12 Oct; 8,000-15,000 deaths"
+kaifeng-1642,1642-01-01T00:00:00Z,year,34.8,114.3,city,"Kaifeng, Yellow River, China",deliberate breach,300000,early-modern,"City largely destroyed; documentary + sedimentary evidence"
+high-rhine-1673,1673-01-01T00:00:00Z,year,47.56,7.59,city,"Basel, High Rhine",river flood,,early-modern,
+rhone-1715,1715-01-01T00:00:00Z,year,43.95,4.81,city,"Avignon, Rhone, France",river flood,,early-modern,
+christmas-1717,1717-12-25T00:00:00Z,day,53.4,7.0,region,"Netherlands, Germany, Scandinavia",storm surge,14000,early-modern,"Christmas flood"
+arno-1740,1740-01-01T00:00:00Z,year,43.77,11.25,city,"Florence, Arno, Italy",river flood,,early-modern,
+rhone-1747,1747-01-01T00:00:00Z,year,43.95,4.81,city,"Avignon, Rhone, France",river flood,,early-modern,
+rhone-1754,1754-01-01T00:00:00Z,year,43.95,4.81,city,"Avignon, Rhone, France",river flood,,early-modern,
+rhone-1755,1755-01-01T00:00:00Z,year,43.95,4.81,city,"Avignon, Rhone, France",river flood,,early-modern,
+arno-1758,1758-01-01T00:00:00Z,year,43.77,11.25,city,"Florence, Arno, Italy",river flood,,early-modern,
+europe-1784,1784-02-01T00:00:00Z,month,49.0,8.0,region,"England, France, Central Europe, Danube, Hungary",snowmelt (post-Laki),,early-modern,"Winter 1783/84; Laki-eruption cold then thaw"
+yangtze-1788,1788-01-01T00:00:00Z,year,30.6,114.3,region,"Middle/lower Yangtze, China",river flood,,early-modern,
+indus-1841,1841-06-01T00:00:00Z,month,33.8,72.2,point,"Attock, Upper Indus, Pakistan",landslide-dam outburst,,modern,"Peak ~0.54e6 m3/s — among the largest historical"
+mississippi-1844,1844-06-01T00:00:00Z,month,38.6,-90.2,region,"Missouri / Upper Mississippi, USA",river flood,,modern,
+yellow-river-1855,1855-01-01T00:00:00Z,year,34.8,114.8,region,"Tongwaxiang breach, Henan, China",avulsion,,modern,"Major course change"
+sheffield-1864,1864-03-11T00:00:00Z,day,53.4,-1.5,city,"Sheffield, England",dam failure,244,modern,"Dale Dyke dam"
+california-1862,1862-01-01T00:00:00Z,month,37.0,-120.0,region,"California Central Valley, USA",atmospheric river,,modern,"Dec 1861-Jan 1862; worst in California history"
+yangtze-1870,1870-07-01T00:00:00Z,month,30.6,114.3,region,"Yangtze basin, China",river flood,,modern,"Very high discharges; hundreds of flood marks"
+rhine-1882,1882-12-01T00:00:00Z,month,50.0,7.5,region,"Rhine, Germany",river flood,,modern,"1882/83 pair"
+yellow-river-1887,1887-09-01T00:00:00Z,month,35.0,114.0,region,"Lower Huang He, China",breach,1500000,modern,"900,000-2,000,000 deaths"
+johnstown-1889,1889-05-31T00:00:00Z,day,40.33,-78.92,city,"Johnstown, Pennsylvania, USA",dam failure,2209,modern,"South Fork dam"
+galveston-1900,1900-09-08T00:00:00Z,day,29.3,-94.8,city,"Galveston, Texas, USA",hurricane storm surge,9000,modern,"6,000-12,000 deaths"
+seine-1910,1910-01-28T00:00:00Z,day,48.86,2.35,city,"Paris, Seine, France",river flood,,modern,"Great flood of Paris; peak 28 Jan"
+yangtze-1911,1911-01-01T00:00:00Z,year,30.6,114.3,region,"Yangtze, China",river flood,100000,modern,
+dayton-1913,1913-03-25T00:00:00Z,day,39.76,-84.19,city,"Dayton, Ohio, USA",river flood,,modern,"Great Dayton flood"
+pearl-river-1915,1915-07-01T00:00:00Z,month,23.1,113.3,region,"Guangdong, Pearl River, China",river flood,10000,modern,
+katla-1918,1918-10-12T00:00:00Z,day,63.6,-19.0,point,"Katla, Iceland",jokulhlaup,,modern,"Peak ~0.3e6 m3/s"
+mississippi-1927,1927-04-15T00:00:00Z,day,32.3,-90.9,region,"Lower Mississippi, USA",river flood,,modern,"Great Mississippi flood; levee failures from mid-April"
+china-1931,1931-07-01T00:00:00Z,month,30.6,114.3,region,"Yangtze, Huai, Yellow — central/eastern China",river flood,2000000,modern,"Deadliest recorded; 422,000-4,000,000 deaths"
+yangtze-1935,1935-07-01T00:00:00Z,month,30.6,114.3,region,"Yangtze, China",river flood,145000,modern,
+ohio-1937,1937-01-26T00:00:00Z,day,38.0,-85.7,region,"Ohio River, Pittsburgh to Cairo, USA",river flood,,modern,"Peak stages late January"
+huayuankou-1938,1938-06-09T00:00:00Z,day,34.8,113.7,point,"Huayuankou, near Zhengzhou, China",deliberate breach,500000,modern,"War-related; hundreds of thousands of deaths"
+north-sea-1953,1953-01-31T00:00:00Z,day,51.8,3.8,region,"Netherlands, Belgium, UK",storm surge,2500,modern,"31 Jan-1 Feb"
+yangtze-1954,1954-07-01T00:00:00Z,month,30.6,114.3,region,"Yangtze, China",river flood,33000,modern,
+arno-1966,1966-11-04T00:00:00Z,day,43.77,11.25,city,"Florence, Arno, Italy",river flood,,modern,"Major cultural-heritage damage"
+banqiao-1975,1975-08-08T00:00:00Z,day,33.0,113.6,point,"Banqiao dam, Henan, China",dam failure cascade,100000,modern,"26,000-240,000 deaths; Typhoon Nina"
+yangtze-1998,1998-08-01T00:00:00Z,month,30.6,114.3,region,"Yangtze, China",river flood,,contemporary,
+maharashtra-2005,2005-07-26T00:00:00Z,day,19.08,72.88,city,"Mumbai / Maharashtra, India",extreme rainfall,1094,contemporary,"944 mm in 24 h at Santacruz"
+katrina-2005,2005-08-29T00:00:00Z,day,29.95,-90.07,city,"New Orleans, Louisiana, USA",hurricane surge / levee failure,1392,contemporary,
+nargis-2008,2008-05-02T00:00:00Z,day,16.0,96.0,region,"Irrawaddy Delta, Myanmar",cyclone surge,138000,contemporary,
+pakistan-2010,2010-07-29T00:00:00Z,day,30.0,70.0,region,"Indus basin, Pakistan",monsoon,1985,contemporary,"~20 million affected"
+thailand-2011,2011-07-25T00:00:00Z,day,14.0,100.5,region,"Chao Phraya basin, Thailand",monsoon,815,contemporary,
+uttarakhand-2013,2013-06-16T00:00:00Z,day,30.73,79.07,region,"Kedarnath / Uttarakhand, India",cloudburst + glacial lake,5700,contemporary,"NU's Uranus-Neptune flood-family cluster member"
+europe-2013,2013-06-02T00:00:00Z,day,48.5,12.0,region,"Danube & Elbe basins, Central Europe",river flood,25,contemporary,"Flood-family cluster member"
+kashmir-2014,2014-09-05T00:00:00Z,day,34.08,74.8,region,"Jhelum basin, Kashmir",monsoon,280,contemporary,"Flood-family cluster member"
+china-2016,2016-07-01T00:00:00Z,month,30.6,114.3,region,"Yangtze basin, China",river flood,475,contemporary,
+hyderabad-2016,2016-09-23T00:00:00Z,day,17.385,78.487,city,"Hyderabad, India",cloudburst,,contemporary,"NU's taught site-specific instance — see anchors.toml"
+harvey-2017,2017-08-26T00:00:00Z,day,29.76,-95.37,city,"Houston, Texas, USA",hurricane rainfall,107,contemporary,
+bangladesh-2017,2017-08-12T00:00:00Z,day,24.9,89.4,region,"Brahmaputra basin, Bangladesh",monsoon,1200,contemporary,
+europe-2002,2002-08-11T00:00:00Z,day,50.1,14.4,region,"Elbe & Danube, Central Europe",river flood,232,contemporary,
+europe-2021,2021-07-14T00:00:00Z,day,50.55,6.9,region,"Ahr valley, Germany & Belgium",extreme rainfall,243,contemporary,
