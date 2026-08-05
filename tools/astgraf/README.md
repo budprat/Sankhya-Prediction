@@ -431,6 +431,53 @@ flood family's 1993 conjunction was itself a triple, all three passes in
 Poorvashada pada 4 — the 1,000-year records list (awaited) populates its
 historical members. Timing only — no spots.
 
+## The dwell claim (`scripts/dwell_grade.py`) — half of it survives
+
+The author gives two numbers: a threshold (*"dwell time more than 3 seconds,
+for above that MAJOR SHOCK WAVES can be created"*) and one worked case
+(*"In Nepal the dwell time has been 4 minutes"*). At Gorkha exactly two taught
+contacts are in force — real-Uranus on the Sun at 0.692° and real-Neptune on
+Ketu at 0.342° — and their sum, 1.034°, is **4.14 minutes** at his own 4 min per
+degree. So dwell is read as `Σ(active crossing separations) × 4 min/deg`. Note
+this makes a *wider* pair give a *longer* dwell, so the doctrine predicts looser
+configurations drive bigger events.
+
+His claim has two separable halves, and they do not fare alike.
+
+**The trigger half fails.** Events do not carry more dwell than time-uniform
+controls — the difference is +0.054 min at orb 3° (p = 0.42), and at orb 1° it
+runs the *wrong way* (events 0.062 min vs controls 0.079). His 3-second
+threshold is also vacuous as literally stated: 3 s is 1/81°, so any crossing
+inside orb clears it, and the rates are the same for events and controls.
+
+**The magnitude half survives three attempts to kill it.** Over the four
+correlation cells inspected, dwell vs magnitude gives:
+
+| cell | ρ | n |
+|---|---|---|
+| **taught giants, orb 1°** | **+0.322** | 44 |
+| all four giants, orb 1° | +0.192 | 95 |
+| taught giants, orb 3° | −0.065 | 148 |
+| all four giants, orb 3° | +0.009 | 268 |
+
+Shuffling magnitudes across all events and recomputing every cell gives a
+**family-wise permutation p = 0.042** (null median 0.137, 95th pct 0.310).
+
+- *Is it just the crossing count?* No — count vs magnitude is only ρ = +0.100,
+  and restricting to events with exactly **one** active crossing (n = 41) leaves
+  ρ = **+0.315**. It is the width of a single crossing, which is his claim.
+- *Does it split?* Both halves in time hold: earlier n = 22, ρ = +0.455; later
+  n = 22, ρ = +0.333.
+- *Is the test honest?* Injecting a known rank correlation into the same
+  44-event cell recovers ρ = 0.306 for a 0.30 target, detected in 8/12 draws —
+  underpowered, but unbiased.
+
+⚠️ **Not established.** n = 44, p = 0.042 is marginal, the dwell construction was
+fitted to a single anchor (Nepal), and the real family of choices is larger than
+the four cells corrected for. Treat as the project's one live lead, not a result.
+The decisive test is genuinely held-out data: re-run on an M6+ catalog, which
+would take n from 44 into the hundreds.
+
 ## The rotation spectrum (`scripts/rotation_spectrum.py`) — no rotation works
 
 The locator rotates a body's sub-point west by the Earth-rotation angle

@@ -1500,6 +1500,44 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   angles.py stays as a way to READ a chart's angles; it must not be used to
   claim a location. Third location family retired by test, after the
   rotation-based spots and the Ascendant-based rules.
+- *** THE DWELL CLAIM: TRIGGER HALF FAILS, MAGNITUDE HALF SURVIVES ***
+  scripts/dwell_grade.py. The construction comes from his two numbers: dwell =
+  SUM of active crossing separations x 4 min/deg. At Gorkha the two taught
+  contacts are real-Uranus/Sun 0.692 and real-Neptune/Ketu 0.342, summing to
+  1.034 deg = 4.14 min, which reproduces his "4 minutes" AND his "one after
+  another". CAVEAT ON THE RECORD: one confirming instance, and his prose puts
+  BOTH crossings on Ketu whereas the chart puts real-Uranus on the Sun, 26.5
+  deg from Ketu. The number fits; the attribution does not.
+  TRIGGER HALF — FAILS. Events carry no more dwell than time-uniform controls
+  (+0.054 min at orb 3, p = 0.42; at orb 1 it runs the WRONG way, events 0.062
+  vs controls 0.079). His 3-second threshold is vacuous as literally stated:
+  3 s IS 1/81 deg, so any crossing inside orb clears it, at the same rate for
+  events and controls.
+  MAGNITUDE HALF — SURVIVES. Four cells of dwell-vs-magnitude:
+    taught/orb1  rho +0.3223 (n= 44)   <- the hit
+    all4/orb1    rho +0.1923 (n= 95)
+    taught/orb3  rho -0.0646 (n=148)
+    all4/orb3    rho +0.0085 (n=268)
+  Shuffling magnitudes across ALL events and recomputing every cell (which
+  preserves the nesting between cells) gives family-wise p = 0.042, null
+  median 0.137, 95th pct 0.310. This is the FIRST thing in this project to
+  clear a multiplicity-corrected bar, so it was attacked three ways:
+    1. COUNT CONFOUND? No. count-vs-magnitude is only rho +0.100, and within
+       events having exactly ONE active crossing (n=41) rho stays +0.3145. It
+       is the WIDTH of a single crossing — which is his claim, not a restated
+       stack count.
+    2. SPLIT-HALF? Holds. earlier n=22 rho +0.455, later n=22 rho +0.333.
+    3. IS THE TEST HONEST? An injected rank correlation of 0.30 is recovered
+       at 0.306, detected in 8/12 draws — underpowered but unbiased. NOTE the
+       first version of this power arm was BROKEN (injected on raw dwell,
+       which is skewed, so 0.25 scored below 0.10); it was rebuilt on ranks
+       and averaged over seeds before any of this was believed.
+  STATUS: the project's one live lead, NOT a result. n=44, p=0.042 is
+  marginal, the dwell construction was fitted to a single anchor, and the true
+  family of choices (construction, target set, giant set, orbs, real-vs-
+  observed) is larger than the four cells corrected for.
+  DECISIVE NEXT TEST: genuinely held-out data — re-mine at M6+ and re-run.
+  That takes n from 44 into the hundreds and the M7+ fit cannot leak into it.
 - *** THE ROTATION SPECTRUM: NO GROUND ROTATION CARRIES LOCATION SIGNAL ***
   scripts/rotation_spectrum.py. NU's reading of the author's briefing found
   that his PROSE light-times (Jup 40, Sat 80, Ura 150, Nep 240 min ->
