@@ -213,6 +213,45 @@ win, or a new NU ruling on the spot channel's role. The timing layers —
 which reproduce every taught number to the minute — are the doctrine's
 proven core.
 
+**The location board, complete (2026-08-05).** Six families built and
+graded on the same 1,435 declustered M7+ mainshocks, M7+ only per NU's
+ruling. Every one carries a power check proving the instrument could see
+the effect it failed to find — a null without demonstrated power is only
+silence:
+
+| # | family | what it claims | verdict |
+|---|---|---|---|
+| 1 | Rotation spots | sub-planet point rotated by the offsets | at chance |
+| 2 | Ascendant rules | cell / lord / nakshatra / horary sub | p = 0.12–0.99 |
+| 3 | Site-angles | the crossing pair on the site's MC/Asc | z ≈ 0 |
+| 4 | Rotation spectrum | ANY rotation 0–360°, swept per giant | flat everywhere |
+| 5 | Tangent ring | epicenter at a preferred angular radius | flat, 90° bin at 0.997 of null |
+| 6 | Cell→region table | the 28×11 cells prefer areas (his own design) | max R 0.699 vs null 0.662, **p = 0.166** |
+
+Family 4 is the strongest of the six: it retires the rotation idea across
+its entire parameter space rather than at one point. Family 6 was the
+author's own empirical design (Predict.pdf: cells accumulate "confirmed
+event synchronisation factors from areas of our interest") and the only
+family that escapes the declination ceiling structurally — pre-registered,
+one test, and null. Its power check plants a region preference into a real
+cell: a 30% plant lifts that cell to R = 0.777, above the family null's
+95th percentile of 0.742, and to p = 0.000 against a same-size null.
+
+**Why the geometric route is exhausted, derived from the clocks (§1b).**
+A slow–slow crossing cannot define a meridian: the crossing lasts days
+while meridians sweep 360° per day. Geometric longitude can therefore only
+come from a fast body — and every fast-body channel (families 2 and 3) is
+tested and null. Meanwhile latitude has exactly one geometric source,
+declination, which cannot express 44.4% of M7+ epicenters with the four
+giants, or 38.5% even with lunar latitude restored (the Moon reaches
++28.58°, enough for Gorkha in principle — but its declination at the Nepal
+instant was +15.94°, so even that escape hatch fails on the flagship case).
+
+**Standing question for the author, the one that unblocks everything:**
+his recipe has three longitude mechanisms (rotation, ecliptic tilt, light
+travel) and one latitude mechanism (declination) capped at 23.71°, against
+Nepal's 28.23°N. *What supplies the latitude?*
+
 **Long-cycle families (NU, 2026-08-02).** A 1000-year record list exists
 (NU to share) for the Uranus–Neptune flood family (2011–15 cluster:
 Uttarakhand, Kashmir, China, Europe, US/Canada). The conjunction recurs at
@@ -399,6 +438,7 @@ yet in the right place. It is a finishing step, not a fix.
 - `FRAMEWORK.md` — this file: the theory and its implementation status.
 - `README.md` — tool-by-tool usage, the 60-period drill, honesty notes.
 - `WATCHLIST.md` — registered forward windows, spots, outcome protocol.
+- `PLAN.md` — current state, method rulings, next actions, what is blocked on NU.
 - `doctrine-triggers.toml` / `mined-triggers.toml` / `observed-triggers.toml` — rules as data by provenance: NU's taught rules; mined candidates (the three RETIRED 2026-08-02, windows stay graded); observed single-chart promotions in TESTING status (NU ruling 2026-08-04).
 - `anchors.toml` — the anchor library (recurrence principle); `astgraf-recur` episodes register on the WATCHLIST.
 - `families.toml` — the long-cycle families (nakshatra-sector recurrence); `astgraf-families` computes the conjunction calendars.

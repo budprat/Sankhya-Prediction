@@ -1810,3 +1810,45 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   author's own stated design, it escapes the latitude cage structurally,
   and a hit would be operationally useful (a ranked region shortlist is
   what his stated purpose — logistics planning — actually needs).
+
+## 2026-08-05 — Cell-region test RESULT: null (p = 0.166), instrument verified
+- Ran the pre-registered test (design committed first at ac88628, untouched).
+  1,435 declustered M7+ mainshocks; 302 cells reached the n>=15 bar.
+  Observed max R 0.6993 (Mars band 22, n=38); null max median 0.6624, 95th
+  0.7424; p = 0.166 over 500 epicenter shuffles. NULL — the author's
+  empirical cell-region design does not beat chance on M7+.
+- POWER: the first arm as written was BROKEN (it reported the family max,
+  which a planted cell never became — identical 0.7392 at both 50% and 30%
+  plants gave it away). Rebuilt to measure the planted cell directly
+  against a same-size null: a 30% plant lifts the cell to R 0.777
+  (p = 0.000, and above the family null's 95th of 0.742), 50% to 0.878,
+  100% to 0.998. The instrument CAN see a region preference of the size
+  claimed; it is not blind. Verdict therefore stands as a refutation, not
+  an inconclusive.
+- Worth recording: Mars band 22 alone would read p = 0.002 against a
+  same-size null — and is exactly what the family-wise correction exists to
+  discount at 302 cells. Same shape as the dwell winner's curse; caught by
+  design this time rather than after a held-out test.
+- LOCATION BOARD NOW SIX FAMILIES, ALL NULL: rotation spots, Ascendant
+  rules, site-angles, the full 0-360 rotation spectrum, the tangent ring,
+  and the cell-region table. Recorded as a table in FRAMEWORK with the
+  derivation of why the geometric route is exhausted (slow-slow crossings
+  cannot define a meridian; latitude has one source and it is capped).
+
+## 2026-08-05 — Documentation pass: PLAN.md created, FRAMEWORK completed
+- NU: "document well your visualization and other updates from this
+  session, also the plan, and framework."
+- FRAMEWORK.md now carries the full picture: section 1b (the clocks model —
+  every motion as time-to-cross the 1/81 cell, measured from the engine's
+  own mean geocentric apparent motion; the dwell decode AND its closure;
+  the ~11% optimistic ground distances; the three-longitude/one-latitude
+  asymmetry) and the completed six-family location board with power-check
+  notes and the exhaustion argument.
+- PLAN.md CREATED (new document, referenced from the doc map): the one-line
+  state, what works with the reproduced-instant table, what is closed
+  (location / mining / dwell), the five standing METHOD RULINGS
+  (pre-register before running; every null needs a power check; replication
+  is not confirmation; held-out sets must be strictly disjoint; honest
+  negatives stay on record), the three next actions buildable without new
+  input, the ranked list of what is blocked on NU, and the standing
+  latitude question.
