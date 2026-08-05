@@ -1500,6 +1500,26 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   angles.py stays as a way to READ a chart's angles; it must not be used to
   claim a location. Third location family retired by test, after the
   rotation-based spots and the Ascendant-based rules.
+- *** THE CANON HAS NO LUNAR LATITUDE — the tropical ceiling is HIS ceiling ***
+  Chasing NU's question "what is 23.5", the per-body bound was measured rather
+  than assumed, and it is NOT a flat 23.44: a sub-point's latitude is the
+  body's declination, bounded by obliquity PLUS the body's own ecliptic
+  latitude. Sun 23.44, Uranus 24.06, Neptune 24.20, Jupiter 24.37, Saturn
+  25.62. Beyond even Saturn's bound lies 41.8% of the M7+ catalog (600/1435);
+  the old "44%" used the flat 23.44 and was slightly overstated.
+  The Moon is the interesting case. In the real sky it reaches +-28.6 deg at a
+  major standstill — PAST Gorkha's 28.23 N — because its orbit is inclined
+  5.15 deg. But ASTGRAF.BAS cannot express that: its 20-term Brown series
+  accumulates ML, a LONGITUDE correction only (PX = LL + ML), with no sin(F)
+  latitude terms anywhere in the block. Our port reproduces this faithfully
+  (ecliptic_latitude is computed only in the planet loop from the geocentric
+  vector; the Moon defaults to 0.0) — verified against canon/ASTGRAF.BAS
+  lines 253-320, so it is a canon limitation, NOT a port bug.
+  WHY IT MATTERS: the author's own program cannot place a sub-planet point at
+  Gorkha's latitude by ANY body, the Moon included. That sharpens the standing
+  question to him from "how do you exceed 23.5" to something much more precise:
+  his latitude source cannot be a sub-planet point computed by ASTGRAF at all,
+  so it must come from somewhere the program does not compute.
   STILL OPEN, and the honest next lead: every location family tried so far
   derives the place from the sky ALONE. The author's own claim couples a
   crossing to a 1/81 horary subdivision, which needs a reference longitude to

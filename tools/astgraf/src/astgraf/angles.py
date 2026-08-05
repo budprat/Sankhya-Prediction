@@ -1,11 +1,21 @@
 # ABOUTME: Chart angles (Asc/Desc/MC/IC) and the solvers that invert them. The location
 # ABOUTME: rule built on them was graded against the catalog and RETIRED — see below.
 
-# Why this and not the sub-planet spot (NU, 2026-08-05): every ecliptic body's
-# sub-point is capped at |lat| <= the obliquity (23.44 deg — that IS the
-# definition of the tropics), while Gorkha is 28.23 N, Tohoku 38.3, Alaska
-# 60.9. The sub-planet construction cannot express the latitude of 44% of M7+
-# events. The taught anchors instead all show the CROSSING PAIR on an angle of
+# Why this and not the sub-planet spot (NU, 2026-08-05): a body's sub-point has
+# latitude equal to its declination, which is bounded by the obliquity plus the
+# body's own ecliptic latitude. Measured per body: Sun/Moon 23.44 (the tropics
+# proper), Uranus 24.06, Neptune 24.20, Jupiter 24.37, Saturn 25.62 — the most
+# generous body in the located set. Gorkha is 28.23 N, Tohoku 38.3, Alaska
+# 60.9, and 41.8% of the M7+ catalog lies beyond even Saturn's bound.
+# The Moon deserves its own line, because it is the one body that escapes the
+# tropics in the real sky (+-28.6 deg at a major standstill, past Gorkha) — but
+# NOT in this canon: ASTGRAF.BAS's 20-term Brown series builds only ML, a
+# LONGITUDE correction (PX = LL + ML). There is no lunar latitude series in it
+# at all, so the port's Moon sits exactly on the ecliptic and is capped at
+# 23.44 like the Sun. Faithful to the canon, and it means the author's OWN
+# program cannot produce a sub-point at Gorkha's latitude by any body. Whatever
+# his latitude source is, it is not a sub-planet point computed by ASTGRAF.
+# The taught anchors instead all show the CROSSING PAIR on an angle of
 # the site's own chart, which is the author's own language:
 #   Nepal      Sun 2.00 deg and real-Uranus 2.69 deg from the MC
 #              (his taught pair is "real-Uranus on the Sun")
