@@ -1,10 +1,10 @@
 {
-  "total_tokens": 79030,
-  "messages_count": 17,
-  "tool_tokens": 73935,
+  "total_tokens": 502,
+  "messages_count": 1,
+  "tool_tokens": 501,
   "system_tokens": 0,
-  "user_tokens": 5095,
+  "user_tokens": 1,
   "assistant_tokens": 0,
-  "last_updated": "2026-08-05T15:53:35.286042",
+  "last_updated": "2026-08-05T19:23:46.344583",
   "warnings_issued": []
 }
