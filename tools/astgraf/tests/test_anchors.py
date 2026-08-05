@@ -209,3 +209,20 @@ def test_historical_quake_corpus_is_well_formed():
             assert float(r["latitude"]) == pytest.approx(a.lat, abs=0.6), r["id"]
     deadliest = [r for r in rows if r["tier"] == "deadliest"]
     assert len(deadliest) >= 10
+
+
+def test_ncei_deaths_corpus_matches_the_shared_schema():
+    # NCEI/WDS deaths-selected import (hazard-service API, 2026-08-05):
+    # the powered version of the deaths-selected population.
+    import csv as _csv
+    from pathlib import Path
+    base = Path(ANCHORS_PATH).parent / "data"
+    rows = list(_csv.DictReader(open(base / "quakes-ncei-deaths.csv")))
+    ref = list(_csv.DictReader(open(base / "quakes-historical.csv")))
+    assert len(rows) > 1500
+    assert list(rows[0].keys()) == list(ref[0].keys()), "schema drift"
+    assert len({r["id"] for r in rows}) == len(rows), "duplicate ids"
+    assert all(r["date_precision"] in ("minute", "day") for r in rows)
+    assert all(r["deaths"].startswith(">=") for r in rows)
+    years = [int(r["time"][:4]) for r in rows]
+    assert min(years) >= 1700 and max(years) <= 2026

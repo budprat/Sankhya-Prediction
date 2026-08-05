@@ -2173,3 +2173,28 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   to the flood files, unique ids, tier enum, coordinate ranges, and agreement
   with anchors.toml coordinates where the same event appears in both.
   249 tests passing.
+
+## 2026-08-05 — NCEI/WDS imported: the deaths-selected test becomes POWERED, and is null
+- Firecrawl is exhausted, but NOAA's hazard-service REST API answers curl:
+  https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/earthquakes
+  Paging capped at itemsPerPage=200 (500/1000 return HTTP 400). The payload
+  omits deaths, BUT minDeaths filters SERVER-SIDE — so graded queries at
+  1/10/100/1000/10000/100000 reconstruct death BRACKETS by set difference.
+  Counts 1700-2025: 1,999 / 1,098 / 563 / 250 / 72 / 5.
+- data/quakes-ncei-deaths.csv: 1,981 rows in the shared schema, span
+  1702-2025, 1,688 minute-precision + 293 day, brackets >=1 (898), >=10
+  (532), >=100 (307), >=1,000 (175), >=10,000 (64), >=100,000 (5).
+- THE TEST IS NOW POWERED. Same statistic, same null, same seed as the n=12
+  pre-registration — only n changes:
+    >=100,000 deaths  n=5    similarity 0.0071  null median 0.0121  p = 0.68
+    >= 10,000 deaths  n=63   similarity 0.0130  null median 0.0142  p = 0.86
+    >=  1,000 deaths  n=175  similarity 0.0138  null median 0.0142  p = 0.80
+  Every bracket sits AT OR BELOW its null. Deaths-selected earthquakes share
+  no more configuration structure than magnitude-selected ones — and at
+  n=175 this is a real verdict, not the n=12 gesture. The underpowered-null
+  from earlier today is now UPGRADED TO A REFUTATION for the >=1,000 bracket.
+- Note the direction: all three observed values are BELOW their null medians,
+  the same pattern the held-out dwell test showed. Nothing to salvage.
+- ELEVENTH graded channel; eleventh failure. Invariant test added (250
+  passing): schema identical to the curated files, unique ids, precision and
+  bracket formats, year range.

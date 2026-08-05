@@ -139,3 +139,57 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# ---------------------------------------------------------------------------
+# EXTENSION 2026-08-05, pre-registered addendum: rerun the same statistic on
+# the NCEI/WDS deaths-selected corpus (1,981 events, 1702-2025), which turns
+# the n=12 gesture into a powered test. Design UNCHANGED except for n:
+# same statistic (mean pairwise Jaccard of Moon-free contact sets), same null
+# (random same-size samples from the magnitude-selected declustered corpus),
+# same direction, same seed. Sets are the >=10,000 and >=100,000 death
+# brackets — the "catastrophe" population the doctrine speaks about.
+# ---------------------------------------------------------------------------
+
+def ncei_extension():
+    import csv as _csv
+    rows = [r for r in _csv.DictReader(open("data/quakes-ncei-deaths.csv"))
+            if int(r["time"][:4]) >= 1700]
+    with open(USGS, newline="") as fh:
+        pool = [r for r in _csv.DictReader(fh)
+                if r.get("time") and r.get("latitude") and r.get("longitude")
+                and int(r["time"][0:4]) >= 1900]
+    pool = decluster(pool)
+    pool_jd = [jd_of_iso(r["time"]) for r in pool]
+    cache = {}
+
+    def cached(jd):
+        if jd not in cache:
+            cache[jd] = contact_set(jd)
+        return cache[jd]
+
+    print("\n=== NCEI deaths-selected extension ===")
+    for bracket in (">=100000", ">=10000", ">=1000"):
+        sel = [r for r in rows if r["deaths"] == bracket]
+        # declustered temporally: same-day aftershock rows collapse
+        sel.sort(key=lambda r: r["time"])
+        keep = []
+        for r in sel:
+            if not keep or jd_of_iso(r["time"]) - jd_of_iso(keep[-1]["time"]) > 3:
+                keep.append(r)
+        k = len(keep)
+        if k < 5:
+            print(f"  {bracket}: n={k} — too few to score")
+            continue
+        obs = mean_pairwise_jaccard([cached(jd_of_iso(r["time"])) for r in keep])
+        rng = random.Random(SEED)
+        null = sorted(mean_pairwise_jaccard([cached(j) for j in
+                                             rng.sample(pool_jd, k)])
+                      for _ in range(N_NULL))
+        p = sum(1 for v in null if v >= obs) / N_NULL
+        print(f"  {bracket:<10} n={k:<4} similarity {obs:.4f}  "
+              f"null median {null[N_NULL//2]:.4f}  p = {p:.4f}")
+
+
+if __name__ == "__main__":
+    ncei_extension()
