@@ -280,12 +280,19 @@ records through assiduous search and only then it can be predictable."
 Retrodiction against recorded events is internal to the method, and the
 system "can be made as accurate as one wants" by descending the ladder.
 Scores are reported against chance baselines, pre-registered criteria,
-hits and misses alike (see ledger: band trigger, grid mode 0/31 catalog
-hits vs 0.63 expected by chance; proximity mode 1/31 — March 2015 North
-India rain — vs 1.79 expected; baselines are step-honest per the 2026-08-02
-audit fix — earlier quotes of 1.12/3.45 used the inflated formula;
-proximity census 4 episodes/30 yr; Chatur
-Vyuham 1/126 yr — on the exact window NU named from memory).
+hits and misses alike. **The full scoreboard is `RESULTS.md`** — every
+graded claim with its numbers, positive and negative in one place.
+
+Superseded here for the record: the band trigger's first scoring used the
+31-episode `NATURAL DISASTERS.xlsx` (grid mode 0/31 vs 0.63 expected;
+proximity mode 1/31 — March 2015 North India rain — vs 1.79; baselines
+step-honest per the 2026-08-02 audit fix, earlier quotes of 1.12/3.45 used
+the inflated formula). At n = 31 that carried essentially no power. It was
+regraded 2026-08-05 against 1,435 exact-instant quakes and 1,886 floods with
+era-matched controls: **lift 1.804, p = 0.069 — short of its pre-registered
+bar, and resting on 12 firings against 7.0 expected (1.4 sigma)**. The
+proximity census (4 episodes/30 yr) and the Chatur Vyuham census (1 firing
+in 126 years, on the exact window NU named from memory) stand.
 
 ## 3a. The resolution budget — what "accurate" can mean
 
@@ -439,6 +446,7 @@ yet in the right place. It is a finishing step, not a fix.
 - `README.md` — tool-by-tool usage, the 60-period drill, honesty notes.
 - `WATCHLIST.md` — registered forward windows, spots, outcome protocol.
 - `PLAN.md` — current state, method rulings, next actions, what is blocked on NU.
+- `RESULTS.md` — the evidence ledger: every graded claim with its numbers.
 - `doctrine-triggers.toml` / `mined-triggers.toml` / `observed-triggers.toml` — rules as data by provenance: NU's taught rules; mined candidates (the three RETIRED 2026-08-02, windows stay graded); observed single-chart promotions in TESTING status (NU ruling 2026-08-04).
 - `anchors.toml` — the anchor library (recurrence principle); `astgraf-recur` episodes register on the WATCHLIST.
 - `families.toml` — the long-cycle families (nakshatra-sector recurrence); `astgraf-families` computes the conjunction calendars.

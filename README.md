@@ -8,7 +8,7 @@ Built as a faithful modern port of a family BASIC astrology suite
 (ASTGRAF/ASTROLOG/GRAPHDO/HORARY, preserved in [`canon/`](canon/)), extended
 into a full prediction pipeline from the Sankhyan doctrine of
 *Secrets of Sankhya* and its worked instances. Python 3.12 · zero heavy
-dependencies · 239 tests · MIT.
+dependencies · 248 tests · MIT.
 
 ```
 canon/                      The original BASIC suite (the computation canon, in-tree)
@@ -16,6 +16,8 @@ tools/astgraf/              The engine: CLI tools, tests, doctrine rules, docume
   ├── FRAMEWORK.md          The theory — how prediction works in this system
   ├── WATCHLIST.md          Registered forward windows + outcome protocol
   ├── AUDIT.md              Full adversarial audit: 127 findings, all resolved
+  ├── RESULTS.md            The evidence ledger: every graded claim, with numbers
+  ├── PLAN.md               Current state, open work, what is blocked
   ├── README.md             Tool-level docs: every CLI, flag, and output
   ├── doctrine-triggers.toml  Taught trigger patterns as declarative rules
   ├── mined-triggers.toml     Data-mined candidates (retired — see below)
@@ -115,7 +117,7 @@ uv run astgraf --year 2015 --month 4 --day 25 --time 11:40 \
 uv run astgraf-bands --start 2016-05-25 --days 15 \
   --rules doctrine-triggers.toml --out out/vyuha-2016
 
-uv run pytest   # 239 tests
+uv run pytest   # 248 tests
 ```
 
 Full CLI documentation: [`tools/astgraf/README.md`](tools/astgraf/README.md).
@@ -142,6 +144,13 @@ assiduous search and only then it can be predictable"*:
   site channel is scoped to the taught local categories. The timing
   layers — which reproduce the taught instances to the minute — are the
   system's proven core.
+- **Ten channels have been graded and every one failed its bar**, each with a
+  power check proving the instrument could see the effect it did not find —
+  three mining passes, six location families, the dwell doctrine, the taught
+  flood signature in its own category, and Predict.pdf'''s headline band rule
+  (lift 1.804, p = 0.069, on 12 firings vs 7 expected). The full scoreboard,
+  positive and negative together, is
+  [`RESULTS.md`](tools/astgraf/RESULTS.md).
 - **Negative results stay on the record.** The three data-mined candidate
   rules were *retired* when honest re-mining (declustered corpus, time-uniform
   climatology controls, 2-year-block split, 200-run permutation calibration)

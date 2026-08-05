@@ -1,8 +1,8 @@
 # Plan — what is done, what is open, and what is blocked
 
 Status 2026-08-05, end of session. Companion to `FRAMEWORK.md` (the theory),
-`WATCHLIST.md` (registered forward windows), `data/README-floods.md` (the
-flood corpora), and `.claude/tasks/ASTGRAF_TOOL.md` (every ruling, dated).
+`WATCHLIST.md` (registered forward windows), `RESULTS.md` (the evidence
+ledger), `data/README-floods.md` (the flood corpora), and `.claude/tasks/ASTGRAF_TOOL.md` (every ruling, dated).
 248 tests passing, from any working directory.
 
 ## 1. The one-line state
@@ -92,6 +92,18 @@ n = 1,435 still yields single digits. **It is decidable with more events**:
 n ≈ 3,000 → 2.3 σ, n ≈ 6,000 → 3.2 σ, n ≈ 12,000 → 4.6 σ if the effect is
 real. An M6+ quake corpus would settle it, and we already know how to fetch
 one (12,212 rows came from USGS FDSN for the dwell test).
+
+### 3.2c The band trigger at M6+ — the one open question data can settle
+
+§3.2b failed its bar on 12 firings vs 7.0 expected (1.4 σ). The predicate is
+rare, not the corpus small, so more events decide it: n ≈ 6,000 → 3.2 σ,
+n ≈ 12,000 → 4.6 σ if the 1.80 lift is real. An M6+ USGS FDSN pull (12,212
+rows came down for the dwell test) would settle it in one pre-registered shot.
+
+⚠️ Decide **in the pre-registration, not after**: the author's claim is about
+*major* events, so extending to M6 tests a different population. And the flood
+arm already points negative (0.937), which is evidence the effect may not be
+there at all.
 
 ### 3.3 Category-tagged recurrence, graded
 

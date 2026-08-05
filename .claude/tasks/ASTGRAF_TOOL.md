@@ -2092,3 +2092,35 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   predicate has come in this project, and as the FIRST properly powered test
   of Predict.pdf's own headline claim (previous scoring: 31 episodes).
   Ninth graded channel; ninth failure to clear its bar.
+
+## 2026-08-05 — RESULTS.md created: the evidence ledger
+- NU: "document well." The gap: the chronological ledger is 1,500+ lines,
+  FRAMEWORK is theory, PLAN is forward-looking — nothing recorded EVERY test
+  and what it found in one place, so positive and negative could be quoted
+  separately. RESULTS.md fixes that in five parts:
+  * Part 1 WHAT REPRODUCES — the 12-row retrodiction table (Hyderabad
+    04:50/17:06 and the 15:29-19:24 Moon squares, Ulsoor 06:12/08:21 with the
+    sweep order, Nepal 0.692/0.342, the QUAKE page, the docx 13/13, the Java
+    members, the vyuha census) plus the 130-year sweep's zero false
+    positives — and the matching statement that zero trials means skill is
+    UNDEMONSTRATED, not demonstrated.
+  * Part 2 WHAT FAILED — all ten graded channels in one table with design,
+    result and POWER CHECK per row; and the note that channels 8/9/10 each
+    closed a standing excuse (never held-out; wrong catalogue; only 31
+    episodes). #10 flagged as the only one merely UNDERPOWERED rather than
+    refuted, with its sigma projections.
+  * Part 3 STRUCTURAL RESULTS — the declination ceiling with measured
+    achieved extremes, the canon's missing lunar latitude, the
+    slow-slow-cannot-define-a-meridian derivation, three-longitude/
+    one-latitude, 1/81 is a resolution not an origin, the ~11% optimistic
+    ground distances.
+  * Part 4 REGISTERED NOT YET RESOLVED — the autumn season with its base-rate
+    warning.
+  * Part 5 HOW THESE WERE PRODUCED — the six method rulings, each tied to the
+    specific mistake that earned it, including the git-verifiable
+    pre-registration timestamps.
+- Wired in: FRAMEWORK section 3 now points at RESULTS.md and its stale
+  31-episode band scoring is marked SUPERSEDED by the 2026-08-05 regrade;
+  FRAMEWORK document map, PLAN header, and the repo README tree all list it;
+  repo README's epistemic contract gained the ten-channel summary; test
+  counts trued to 248.
