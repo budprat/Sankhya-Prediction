@@ -1674,3 +1674,35 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   The 1/81 subdivision is a RESOLUTION, not an ORIGIN: it presupposes a zero
   to subdivide from. Both gaps (latitude source, zero-longitude convention)
   remain the blocking inputs.
+
+## 2026-08-05 — Cross-session check: dwell-magnitude finding REPLICATED independently
+- Reconstructed the parallel session's dwell-magnitude test from its prose
+  description only (not its code), same corpus (1,435 declustered post-1900),
+  dwell = sum of real-giant-to-(Sun/Rahu/Ketu) separations x 4 min/deg:
+    taught giants orb 1.0: rho +0.342, n 44   (theirs +0.322, n 44)
+    taught giants orb 3.0: rho -0.064, n 148  (theirs -0.065, n 148)
+    all four      orb 1.0: rho +0.202, n 95   (theirs +0.192, n 95)
+    all four      orb 3.0: rho +0.007, n 268  (theirs +0.009, n 268)
+    family-wise permutation p = 0.028 (theirs 0.042); single-crossing subset
+    n 41 rho +0.344 (theirs +0.315).
+  INDEPENDENT REPLICATION CONFIRMED within noise. The computation is real;
+  whether the EFFECT is real remains open.
+- ADDED CAUTION (not in their report): the surviving cell is the smallest
+  (n=44) and the correlation REVERSES at orb 3 (-0.064). An effect present
+  only in the tightest cell and sign-flipped when loosened is either
+  genuinely threshold-dependent or the classic small-n fluctuation shape.
+- DESIGN NOTE for the proposed M6+ held-out test: M6+ CONTAINS M7+, so the
+  fit would leak. The held-out set must be strictly M6.0-6.9 (disjoint from
+  the M7+ corpus the hypothesis was formed on).
+- ARITHMETIC: their rounding catch is right and this session had repeated
+  the author's figure uncritically — 1 deg at the equator is 111.319 km, not
+  100; equatorial speed 465.1 m/s, not 400; the 1/81 cell is 1,374 m, not
+  1,234. All his ground-distance claims run ~11% optimistic.
+- STRUCTURAL POINT for FRAMEWORK: (a-1)*500/240 reproduces his PROSE
+  rotations (Uranus 37.80 vs 37.5, Neptune 60.27 vs 60 — and (a-1) IS the
+  nearest-approach distance he explicitly names), while (a/2-1)*500/240 is
+  the Mathcad form validated by the NEPAL CHART as the REAL-POSITION offset.
+  These are two different quantities sharing a formula shape; the v3 ruling
+  set them equal. The 0-360 rotation sweep shows the choice has no
+  predictive consequence, so the ruling stands untouched — but the two
+  should be recorded as distinct, not identified.
