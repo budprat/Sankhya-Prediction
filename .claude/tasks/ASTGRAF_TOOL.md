@@ -2723,3 +2723,26 @@ fix and the flood clock had made stale.
   are a must" — PLUTO IS REQUIRED though Predict.pdf's BAND_BODIES omits it;
   HDMY unit x 2-60 periods = our --unit/--step/--count; "rotate by changing
   asc. time — spread by changing Lat long" = the inverse-search handle.
+
+## 2026-08-05 — NU RULING: Pluto excluded from doctrine classification "for now"
+- NU: "remove Pluto for now and document it." Pluto had been added to
+  MAJOR_BODIES an hour earlier on the strength of the author's "All nine
+  planets are a must for accuracy". Removed, test-first (the test now ASSERTS
+  its absence and that doctrine_orb('Pluto','Sun') returns the MINOR orb).
+- GROUNDS, all three recorded in the source and in FRAMEWORK 1a:
+  * Predict.pdf's own 28x11 table has NO Pluto column, and BAND_BODIES
+    follows it verbatim;
+  * a prior audit found Pluto silently leaking into min-over-bodies tests and
+    treated it as a DEFECT, restating every affected figure (T4/T5 and the
+    selectivity numbers);
+  * no taught reading — Nepal, Hyderabad, Ulsoor, the vyuham, Hiroshima —
+    names Pluto.
+- TENSION KEPT ON RECORD, not resolved: the author's sentence says nine
+  planets, which would include Pluto. Listed in PLAN as blocked-on-author
+  item 1b — does "nine planets" include Pluto, and if so why is it absent
+  from his own table? Re-including it is a ONE-LINE change plus a re-run of
+  every graded channel.
+- SCOPE OF THE EXCLUSION IS NARROW AND VERIFIED: Pluto REMAINS COMPUTED by the
+  frozen canon (ephemeris BODY_ORDER, report page, RASI/NAVAMSAM boxes) —
+  confirmed still returning 129.930 deg on the Hiroshima chart. Only
+  MAJOR_BODIES changed, so NO canon output is affected. 267 tests passing.

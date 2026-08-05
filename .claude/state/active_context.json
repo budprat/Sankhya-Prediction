@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-08-05T20:53:59.530103",
-  "message_count": 91,
+  "last_updated": "2026-08-05T20:55:36.389201",
+  "message_count": 92,
   "current_task": "set git remote origin to git@github",
   "task_started": "2026-08-03T00:23:53.226598",
   "task_status": "in_progress",
@@ -62,10 +62,10 @@
   "todos_snapshot": [],
   "skills_used": [],
   "recent_errors": [
+    "GUARDRAIL [workflow]: Pull latest changes before making edits. Resolve conflicts before committing.",
+    "GUARDRAIL [correctness]: Run tests before committing. Fix failing tests before moving forward.",
     "GUARDRAIL [correctness]: Verify dependencies are installed. Check import paths and module names.",
     "GUARDRAIL [correctness]: Run tests before committing. Fix failing tests before moving forward.",
-    "GUARDRAIL [correctness]: Verify file exists before reading. Use Glob to find files by pattern.",
-    "GUARDRAIL [correctness]: Verify dependencies are installed. Check import paths and module names.",
-    ""
+    "GUARDRAIL [correctness]: Verify file exists before reading. Use Glob to find files by pattern."
   ]
 }

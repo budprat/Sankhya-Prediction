@@ -14,26 +14,6 @@
   ],
   "commands_run": [
     {
-      "command": "curl -s --max-time 30 \"https://en.wikipedia.org/w/index.php?title=2026_Assam_floods&action=raw\" | se",
-      "success": true,
-      "timestamp": "2026-08-05T19:44:04.880891"
-    },
-    {
-      "command": "cd tools/astgraf && uv run python - <<'EOF'\nfrom astgraf.anchors import chart_at, contacts_at, iso_j",
-      "success": true,
-      "timestamp": "2026-08-05T19:44:38.750532"
-    },
-    {
-      "command": "uv run python - <<'EOF'\nfrom astgraf.anchors import asc_crossings, iso_jd\nfrom astgraf.triggers impo",
-      "success": true,
-      "timestamp": "2026-08-05T19:44:52.695629"
-    },
-    {
-      "command": "uv run python - <<'EOF'\nfrom astgraf.anchors import chart_at, iso_jd, jd_iso_minute\nfrom astgraf.ban",
-      "success": true,
-      "timestamp": "2026-08-05T19:49:23.103561"
-    },
-    {
       "command": "uv run python - <<'EOF'\nimport csv\nfrom astgraf.ephemeris import julian_day_number\nEP=[(\"1911-11-08\"",
       "success": true,
       "timestamp": "2026-08-05T19:49:48.622035"
@@ -262,6 +242,26 @@
       "command": "python3 - <<'PYEOF'\np=\"RESULTS.md\"; s=open(p).read()\nanchor=\"### Notes that matter more than the num",
       "success": true,
       "timestamp": "2026-08-05T20:53:41.573898"
+    },
+    {
+      "command": "printf -- '- [Author orbs 2/18 + gravity ruling](author-orbs-and-gravity-ruling.md) \u2014 we tested 15 c",
+      "success": true,
+      "timestamp": "2026-08-05T20:54:25.329133"
+    },
+    {
+      "command": "cd tools/astgraf && grep -rn \"Pluto\" src/astgraf/*.py | grep -v \"^src/astgraf/ephemeris.py\" | head",
+      "success": true,
+      "timestamp": "2026-08-05T20:55:25.743488"
+    },
+    {
+      "command": "python3 - <<'PYEOF'\np=\"tests/test_bands.py\"; s=open(p).read()\nold = '''    assert {\"Jupiter\", \"Satur",
+      "success": true,
+      "timestamp": "2026-08-05T20:55:36.396208"
+    },
+    {
+      "command": "python3 - <<'PYEOF'\np=\"src/astgraf/bands.py\"; s=open(p).read()\nold = '''MAJOR_BODIES = (\"Jupiter\", \"",
+      "success": true,
+      "timestamp": "2026-08-05T20:55:58.502422"
     }
   ]
 }

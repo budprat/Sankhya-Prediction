@@ -91,7 +91,21 @@ REAL_POSITION_OFFSETS = {"Uranus": 17.8562342478, "Neptune": 29.0917753653,
 # *** CONSEQUENCE ON RECORD: this project graded fifteen channels at a 3-deg
 # orb. Four of those five pairs are INVISIBLE at 3 deg. Tests written against
 # ASPECT_ORB were not measuring the author's rule. ***
-MAJOR_BODIES = ("Jupiter", "Saturn", "Uranus", "Neptune", "Pluto")
+# PLUTO EXCLUDED (NU ruling 2026-08-05: "remove Pluto for now"). Three reasons
+# and one tension, all on record:
+#   * Predict.pdf's own 28x11 table has no Pluto column, and BAND_BODIES
+#     follows it verbatim;
+#   * a prior audit found Pluto silently leaking into min-over-bodies tests and
+#     treated it as a DEFECT, restating every affected figure;
+#   * none of the taught readings (Nepal, Hyderabad, Ulsoor, vyuham, Hiroshima)
+#     names Pluto.
+# TENSION, unresolved: the author says "All nine planets are a must for
+# accuracy", which would include Pluto. That is recorded, not acted on —
+# re-including it is a one-line change here plus a re-run of every graded
+# channel. Pluto REMAINS COMPUTED by the frozen canon (ephemeris BODY_ORDER,
+# the report page, the RASI boxes); it is only excluded from doctrine
+# classification, so no canon output changes.
+MAJOR_BODIES = ("Jupiter", "Saturn", "Uranus", "Neptune")
 MAJOR_ORB = 18.0
 MINOR_ORB = 2.0
 

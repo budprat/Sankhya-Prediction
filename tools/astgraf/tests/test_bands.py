@@ -316,7 +316,14 @@ def test_author_orbs_by_body_class():
     # involves a GIANT, so the orb is set by body CLASS, not by aspect type.
     from astgraf.bands import MAJOR_BODIES, MAJOR_ORB, MINOR_ORB, doctrine_orb
     assert MINOR_ORB == 2.0 and MAJOR_ORB == 18.0
-    assert {"Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"} == set(MAJOR_BODIES)
+    # PLUTO IS EXCLUDED (NU ruling 2026-08-05, "remove Pluto for now"): it is
+    # absent from Predict.pdf's own 28x11 table and from BAND_BODIES, and a
+    # prior audit found it leaking into scored tests as a defect. The author's
+    # "all nine planets are a must" is a TENSION on record, not a licence —
+    # Pluto stays COMPUTED by the frozen canon, just not doctrine-classified.
+    assert {"Jupiter", "Saturn", "Uranus", "Neptune"} == set(MAJOR_BODIES)
+    assert "Pluto" not in MAJOR_BODIES
+    assert doctrine_orb("Pluto", "Sun") == MINOR_ORB   # not treated as a giant
     assert doctrine_orb("Jupiter", "Neptune") == MAJOR_ORB      # both major
     assert doctrine_orb("Uranus", "Mars") == MAJOR_ORB          # one major
     assert doctrine_orb("Saturn", "Moon") == MAJOR_ORB

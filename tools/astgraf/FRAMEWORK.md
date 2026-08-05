@@ -94,9 +94,18 @@ re-runs at his orbs are recorded there.
 - **`E` / `W`**: *"E is eastern with ayanamsa deduction and W is western =
   realtime."* Tropical is the **realtime** frame — confirming the tropical
   rulings already used for angle work.
-- **Body set**: *"All nine planets are a must"* — so **Pluto is required**,
-  though `BAND_BODIES` (Predict.pdf's own columns) omits it. Plus Sun, Moon,
-  the galactic ecliptic, Aries, and the local-time Ascendant.
+- **Body set**: *"All nine planets are a must"* — plus Sun, Moon, the galactic
+  ecliptic, Aries, and the local-time Ascendant. **PLUTO IS EXCLUDED FOR NOW
+  (NU ruling 2026-08-05)**, and this is a recorded TENSION with the author's
+  sentence, not an agreement with it. Grounds for exclusion: Predict.pdf's own
+  28×11 table has no Pluto column and `BAND_BODIES` follows it verbatim; a
+  prior audit found Pluto silently leaking into min-over-bodies tests and
+  treated it as a defect, restating every affected figure; and no taught
+  reading — Nepal, Hyderabad, Ulsoor, the vyuham, Hiroshima — names Pluto.
+  **Pluto remains COMPUTED by the frozen canon** (`ephemeris.BODY_ORDER`, the
+  report page, the RASI/NAVAMSAM boxes) — the exclusion is only from doctrine
+  classification (`MAJOR_BODIES`), so no canon output changes. Re-including it
+  is a one-line change plus a re-run of every graded channel.
 - **Grid**: HDMY unit × 2–60 periods; *"Y and 60 … if unit is 2 it is 120 yrs"*
   — exactly our `--unit/--step/--count`.
 - **Controls**: *"rotate by changing asc. time — spread by changing Lat long"*,
