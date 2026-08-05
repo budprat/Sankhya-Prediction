@@ -1984,3 +1984,36 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   what a user would expect.
 - VERIFIED BOTH WAYS: 248 passed from tools/astgraf AND 248 passed from the
   repo root (exit 0 each). The debt is closed, not merely mitigated.
+
+## 2026-08-05 — PRE-REGISTRATION: the taught flood signature in its own category
+- COMMITTED BEFORE RUNNING. Script scripts/flood_signature.py carries the
+  full design in its header.
+- WHY: every doctrine grading to date used the QUAKE corpus. "Giant on a
+  node — Neptune on Ketu" is taught as a FLOOD constraint (Hyderabad 1.15
+  observed, Nepal 0.34 real). The flood corpora built today make it testable
+  in the category it was TAUGHT IN for the first time.
+- HYPOTHESIS: flood dates carry Neptune-on-Ketu more often than era-matched
+  instants. DIRECTION: lift > 1.
+- CORPUS: both flood files, date_precision == day AND year >= 1700 (day
+  precision puts every body but the Moon inside 3 deg; the engine drifts to
+  degrees by ~1600). n = 2,750 raw -> 1,886 after 3-DAY TEMPORAL
+  declustering (temporal only: HANZE locations are country centroids, so
+  spatial declustering is meaningless and one European episode otherwise
+  appears as several country rows on adjacent days).
+- CONTROLS — the load-bearing choice, measured first: flood reporting
+  density rises ~12x across the span (36 events/decade in the 1870s to 447
+  in the 2000s), so UNIFORM controls would hand any era-locked slow-body
+  predicate a trivial win (this is exactly the artifact that once promoted
+  sep:Uranus-Neptune@opp to lift 55). Controls are ERA-MATCHED: 5 instants
+  per event drawn uniformly from +-365 d, excluding +-7 d. Era, reporting
+  regime and slow-body epoch are all held fixed while the Neptune-Ketu
+  separation still sweeps ~27 deg/year against a 3 deg orb.
+- PRIMARY: real:Neptune conj Ketu, orb 3.0, one predicate. STATISTIC:
+  add-one smoothed lift. VERDICT: within-block permutation (which of the
+  1 event + 5 controls is labelled the event), 2,000 shuffles, p < 0.05 AND
+  lift > 1 supports the doctrine.
+- SECONDARY (reported, NOT the verdict, with their own family-wise p):
+  observed Neptune-Ketu; real-Neptune-Rahu; real-Uranus-Ketu/Rahu; and the
+  primary at orb 1.0.
+- POWER CHECK in the same script: plant the predicate into 10/5/2% of events
+  and confirm recovery, so a null cannot be mistaken for blindness.
