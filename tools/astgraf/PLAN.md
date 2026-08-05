@@ -182,7 +182,7 @@ and state n = 13 in the pre-registration.
 | # | Input | Unlocks |
 |---|---|---|
 | 1 | **The latitude question, put to the author** | The only thing that could reopen location. His recipe has three longitude mechanisms and one latitude mechanism capped at 23.71°, against Nepal's own 28.23°N. Six families died against that wall |
-| 2 | **Navamsam event-reading rules** | The one generated output the engine still cannot interpret for events |
+| 2 | **Navamsam event-reading rules** | The one generated output the engine still cannot interpret for events. **Constraint found 2026-08-05 by reading the box charts:** the canon deliberately blanks Ura/Nep/Plu from NAVAMSAM (`rasi.py` `_placements`, ASTROLOG.BAS 6550), verified against both original charts — so whatever the rules are, they **cannot involve the three bodies the doctrine's real-position channel is built on**. Either the rules are confined to the seven classical grahas + nodes, or NAVAMSAM is not where the giants are read |
 | 3 | **The Java-family reading** | 2040 falls in Chitra (not a member sector); the next member-sector return is 2060 in Kritika. Which carries the family's claim? And is the 1941 Bharani triple a member — was there a Java-arc event in 1940–41? |
 | 4 | **Abhijit-28 decision** | Unparks the 28-equal ladder behind `--ladder 28` |
 | 5 | **7-level Vimshottari lords** | Completes the 1764 instant ladder |
