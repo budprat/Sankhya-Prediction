@@ -49,6 +49,7 @@
 # still false (RESULTS.md #8).
 # ===========================================================================
 
+import argparse
 import csv
 import math
 from collections import Counter
@@ -68,9 +69,23 @@ from astgraf.validation import (Claim, block_permutation_p, era_matched_controls
                                 poisson_sigma, power_curve, smoothed_lift)
 
 BASE = Path(__file__).resolve().parent.parent
-CORPUS = BASE / "data" / "usgs-m7-1850-2020.csv"
-OUT = BASE / "out" / "quake-atlas"
-WHEELS = OUT / "wheels"
+
+# Every quake catalog in the tree. `decluster` needs magnitudes to pick the
+# largest of a cluster; the deaths-selected and curated files carry none, so
+# they are declustered on time/space alone with a constant magnitude — noted
+# per corpus rather than silently applied.
+CORPORA = {
+    "m7": {"path": "data/usgs-m7-1850-2020.csv", "mag": True,
+           "label": "USGS M7+ 1850-2020 (magnitude-selected)"},
+    "m6": {"path": "data/usgs-m6-1900-2020.csv", "mag": True,
+           "label": "USGS M6.0-6.99 1901-2020 (held-out band)"},
+    "ncei": {"path": "data/quakes-ncei-deaths.csv", "mag": False,
+             "label": "NCEI/WDS deaths-selected 1702-2025"},
+    "hist": {"path": "data/quakes-historical.csv", "mag": False,
+             "label": "curated majors 856-2023 (three tiers)"},
+}
+
+OUT_ROOT = BASE / "out" / "quake-atlas"
 
 MIN_YEAR = 1900          # engine drift disqualifies earlier events
 CONTROLS_PER_EVENT = 3   # era-matched, +-365 d excluding +-7 d
@@ -209,16 +224,36 @@ def predicates(chart) -> set[str]:
 # --------------------------------------------------------------------------
 
 def main() -> None:
-    OUT.mkdir(parents=True, exist_ok=True)
-    WHEELS.mkdir(parents=True, exist_ok=True)
+    ap = argparse.ArgumentParser(description="Cast and grade every quake chart")
+    ap.add_argument("--corpus", default="m7", choices=sorted(CORPORA) + ["all"])
+    ap.add_argument("--no-wheels", action="store_true",
+                    help="skip SVG rendering (the CSV is the chart record)")
+    args = ap.parse_args()
+    names = sorted(CORPORA) if args.corpus == "all" else [args.corpus]
+    for name in names:
+        run_corpus(name, wheels=not args.no_wheels)
+
+
+def run_corpus(name: str, wheels: bool = True) -> None:
+    spec = CORPORA[name]
+    out = OUT_ROOT / name
+    out.mkdir(parents=True, exist_ok=True)
     rules = load_rules("doctrine-triggers.toml")
     rules = [r for r in rules if "Ascendant" not in str(r)]   # site-free rules only
 
-    rows = [r for r in csv.DictReader(open(CORPUS))
+    print("\n" + "#" * 74)
+    print(f"# CORPUS {name}: {spec['label']}")
+    print("#" * 74)
+    rows = [r for r in csv.DictReader(open(BASE / spec["path"]))
             if r.get("time") and r.get("latitude") and r.get("longitude")
             and int(r["time"][:4]) >= MIN_YEAR]
+    if not spec["mag"]:
+        # No magnitude column: decluster on time/space only. Stated, not hidden —
+        # keep-largest degenerates to keep-earliest for these corpora.
+        for r in rows:
+            r.setdefault("mag", "0")
     rows = decluster(rows)
-    print(f"corpus: {len(rows)} declustered M7+ mainshocks >= {MIN_YEAR}")
+    print(f"corpus: {len(rows)} declustered events >= {MIN_YEAR}")
 
     # ---------------- PART A: the atlas ----------------
     records, charts, all_contacts, jds = [], [], [], []
@@ -235,26 +270,31 @@ def main() -> None:
         for k in rec:
             if k not in keys:
                 keys.append(k)
-    with open(OUT / "charts.csv", "w", newline="") as fh:
+    with open(out / "charts.csv", "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=keys)
         w.writeheader()
         w.writerows(records)
-    print(f"wrote {OUT / 'charts.csv'} ({len(records)} event charts)")
+    print(f"wrote {out / 'charts.csv'} ({len(records)} event charts)")
 
-    for rec, chart in zip(records, charts):
-        pos = {n: chart.positions[n].longitude for n in BODY_ORDER}
-        stem = f"{rec['time'][:10]}_{rec['id'] or 'na'}".replace("/", "-")
-        title = f"{rec['time'][:16]}Z  M{rec['mag']}  {rec['place'][:44]}"
-        (WHEELS / f"{stem}.svg").write_text(render_scope(pos, title=title, orb=3.0))
-    print(f"wrote {len(records)} chart wheels -> {WHEELS}")
+    if wheels:
+        wdir = out / "wheels"
+        wdir.mkdir(parents=True, exist_ok=True)
+        for rec, chart in zip(records, charts):
+            pos = {n: chart.positions[n].longitude for n in BODY_ORDER}
+            stem = f"{rec['time'][:10]}_{rec['id'] or 'na'}".replace("/", "-")
+            mag = f"M{rec['mag']}" if rec["mag"] else ""
+            title = f"{rec['time'][:16]}Z  {mag}  {rec['place'][:44]}"
+            (wdir / f"{stem}.svg").write_text(
+                render_scope(pos, title=title, orb=3.0))
+        print(f"wrote {len(records)} chart wheels -> {wdir}")
 
-    census(records, all_contacts)
+    census(records, all_contacts, out, spec["label"])
 
     # ---------------- PART B: grading ----------------
-    grade(charts, jds, records)
+    grade(charts, jds, records, out)
 
 
-def census(records, all_contacts) -> None:
+def census(records, all_contacts, out, label) -> None:
     L = []
 
     def say(s=""):
@@ -262,12 +302,15 @@ def census(records, all_contacts) -> None:
         print(s)
 
     say("=" * 74)
-    say("PART A — THE ATLAS (descriptive census; no claim is made here)")
+    say(f"PART A — THE ATLAS: {label}")
     say("=" * 74)
     say(f"events: {len(records)}")
-    mags = [float(r["mag"]) for r in records if r["mag"]]
-    say(f"magnitude: min {min(mags):.1f}  median {sorted(mags)[len(mags)//2]:.1f}  "
-        f"max {max(mags):.1f}")
+    mags = [float(r["mag"]) for r in records if r["mag"] and float(r["mag"]) > 0]
+    if mags:
+        say(f"magnitude: min {min(mags):.1f}  "
+            f"median {sorted(mags)[len(mags)//2]:.1f}  max {max(mags):.1f}")
+    else:
+        say("magnitude: not carried by this corpus (deaths/curation-selected)")
     sited = sum(1 for r in records if r["site_chart"])
     say(f"charts cast at the epicenter: {sited}/{len(records)} "
         f"({len(records)-sited} polar, cast site-free)")
@@ -312,10 +355,10 @@ def census(records, all_contacts) -> None:
         say(f"    {name:<34} {n:>5}  {100*n/len(records):>5.1f}%")
     say()
 
-    (OUT / "census.txt").write_text("\n".join(L) + "\n")
+    (out / "census.txt").write_text("\n".join(L) + "\n")
 
 
-def grade(charts, jds, records) -> None:
+def grade(charts, jds, records, out) -> None:
     L = []
 
     def say(s=""):
@@ -376,7 +419,7 @@ def grade(charts, jds, records) -> None:
 
     # The full graded table, so any census regularity can be looked up against
     # its control rate — the only way to tell a sky base rate from an effect.
-    with open(OUT / "lifts.csv", "w", newline="") as fh:
+    with open(out / "lifts.csv", "w", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["predicate", "lift", "event_hits", "event_rate",
                     "control_rate"])
@@ -464,8 +507,8 @@ def grade(charts, jds, records) -> None:
     say("   exactly such a trend appeared on M7+ and died on held-out M6.)")
     say()
 
-    (OUT / "patterns.txt").write_text("\n".join(L) + "\n")
-    print(f"wrote {OUT / 'census.txt'} and {OUT / 'patterns.txt'}")
+    (out / "patterns.txt").write_text("\n".join(L) + "\n")
+    print(f"wrote {out / 'census.txt'} and {out / 'patterns.txt'}")
 
 
 if __name__ == "__main__":

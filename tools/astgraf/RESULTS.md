@@ -59,6 +59,8 @@ silence, not evidence.
 | 8 | **Dwell doctrine** | trigger half + magnitude half | trigger **vacuous** (3 s *is* 1/81°, so every in-orb crossing clears it); magnitude ρ = +0.32 on M7+ then **ρ = −0.040, p = 0.77** on pre-registered held-out M6.0–6.99 | injected ρ = 0.32 recovered 12/12 |
 | 9 | **Taught flood signature** (Neptune on Ketu, in its *own* category) | 1,886 declustered flood events, 9,430 era-matched controls | **lift 1.012, p = 0.57** — on the null median | 2% plant → lift 2.22, p = 0.000 |
 | 10 | **Predict.pdf's band trigger** (its headline claim) | 1,435 quakes at exact instants + 1,886 floods, era-matched controls | **lift 1.804, p = 0.069** — fails the pre-registered bar. Floods point the other way (0.937) | 2% plant → lift 5.69, p = 0.000 |
+| 11 | **Band trigger on held-out M6.0–6.99** (the settling test) | 10,324 declustered events, era-matched controls, pre-registered and committed before running | **lift 0.915, p = 0.76 — wrong direction.** P2 grid 0.759, P3 escalated 1.091; family-wise p = 1.00 | 2% plant → lift 5.75, p = 0.000 |
+| 12 | **Full-vocabulary screen, epicenter charts** | 1,435 M7+, 4,305 era-matched controls, 524 predicates incl. band occupancy | best lift 1.665 vs permutation-max null median 1.609, **family-wise p = 0.302** | 2% plant → lift 3.22, p = 0.000 |
 
 ### Notes that matter more than the numbers
 

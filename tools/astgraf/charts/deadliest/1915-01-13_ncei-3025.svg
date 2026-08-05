@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+<rect width="800" height="800" fill="white"/>
+<text x="400.0" y="26" font-size="15" fill="#222" text-anchor="middle">1915-01-13T06:52Z  M0  ITALY:  MARSICA; AVEZZANO; ABRUZZI</text>
+<circle cx="400.0" cy="400.0" r="340.0" fill="none" stroke="#333"/>
+<circle cx="400.0" cy="400.0" r="296.0" fill="none" stroke="#999"/>
+<line x1="104.0" y1="400.0" x2="60.0" y2="400.0" stroke="#999"/>
+<text x="92.8" y="482.3" font-size="13" fill="#555" text-anchor="middle" dominant-baseline="middle">Ari</text>
+<line x1="143.7" y1="548.0" x2="105.6" y2="570.0" stroke="#999"/>
+<text x="175.1" y="624.9" font-size="13" fill="#555" text-anchor="middle" dominant-baseline="middle">Tau</text>
+<line x1="252.0" y1="656.3" x2="230.0" y2="694.4" stroke="#999"/>
+<text x="317.7" y="707.2" font-size="13" fill="#555" text-anchor="middle" dominant-baseline="middle">Gem</text>
+<line x1="400.0" y1="696.0" x2="400.0" y2="740.0" stroke="#999"/>
+<text x="482.3" y="707.2" font-size="13" fill="#555" text-anchor="middle" dominant-baseline="middle">Can</text>
+<line x1="548.0" y1="656.3" x2="570.0" y2="694.4" stroke="#999"/>
+<text x="624.9" y="624.9" font-size="13" fill="#555" text-anchor="middle" dominant-baseline="middle">Leo</text>
+<line x1="656.3" y1="548.0" x2="694.4" y2="570.0" stroke="#999"/>
+<text x="707.2" y="482.3" font-size="13" fill="#555" text-anchor="middle" dominant-baseline="middle">Vir</text>
+<line x1="696.0" y1="400.0" x2="740.0" y2="400.0" stroke="#999"/>
+<text x="707.2" y="317.7" font-size="13" fill="#555" text-anchor="middle" dominant-baseline="middle">Lib</text>
+<line x1="656.3" y1="252.0" x2="694.4" y2="230.0" stroke="#999"/>
+<text x="624.9" y="175.1" font-size="13" fill="#555" text-anchor="middle" dominant-baseline="middle">Sco</text>
+<line x1="548.0" y1="143.7" x2="570.0" y2="105.6" stroke="#999"/>
+<text x="482.3" y="92.8" font-size="13" fill="#555" text-anchor="middle" dominant-baseline="middle">Sag</text>
+<line x1="400.0" y1="104.0" x2="400.0" y2="60.0" stroke="#999"/>
+<text x="317.7" y="92.8" font-size="13" fill="#555" text-anchor="middle" dominant-baseline="middle">Cap</text>
+<line x1="252.0" y1="143.7" x2="230.0" y2="105.6" stroke="#999"/>
+<text x="175.1" y="175.1" font-size="13" fill="#555" text-anchor="middle" dominant-baseline="middle">Aqu</text>
+<line x1="143.7" y1="252.0" x2="105.6" y2="230.0" stroke="#999"/>
+<text x="92.8" y="317.7" font-size="13" fill="#555" text-anchor="middle" dominant-baseline="middle">Pis</text>
+<line class="aspect-line conjunction" x1="389.3" y1="152.2" x2="382.0" y2="152.7" stroke="#666666" stroke-width="1.6"/>
+<line class="aspect-line opposition" x1="382.0" y1="152.7" x2="428.4" y2="646.4" stroke="#772222" stroke-width="1.6"/>
+<line class="aspect-line trine" x1="267.5" y1="190.4" x2="293.1" y2="623.8" stroke="#2e7d32" stroke-width="1.6"/>
+<line class="aspect-line trine" x1="293.1" y1="623.8" x2="255.1" y2="198.8" stroke="#2e7d32" stroke-width="1.6"/>
+<line class="aspect-line opposition" x1="255.1" y1="198.8" x2="544.9" y2="601.2" stroke="#772222" stroke-width="1.6"/>
+<line class="aspect-line trine" x1="255.1" y1="198.8" x2="307.4" y2="630.1" stroke="#2e7d32" stroke-width="1.6"/>
+<circle data-body="Saturn" cx="284.5" cy="641.8" r="5" fill="#444444"/>
+<text x="295.7" y="618.4" font-size="11" fill="#444444" text-anchor="middle" dominant-baseline="middle">Sat</text>
+<circle data-body="Pluto" cx="300.0" cy="648.6" r="5" fill="#00AACC"/>
+<text x="317.1" y="606.0" font-size="11" fill="#00AACC" text-anchor="middle" dominant-baseline="middle">Plu</text>
+<circle data-body="Neptune" cx="430.6" cy="666.2" r="5" fill="#55AA55"/>
+<text x="427.7" y="640.4" font-size="11" fill="#55AA55" text-anchor="middle" dominant-baseline="middle">Nep</text>
+<circle data-body="Ketu" cx="556.6" cy="617.5" r="5" fill="#555555"/>
+<text x="541.4" y="596.4" font-size="11" fill="#555555" text-anchor="middle" dominant-baseline="middle">Ket</text>
+<circle data-body="Venus" cx="588.0" cy="209.0" r="5" fill="#FF5555"/>
+<text x="569.7" y="227.5" font-size="11" fill="#FF5555" text-anchor="middle" dominant-baseline="middle">Ven</text>
+<circle data-body="Moon" cx="541.0" cy="172.1" r="5" fill="#00AAAA"/>
+<text x="527.3" y="194.2" font-size="11" fill="#00AAAA" text-anchor="middle" dominant-baseline="middle">Moo</text>
+<circle data-body="Mars" cx="427.0" cy="133.4" r="5" fill="#AA0000"/>
+<text x="424.4" y="159.2" font-size="11" fill="#AA0000" text-anchor="middle" dominant-baseline="middle">Mar</text>
+<circle data-body="Sun" cx="403.0" cy="132.0" r="5" fill="#00AA00"/>
+<text x="402.5" y="178.0" font-size="11" fill="#00AA00" text-anchor="middle" dominant-baseline="middle">Sun</text>
+<circle data-body="Ascendant" cx="388.4" cy="132.3" r="5" fill="#0000AA"/>
+<text x="391.3" y="198.2" font-size="11" fill="#0000AA" text-anchor="middle" dominant-baseline="middle">Asc</text>
+<circle data-body="Mercury" cx="380.6" cy="132.7" r="5" fill="#AA00AA"/>
+<text x="382.5" y="158.6" font-size="11" fill="#AA00AA" text-anchor="middle" dominant-baseline="middle">Mer</text>
+<circle data-body="Uranus" cx="317.8" cy="144.9" r="5" fill="#5555FF"/>
+<text x="325.8" y="169.7" font-size="11" fill="#5555FF" text-anchor="middle" dominant-baseline="middle">Ura</text>
+<circle data-body="Jupiter" cx="256.8" cy="173.5" r="5" fill="#C8A200"/>
+<text x="270.7" y="195.5" font-size="11" fill="#C8A200" text-anchor="middle" dominant-baseline="middle">Jup</text>
+<circle data-body="Rahu" cx="243.4" cy="182.5" r="5" fill="#777777"/>
+<text x="270.3" y="219.9" font-size="11" fill="#777777" text-anchor="middle" dominant-baseline="middle">Rah</text>
+<text x="14" y="709" font-size="12" fill="#666666">Ascendant conjunction Mercury (1.68°)</text>
+<text x="14" y="724" font-size="12" fill="#772222">Mercury opposition Neptune (177.59°)</text>
+<text x="14" y="739" font-size="12" fill="#2e7d32">Jupiter trine Saturn (122.17°)</text>
+<text x="14" y="754" font-size="12" fill="#2e7d32">Saturn trine Rahu (118.71°)</text>
+<text x="14" y="769" font-size="12" fill="#772222">Rahu opposition Ketu (180.00°)</text>
+<text x="14" y="784" font-size="12" fill="#2e7d32">Rahu trine Pluto (122.32°)</text>
+</svg>

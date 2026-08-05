@@ -9,11 +9,15 @@ ledger), `data/README-floods.md` (the flood corpora), and `.claude/tasks/ASTGRAF
 
 **The engine predicts *when* with tested precision and cannot predict *where*
 at all.** Both halves are measured, not impressions: every taught instant
-reproduces to 1–2 minutes, and **eight independent channels have been built
+reproduces to 1–2 minutes, and **twelve independent channels have been built
 and graded null** — six location families, the mining channel, the dwell
-doctrine, and now the taught flood signature tested in its own category —
-each with a power check proving the instrument could see the effect it
-failed to find.
+doctrine, the taught flood signature in its own category, the band trigger at
+M7+ and again on held-out M6, and a full-vocabulary screen over epicenter
+charts — each with a power check proving the instrument could see the effect
+it failed to find.
+
+As of 2026-08-05 the last question that data alone could settle (§3.2c) is
+closed, null. What remains open is **blocked on NU**, not on compute.
 
 ## 2. Closed — do not reopen without new input
 
@@ -28,6 +32,8 @@ failed to find.
 | Dwell doctrine | trigger + magnitude halves | vacuous; and dead on held-out M6.0–6.99 |
 | **Taught flood signature** (Neptune on Ketu, tested in its OWN category) | 1,886 declustered flood events, era-matched controls | **lift 1.012, p = 0.57** |
 | **Predict.pdf's band trigger** (Moon+Ketu+Mars, its headline claim) | 1,435 quakes exact-instant + 1,886 floods, era-matched | **lift 1.804, p = 0.069** — fails the bar; rests on 12 firings vs 7 expected (1.4 σ). Floods point the other way (0.937) |
+| **Band trigger, held-out M6.0–6.99** | 10,324 declustered, pre-registered, one test | **lift 0.915, p = 0.76 — wrong direction** (38 vs 42.4 expected) |
+| **Full-vocabulary screen** (524 predicates, epicenter charts) | 1,435 M7+ vs 4,305 era-matched | best 1.665 vs null-max median 1.609, **family-wise p = 0.302** |
 
 The geometric location route is exhausted **by derivation**, not merely by
 testing: a slow–slow crossing cannot define a meridian (crossings last days;
@@ -93,17 +99,33 @@ n ≈ 3,000 → 2.3 σ, n ≈ 6,000 → 3.2 σ, n ≈ 12,000 → 4.6 σ if the e
 real. An M6+ quake corpus would settle it, and we already know how to fetch
 one (12,212 rows came from USGS FDSN for the dwell test).
 
-### 3.2c The band trigger at M6+ — the one open question data can settle
+### 3.2c The band trigger at M6+ — **CLOSED 2026-08-05, null**
 
-§3.2b failed its bar on 12 firings vs 7.0 expected (1.4 σ). The predicate is
-rare, not the corpus small, so more events decide it: n ≈ 6,000 → 3.2 σ,
-n ≈ 12,000 → 4.6 σ if the 1.80 lift is real. An M6+ USGS FDSN pull (12,212
-rows came down for the dwell test) would settle it in one pre-registered shot.
+Pre-registered (`scripts/band_trigger_m6.py`, committed with no results —
+verifiable in git) and run once. 12,212 M6.0–6.99 events declustered to
+**10,324**, against 51,620 era-matched controls, design identical to the M7+
+run so the numbers are directly comparable:
 
-⚠️ Decide **in the pre-registration, not after**: the author's claim is about
-*major* events, so extending to M6 tests a different population. And the flood
-arm already points negative (0.937), which is evidence the effect may not be
-there at all.
+| | M7+ (n = 1,435) | **M6.0–6.99 (n = 10,324)** |
+|---|---|---|
+| P1 primary | lift 1.804, p = 0.069 | **lift 0.915, p = 0.76** |
+| firings vs expected | 12 vs 7.0 (+1.4 σ) | **38 vs 42.4 (−0.71 σ)** |
+| P2 grid mode | — | 0.759 (11 vs 15.6) |
+| P3 escalated | — | 1.091 (11 vs 10.8) |
+
+**Wrong direction, and powered to see it**: planting the predicate into 2% of
+events yields lift 5.75 at p < 0.0001. Family-wise p over the three
+predicates = 1.00.
+
+Registered in advance and still binding: a null at M6 does not refute a
+mechanism that switches on only above M7. But the M7+ result was itself
+1.4 σ, so the rule now rests on that and nothing else. The honest summary is
+**unsupported at every magnitude tested**, not *refuted*.
+
+⚠️ **The holdout is now spent.** M6.0–6.99 was the project's only strictly
+disjoint band. It has been used twice (dwell, RESULTS #8; band trigger,
+RESULTS #11) and is no longer clean for confirmatory use. Any future
+confirmatory test needs a genuinely new corpus.
 
 ### 3.3 Category-tagged recurrence, graded
 

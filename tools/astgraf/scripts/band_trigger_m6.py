@@ -74,7 +74,6 @@
 # ==========================================================================
 
 import csv
-import math
 
 from astgraf.anchors import chart_at
 from astgraf.bands import GIANTS, circular_spread, division_of
@@ -194,8 +193,8 @@ def main() -> None:
     supported = p1["p"] < 0.05 and p1["lift"] > 1.0
     say(f"VERDICT on P1: {'SUPPORTED' if supported else 'NOT SUPPORTED'} "
         f"(bar: {claim.verdict})")
-    say(f"  M7+ comparison (RESULTS.md #10): lift 1.804, p = 0.069, "
-        f"12 firings vs 7.0 expected (1.4 sigma)")
+    say("  M7+ comparison (RESULTS.md #10): lift 1.804, p = 0.069, "
+        "12 firings vs 7.0 expected (1.4 sigma)")
     say(f"  M6 result here:                  lift {p1['lift']:.3f}, "
         f"p = {p1['p']:.4f}, {p1['eh']} firings vs {p1['expected']:.1f} "
         f"expected ({p1['sigma']:.2f} sigma)")
