@@ -1939,3 +1939,35 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
 - Schema interoperability enforced by test (247 passing): identical column
   order to floods-historical.csv, unique ids, all-day precision, all-country
   loc_precision, year range 1870-2026.
+
+## 2026-08-05 — PLAN.md rewritten as the authoritative open-work document
+- NU: "document well what still needs to be done." PLAN.md had gone stale
+  within hours (its P2/P3 next-actions were built; its top two blocked
+  inputs were resolved). Rewritten from measurements, not intentions:
+  * Section 2 CLOSED — the seven graded channels in one table with verdicts,
+    plus the derivation that the geometric location route is EXHAUSTED
+    rather than merely untested.
+  * Section 3 RUNNABLE NOW (what the flood corpora opened): four
+    pre-registration candidates with available n MEASURED —
+    (3.1) long-cycle clock test: 2,757 dated events since 1871, 326 in the
+    1988-98 conjunction window, with the honest limit stated up front that a
+    155-year record is LESS THAN ONE CYCLE of any candidate clock, so the
+    test can rule one OUT but cannot confirm one; and the warning that the
+    null must be built first because flood reporting density rises steeply
+    with time and toward Europe. (3.2) the taught Neptune-on-Ketu signature
+    tested in its OWN category for the first time, n=2,750 day-precision —
+    every prior grading used the quake corpus. (3.3) category-tagged
+    recurrence grading. (3.4) site channel in its own category, flagged
+    UNDERPOWERED at n=13 (only 13 events are day-precision AND modern AND
+    point/city located).
+  * Section 4 ENGINEERING DEBTS, seven, each with impact and fix — including
+    one measured today: 21 TESTS FAIL WHEN RUN FROM THE REPO ROOT because
+    trigger/CLI tests open doctrine-triggers.toml relative to cwd (the suite
+    is only green from tools/astgraf); HANZE's country-centroid limit; the
+    undeclustered flood corpora with no completeness model; the canon's
+    missing lunar latitude; the parked provisional Jup/Sat offsets;
+    unconverted pre-1582 Julian dates; exhausted firecrawl credits.
+  * Section 5 BLOCKED ON NU, re-ranked now that the flood records and the NR
+    values are resolved — THE LATITUDE QUESTION TO THE AUTHOR IS NOW #1.
+  * Sections 6-7: the autumn season table with its base-rate warning, and
+    the six standing method rulings.
