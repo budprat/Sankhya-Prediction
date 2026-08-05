@@ -16,8 +16,15 @@ end acts at once. What arrives later, at light speed, is only the *image*:
   (`(NR·Rs/2Ro − 1)·500/240`: Uranus +17.856°, Neptune +29.092°) — the
   substratum acts at the real position.
 - An event's **place** is the light-time made geographic: the planet's
-  culmination meridian rotated west by light-minutes × 15°/h
-  (Jup 40 / Sat 80 / Ura 150 / Nep 240); latitude from declination.
+  culmination meridian rotated west by the Mathcad quantity itself —
+  `(a/2 − 1)·500/240` is ALREADY degrees of ground rotation (500 s per AU
+  of travel ÷ 240 s per degree of Earth rotation), so the rotation is
+  Jupiter 3.336° / Saturn 7.867° / Uranus 17.856° / Neptune 29.092°
+  (rule v3, NU ruling 2026-08-05: "Mathcad version is the one"); latitude
+  from declination. The superseded readings stay on record: the prose
+  minutes 40/80/150/240 (= nearest-approach `a−1`, giving 10/20/37.5/60°)
+  and the 2026-08-02 distance-true refinement — the Mathcad is defined on
+  the ORBITAL RADIUS, so the rotation is a fixed constant per body.
 
 **Karma.** Sankhya and the theory of karma are synonymous: happenings are
 predestined, hence predictable. Natal astrology reads only karmic traits —
@@ -96,11 +103,16 @@ named from it, and its dwell time sets every sweep step.
 
 **Location layer.** At the trigger instant, the light-time rotation gives
 the spot (longitude from the rotated culmination meridian, latitude from
-declination). Rule v2 (NU, 2026-08-02): the displacement follows the
-planet's ACTUAL distance — almanacs that ignore light-delay hide the
-connection; at nearest position the displacements are ~1000 km (Jupiter),
-~2000 (Saturn), ~4000 (Uranus) — NU's Neptune 8000 exceeds the physical
-~6700-7200 km, tension on record.
+declination). **Rule v3 (NU, 2026-08-05, "Mathcad version is the one"):**
+the rotation is the Mathcad offset itself — Jupiter 3.336° / Saturn 7.867°
+/ Uranus 17.856° / Neptune 29.092°, a FIXED constant per body (the Mathcad
+is defined on the orbital radius), ground scale ~371 / 875 / 1,987 /
+3,238 km at the equator. Two earlier readings are superseded but kept on
+record: v1, the prose minutes 40/80/150/240 rotated at 15°/h; and v2
+(2026-08-02), the distance-true refinement in which the displacement
+followed the planet's ACTUAL distance (~1000 km Jupiter, ~2000 Saturn,
+~4000 Uranus, with NU's Neptune 8000 exceeding the physical ~6700-7200 km
+— that tension dissolves under v3, whose Neptune figure is ~3,238 km).
 
 **Two-channel ruling (NU, 2026-08-02): real positions TIME the crossing;
 the OBSERVED image PLACES the marker.** The substratum channel is instant
@@ -260,6 +272,16 @@ yet in the right place. It is a finishing step, not a fix.
    outlier). Sankhya-trend expectation (Ura −0.26%, Nep −0.47%, shrinking
    inward): corrections within ~0.02°. (Earlier note stands: offsets run
    AHEAD; Hyderabad reads as Jupiter-on-Sun + Mercury-on-Rahu.)
+   **SCOPE OF THE PROVISIONALS WIDENED 2026-08-05:** under locator rule v3
+   the same `REAL_POSITION_OFFSETS` are also the ground rotation
+   (`locator.ROTATION_DEGREES = dict(REAL_POSITION_OFFSETS)`), so these two
+   provisional numbers now set **spot longitudes and derived light-minutes
+   as well as real positions**. When NU's exact NR values land, Jupiter and
+   Saturn spots move with them, and every published Jupiter/Saturn
+   longitude (WATCHLIST rows, dossiers, signature `spot_lon:` features)
+   must be regenerated — expected shift ≲ 0.02° of longitude (~2 km), so
+   the correction is real but small. Uranus and Neptune are unaffected
+   (their offsets are the Mathcad's own digits).
 2. Is Moon+Ketu+Mars *the* band trigger or one of a taught family?
 3. Lords for the 7-fold instant level (the 9-lord cycle doesn't map onto 7).
 4. Exact definition of the "Moon–Sun–Asc cross" trigger (square/conjunction

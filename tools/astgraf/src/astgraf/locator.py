@@ -22,6 +22,11 @@ from .models import ChartResult
 #    orbital radius, not the instantaneous distance, so the rotation is FIXED.
 # Ground scale at the equator: Jup ~371 km, Sat ~875, Ura ~1987, Nep ~3238.
 
+# CAUTION: Jupiter's and Saturn's entries are PROVISIONAL (canon-axis derived,
+# NU ruling 2026-08-04) pending NU's exact Sankhya NR values — so under this
+# rule they set SPOT LONGITUDES too, not just real positions. When the exact
+# values land, regenerate every published Jupiter/Saturn longitude (expected
+# shift <= 0.02 deg). Uranus/Neptune are the Mathcad's own digits.
 ROTATION_DEGREES = dict(REAL_POSITION_OFFSETS)
 MINUTES_PER_DEGREE = 4.0                  # Earth turns 1 deg in 4 minutes
 LIGHT_MINUTES = {b: d * MINUTES_PER_DEGREE for b, d in ROTATION_DEGREES.items()}

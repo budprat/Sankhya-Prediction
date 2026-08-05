@@ -8,7 +8,7 @@ Built as a faithful modern port of a family BASIC astrology suite
 (ASTGRAF/ASTROLOG/GRAPHDO/HORARY, preserved in [`canon/`](canon/)), extended
 into a full prediction pipeline from the Sankhyan doctrine of
 *Secrets of Sankhya* and its worked instances. Python 3.12 · zero heavy
-dependencies · 211 tests · MIT.
+dependencies · 239 tests · MIT.
 
 ```
 canon/                      The original BASIC suite (the computation canon, in-tree)
@@ -39,7 +39,10 @@ against the original suite's printouts. On top of it:
   the `.GRF` files.
 - **Aspect events** — wrap-safe, retrograde-aware crossing detection
   (the 2010–11 Jupiter–Saturn triple opposition resolves at a *yearly* lens),
-  bisection-refined to the minute.
+  bisection-refined to the minute — plus the heritage **cos-fold mirror
+  crossing** (`--mirror`): the suite plots `cos(longitude)`, so two traces
+  also meet when `lon_a + lon_b = 360k`, a crossing visible on the author's
+  own graph and invisible to ordinary aspect angles.
 - **The nakshatra layer** — classical 27-star position/pada/navamsam exactly
   per the canon; the Sankhyan 28×9×7 = 1764 "instant" ladder available behind
   `--ladder 28`.
@@ -52,8 +55,18 @@ against the original suite's printouts. On top of it:
   becomes a few lines in a file, swept and scored uniformly.
 - **The event locator** — the doctrine's light-time rule: crossings act
   instantly in the substratum; the marker arrives at light speed; the spot is
-  the culmination meridian rotated west by light-minutes × 15°/h, latitude
-  from declination. Distance-true light-times from the engine's own geometry.
+  the culmination meridian rotated west, latitude from declination. Rule v3
+  (2026-08-05): the rotation is the Mathcad quantity itself — a fixed
+  3.336° / 7.867° / 17.856° / 29.092° for Jupiter / Saturn / Uranus /
+  Neptune, superseding both the prose-minute and distance-true readings.
+- **Chart angles & the site-angle layer** (`angles.py`) — Asc/Desc/MC/IC and
+  the solvers that invert them. The location rule built on them fits all
+  three taught anchors, was graded against leave-one-out epicenter controls,
+  and is **retired as a predictor** — with a planted-signal power check
+  proving the null is not blindness.
+- **Galactic reference** (`--galactic`) — per body, the separation from the
+  Punarvasu crossover (the galactic–ecliptic node) and the Magha axis, drawn
+  on the scope wheels.
 - **Chatur Vyuham detector** — the fourfold array (crossing oppositions +
   nodal lock); its 1900–2026 census fires exactly once: June 1–6, 2016.
 - **Precession clock** — the 25,739-year equinox cycle, 919.25 years per
@@ -102,7 +115,7 @@ uv run astgraf --year 2015 --month 4 --day 25 --time 11:40 \
 uv run astgraf-bands --start 2016-05-25 --days 15 \
   --rules doctrine-triggers.toml --out out/vyuha-2016
 
-uv run pytest   # 211 tests
+uv run pytest   # 239 tests
 ```
 
 Full CLI documentation: [`tools/astgraf/README.md`](tools/astgraf/README.md).
@@ -145,8 +158,16 @@ assiduous search and only then it can be predictable"*:
 - **The canon is in-tree** ([`canon/`](canon/)) and the port is verifiable
   against it: all 144 planetary coefficients digit-for-digit, the truncated
   `PI = 3.141592654`, the epoch arithmetic, the Ascendant chain — pinned by
-  oracle tests against the suite's own printouts (PRATEEK, QUAKE) and
-  bit-close parity with the corrected JS descendant of the suite.
+  oracle tests against the suite's own printouts (PRATEEK, QUAKE), the
+  author's own program output (`canon/ASTROC.GRF` — 11 bodies × 41 daily
+  rows reproduced within the file's 0.12° print resolution, confirming the
+  BAS pre-increment; a sample output, not a pipeline stage), and bit-close
+  parity with the corrected JS descendant of the suite.
+- **One environment difference, not a source divergence**: the canon
+  declares no `DEFDBL`, so the family's interpreter ran the series in
+  single precision. The port computes in double, which can move the Moon
+  1–2 arcminutes from a period print (and ~10 days of Vimshottari balance).
+  The port follows the source, not the 1980s float hardware.
 - **Exactly two engine behaviors deliberately diverge from the canon** (the
   Gregorian reform-day comparison and the instant-derived ayanamsa year), both
   bug fixes, both tested, both documented — see

@@ -1525,3 +1525,27 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   crossing to a 1/81 horary subdivision, which needs a reference longitude to
   subdivide FROM — and we have never been told what his zero is. Until that
   arrives (or the 1000-year record), there is no location layer to grade.
+
+## 2026-08-05 — Cross-session reconciliation: five documentation gaps closed
+- Reviewed all 22 commits made after 0d5f9dd by the parallel session
+  (locator v3 Mathcad ruling, angles.py site-angle layer graded + retired,
+  mirror crossings, galactic layer, GRF oracle; 239 tests green). Work is
+  sound; five gaps found where the new ruling did not reach:
+  (1) CONSEQUENTIAL — locator v3 sets ROTATION_DEGREES =
+  dict(REAL_POSITION_OFFSETS), so the PROVISIONAL canon-axis Jupiter
+  (3.3363593) and Saturn (7.8672057) offsets now set SPOT LONGITUDES and
+  derived light-minutes, not just real positions. Documented at both ends:
+  a caution block in locator.py and a "scope of the provisionals widened"
+  paragraph in FRAMEWORK open question 1, with the regeneration duty when
+  NU's exact NR values land (expected shift <= 0.02 deg of longitude,
+  ~2 km; Ura/Nep unaffected — their offsets are the Mathcad's own digits).
+  (2) FRAMEWORK section 1 still carried the v1 prose reading (Jup 40 / Sat
+  80 / Ura 150 / Nep 240 at 15 deg/h) -> rewritten to v3 with v1/v2 kept on
+  record. (3) FRAMEWORK section 2 still carried "Rule v2 distance-true" ->
+  rewritten to v3; NU's Neptune-8000-km tension noted as DISSOLVED under
+  v3 (Neptune ground scale ~3,238 km). (4) Repo README still said
+  "Distance-true light-times" -> v3. (5) Repo README stale otherwise: test
+  count 211 -> 239, and the capability list gained the mirror crossing, the
+  angles/site-angle layer (with its retirement), the galactic reference,
+  the ASTROC.GRF oracle, and the single-precision environment note.
+- No code behavior changed (comment-only in locator.py); 239 tests green.
