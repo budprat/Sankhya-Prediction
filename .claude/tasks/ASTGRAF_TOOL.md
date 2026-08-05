@@ -1500,6 +1500,35 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
   angles.py stays as a way to READ a chart's angles; it must not be used to
   claim a location. Third location family retired by test, after the
   rotation-based spots and the Ascendant-based rules.
+- *** THE ROTATION SPECTRUM: NO GROUND ROTATION CARRIES LOCATION SIGNAL ***
+  scripts/rotation_spectrum.py. NU's reading of the author's briefing found
+  that his PROSE light-times (Jup 40, Sat 80, Ura 150, Nep 240 min ->
+  10/20/37.5/60 deg) reproduce his own stated displacements (1000/2000/4000/
+  8000 km) while the Mathcad offsets we implemented (3.34/7.87/17.86/29.09,
+  from (a/2-1)*500/240) are about a third of that. Rather than test two
+  candidates, the rotation was SCANNED right round the circle at 5 deg steps
+  for each giant, using the same leave-one-out epicenter rank statistic the
+  angle layer was graded with.
+  THE SPECTRUM IS FLAT. Deepest dip anywhere is Neptune at 25 deg, z = -2.32,
+  against a z = -3.7 bar for 4 bodies x 72 angles. The per-body minima sit at
+  Jup 270, Sat 170, Ura 60, Nep 25 deg — NOT clustered near the physical
+  light-time values, which is what a real propagation effect would produce.
+  BY CONVENTION (nearest-of-four, within 1000 km / rank z):
+    mathcad (current)   0.0383  z -1.67
+    prose 40/80/150/240 0.0258  z -1.04   <- WORSE, not better
+    no rotation at all  0.0328  z -1.15
+  At Gorkha itself, NO rotation is best (Uranus 2852 km) vs mathcad 4151 and
+  prose 5939. Adding any rotation moves the spot AWAY from the taught anchor.
+  POWER FIRST: planting synthetic epicenters at a known 100 deg rotation, the
+  scan recovers it in the exact 5 deg bin at z = -64, and still exactly at
+  z = -60 with +-30 deg of jitter. The instrument finds rotations that exist.
+  CONSEQUENCE: the Mathcad-vs-prose question is settled for PREDICTION — the
+  3x discrepancy was never what was costing us accuracy, because no value
+  works. It is NOT settled as doctrine: the evidence says neither predicts,
+  not which one the author meant. NU's Mathcad ruling can stand on doctrinal
+  grounds; it simply has no predictive consequence. Fourth location family
+  retired by test, and the first one retired across its ENTIRE parameter
+  space rather than at a single point.
 - *** THE CANON HAS NO LUNAR LATITUDE — the tropical ceiling is HIS ceiling ***
   Chasing NU's question "what is 23.5", the per-body bound was measured rather
   than assumed, and it is NOT a flat 23.44: a sub-point's latitude is the

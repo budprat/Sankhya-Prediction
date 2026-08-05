@@ -431,6 +431,39 @@ flood family's 1993 conjunction was itself a triple, all three passes in
 Poorvashada pada 4 — the 1,000-year records list (awaited) populates its
 historical members. Timing only — no spots.
 
+## The rotation spectrum (`scripts/rotation_spectrum.py`) — no rotation works
+
+The locator rotates a body's sub-point west by the Earth-rotation angle
+corresponding to its light time. Two candidate offset sets exist: the Mathcad
+`(a/2−1)·500/240` values (3.34/7.87/17.86/29.09°) and the author's prose light
+times (40/80/150/240 min → 10/20/37.5/60°, which reproduce his own stated
+1000/2000/4000/8000 km displacements).
+
+Rather than test two points, the rotation is **scanned round the whole circle**
+at 5° steps per giant, using the same leave-one-out epicenter rank statistic
+that graded the angle layer. **The spectrum is flat** — deepest dip anywhere is
+Neptune at 25°, z = −2.32, against a z = −3.7 bar for 288 tests. The per-body
+minima (Jup 270°, Sat 170°, Ura 60°, Nep 25°) are scattered, not clustered near
+the physical light-time values, which is what a real propagation effect would
+produce.
+
+| convention | within 1000 km | rank z |
+|---|---|---|
+| Mathcad (current) | 0.0383 | −1.67 |
+| prose 40/80/150/240 min | 0.0258 | −1.04 |
+| no rotation at all | 0.0328 | −1.15 |
+
+At Gorkha, **no rotation is best** (Uranus 2,852 km) against Mathcad 4,151 km
+and prose 5,939 km — every rotation moves the spot away from the taught anchor.
+
+Power check in the same script: planting synthetic epicenters at a known 100°
+rotation, the scan recovers it in the exact 5° bin at z = −64, and still exactly
+at z = −60 with ±30° of jitter. It finds rotations that exist.
+
+This settles the Mathcad-vs-prose question **for prediction only** — the 3×
+discrepancy was never what cost us accuracy, because no value works. It does not
+settle which the author meant.
+
 ## The site-angle layer (`astgraf.angles`) — graded, and retired as a predictor
 
 The idea: an event stands where the crossing pair sits on an **angle** of the
