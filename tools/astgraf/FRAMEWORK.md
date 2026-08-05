@@ -271,7 +271,32 @@ solution**, each with its own longitude and time. The author's own phrase —
   collapse the two free parameters. He is aware of this and reaches for a
   nodal correction: *"It may not be exactly on that spot because Rahu has
   shifted so there could be an angular shift in Latitude Northward."*
-- **The standing question for the author is therefore sharper than "what
+- **A SECOND UNRESOLVED PHRASE OF HIS: "straight line" (EXPLODE.docx note,
+2026-08-05).** Of the July 2013 cluster — Bodhgaya explosions, Lac-Mégantic,
+the Asiana SFO crash — he wrote: *"Saturn / Jup in straight line and Saturn /
+Moon is straight line. Problem is to find an easier way to plot the straight
+line in time discarding velocity of light."* Measured on his own EXPLODE chart,
+no reading resolves: observed Jupiter–Saturn 122.4°, real Jupiter–Saturn 126.9°,
+observed Moon–Saturn 123.7°, Moon–real-Saturn 131.6° — every one 48–58° away
+from 0° or 180°. All four sit near a TRINE. So "straight line" is not an
+ecliptic-longitude alignment in his usage; the most likely candidate is a line
+on the PLOTTED CURVE (the cos-fold mirror, `--mirror`), which our aspect engine
+could not originally see. **Unresolved; needs his clarification.**
+
+What his sentence DOES settle is the frame: *"discarding velocity of light"*
+confirms the straight-line channel is the SUBSTRATUM channel — real positions,
+no light-time rotation — the same instruction the Mathcad offsets encode, and
+consistent with the two-channel ruling above. What he is asking for is a tool:
+plot the alignment over time in the light-discarded frame.
+
+**What DOES hold in that chart**: Moon 91.1° and Jupiter 92.4° are **1.3°
+apart, both in Punarvasu pada 4**, with Jupiter EXALTED and Moon RULER — a
+tight same-cell conjunction on the exact day he names. The 6 July events sit at
+Moon–Jupiter 10.3°. His June flood pair does NOT share it (82.0° and 135.2°),
+so "the same combo" spans two different geometries, and Moon–Jupiter conjunct
+~12 times a year: base-rate untested.
+
+**The standing question for the author is therefore sharper than "what
   supplies the latitude?": it is "what second condition collapses the
   Ascendant solve from one equation in three unknowns to a point?"**
 

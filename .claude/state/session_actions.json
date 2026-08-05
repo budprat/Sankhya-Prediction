@@ -14,46 +14,6 @@
   ],
   "commands_run": [
     {
-      "command": "echo \"=== scan for secrets / tokens / keys ===\"; grep -rlEi \"api[_-]?key|secret|token|password|Beare",
-      "success": true,
-      "timestamp": "2026-08-05T15:50:35.513764"
-    },
-    {
-      "command": "grep -oEi \".{60}(api[_-]?key|secret|token|password).{60}\" .claude/state/context_budget.json | head -",
-      "success": true,
-      "timestamp": "2026-08-05T15:50:43.478141"
-    },
-    {
-      "command": "grep -n \"claude\" .gitignore; echo \"=== when were they ignored? ===\"; git log --oneline -2 -- .gitign",
-      "success": true,
-      "timestamp": "2026-08-05T15:51:00.746890"
-    },
-    {
-      "command": "python3 - <<'PYEOF'\np=\".gitignore\"; s=open(p).read()\nfor line in (\".claude/analytics/\\n\", \".claude/s",
-      "success": true,
-      "timestamp": "2026-08-05T15:51:14.915435"
-    },
-    {
-      "command": "git add .gitignore && git commit -q -m \"chore: track the hook memory, analytics and state directorie",
-      "success": true,
-      "timestamp": "2026-08-05T15:51:34.150016"
-    },
-    {
-      "command": "git status --porcelain",
-      "success": true,
-      "timestamp": "2026-08-05T15:51:43.474836"
-    },
-    {
-      "command": "git add -A .claude && git commit -q -m \"chore: capture hook state written during the tracking commit",
-      "success": true,
-      "timestamp": "2026-08-05T15:51:57.012923"
-    },
-    {
-      "command": "echo \"=== branches ===\"; git branch -a; echo; echo \"=== astro-history pushed? ===\"; git rev-parse as",
-      "success": true,
-      "timestamp": "2026-08-05T15:52:24.177447"
-    },
-    {
       "command": "for d in ~/.claude/projects/-Users-macbookpro-Astro ~/.claude/projects/-Users-macbookpro-Astro-tools",
       "success": true,
       "timestamp": "2026-08-05T15:52:38.384840"
@@ -262,6 +222,46 @@
       "command": "grep -n \"The latitude question, put to the author\" tools/astgraf/PLAN.md | head -2",
       "success": true,
       "timestamp": "2026-08-05T20:24:36.341902"
+    },
+    {
+      "command": "python3 - <<'PYEOF'\np='tools/astgraf/PLAN.md'\ns=open(p).read()\nold = '| 1 | **The latitude question,",
+      "success": true,
+      "timestamp": "2026-08-05T20:25:00.905521"
+    },
+    {
+      "command": "find . -iname \"*explode*\" 2>/dev/null; ls canon/ tools/astgraf/*.docx tools/astgraf/*.pdf 2>/dev/nul",
+      "success": true,
+      "timestamp": "2026-08-05T20:29:25.976559"
+    },
+    {
+      "command": "git ls-files tools/astgraf/EXPLODE.docx; grep -ril \"EXPLODE\" tools/astgraf/*.md .claude/tasks/*.md 2",
+      "success": true,
+      "timestamp": "2026-08-05T20:29:37.648827"
+    },
+    {
+      "command": "cd tools/astgraf && uv run astgraf --year 2013 --month 7 --day 7 --time 06:00 --utc-offset +05:30 --",
+      "success": true,
+      "timestamp": "2026-08-05T20:30:18.079141"
+    },
+    {
+      "command": "uv run python - <<'EOF'\nfrom astgraf.anchors import chart_at, iso_jd, jd_iso_minute\nfrom astgraf.ban",
+      "success": true,
+      "timestamp": "2026-08-05T20:31:03.550239"
+    },
+    {
+      "command": "cd tools/astgraf && cat >> tests/test_report.py <<'EOF'\n\n\ndef test_explode_docx_oracle_2013():\n    \"",
+      "success": true,
+      "timestamp": "2026-08-05T20:35:01.517889"
+    },
+    {
+      "command": "pwd; cat >> tests/test_report.py <<'EOF'\n\n\ndef test_explode_docx_oracle_2013():\n    \"\"\"EXPLODE.docx:",
+      "success": true,
+      "timestamp": "2026-08-05T20:35:17.053831"
+    },
+    {
+      "command": "python3 - <<'PYEOF'\n# TESTING.md: add EXPLODE to the oracle table\np=\"TESTING.md\"; s=open(p).read()\no",
+      "success": true,
+      "timestamp": "2026-08-05T20:35:45.589530"
     }
   ]
 }

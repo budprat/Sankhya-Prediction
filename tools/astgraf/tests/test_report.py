@@ -96,3 +96,31 @@ def test_report_edge_south_and_pm():
     h, m, s = sidereal_hms(chart.sidereal_time_deg)
     # m can reach 60: the canon rounds the float minutes for display (USING ##).
     assert 0 <= h <= 24 and 0 <= m <= 60 and 0 <= s < 60
+
+
+def test_explode_docx_oracle_2013():
+    """EXPLODE.docx: the author's own cast of 07-07-2013 06:00, 76E 11N,
+    GMT +5:30, tropical/Koch, place "WORLD" — the day of the Bodhgaya
+    explosions, one day after Lac-Megantic and the Asiana SFO crash. A FIFTH
+    oracle and the first covering a 2013 epoch; it sat unused in the repo,
+    referenced by no document, until 2026-08-05."""
+    from astgraf.ephemeris import compute_chart
+    from astgraf.models import ChartMoment
+    moment = ChartMoment(year=2013, month=7, day=7, hour=6, minute=0,
+                         utc_offset_hours=5.5, longitude_east=76.0,
+                         latitude_north=11.0, sidereal=False, equal_houses=False)
+    chart = compute_chart(moment)
+    expected = {
+        "Ascendant": 102 + 16 / 60, "Sun": 105 + 5 / 60, "Moon": 91 + 7 / 60,
+        "Mars": 85 + 34 / 60, "Mercury": 109 + 26 / 60, "Jupiter": 92 + 25 / 60,
+        "Venus": 131 + 17 / 60, "Saturn": 214 + 47 / 60, "Rahu": 223 + 41 / 60,
+        "Ketu": 43 + 41 / 60, "Uranus": 12 + 31 / 60, "Neptune": 335 + 22 / 60,
+        "Pluto": 280 + 33 / 60,
+    }
+    for body, value in expected.items():
+        # 0.03 deg covers the canon's single-precision Moon (his 91d07 vs 91d06)
+        assert chart.positions[body].longitude == pytest.approx(value, abs=0.03), body
+    for body in ("Mercury", "Saturn", "Neptune", "Pluto"):
+        assert chart.positions[body].retrograde, body
+    assert chart.mc == pytest.approx(9.4, abs=0.05)
+    assert chart.cusps[3] == pytest.approx(102.3, abs=0.05)   # First cusp

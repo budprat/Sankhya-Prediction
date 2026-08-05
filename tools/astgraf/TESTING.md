@@ -17,7 +17,7 @@ Layer 1 must be perfect. Layer 2 is where the project's honesty lives.
 **The canon is in-tree** (`canon/`: ASTGRAF.BAS, ASTROLOG.BAS, GRAPHDO.BAS,
 HORARY.BAS) so every claim of fidelity is checkable, not asserted.
 
-**16 oracle tests** pin the engine against sources the implementer did not
+**17 oracle tests** pin the engine against sources the implementer did not
 produce:
 
 | Oracle | What it pins |
@@ -25,6 +25,7 @@ produce:
 | `PRATEEK.docx` | The 1987 ASTROLOG.BAS printout — all bodies, sidereal/E path |
 | `QUAKE.pdf` | Tropical/Koch path: cusps, MC, sidereal time, planet table, star/pada/navam, Dasa/Bukti, the full report page |
 | `Hyderaba-floods.docx` | NU's own 2016 cast: 13/13 planet rows, retrograde flags, dignities |
+| `EXPLODE.docx` | The author's cast of **07-07-2013** (Bodhgaya explosions; Lac-Mégantic and Asiana SFO the day before) — 13/13 bodies, all cusps, sidereal time, dignities. A 2013 epoch, and the file sat unused until 2026-08-05 |
 | `canon/ASTROC.GRF` | **The author's own program output** — 11 bodies × 41 daily rows, reproduced within the file's 0.12° print resolution, confirming the BAS pre-increment |
 | Corrected JS engine | Bit-close parity across all bodies |
 

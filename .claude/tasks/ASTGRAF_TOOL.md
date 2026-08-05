@@ -2642,3 +2642,37 @@ fix and the flood clock had made stale.
   court for what the doctrine asserts. DE440 applies in ONE case only — when a
   claim ties the program's clock to a REAL-WORLD event clock. Corrected in
   FRAMEWORK section 2b and TESTING protocol step 5.
+
+## 2026-08-05 — EXPLODE.docx found unused: a FIFTH oracle, and a second unresolved phrase
+- NU pointed at EXPLODE.docx. It was IN THE REPO, untracked by git, and
+  referenced by NO document — never used in the whole project. It is the
+  author's own cast: 07-07-2013 06:00, 76E 11N, GMT +5:30, tropical/Koch,
+  place "WORLD" — the day of the Bodhgaya explosions, one day after
+  Lac-Megantic and the Asiana SFO crash.
+- OUR ENGINE REPRODUCES IT VALUE-FOR-VALUE: all 12 cusps, all 13 bodies,
+  sidereal time 0H35M34S, every dignity (Jupiter EXALTED, Moon and Neptune
+  RULER, Rahu/Ketu WEAK), every nakshatra/pada/navam. Only the two documented
+  divergences appear (Magha/Makha; Moon 91d06 vs his 91d07 = the canon's
+  single-precision interpreter). Pinned as test_explode_docx_oracle_2013.
+  ORACLE COUNT 4 -> 5, and the FIRST covering a 2013 epoch. 265 tests.
+- HIS EVENT CLUSTER IS REAL AND THE MOON-JUPITER TIMING IS STRIKING:
+  2013-07-07 Bodhgaya Moon-Jupiter 1.3 deg (BOTH in Punarvasu pada 4, Jupiter
+  exalted, Moon ruler); 2013-07-06 Lac-Megantic + Asiana SFO at 10.3 deg.
+  BUT his June flood pair does NOT share it — Uttarakhand 82.0, Alberta
+  135.2 — so "the same combo" spans two different geometries, and
+  Moon-Jupiter conjuncts ~12x a year. BASE RATE UNTESTED; recorded as an
+  observation, not a finding.
+- *** HIS "STRAIGHT LINE" DOES NOT RESOLVE *** — measured on his own chart,
+  every reading including the light-discarded one:
+    observed Jupiter-Saturn 122.4 | real Jupiter-Saturn 126.9
+    observed Moon-Saturn    123.7 | Moon - real-Saturn  131.6
+  all 48-58 deg from 0/180, and ALL FOUR SIT NEAR A TRINE. So "straight line"
+  is NOT an ecliptic-longitude alignment in his usage. Most likely candidate:
+  a line on the PLOTTED CURVE — the cos-fold mirror (--mirror), which the
+  aspect engine originally could not see. UNRESOLVED; added to PLAN as
+  blocked-on-author question 1b, beside the Ascendant-solve question.
+- WHAT HIS SENTENCE DOES SETTLE: "discarding velocity of light" confirms the
+  straight-line channel is the SUBSTRATUM channel — real positions, no
+  light-time rotation — the same instruction the Mathcad offsets encode and
+  consistent with the two-channel ruling. What he asks for is a TOOL: plot
+  the alignment over time in the light-discarded frame.
