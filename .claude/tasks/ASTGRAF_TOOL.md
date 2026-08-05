@@ -1532,12 +1532,33 @@ Jan–Mar 2027 double-occupation windows now yield per-site daily hours via this
        first version of this power arm was BROKEN (injected on raw dwell,
        which is skewed, so 0.25 scored below 0.10); it was rebuilt on ranks
        and averaged over seeds before any of this was believed.
-  STATUS: the project's one live lead, NOT a result. n=44, p=0.042 is
-  marginal, the dwell construction was fitted to a single anchor, and the true
-  family of choices (construction, target set, giant set, orbs, real-vs-
-  observed) is larger than the four cells corrected for.
-  DECISIVE NEXT TEST: genuinely held-out data — re-mine at M6+ and re-run.
-  That takes n from 44 into the hundreds and the M7+ fit cannot leak into it.
+  STATUS AT THE TIME: the project's one live lead, NOT a result — n=44,
+  p=0.042 marginal, construction fitted to a single anchor.
+- *** AND IT DID NOT REPLICATE — the dwell lead is dead ***
+  scripts/dwell_holdout.py, data/usgs-m6-1900-2020.csv (12,212 events fetched
+  from USGS FDSN, minmag 6.0 maxmag 6.99 — disjoint from the M7+ corpus by
+  construction, verified in-script by asserting max mag < 7.0). Declustered
+  with the identical 7 d / 500 km keep-largest rule to 10,324; 338 carry an
+  active taught crossing at orb 1.
+  PRE-REGISTERED before running: one cell (taught giants, orb 1), one
+  statistic (Spearman dwell vs magnitude), one-sided because the direction was
+  predicted, expected rho > 0 of order +0.3. No re-tuning permitted.
+  RESULT: rho = -0.0399, one-sided p = 0.768. Wrong sign. Every secondary cut
+  agrees: count -0.033, within-single-crossing -0.019, halves -0.048/-0.045,
+  1970+ -0.041, and pooled M6+M7 over the full 6.0-8.5 range (n=382)
+  rho = -0.0528, p = 0.298 — which also kills the range-restriction excuse.
+  POWER: injecting a true rho of 0.32 into these same 338 events recovers it
+  in 12/12 draws, rho 0.20 in 11/12, rho 0.10 in 6/12. The test could not have
+  missed the claimed effect.
+  VERDICT: the dwell doctrine is unsupported. Trigger half vacuous, magnitude
+  half a winner's curse — an underpowered cell taken as the max of four, on a
+  construction fitted to one anchor. FAIR CAVEAT ON THE RECORD: his claim is
+  about MAJOR events, and a mechanism switching on only above M7 would not
+  appear in the M6 band; but the M7+ result now rests on nothing except its
+  own selection.
+  METHOD NOTE WORTH KEEPING: pre-registering the cell and direction BEFORE
+  running is what made this a clean kill rather than another argument. Do it
+  for every future lead.
 - *** THE ROTATION SPECTRUM: NO GROUND ROTATION CARRIES LOCATION SIGNAL ***
   scripts/rotation_spectrum.py. NU's reading of the author's briefing found
   that his PROSE light-times (Jup 40, Sat 80, Ura 150, Nep 240 min ->

@@ -472,11 +472,36 @@ Shuffling magnitudes across all events and recomputing every cell gives a
   44-event cell recovers ρ = 0.306 for a 0.30 target, detected in 8/12 draws —
   underpowered, but unbiased.
 
-⚠️ **Not established.** n = 44, p = 0.042 is marginal, the dwell construction was
-fitted to a single anchor (Nepal), and the real family of choices is larger than
-the four cells corrected for. Treat as the project's one live lead, not a result.
-The decisive test is genuinely held-out data: re-run on an M6+ catalog, which
-would take n from 44 into the hundreds.
+### …and then it failed to replicate (`scripts/dwell_holdout.py`)
+
+The M7+ result was flagged as a lead, not a result, precisely because n = 44 and
+the cell was the largest of four. It was tested against genuinely held-out data:
+**12,212 M6.0–6.99 events** from USGS FDSN (a band disjoint from the M7+ corpus
+by construction), declustered by the identical 7 d / 500 km rule to 10,324, of
+which **338** carry an active taught crossing at orb 1°.
+
+The cell, direction and statistic were **pre-registered before running** — one
+test, no re-tuning, predicted ρ > 0 of order +0.3.
+
+| test | n | ρ | p |
+|---|---|---|---|
+| **held-out M6.0–6.99** | 338 | **−0.040** | 0.77 (one-sided) |
+| pooled M6 + M7+, full 6.0–8.5 range | 382 | −0.053 | 0.30 |
+| within single-crossing events | 329 | −0.019 | — |
+| earlier / later halves | 169 / 169 | −0.048 / −0.045 | — |
+| 1970+ only (M6 completeness) | 170 | −0.041 | — |
+
+**Wrong sign, every cut.** And the test was not blind: injecting a true ρ of
+0.32 into the same 338 events recovers it in **12/12 draws**, and even ρ = 0.20
+in 11/12. The pooled row also removes the range-restriction excuse — full
+6.0–8.5 dynamic range, still nothing.
+
+**Verdict: the dwell doctrine is unsupported.** Its trigger half was vacuous,
+and its magnitude half was a winner's curse — an underpowered cell selected as
+the max of four, on a construction fitted to one anchor. The one caveat worth
+stating: the author's claim concerns *major* events, and a mechanism that
+switches on only above M7 would not show in the M6 band — but the M7+ result
+now rests on nothing except its own selection.
 
 ## The rotation spectrum (`scripts/rotation_spectrum.py`) — no rotation works
 
