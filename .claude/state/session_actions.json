@@ -14,41 +14,6 @@
   ],
   "commands_run": [
     {
-      "command": "uv run python -c \"import jplephem; print('jplephem available')\" 2>&1 | tail -1; grep -rn \"de440\" scr",
-      "success": true,
-      "timestamp": "2026-08-05T19:55:18.060728"
-    },
-    {
-      "command": "uv run --with jplephem python - <<'EOF' 2>&1 | tail -20\nimport math\nfrom jplephem.spk import SPK\nfro",
-      "success": true,
-      "timestamp": "2026-08-05T19:55:35.503756"
-    },
-    {
-      "command": "uv run --with jplephem python - <<'EOF' 2>&1 | tail -32\nimport math\nfrom jplephem.spk import SPK\nfro",
-      "success": true,
-      "timestamp": "2026-08-05T19:56:15.827938"
-    },
-    {
-      "command": "uv run --with jplephem python - <<'EOF' 2>&1 | tail -18\nimport csv, math\nfrom jplephem.spk import SP",
-      "success": true,
-      "timestamp": "2026-08-05T19:56:45.948394"
-    },
-    {
-      "command": "cat >> observed-triggers.toml <<'EOF'\n\n# -----------------------------------------------------------",
-      "success": true,
-      "timestamp": "2026-08-05T19:57:15.425053"
-    },
-    {
-      "command": "cat >> tests/test_triggers.py <<'EOF'\n\n\ndef test_jupiter_neptune_double_lock_is_encoded_with_its_ref",
-      "success": true,
-      "timestamp": "2026-08-05T19:57:29.036771"
-    },
-    {
-      "command": "python3 - <<'PYEOF'\np=\"RESULTS.md\"; s=open(p).read()\nanchor = \"### Notes that matter more than the n",
-      "success": true,
-      "timestamp": "2026-08-05T19:57:56.139249"
-    },
-    {
       "command": "python3 - <<'PYEOF'\n# 1. FRAMEWORK: the accuracy rule belongs with the divergences/accuracy note\np=\"",
       "success": true,
       "timestamp": "2026-08-05T19:58:18.029168"
@@ -262,6 +227,41 @@
       "command": "cd /Users/macbookpro/Sankhya-Prediction && git fetch -q; echo \"=== staged ===\"; git diff --cached --",
       "success": true,
       "timestamp": "2026-08-05T20:59:32.210992"
+    },
+    {
+      "command": "git add -A && git commit -q -m \"chore: capture hook memory, analytics, cache and state\" && git push ",
+      "success": true,
+      "timestamp": "2026-08-05T20:59:42.619270"
+    },
+    {
+      "command": "git fetch --all --prune 2>&1 | tail -3; echo \"=== BRANCH TRACKING ===\" && git branch -vv && echo \"\" ",
+      "success": true,
+      "timestamp": "2026-08-07T12:19:59.671157"
+    },
+    {
+      "command": "echo \"=== are they gitignored? ===\" && git check-ignore -v canon/EXPLODE.docx tools/astgraf/ASTGRAF.",
+      "success": true,
+      "timestamp": "2026-08-07T12:20:18.541624"
+    },
+    {
+      "command": "cd /Users/macbookpro/Sankhya-Prediction; echo \"=== check-ignore (standalone, no pipe) ===\"; git chec",
+      "success": true,
+      "timestamp": "2026-08-07T12:20:31.933368"
+    },
+    {
+      "command": "cd /Users/macbookpro/Sankhya-Prediction; echo \"=== hooks present ===\"; ls .git/hooks/ | grep -v '\\.s",
+      "success": true,
+      "timestamp": "2026-08-07T12:20:47.538581"
+    },
+    {
+      "command": "cd /Users/macbookpro/Sankhya-Prediction/tools/astgraf && uv run pytest -q 2>&1 | tail -8",
+      "success": true,
+      "timestamp": "2026-08-07T12:21:57.962747"
+    },
+    {
+      "command": "R=/Users/macbookpro/Sankhya-Prediction\necho \"=== BEFORE ===\"\necho \"staged:     $(git -C $R diff --ca",
+      "success": true,
+      "timestamp": "2026-08-07T12:22:05.333090"
     }
   ]
 }
