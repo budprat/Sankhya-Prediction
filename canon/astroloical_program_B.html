@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="G Srinivasan" />
+    <meta name="description" content="Sankhya Astrology Software " />
+    <meta name="keywords" content="UserInput for Horoscope" />
+    <title>Sankhya Astrology Program </title>
+
+
+
+    <style>
+        label {
+            width:180px;
+            clear:left;
+            text-align:right;
+            padding-right:10px;
+            margin-bottom: 20px;
+            margin-left: 10px;
+        }
+
+        input, label {
+
+            float:left;
+            width: 300px;
+        }
+
+
+    </style>
+
+
+
+    <script type="text/javascript">
+
+
+
+
+       function storedata() {
+
+
+            var d1 = document.getElementById("birthdate").value;
+
+
+
+            var m1 = document.getElementById("birthmonth").value;
+
+
+
+            var y1 = document.getElementById("birthyear").value;
+
+
+
+            var f1 = document.getElementById("birthhour").value;
+
+
+
+            var ff1 = document.getElementById("birthminute").value;
+
+
+
+            var fs1 = document.getElementById("ampm").value;
+
+
+
+            var x1 = document.getElementById("gmthour").value;
+
+
+
+            var xy1 = document.getElementById("gmtminute").value;
+
+
+
+           var lg1 = document.getElementById('londeg').value;
+
+
+
+           var gtl1 = document.getElementById('lonmins').value;
+
+
+
+            var b41 = document.getElementById("latdeg").value;
+
+
+
+            var bb41 = document.getElementById("latmins").value;
+
+
+
+            var amsas1 = document.getElementById("zodtype").value;
+
+
+
+            var ees1 = document.getElementById("housesys").value;
+
+
+           astrology(d1,m1,y1,f1,ff1,fs1,x1,xy1,lg1,gtl1,b41,bb41,amsas1,ees1);
+
+            }
+
+
+           function astrology(d,m,y,f,ff,fs,x,xy,lg,gtl,b4,bb4,amsas,ees)  {
+
+
+
+                var rass = new Array(13);
+                for (i=0; i <14; i++)
+                { rass[i] = new Array(14); }
+
+                var nvm = new Array(13);
+                for (i=0; i <14; i++)
+                { nvm[i] = new Array(14); }
+
+                var ar  = [0, 12, 1, 2, 3, 11, 4, 10, 5, 9, 8, 7, 6];
+
+                var br  = [0, 12, 3, 1, 10, 4, 11, 5, 6, 2];
+
+                var rt  = [0, 7, 20, 6, 10, 7, 18, 16, 19, 17];
+
+                var zos  = new Array(14);
+
+                var zo1 = new Array(14);
+
+                var zo2s = new Array(14);
+
+                var zo3 = new Array(14);
+
+                var zo4 = new Array(14);
+
+                var dr  = [0, 13, 1, 10, 4, 2, 5, 3, 6, 11, 12, 7, 8, 9];
+
+
+
+                var grh = new Array(3);
+                for (i=0; i <14; i++)
+                { grh[i] = new Array(14); }
+
+                var lucks = [0, 0, 0, 0, 0, 0, 5, 5, 1, 7, 0, 3, 3, 6, 12, 0, 2, 7, 12, 6, 0, 1, 8, 10, 4, 0, 9, 12, 4, 10, 0, 10, 11, 7, 1, 0, 11, 11, 8, 2, 0, 12, 12, 5, 11, 0, 8, 8, 0, 2, 0, 4, 4, 2, 8, 0, 0, 0, 2, 8, 0, 0, 0, 8, 2];
+
+                var luck = new Array(13);
+
+                for (j=0;j<13;j++) {
+                luck[j] = new Array(5);
+                }
+                for (i=0;i<13;i++) {
+
+                for (j=0;j<5;j++) {
+                luck[i][j]=lucks[j+i*5];
+                }
+                }
+
+                var stars  = ["o", "Aswini", "Bharani", "Kritika", "Rohini", "Mirgasirsa", "Rudra", "Punarvasu", "Pusyam", "Ashlesha", "Makha", "Pura", "Uthra", "Hasta", "Chitra", "Swathy", "Visaka", "Anuradha", "Jyestha", "Moola", "Poorvashada", "Uthrashada", "Sravana", "Dhanishta", "Satabhisa", "P.Badra", "Uthra Badra", "Revathy"];
+
+                var k  = new Array(13);
+
+                var hc = new Array(13);
+
+                var cs = ["o", "Sun", "Mer", "Ven", "Mar", "Jup", "Sat", "Ura", "Nep","Plu", "Moo","Rah", "Ket"];
+
+                var zs = ["o", "Ari", "Tau", "Gem", "Can", "Leo", "Vir", "Lib", "Sco", "Sag", "Cap", "Aqu", "Pis"];
+
+                var hcs = ["o", "Tenth", "Eleventh", "Twelfth", "First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth"];
+
+
+
+                var z   = new Array(13);
+
+                var pl9 = new Array(14);
+
+                var pl1 = new Array(14);
+
+                var pl2 = new Array(14);
+
+                var pl3 = new Array(14);
+
+                var pl4 = new Array(14);
+
+                var pl5 = new Array(14);
+
+                var pl6 = new Array(14);
+
+                var pl8 = new Array(14);
+
+                var pl7 = new Array(14);
+
+                var c;    var cc = new Array(5);
+
+                var bl1 = new Array(14);
+
+                var tim = f;
+
+                var pi  = 3.1415926540000000;
+
+
+               d = Math.abs(d);
+
+               m = Math.abs(m);
+
+               y = Math.abs(y);
+
+               f = Math.abs(f);
+
+               ff = Math.abs(ff);
+
+               x = Math.abs(x)*Math.sign(x);
+
+               xy = Math.abs(xy);
+
+               lg = Math.abs(lg)*Math.sign(lg);
+
+               gtl = Math.abs(gtl);
+
+               b4 = Math.abs(b4)*Math.sign(b4);
+
+               bb4 = Math.abs(bb4);
+
+
+
+                f = f+ff/100;
+
+
+                x = (Math.abs(x) + xy/100)*Math.sign(x);
+
+                var vs = [];
+
+                if (x<0) {vs = "East";}
+                else {vs = "West";}
+
+                var gat = Math.abs(lg);
+
+                var tat = Math.abs(b4);
+
+                var nam = 0;
+
+                var ob = 0;
+
+                var lons = [];
+
+                var b4s;
+
+
+
+                var l = (Math.abs(lg)+(gtl/100))*Math.sign(lg);
+
+
+
+                if (l<0) { lons = "East";
+                }
+                else { lons = "West";
+                }
+
+                b4 = (Math.abs(b4)+(bb4/100))*Math.sign(b4);
+
+                if (b4<0) { b4s = "South";
+                }
+                else { b4s = "North";
+                }
+
+
+
+
+                var posts = fs;
+                var qx = f;
+
+
+                qx = anq(qx);
+
+                f = qx;         var tam = f;
+
+                qx = Math.abs(x);
+
+
+                qx = anq(qx);
+
+                var x1 = qx;
+
+                var zt = x1;
+
+
+
+                x1 = Math.sign(x)*x1;
+
+                f = (f+x1)/24;
+
+
+
+                var mths;
+
+
+                var qls;
+
+                if (ees=="E") { qls = "Equal";}
+                else {qls = "Koch";}
+
+
+                if (amsas=="E") { nam = (y-294)*151/10800; mths = "Eastern";}
+                else {
+                    mths = "Western";}
+
+                 if(fs=="PM") { f = f+0.5; }
+
+                var aes;
+
+                var lngt = Math.abs(l);
+
+                if (l<0) { aes = "E"; }
+                else { aes = "W"; }
+
+                qx = Math.abs(l);
+
+
+                qx = anq(qx);
+
+                var l1 = qx; var su = l1;
+
+                if (l1>=180) { lngt = Math.abs(l);
+
+                    if (l<0) { aes = "E"; }
+                    else { aes = "W"; }
+
+                    qx = Math.abs(l);
+
+                    qx = anq(qx);
+                    l1 = qx; su = l1; }
+
+
+
+                var l5 = Math.sign(l)*l1;
+
+                qx = Math.abs(b4);
+
+
+                qx = anq(qx);
+                var latt = qx;           var bb = qx;
+
+                if (bb>=90) { qx = Math.abs(b4);
+
+                    qx = anq(qx);
+                    latt = qx;       bb = qx; }
+
+
+                var rx = Math.sign(b4)*bb;    var lat =rx;
+
+                rx = anr(rx);
+
+                b4 = rx;
+
+
+
+                var im = 12*(y+4800)+m-3;
+
+                var j = (2*(im-Math.floor(im/12)*12)+7+365*im)/12;
+
+
+
+
+                j = Math.floor(j) + d + Math.floor(im/48)-32083;
+
+
+
+                if (j>2299171) { j = j + Math.floor(im/4800) - Math.floor(im/1200)+38; }
+
+
+
+                var t  = (((j-2415020)+ f )-0.5)/36525;
+
+
+
+                var rg = (23925.8360000000000000 + 8640184.5419999990000000*t+0.0929*t*t)/3600;
+
+                rg = (rg+f*24)/24;
+
+                var ux = ((rg-Math.floor(rg))*24)*15-l5;
+
+
+
+                var dd = ux;
+
+                ux = ux - nam;
+
+
+
+                ux = anu(ux);         rx = ux;
+
+
+                rx = anr(rx);
+                var ra = rx;
+
+
+
+                var bob;
+
+                if (ees=="W") { rx = 23.4522944400000000-0.130125*t;
+
+                rx = anr(rx);
+                ob = rx; bob = ob;}
+
+                else { bob = 0; }
+
+                var flag = 0; var a = ra; var r = 1;
+
+                if (a==0) { a=1.74533e-9; }
+                x = r*Math.cos(a); y = r*Math.sin(a);
+
+                x = x*Math.cos(ob);
+
+                if (y==0) { y=1.74533e-9;}
+
+                r = Math.sqrt(x*x+y*y);
+                a = Math.atan(y/x);
+
+                if (a<0) { a = a+pi; }
+
+                if (y<0) { a = a+pi; }
+
+                var round = 0; var eqls = "Koch";
+                round = round + 1;
+                var mc = a*180/pi;
+
+                grh[round][12] = mc;
+
+
+                flag = flag + 1;
+
+                if (flag==1) { ob = 0; }
+
+
+
+                ob = -ob; a = b4; r = 1;
+
+               if (a==0) { a=1.74533e-9; }
+               x = r*Math.cos(a); y = r*Math.sin(a);
+
+                var q = y; r = x; a = ra;
+
+               if (a==0) { a=1.74533e-9; }
+               x = r*Math.cos(a); y = r*Math.sin(a);
+
+                g = x; var xyz = y;  x = xyz; y = q;
+
+
+
+               if (y==0) { y=1.74533e-9;}
+
+               r = Math.sqrt(x*x+y*y);
+               a = Math.atan(y/x);
+
+               if (a<0) { a = a+pi; }
+
+               if (y<0) { a = a+pi; }
+
+                a = a + ob;
+
+                if (a==0) { a=1.74533e-9;}
+                x = r*Math.cos(a);      y = r*Math.sin(a);
+
+                q = Math.atan(y/Math.sqrt((1-y*y)));
+
+                xyz = x; y = xyz; x = g;
+
+
+
+
+               if (y==0) { y=1.74533e-9;}
+
+               r = Math.sqrt(x*x+y*y);
+               a = Math.atan(y/x);
+
+
+               if (a<0) { a = a+pi; }
+
+               if (y<0) { a = a+pi; }
+
+
+                if (a<0) { a = a+ 2*pi; }
+
+                var dx = a;
+
+                dx = adx(dx);
+
+                ux = dx + 90;
+
+
+                ux = anu(ux);
+
+                var pas = ux;
+
+
+
+                grh[round][13] = pas;
+
+                flag = flag + 1;
+
+
+
+                if (flag==2) { srhz = pas; }
+
+
+               ob = bob;
+
+               ob = -ob; a = b4; r = 1;
+
+               if (a==0) { a=1.74533e-9; }
+               x = r*Math.cos(a);   y = r*Math.sin(a);
+
+               q = y; r = x; a = ra;
+
+               if (a==0) { a=1.74533e-9; }
+               x = r*Math.cos(a);   y = r*Math.sin(a);
+
+               var g = x; xyz = y;  x = xyz; y = q;
+
+
+
+               if (y==0) { y=1.74533e-9;}
+
+               r = Math.sqrt(x*x+y*y);
+               a = Math.atan(y/x);
+
+               if (a<0) { a = a+pi; }
+
+               if (y<0) { a = a+pi; }
+
+               a = a + ob;
+
+               if (a==0) { a=1.74533e-9;}
+               x = r*Math.cos(a);      y = r*Math.sin(a);
+
+               q = Math.atan(y/Math.sqrt((1-y*y)));
+
+               xyz = x; y = xyz; x = g;
+
+
+
+
+               if (y==0) { y=1.74533e-9;}
+
+               r = Math.sqrt(x*x+y*y);
+               a = Math.atan(y/x);
+
+
+               if (a<0) { a = a+pi; }
+
+               if (y<0) { a = a+pi; }
+
+
+               if (a<0) { a = a+ 2*pi; }
+
+               dx = a;
+
+
+
+               dx = adx(dx);
+
+               ux = dx + 90;
+
+
+               ux = anu(ux);
+
+               pas = ux;
+
+               grh[round][13] = pas;
+
+                dx = ra; dx = adx(dx);
+                x = dx;
+
+                if (b4<0) { ux = x+180; ux = anu(ux); x = ux; }
+
+
+
+
+                var sd = x + nam;
+
+                x = sd/15;
+
+                y = Math.floor(x);
+
+                var shy = y;
+
+                z = (x-y)*60;
+
+                var smz = Math.floor(z);
+
+                x = Math.floor((z-Math.floor(z))*60);
+
+                var ssx = x;
+
+
+
+
+
+
+                document.getElementById("siderial").value = shy+"H-"+smz+"M-"+ssx+"S";
+
+
+                var sts = y+"H"+z+"M"+x+"S";
+
+                z = pas;                      grh[round][11] = pas;
+
+                var z3 = Math.floor(z);       q = Math.floor(z3/30)+1;     //Co920
+
+                var wx = (z3/30-Math.floor(z3/30))*30;
+
+                wx = anw(wx);                 var z1 = Math.floor(wx);
+
+                var z2 = Math.floor(Math.floor(((z-z3)*60)*10+0.5)/10);   //Co920
+
+
+
+
+
+               document.getElementById("ayanamsa").value = nam;
+
+
+
+                zo1[13] = z1; zo2s[13] = zs[q]; zo3[13] = z2;
+                zo4[13] = z;
+
+
+
+
+                xx = Math.sin(ra)*Math.tan(Math.abs(ob))*Math.tan(b4);           //Co960
+
+                xx = anx(xx);
+
+                var ad = xx; var oa = ra-ad;
+
+                var sa = pi/2+ad; var ax = sa/3;
+
+                hc[1] = mc;
+
+
+
+                for(i=1;i<6;i++) {
+
+                dx=(oa+ax*i);
+
+                dx = adx(dx);
+
+                ux = dx;  ux = anu(ux);  rx = ux;
+
+                rx = anr(rx); var ko = rx;
+
+                var aa = Math.atan(Math.tan(b4)/Math.cos(ko));
+
+                var ab = aa+Math.abs(ob);
+
+                var lo = Math.atan(Math.tan(ko)*Math.cos(aa)/Math.cos(ab));
+
+                if (lo<0) {lo = lo+pi;}
+                if (Math.sin(ko)<0) {lo=lo+pi;}
+
+                dx = lo;   dx = adx(dx);    hc[i+1] = dx;
+
+                }
+
+
+                for(i=1;i<7;i++) {
+
+                ux = hc[i];                ux = anu(ux);       z = ux;
+
+                z3 = Math.floor(z);        q = Math.floor(z3/30)+1;
+
+                wx = (z3/30-Math.floor(z3/30))*30;
+
+                wx = anw(wx);              z1 = Math.floor(wx);
+
+                z2 = Math.floor(Math.floor(((z-z3)*60)*10+0.5)/10);
+
+                var jk = i;
+
+                zos[jk] = hcs[i]; zo1[jk] = z1;
+
+                zo2s[jk] = zs[q]; zo3[jk] = z2;
+
+                zo4[jk] = z;
+
+                }
+
+
+                for(i=1;i<7;i++) {
+
+                ux = hc[i] + 180;        ux = anu(ux);       z = ux;
+
+                z3 = Math.floor(z);      q = Math.floor(z3/30)+1;
+
+                wx = (z3/30-Math.floor(z3/30))*30;
+
+                wx = anw(wx);            z1 = Math.floor(wx);
+
+                z2 = Math.floor(Math.floor(((z-z3)*60)*10+0.5)/10);
+
+                jk = i+6;
+
+                zos[jk] = hcs[i+6]; zo1[jk] = z1;
+
+                zo2s[jk] = zs[q]; zo3[jk] = z2;
+
+                zo4[jk] = z;                              //Co960
+
+                }
+
+
+
+
+
+
+                var ss  = [0, 358.4758445, 0.01675104, 101.2208333, 0, 0, 102.2793806, 0.205614210, 28.75375278, 47.14594444, 7.002880556, 212.6032194, 0.00682069, 54.38418611, 75.77964722, 3.393630556, 319.529425, 0.0933129, 285.4317611, 48.78644167, 1.850333333, 225.4928125, 0.04838144, 273.3930152, 99.41984827, 1.3096585, 174.215296, 0.05422831, 338.911673, 112.8261394, 2.49080547, 74.17574887, 0.04681664, 95.68630387, 73.52220082, 0.77256652, 30.1329437, 0.00912805, 284.168255, 130.6841531, 1.77939281, 229.7810007, 0.24797376, 113.5365761, 108.94405, 17.15140319 ];
+
+                var ss1 = [0, 35999.04975, -0.418e-4, 1.719175, 0, 0, 149472.5153, 0.2046e-4, 0.370280556, 1.185208333, 0.001860833, 58517.80386, -0.4474e-4, 0.508186111, 0.89985, 0.00100583, 19139.8585, 0.92064e-4, 1.069766667, 0.770991667, -0.000675, 3033.687936, -0.155e-4, 1.33834464, 1.05829152, -0.00515613, 1223.507963, -0.00020495, -0.31667941, 0.82587569, -0.00466035, 427.2742717, 0.00041875, 2.05082548, 0.52415598, 0.00012824, 240.4551595, -0.00127185, -21.6328615, 1.10046492, -0.00975088, 145.1781092, 0.00289875, 0.208637761, 1.37395444, -0.01611824 ];
+
+                var ss2 = [0, -0.000150278, -0.126e-6, 0.000452778, 0.6389e-5, -0.3e-7, 0.000120833, 0.173889e-3, -0.18333e-4, 0.001286056, 0.91e-7, -0.001386389, 0.00041, -0.972e-6, 0.000180806, -0.77e-7, 0.00013125, -0.1389e-5, 0.12611e-4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
+
+                var aus = [0, 1.00000023, 0.3870984, 0.7233316, 1.5236915, 5.20290493, 9.55251745, 19.22150505, 30.1137593, 39.53903455 ];
+
+
+                for (i=1;i<10;i++) {
+
+
+                var ji = i + 4*(i-1);
+
+                var s = ss[ji] + ss1[ji]*t + ss2[ji]*t*t;
+
+
+                ux = s;       ux = anu(ux);     rx = ux;
+
+                rx = anr(rx);             m = rx;
+
+                s = ss[ji+1] + ss1[ji+1]*t + ss2[ji+1]*t*t;
+
+
+                var e = s;     var ea = m;
+
+                for (ai=1;ai<6;ai++) {ea = m + e*Math.sin(ea);}
+
+                var au = aus[i];
+
+                rx = au;   rx = anr(rx);     au = rx;
+
+                var rv = au*(1-e*Math.cos(ea));
+
+                x = au*(Math.cos(ea)-e);
+
+                y = au*Math.sin(ea)*Math.sqrt(1-e*e);
+
+                    document.getElementById("mths").value = mths;
+
+                if (y==0) { y=1.74533e-9;}
+
+                r = Math.sqrt(x*x+y*y);
+                a = Math.atan(y/x);
+
+                if (a<0) { a = a+pi; }
+                if (y<0) { a = a+pi; }
+
+
+                s = ss[ji+2] + ss1[ji+2]*t + ss2[ji+2]*t*t;
+
+
+                dx = a;   dx = adx(dx);
+
+                a = dx;
+
+                a = a + s;
+
+
+                s = ss[ji+3] + ss1[ji+3]*t + ss2[ji+3]*t*t;
+
+
+                ux = a + s;       ux = anu(ux);     var v = ux;
+
+                rx = s;           rx = anr(rx);     m = rx;           rx = v;
+
+                rx = anr(rx);     var b = rx;
+
+
+                s = ss[ji+4] + ss1[ji+4]*t + ss2[ji+4]*t*t;
+
+
+                rx = s;            rx = anr(rx);    var inn = rx;
+
+                a = Math.atan(Math.cos(inn)*Math.tan(b-m));
+
+                if (a<0) { a = a + pi; }
+
+                dx = a + m;        dx = adx(dx);    a = dx;
+
+                if (Math.abs(v-a)>10) { a = a - 180;}
+
+                ux = a;            ux = anu(ux);    rx = ux;    rx = anr(rx);    c = rx;
+
+                d = Math.atan(Math.sin(c-m)*Math.tan(inn));
+
+                var hs = "";   var m1;   var c1;   var y1;
+
+
+
+                if (i==1) {
+
+                m1 = rv;
+                c1 = c;
+
+                x = rv * Math.cos(d) * Math.cos(c);
+                y = rv * Math.cos(d) * Math.sin(c);
+                z = rv * Math.sin(d);
+
+                x1 = x;
+                y1 = y;
+                z1 = z;
+
+                dx = c1;       dx = adx(dx);
+                ux = dx + 180 - nam;
+
+
+                ux = anu(ux);
+
+                c = ux;  }
+
+
+
+
+                if (i>1) {
+
+
+                xx = ((Math.sqrt(rv)+Math.sqrt(m1))*(Math.sqrt(rv)*Math.sqrt(m1)))/(Math.sqrt(rv)*rv+Math.sqrt(m1)*m1);
+                xx = xx - Math.cos(c1-c);
+
+                    if (xx<0) { hs = "R";}
+
+                    x = rv * Math.cos(d) * Math.cos(c);
+                    y = rv * Math.cos(d) * Math.sin(c);
+                    z = rv * Math.sin(d);
+
+                x = x - x1;
+                y = y - y1;
+                z = z - z1;
+
+                if (y == 0) {
+                y = 1.74533e-9;
+                }
+
+                r = Math.sqrt(x*x + y*y);
+                a = Math.atan(y/x);
+
+                if (a < 0) {
+                a = a + pi;
+                }
+                if (y < 0) {
+                a = a + pi;
+                }
+
+                g = a;
+                y = z;
+                x = r;
+
+                if (y == 0) {
+                y = 1.74533e-9;
+                }
+
+                r = Math.sqrt(x*x + y*y);
+                a = Math.atan(y/x);
+
+                if (a < 0) {
+                a = a + pi;
+                }
+                if (y < 0) {
+                a = a + pi;
+                }
+
+                dx = g;    dx = adx(dx);
+                c = dx;
+                c = c - nam;
+                ux = c;
+
+                ux = anu(ux);     c = ux; }
+
+
+
+                grh[round][i] = c;
+                z = c;
+
+
+                z3 = Math.floor(z);
+                q = Math.floor(z3 / 30) + 1;
+
+                wx = (z3 / 30 - Math.floor(z3 / 30)) * 30;
+
+                wx = anw(wx);
+                z1 = Math.floor(wx);
+
+                z2 = Math.floor(Math.floor(((z - z3) * 60) * 10 + 0.5) / 10);
+
+
+
+                ws = " ";
+
+                    if (i<13) {
+
+                        for (j = 1; j < 5; j++) {
+
+                            if (q == luck[i][j]) {
+                                k = j;
+
+
+                                if (k == 1) {
+                                    ws = "RULER"
+                                }
+                                else if (k == 2) {
+                                    ws = "RULER"
+                                }
+                                else if (k == 3) {
+                                    ws = "EXALTED"
+                                }
+                                else if (k == 4) {
+                                    ws = "WEAK"
+                                }
+
+
+                        }}}
+
+
+
+                var stas = " "; var navs = " "; var pad = 0;
+                a = grh[round][i];
+                y = (a / 10) * 3;
+                var count = Math.floor(y);
+                var pada = count + 1;
+                var starcount = Math.floor(count / 4) + 1;
+
+                if (starcount > 27) {
+                starcount = starcount - 27;
+                }
+
+                var navam = pada - (Math.floor(y / 12) * 12);
+                navs = zs[navam];
+                var plans = cs[i];
+                stas = stars[starcount];
+                pad = pada - (Math.floor(count / 4) * 4);
+
+
+
+                rass[q][i] = cs[i];
+
+                nvm[navam][i] = cs[i];
+
+
+
+                bl1[i] = z;
+
+                pl1[i] = z1;
+
+                pl2[i] = zs[q];
+
+                pl3[i] = z2;
+
+                pl4[i] = cs[i];
+
+                pl5[i] = hs;
+
+                pl6[i] = ws;
+
+                pl7[i] = stas;
+
+                pl8[i] = pad;
+
+                pl9[i] = navs;
+
+
+
+                }
+
+
+
+
+
+                var ll = 973563 + 1732564379 * t - 4 * t * t;
+
+                g = 1012395 + 6189 * t + 1.6 * t * t;
+
+                var g1 = 1203586 + 14648523 * t - 37 * t * t;
+
+                var nn = 933060 - 6962911 * t + 7.5 * t * t;
+
+                d = 1262655 + 1602961611 * t - 5 * t * t;
+
+                var yy = 3600;
+
+                l = (ll - g1) / yy;
+
+                var l7 = ll - d;
+                l1 = (l7 - g) / yy;
+
+                f = (ll - nn) / yy;
+                d = d / yy;
+                x = 2 * d;
+
+                var sx = l;
+                sx = ans(sx);
+
+                var vv = sx;
+                sx = l - x;
+                sx = ans(sx);
+
+                var vv1 = sx;
+                sx = x;
+                sx = ans(sx);
+
+                var vv2 = sx;
+                sx = 2 * l;
+                sx = ans(sx);
+
+                var vv3 = sx;
+
+                var ml = 22639.6 * vv - 4568.4 * vv1 + 2369.89 * vv2 + 769 * vv3;
+
+                sx = l1;  sx = ans(sx);
+                vv = sx;
+
+                sx = 2 * f;   sx = ans(sx);
+                vv1 = sx;
+
+                sx = 2 * l - x;   sx = ans(sx);
+                vv2 = sx;
+
+                sx = l + l1 - 2 * d;    sx = ans(sx);
+                vv3 = sx;
+
+                ml = ml - 668.9 * vv - 411.6 * vv1 - 211.7 * vv2 - 206.2 * vv3;
+
+                sx = l + x;     sx = ans(sx);
+                vv = sx;
+
+                sx = l1 - x;    sx = ans(sx);
+                vv1 = sx;
+
+                sx = l - l1;    sx = ans(sx);
+                vv2 = sx;
+
+                sx = d;         sx = ans(sx);
+                vv3 = sx;
+
+                ml = ml + 191.9 * vv - 165.4 * vv1 + 147.9 * vv2 - 124.8 * vv3;
+
+                sx = l + l1;    sx = ans(sx);
+                vv = sx;
+
+                sx = 2 * f - x;    sx = ans(sx);
+                vv1 = sx;
+
+                sx = l + 2 * f;    sx = ans(sx);
+                vv2 = sx;
+
+                sx = l - 2 * f;    sx = ans(sx);
+                vv3 = sx;
+
+                ml = ml - 109.8 * vv - 55.2 * vv1 - 45.1 * vv2 + 39.5 * vv3;
+
+                sx = l - 4 * d;    sx = ans(sx);
+                vv = sx;
+
+                sx = 3 * l;        sx = ans(sx);
+                vv1 = sx;
+
+                sx = 2 * l - 4 * d;    sx = ans(sx);
+                vv2 = sx;
+
+                sx = l - l1 - 2 * d;   sx = ans(sx);
+                vv3 = sx;
+
+                cs[13] = "Asc";
+
+                ml = ml - 38.4 * vv + 36.1 * vv1 - 30.8 * vv2 - 28.5 * vv3;
+
+                cc[4] = grh[round][13];
+
+                var px = ll + ml;
+
+                px = anp(px);    vv = px;
+                px = nn;
+
+                px = anp(px);    ux = px;    ux = anu(ux);
+                vv1 = ux;
+
+                ux = vv - nam;   ux = anu(ux);
+                cc[1] = ux;
+
+                ux = vv1 - nam;   ux = anu(ux);
+                cc[2] = ux;
+
+                grh[round][10] = cc[1];
+
+                ux = ux + 180;    ux = anu(ux);
+                cc[3] = ux;
+
+                grh[round][11] = cc[2];
+
+                grh[round][12] = cc[3];
+
+
+
+
+                for (i = 1; i < 5; i++) {
+
+                z = cc[i];
+
+                z3 = Math.floor(z);
+                q = Math.floor(z3 / 30) + 1;
+
+                wx = (z3 / 30 - Math.floor(z3 / 30)) * 30;
+
+                wx = anw(wx);
+                z1 = Math.floor(wx);
+
+                z2 = Math.floor(Math.floor(((z - z3) * 60) * 10 + 0.5) / 10);
+
+                i = i + 9;
+
+
+
+                var ws = " ";
+
+                if (i < 13) {
+
+                for (j = 1; j < 5; j++) {
+
+                if (q == luck[i][j]) {
+                k = j;
+
+
+                if (k == 1) {
+                ws = "RULER"
+                }
+                else if (k == 2) {
+                ws = "RULER"
+                }
+                else if (k == 3) {
+                ws = "EXALTED"
+                }
+                else if (k == 4) {
+                ws = "WEAK"
+                }
+
+
+                }}}
+
+
+
+                a = grh[round][i];
+                y = (a / 10) * 3;
+                count = Math.floor(y);
+                pada = count + 1;
+                starcount = Math.floor(count / 4) + 1;
+
+                if (starcount > 27) {
+                starcount = starcount - 27;
+                }
+
+                navam = pada - (Math.floor(y / 12) * 12);
+                navs = zs[navam];
+                plans = cs[i];
+                stas = stars[starcount];
+                pad = pada - (Math.floor(count / 4) * 4);
+
+                if (i == 10) {
+
+                var bbl = ((starcount * 40) / 3 - a) / 40 * 3;
+                var tos = starcount - (Math.floor(starcount / 9) * 9);
+
+                if (tos == 0) {
+                tos = 9;
+                }
+
+                var dasas = cs[br[tos]];
+                bb = bbl * rt[tos];
+                var dyr = Math.floor(bb);
+                var dm = (bb - dyr) * 12;
+                var dmt = Math.floor(dm);
+                dd = (dm - dmt) * 30;
+                var ddy = Math.floor(dd);
+                var bca = (1 - bbl) * 9;
+                var hca = Math.floor(bca) + 1;
+                var boss = cs[br[hca]];
+                var buk = (hca - bca) * rt[hca] * (rt[tos] / 120);
+                var byr = Math.floor(buk);
+                var bkl = (buk - byr) * 12;
+                var bmt = Math.floor(bkl);
+                var bkd = (bkl - bmt) * 30;
+                var bdy = Math.floor(bkd);        }      //dasa //navamsam
+
+                rass[q][i] = cs[i];
+
+                nvm[navam][i] = cs[i];
+
+                bl1[i] = z;
+
+                pl1[i] = z1;
+
+                pl2[i] = zs[q];
+
+                pl3[i] = z2;
+
+                pl4[i] = cs[i];
+
+                pl5[i] = hs;
+
+                pl6[i] = ws;
+
+                pl7[i] = stas;
+
+                pl8[i] = pad;
+
+                pl9[i] = navs;
+
+                i = i - 9;
+
+
+                }
+
+
+
+
+               document.getElementById("rass").value = rass;
+               document.getElementById("nvm").value = nvm;
+               document.getElementById("zos").value = zos;
+               document.getElementById("zo1").value = zo1;
+               document.getElementById("zo2s").value = zo2s;
+               document.getElementById("zo3").value = zo3;
+               document.getElementById("zo4").value = zo4;
+               document.getElementById("bl1").value = bl1;
+               document.getElementById("pl1").value = pl1;
+               document.getElementById("pl2").value = pl2;
+               document.getElementById("pl3").value = pl3;
+               document.getElementById("pl4").value = pl4;
+               document.getElementById("pl5").value = pl5;
+               document.getElementById("pl6").value = pl6;
+               document.getElementById("pl7").value = pl7;
+               document.getElementById("pl8").value = pl8;
+               document.getElementById("pl9").value = pl9;
+               document.getElementById("natb").value = pl7[10] + " " + pl8[10];
+
+
+               document.getElementById("dasa").value = dasas + " " + dyr + " " + dmt + " " + ddy;
+               document.getElementById("bukti").value = boss + " " +  byr + " " + bmt + " " + bdy;
+
+
+
+
+  /*/             var brs = "";   flag = 0;
+
+                x = 1; y = 4;
+
+                for(a=1; a<14; a+=4) {
+
+                for (i = x; i <= y; i++) {
+                k = ar[i];
+
+
+                    if (a<13)   {
+
+
+                        ras1s = rass[k][a];
+                        ras2s = rass[k][a+1];
+                        ras3s = rass[k][a+2];
+                        ras4s = rass[k][a+3];    }
+
+
+                    document.getElementById("rasis").value = ras1s + " " + ras2s + " " + ras3s + " " + ras4s;
+
+
+
+                    if (a==13) {
+
+                        var ras5s = rass[k][13]; }
+
+                    document.getElementById("ras5s").value = ras5s;
+
+                        if (9<k<12)
+                        {
+
+
+                        }
+                    }
+
+                }
+
+
+
+
+               if (x==1) { x = 5; y = 6;
+
+
+                   for(a=1; a<14; a+=4) {
+
+                       for (i = x; i <= y; i++) {
+                           k = ar[i];
+
+
+
+                           if (a<13)   {
+
+
+                               ras1s = rass[k][a];
+                               ras2s = rass[k][a+1];
+                               ras3s = rass[k][a+2];
+                               ras4s = rass[k][a+3];    }
+
+
+                           document.getElementById("rasis").value = ras1s + " " + ras2s + " " + ras3s + " " + ras4s;
+
+
+                           if (9<k<12)
+                           {
+
+
+                           }}
+
+                       if (k==4) {  }}
+
+
+
+               }
+
+
+
+                if (x == 5) {
+                x = 7;
+                y = 8;
+
+                    for(a=1; a<14; a+=4) {
+
+                        for (i = x; i <= y; i++) {
+                            k = ar[i];
+
+
+
+                            if (a<13)   {
+
+
+                                ras1s = rass[k][a];
+                                ras2s = rass[k][a+1];
+                                ras3s = rass[k][a+2];
+                                ras4s = rass[k][a+3];    }
+
+
+                            document.getElementById("rasis").value = ras1s + " " + ras2s + " " + ras3s + " " + ras4s;
+
+
+
+                        if (a==13) {
+
+                            ras5s = rass[k][13]; }
+
+                            document.getElementById("ras5s").value = ras5s;
+
+                            if (9<k<12)
+                            {
+
+
+                            }
+                        }
+
+
+                    }}
+
+
+
+
+                if (x == 7) {
+                x = 9;
+                y = 12;
+
+
+                    for(a=1; a<14; a+=4) {
+
+                        for (i = x; i <= y; i++) {
+                            k = ar[i];
+
+
+                            if (a<13)   {
+
+
+                                ras1s = rass[k][a];
+                                ras2s = rass[k][a+1];
+                                ras3s = rass[k][a+2];
+                                ras4s = rass[k][a+3];    }
+
+
+                            document.getElementById("rasis").value = ras1s + " " + ras2s + " " + ras3s + " " + ras4s;
+
+
+
+                        if (a==13) {
+
+                            ras5s = rass[k][13]; }
+
+                            document.getElementById("ras5s").value = ras5s;
+
+                            if (9<k<12)
+                            {
+
+
+                            }
+                        }
+
+
+                    }
+
+
+                }
+
+
+                if (x == 9) {
+
+                x = 1; y = 4;   }
+
+                for(a=1; a<14; a+=4) {
+
+                for (i = x; i <= y; i++) {
+                k = ar[i];
+
+
+                    if (a<13)   {
+
+
+                        nvm[k][7] = " ";
+                        nvm[k][8] = " ";
+                        nvm[k][9] = " ";
+
+                        ras1s = rass[k][a];
+                        ras2s = rass[k][a+1];
+                        ras3s = rass[k][a+2];
+                        ras4s = rass[k][a+3];    }
+
+
+                    document.getElementById("rasis").value = ras1s + " " + ras2s + " " + ras3s + " " + ras4s;
+
+
+
+                    if (a==13) {
+
+                        ras5s = nvm[k][13]; }
+
+                    document.getElementById("ras5s").value = ras5s;
+
+                        if (9<k<12)
+                        {
+
+
+                        }
+                    }
+
+                }
+
+
+                    if (x==1) { x = 5; y = 6;
+
+
+                        for(a=1; a<14; a+=4) {
+
+                            for (i = x; i <= y; i++) {
+                                k = ar[i];
+
+
+
+                                if (a<13)   {
+
+
+                                    nvm[k][7] = " ";
+                                    nvm[k][8] = " ";
+                                    nvm[k][9] = " ";
+
+                                    ras1s = nvm[k][a];
+                                    ras2s = nvm[k][a+1];
+                                    ras3s = nvm[k][a+2];
+                                    ras4s = nvm[k][a+3];    }
+
+
+                                document.getElementById("rasis").value = ras1s + " " + ras2s + " " + ras3s + " " + ras4s;
+
+
+                                if (9<k<12)
+                                {
+
+
+                                }}
+
+                            if (k==4) {  }} }
+
+
+
+                    if (x == 5) {
+                        x = 7;
+                        y = 8;
+
+                        for(a=1; a<14; a+=4) {
+
+                            for (i = x; i <= y; i++) {
+                                k = ar[i];
+
+
+                                if (a<13)   {
+
+
+                                    nvm[k][7] = " ";
+                                    nvm[k][8] = " ";
+                                    nvm[k][9] = " ";
+
+                                    ras1s = nvm[k][a];
+                                    ras2s = nvm[k][a+1];
+                                    ras3s = nvm[k][a+2];
+                                    ras4s = nvm[k][a+3];    }
+
+
+                                document.getElementById("rasis").value = ras1s + " " + ras2s + " " + ras3s + " " + ras4s;
+
+
+
+                            if (a==13&&flag==0) {
+
+                                ras5s = nvm[k][13]; }
+
+                                document.getElementById("ras5s").value = ras5s;
+
+                                if (9<k<12)
+                                {
+
+
+                                }
+                            }
+
+
+                        }}
+
+
+                    if (x == 7) {
+                        x = 9;
+
+
+                        for(a=1; a<14; a+=4) {
+
+                            for (i = x; i <= y; i++) {
+                                k = ar[i];
+
+
+                                if (a<13)   {
+
+
+                                    nvm[k][7] = " ";
+                                    nvm[k][8] = " ";
+                                    nvm[k][9] = " ";
+
+                                    ras1s = nvm[k][a];
+                                    ras2s = nvm[k][a+1];
+                                    ras3s = nvm[k][a+2];
+                                    ras4s = nvm[k][a+3];    }
+
+
+                                document.getElementById("rasis").value = ras1s + " " + ras2s + " " + ras3s + " " + ras4s;
+
+
+
+                            if (a==13&&flag==0) {
+
+                                ras5s = nvm[k][13]; }
+
+                                document.getElementById("ras5s").value = ras5s;
+
+                                if (9<k<12)
+                                {
+
+
+                                }
+                            }
+
+
+                        }}
+
+                                 /*/   //horoscope
+
+
+
+                function anu(abc) {
+                abc = abc - (Math.floor(abc/360) * 360);
+                return abc;
+                }
+
+
+                function adx(abc) {
+                abc = abc * 180 / pi;
+                return abc;
+                }
+
+
+                function anx(abc) {
+                abc = Math.atan(abc/Math.sqrt(1-abc*abc));
+                return abc;
+                }
+
+
+                function anq(abc) {
+                abc = Math.floor(abc) + Math.floor((abc - Math.floor(abc)) * 100 + 0.5) / 60;
+                return abc;
+                }
+
+
+                function anr(abc) {
+                abc = abc * pi / 180;
+                return abc;
+                }
+
+
+                function ans(abc) {
+                abc = Math.sin(abc * pi / 180);
+                return abc;
+                }
+
+
+                function anw(abc) {
+                abc = Math.floor(abc * 100 + 0.5) / 100;
+                return abc;
+                }
+
+
+                function anp(abc) {
+                abc = Math.sign(abc) * ((Math.abs(abc) / 3600) / 360 - Math.floor((Math.abs(abc) / 3600) / 360)) * 360;
+                return abc;
+
+                }
+
+
+
+           }
+
+
+
+   </script>
+
+
+
+</head>
+   <body>
+
+
+          <label for="birthdate">Enter the Birth Date (1-31 as per Month):</label>
+          <input type="number" name="birthdate" id="birthdate" value="28"/><br/>
+          <label for="birthmonth">Enter the Birth Month (1-12):</label>
+          <input type="number" name="birthmonth" id="birthmonth" value="8"/><br/>
+          <label for="birthyear">Enter the Birth Year (1111-9999):</label>
+          <input type="number" name="birthyear" id="birthyear" value="1987"/><br/> <br/>
+          <label for="birthhour">Enter the Birth Hour (1-12):</label>
+          <input type="number" name="birthhour" id="birthhour" value="2" /><br/>
+          <label for="birthminute">Enter the Birth Minute (1-59):</label>
+          <input type="number" name="birthminute" id="birthminute" value="55"/><br/>
+          <label for="ampm">Enter the Birth (AM/PM):</label>
+          <input type="text" name="ampm" id="ampm" value="AM"/><br/> <br/>
+          <label for="gmthour">Enter the GMT Time zone(East=minus) Hour (1-12):</label>
+          <input type="number" name="gmthour" id="gmthour" value="-5"/><br/>
+          <label for="gmtminute">Enter the GMT Minute (1-59):</label>
+          <input type="number" name="gmtminute" id="gmtminute" value="30"/><br/> <br/>
+
+
+          <label for="londeg">Enter the Birth Longitude Degree (-90 to 90) (East=minus):</label>
+          <input type="number" name="londeg" step="any" id="londeg" value="-76"/><br/>
+          <label for="lonmins">Enter the Birth Longitude Minute (1 to 59) (South=minus):</label>
+          <input type="number" name="lonmins" step="any" id="lonmins" value="57"/><br/> <br/>
+
+          <label for="latdeg">Enter the Birth Latitude Degree (-180 to 180):</label>
+          <input type="number" name="latdeg" step="any" id="latdeg" value="28"/><br/>
+          <label for="latmins">Enter the Birth Latitude Minute (1 to 59):</label>
+          <input type="number" name="latmins" step="any" id="latmins" value="48"/><br/> <br/>
+
+          <label for="zodtype">Enter the Zodiac Type (E or W):</label>
+          <input type="text" name="zodtype" id="zodtype" value="E"/><br/> <br/>
+          <label for="housesys">Enter the House System (E or W):</label>
+          <input type="text" name="housesys" id="housesys" value="E"/>
+
+
+
+          <input type="submit" value="Submit" onclick="storedata()"/> <br/> <br/>
+
+          <label for="mths">Mths:</label>
+          <input type="text" name="mths" id="mths" /><br/>
+
+          <label for="siderial">Siderial Time:</label>
+          <input type="text" name="siderial" id="siderial" /><br/>
+
+          <label for="ayanamsa">Ayanamsa:</label>
+          <input type="number" name="ayanamsa" id="ayanamsa" /><br/>
+
+          <label for="zos">House Cusps:</label>
+          <input type="text" name="zos" id="zos" /><br/>
+
+          <label for="zo1">Deg:</label>
+          <input type="text" name="zo1" id="zo1" /><br/>
+
+          <label for="zo2s">Sign:</label>
+          <input type="text" name="zo2s" id="zo2s" /><br/>
+
+          <label for="zo3">Min:</label>
+          <input type="text" name="zo3" id="zo3" /><br/>
+
+          <label for="zo4">Degrees:</label>
+          <input type="text" name="zo4" id="zo4" /><br/>
+
+          <label for="rass">Rasi:</label>
+          <input type="text" name="rass" id="rass" /><br/>
+
+          <label for="nvm">Navamsam:</label>
+          <input type="text" name="nvm" id="nvm" /><br/>
+
+
+
+          <label for="pl1">Deg:</label>
+          <input type="text" name="pl1" id="pl1" /><br/>
+
+          <label for="pl2">House Cusps:</label>
+          <input type="text" name="pl2" id="pl2" /><br/>
+
+          <label for="pl3">Min:</label>
+          <input type="text" name="pl3" id="pl3" /><br/>
+
+          <label for="pl4">Planets:</label>
+          <input type="text" name="pl4" id="pl4" /><br/>
+
+          <label for="bl1">Degrees:</label>
+          <input type="text" name="bl1" id="bl1" /><br/>
+
+          <label for="pl5">Retro:</label>
+          <input type="text" name="pl5" id="pl5" /><br/>
+
+          <label for="pl6">W$:</label>
+          <input type="text" name="pl6" id="pl6" /><br/>
+
+          <label for="pl7">Nakshatra:</label>
+          <input type="text" name="pl7" id="pl7" /><br/>
+
+          <label for="pl8">Pada:</label>
+          <input type="text" name="pl8" id="pl8" /><br/>
+
+          <label for="pl9">Navam:</label>
+          <input type="text" name="pl9" id="pl9" /><br/>
+
+          <label for="dasa">Dasa:</label>
+          <input type="text" name="dasa" id="dasa" /><br/>
+
+          <label for="bukti">Bukti:</label>
+          <input type="text" name="bukti" id="bukti" /><br/>    
+
+          <label for="natb">Nakshatra at Birth:</label>
+          <input type="text" name="natb" id="natb" /><br/>
+
+          <label for="rasis">Rasis:</label>
+          <input type="text" name="rasis" id="rasis" /><br/>
+
+          <label for="ras5s">Ras5s:</label>
+          <input type="text" name="ras5s" id="ras5s" /><br/>    
+
+
+
+   </body>
+	
+</html>
